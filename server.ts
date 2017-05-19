@@ -22,7 +22,7 @@ server.listen(process.env.PORT || 8081, function () {
 import {GameServer} from './server/GameServer';
 
 var gameServer : GameServer = new GameServer();
-setInterval(gameServer.listAllPlayer.bind(gameServer), 5000);
+setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
 
 
 io.on('connection',function(socket){
@@ -31,12 +31,6 @@ io.on('connection',function(socket){
 
     socket.on('askMatchmaking', function(data) {
         gameServer.onMatchmaking(player);
-    });
-
-
-    socket.on('askNewPlayer', function (data) {
-        console.log("askNewPlayer requisitado");
-
     });
 
     socket.on('disconnect', function() {
