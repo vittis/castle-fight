@@ -27,7 +27,7 @@ setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
 
 io.on('connection',function(socket){
 
-    var player = gameServer.onConnected();
+    var player = gameServer.onConnected(socket);
 
     socket.on('askMatchmaking', function(data) {
         gameServer.onMatchmaking(player);

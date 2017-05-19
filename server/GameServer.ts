@@ -12,23 +12,23 @@ export class GameServer {
         console.log("gameserver instanciado");
     }
 
-    createGame(host : ServerPlayer, client : ServerPlayer) : GameCore{
-        var game = new GameCore(this.lastGameID, host, client);
-        this.games.push(game);
-        this.lastGameID++;
-        return game;
-    }
-
-    addPlayer(): ServerPlayer {
-        var player = new ServerPlayer(this.lastPlayerID);
+    addPlayer(socket : SocketIO.Socket): ServerPlayer {
+        var player = new ServerPlayer(this.lastPlayerID, socket);
         this.clients.push(player);
         this.lastPlayerID++;
         console.log("player id "+player.id+" se conectou");
         return player;
     }
 
-    onConnected() : ServerPlayer {
-        return this.addPlayer();
+    onConnected(socket : SocketIO.Socket) : ServerPlayer {
+        return this.addPlayer(socket);
+    }
+
+    createGame(host : ServerPlayer, client : ServerPlayer) : GameCore{
+        var game = new GameCore(this.lastGameID, host, client);
+        this.games.push(game);
+        this.lastGameID++;
+        return game;
     }
 
     onMatchmaking(player : ServerPlayer) {

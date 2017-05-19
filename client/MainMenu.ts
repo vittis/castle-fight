@@ -1,4 +1,9 @@
 module Kodo {
+
+    export var startGame = function() {
+
+    }
+
     export class MainMenu extends Phaser.State {
 
         spaceKey : Phaser.Key;
@@ -19,9 +24,7 @@ module Kodo {
         }
         
         startGame() {
-            
             this.game.state.start('GameScene', true, false);
- 
         }
  
     }

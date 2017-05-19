@@ -7,10 +7,10 @@ module Client {
         socket.emit('askMatchmaking');
     }
 
-
-    export function askNewPlayer() {
-        socket.emit('askNewPlayer');
-    }
+    socket.on('startGame',function(data){
+        console.log("start game recebido - iniciando jogo!");
+        Kodo.Game.instance.state.start('GameScene', true, false);
+    });
     /*
     socket.on('addPlayer',function(data){
         Kodo.GameScene._instance.addNewPlayer(data.id,data.x,data.y, data.name);

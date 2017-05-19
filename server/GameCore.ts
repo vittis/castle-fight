@@ -11,8 +11,10 @@ export class GameCore {
         this.host = host;
         this.client = client;
 
-        console.log("jogo id "+this.id+" foi criado");
+        host.socket.emit('startGame');
+        client.socket.emit('startGame');
 
+        console.log("jogo id "+this.id+" foi criado");
     }
     
 }
