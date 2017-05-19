@@ -2,8 +2,6 @@ import * as express from 'express';
 import * as http from "http";
 import * as socketio from "socket.io";
 
-import {GameServer} from './server/GameServer';
-
 var app = express();
 var server = http.createServer(app);
 var io = socketio.listen(server);
@@ -21,20 +19,28 @@ server.listen(process.env.PORT || 8081, function () {
 });            
 //configs^--------------
 
+import {GameServer} from './server/GameServer';
+
 var gameServer : GameServer = new GameServer();
+setInterval(gameServer.listAllPlayer.bind(gameServer), 5000);
+
 
 io.on('connection',function(socket){
-    console.log("alguem se conectou!");
-    
+
+    var player = gameServer.onConnected();
+
     socket.on('askMatchmaking', function(data) {
-        console.log("askMatchmaking requisitado");
-        var player = gameServer.addPlayer();
+        gameServer.onMatchmaking(player);
     });
 
 
     socket.on('askNewPlayer', function (data) {
         console.log("askNewPlayer requisitado");
 
+    });
+
+    socket.on('disconnect', function() {
+        gameServer.onDisconnect(player);
     });
 
 });
