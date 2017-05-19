@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "allowJs" : false
+    "allowJs" : true
   },
   "exclude": [
     "node_modules"

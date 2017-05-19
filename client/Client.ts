@@ -3,6 +3,11 @@ module Client {
     var startPingTime=0;
 
 
+    export function askMatchmaking() {
+        socket.emit('askMatchmaking');
+    }
+
+
     export function askNewPlayer() {
         socket.emit('askNewPlayer');
     }

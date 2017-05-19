@@ -7,12 +7,7 @@ module Kodo {
             GameScene._instance = this;
             this.game.stage.backgroundColor = 'rgb(19,58,43)';
 
-
-            //this.game.input.onDown.add(Client.pingCheck, this);
-            //input wsad
-
             
-            Client.askNewPlayer();
         }
 
         update() {
