@@ -9,6 +9,14 @@ module Client {
 
     socket.on('startGame',function(data){
         console.log("start game recebido - iniciando jogo!");
+        
+        for (var i = 0; i < 2; i++) {
+            for (var j = 0; j < 4; j++) {
+                console.log(data.grid[i][j]);  
+            }
+            console.log("\n");
+        }
+
         Kodo.Game.instance.state.start('GameScene', true, false);
     });
     /*
