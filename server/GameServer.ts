@@ -49,11 +49,11 @@ export class GameServer {
                 break;
             }
         }
-        game.host.status = PlayerStatus.connected;
-        game.client.status = PlayerStatus.connected;
+        game.host.serverPlayer.status = PlayerStatus.connected;
+        game.client.serverPlayer.status = PlayerStatus.connected;
 
-        game.host.socket.emit('endGame');
-        game.client.socket.emit('endGame');
+        game.host.serverPlayer.socket.emit('endGame');
+        game.client.serverPlayer.socket.emit('endGame');
         console.log("jogo id "+game.id+" foi finalizado");
     }
 

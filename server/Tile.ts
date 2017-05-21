@@ -13,7 +13,7 @@ export class Tile {
     }
 
     public toString = () : string => {
-        return this.entity == null ? "0" : "1";
+        return this.entity == null ? "0" : ""+this.entity;
     }
 
     constructor(row, col) {

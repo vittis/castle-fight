@@ -25,7 +25,24 @@ export class GridManager {
             }
             console.log("\n");
         }
-    }
+        console.log("----------------------------------------");
 
+    }
+    getNumberGrid() : number[][] {
+        var numberGrid : number[][] = [];
+
+        for (var i = 0; i < this.rows; i++) {
+            numberGrid[i] = [];
+            for (var j = 0; j < this.cols; j++) {
+                numberGrid[i][j] = this.grid[i][j].entity == null ? 0 : 5;
+                process.stdout.write(""+numberGrid[i][j]);  
+            }
+            console.log("\n");
+
+        }
+        console.log("----------------------------------------");
+
+        return numberGrid;
+    }
 
 }

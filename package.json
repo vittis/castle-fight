@@ -9,10 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/easystarjs": "^0.1.29",
     "@types/express": "^4.0.35",
     "@types/node": "^7.0.8",
     "@types/socket.io": "^1.4.28",
     "@types/socket.io-client": "^1.4.29",
+    "easystarjs": "^0.4.1",
     "express": "^4.15.2",
     "prompt": "^1.0.0",
     "socket.io": "^1.7.3"
