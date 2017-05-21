@@ -18,9 +18,6 @@ server.listen(process.env.PORT || 8081, function () {
     console.log('Listening on '+server.address().port);
 });            
 //configs^--------------
-
-
-
 import {GameServer} from './server/GameServer';
 
 var gameServer : GameServer = new GameServer();

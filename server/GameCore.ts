@@ -1,6 +1,10 @@
 import { ServerPlayer, PlayerStatus } from './ServerPlayer';
 import { GameConfig } from './GameConfig';
 import { GameServer } from './GameServer';
+import { GridManager} from './GridManager';
+import { Entity } from "./Entity";
+import { Castle } from "./Building";
+
 
 var prompt = require('prompt');
 prompt.start();
@@ -11,18 +15,14 @@ prompt.start();
         });*/
 
 
-export enum TileStatus {
-    EMPTY,
-    BUILDING,
-    UNIT
-}
-
 export class GameCore {
     id : number;
     host : ServerPlayer;
     client  : ServerPlayer;
 
-    grid : number[][] = [];
+    gridManager : GridManager;
+
+    entities : Entity[] = [];
 
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
@@ -30,30 +30,16 @@ export class GameCore {
         this.host = host;
         this.client = client;
 
-        for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-            this.grid[i] = [];
-            for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                this.grid[i][j] = TileStatus.EMPTY;
-            }
-        }
+        this.gridManager = new GridManager(GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
 
-        host.socket.emit('startGame', {id: this.id, grid: this.grid, host: true});
-        client.socket.emit('startGame', {id: this.id, grid: this.grid, host: false});
+        //host.socket.emit('startGame', {id: this.id, grid: this.gridManager.grid, host: true});
+        //client.socket.emit('startGame', {id: this.id, grid: this.gridManager.grid, host: false});
 
         console.log("jogo id "+this.id+" foi criado");
 
-        
-        this.printGrid();
-    }
+        this.entities.push(new Castle(this.gridManager, 0, 1, 1, 1));
 
-
-    printGrid() : void {
-        for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-            for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                process.stdout.write(""+this.grid[i][j]);  
-            }
-            console.log("\n");
-        }
+        this.gridManager.printGrid();
     }
 
     endGame() : void {

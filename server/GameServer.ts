@@ -12,6 +12,12 @@ export class GameServer {
 
     constructor() {
         GameServer.instance = this;
+        //debug>
+        var player = this.onConnected();   
+        var player2 = this.onConnected();        
+        this.onMatchmaking(player);
+        this.onMatchmaking(player2);
+
     }
 
     addPlayer(socket : SocketIO.Socket): ServerPlayer {
@@ -22,7 +28,7 @@ export class GameServer {
         return player;
     }
 
-    onConnected(socket : SocketIO.Socket) : ServerPlayer {
+    onConnected(socket? : SocketIO.Socket) : ServerPlayer {
         return this.addPlayer(socket);
     }
 
