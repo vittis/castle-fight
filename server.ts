@@ -19,10 +19,12 @@ server.listen(process.env.PORT || 8081, function () {
 });            
 //configs^--------------
 
+
+
 import {GameServer} from './server/GameServer';
 
 var gameServer : GameServer = new GameServer();
-setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
+//setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
 
 
 io.on('connection',function(socket){

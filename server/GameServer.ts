@@ -8,8 +8,10 @@ export class GameServer {
     games : Array<GameCore> = new Array<GameCore>();
     clients : Array<ServerPlayer> = new Array<ServerPlayer>(); 
 
+    public static instance : GameServer = null;
+
     constructor() {
-        console.log("gameserver instanciado");
+        GameServer.instance = this;
     }
 
     addPlayer(socket : SocketIO.Socket): ServerPlayer {
@@ -28,7 +30,25 @@ export class GameServer {
         var game = new GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
+        
         return game;
+    }
+
+    endGame(game : GameCore) : void {
+        console.log("qqqq");
+
+        for (var i = 0; i < this.games.length; i++) {
+            if (this.games[i].id == game.id) {
+                this.games.splice(i, 1);
+                break;
+            }
+        }
+        game.host.status = PlayerStatus.connected;
+        game.client.status = PlayerStatus.connected;
+
+        game.host.socket.emit('endGame');
+        game.client.socket.emit('endGame');
+        console.log("jogo id "+game.id+" foi finalizado");
     }
 
     onMatchmaking(player : ServerPlayer) {

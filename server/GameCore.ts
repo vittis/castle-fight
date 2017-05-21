@@ -1,5 +1,21 @@
 import { ServerPlayer, PlayerStatus } from './ServerPlayer';
 import { GameConfig } from './GameConfig';
+import { GameServer } from './GameServer';
+
+var prompt = require('prompt');
+prompt.start();
+/*prompt.get(['username', 'email'], function (err, result) {
+            console.log('Command-line input received:');
+            console.log('  username: ' + result.username);
+            console.log('  email: ' + result.email);
+        });*/
+
+
+export enum TileStatus {
+    EMPTY,
+    BUILDING,
+    UNIT
+}
 
 export class GameCore {
     id : number;
@@ -17,7 +33,7 @@ export class GameCore {
         for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
             this.grid[i] = [];
             for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                this.grid[i][j] = 0;
+                this.grid[i][j] = TileStatus.EMPTY;
             }
         }
 
@@ -25,6 +41,9 @@ export class GameCore {
         client.socket.emit('startGame', {id: this.id, grid: this.grid, host: false});
 
         console.log("jogo id "+this.id+" foi criado");
+
+        
+        this.printGrid();
     }
 
 
@@ -37,5 +56,11 @@ export class GameCore {
         }
     }
 
+    endGame() : void {
+        console.log("end game chamado");
+        GameServer.instance.endGame(this);
+    }
+
+    
 
 }
