@@ -11,14 +11,16 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Heuristic_1 = require("./Heuristic");
-var ManhattenHeuristic = (function (_super) {
-    __extends(ManhattenHeuristic, _super);
-    function ManhattenHeuristic() {
+var EuclideanHeuristic = (function (_super) {
+    __extends(EuclideanHeuristic, _super);
+    function EuclideanHeuristic() {
         return _super.call(this) || this;
     }
-    ManhattenHeuristic.prototype.getHeuristic = function (x1, y1, z1, x2, y2, z2) {
-        return Math.abs(x2 - x1) + Math.abs(y2 - y1) + Math.abs(z2 - z1);
+    EuclideanHeuristic.prototype.getHeuristic = function (x1, y1, z1, x2, y2, z2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) +
+            Math.pow(y2 - y1, 2) +
+            Math.pow(z2 - z1, 2));
     };
-    return ManhattenHeuristic;
+    return EuclideanHeuristic;
 }(Heuristic_1.Heuristic));
-exports.ManhattenHeuristic = ManhattenHeuristic;
+exports.EuclideanHeuristic = EuclideanHeuristic;

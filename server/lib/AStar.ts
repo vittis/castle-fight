@@ -9,7 +9,7 @@ export class AStar
 	getGraph() { return this.graph; }
 	getNode(x : number, y : number) { return this.graph.getNode(x, y); }
 		
-	private heuristic : Heuristic;
+	public heuristic : Heuristic;
 	setHeuristic(heuristic : Heuristic) { this.heuristic = heuristic; }
 	
 	constructor(heuristic: Heuristic) {

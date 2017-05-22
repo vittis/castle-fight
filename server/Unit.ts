@@ -21,10 +21,9 @@ export class Soldado extends Unit {
 
     constructor(gm : GridManager, row, col, width, height, owner) {
         super(gm, row, col, width, height, owner);
-        console.log("castle inicializado!");
     }
      public toString = () : string => {
-        return "S";
+        return "s";
     }
 
 

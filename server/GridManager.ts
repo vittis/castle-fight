@@ -1,4 +1,5 @@
 import {Tile} from './Tile';
+import { AStar } from "./lib/AStar";
 
 export class GridManager {
 
@@ -6,7 +7,10 @@ export class GridManager {
     rows : number;
     cols : number;
 
-    constructor(rows, cols) {
+    aStar : AStar;
+
+    constructor(aStar : AStar,rows, cols) {
+        this.aStar = aStar;
         this.rows = rows;
         this.cols = cols;
 
@@ -21,9 +25,9 @@ export class GridManager {
     printGrid() : void {
         for (var i = 0; i < this.rows; i++) {
             for (var j = 0; j < this.cols; j++) {
-                process.stdout.write(""+this.grid[i][j]);  
+                process.stdout.write(""+this.grid[i][j]+" ");  
             }
-            console.log("\n");
+            process.stdout.write("\n");
         }
         console.log("----------------------------------------");
 
@@ -35,12 +39,8 @@ export class GridManager {
             numberGrid[i] = [];
             for (var j = 0; j < this.cols; j++) {
                 numberGrid[i][j] = this.grid[i][j].entity == null ? 0 : 5;
-                process.stdout.write(""+numberGrid[i][j]);  
             }
-            console.log("\n");
-
         }
-        console.log("----------------------------------------");
 
         return numberGrid;
     }

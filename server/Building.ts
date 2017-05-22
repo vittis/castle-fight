@@ -15,7 +15,7 @@ export class Castle extends Building {
         console.log("castle inicializado!");
     }
      public toString = () : string => {
-        return "C";
+        return "c";
     }
 
 }
