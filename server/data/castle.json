@@ -3,7 +3,6 @@
     "width": 2,
     "height": 2,
     "maxHP": 50, 
-    "maxArmor": 10,
+    "maxArmor": 10
 
-    "canAttack": false
 }

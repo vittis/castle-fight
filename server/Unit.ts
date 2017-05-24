@@ -13,8 +13,8 @@ export abstract class Unit extends Entity{
         return this.dataq;
     }
 
-    constructor(gm : GridManager, row, col, unitData : UnitData, owner) {
-        super(gm, row, col, unitData, owner);        
+    constructor(gm : GridManager, row, col, unitData : UnitData) {
+        super(gm, row, col, unitData);        
     }
 
     moveTo(tile : Tile) : void {
@@ -29,18 +29,5 @@ export abstract class Unit extends Entity{
 
 }
 
-export class Soldado extends Unit {
-    
-    constructor(gm : GridManager, row, col, owner) {
-        super(gm, row, col, require('clone')(require('./data/soldado.json')), owner);
-        
-    }    
-}
 
-export class Archer extends Unit {
-    
-    constructor(gm : GridManager, row, col, owner) {
-        super(gm, row, col, require('clone')(require('./data/archer.json')), owner);
-        
-    }    
-}
+

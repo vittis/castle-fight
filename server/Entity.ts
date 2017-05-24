@@ -23,18 +23,15 @@ export abstract class Entity {
 
     gm : GridManager;
 
-    constructor(gm : GridManager, row, col, data : EntityData, owner : GamePlayer) {
+    constructor(gm : GridManager, row, col, data : EntityData) {
         this.gm = gm;
         this.dataq = data;
         this.dataq.hp = data.maxHP;
         this.dataq.armor = data.maxArmor;
 
         this.tile = gm.grid[row][col];
-
-        this.owner = owner;
         
         for (var i = 0; i < data.width; i++) {
-            //gm.grid[row][col+i].entity = this;
             for (var j = 0; j < data.height; j++) {
                 gm.grid[row+j][col+i].entity = this;
             }
