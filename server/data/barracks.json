@@ -1,0 +1,9 @@
+{
+    "name": "barracks", 
+    "width": 2,
+    "height": 2,
+    "maxHP": 30, 
+    "armor": 5,
+
+    "canAttack": false
+}

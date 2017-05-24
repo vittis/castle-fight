@@ -2,12 +2,13 @@ import { ServerPlayer, PlayerStatus } from './ServerPlayer';
 import { GameConfig } from './GameConfig';
 import { GameServer } from './GameServer';
 import { GridManager} from './GridManager';
-import { Entity } from "./Entity";
-import { Castle } from "./Building";
+import { Entity, EntityData } from "./Entity";
+import { Castle, Barracks } from "./Building";
 import { GamePlayer } from "./GamePlayer";
-import { Soldado, Unit } from "./Unit";
+import { Soldado, Unit, UnitData, Archer } from "./Unit";
 import { AStar } from "./lib/AStar";
 import { EuclideanHeuristic } from "./lib/Heuristics/EuclideanHeuristic";
+import { Tile } from "./Tile";
 
 /*
 var prompt = require('prompt');
@@ -26,8 +27,6 @@ export class GameCore {
 
     gridManager : GridManager;
 
-    entities : Entity[] = [];
-
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -41,84 +40,112 @@ export class GameCore {
             this.client.serverPlayer.socket.emit('startGame', {id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: false});
         }
 
-        this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0, 2, 2, this.host));
-        this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2, 2, 2, this.client));
+        this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0, this.host));
+        this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2, this.client));
 
-        this.host.addEntity(new Soldado(this.gridManager, 0, 0, 1, 1, this.host));
-        //this.host.addEntity(new Soldado(this.gridManager, 0, 5, 1, 1, this.host));
 
-        //this.client.addEntity(new Soldado(this.gridManager, 10, 6, 1, 1, this.client));
-        //this.client.addEntity(new Soldado(this.gridManager, 10, 7, 1, 1, this.client));
-        //this.client.addEntity(new Soldado(this.gridManager, 10, 8, 1, 1, this.client));
+        this.host.addEntity(new Soldado(this.gridManager, 4, 0, this.host));
+        this.host.addEntity(new Soldado(this.gridManager, 3, 0, this.host));
+        this.host.addEntity(new Soldado(this.gridManager, 3, 1, this.host));
 
-        process.stdout.write('\x1Bc');
+        this.client.addEntity(new Soldado(this.gridManager, 6, 15, this.client));
+        this.client.addEntity(new Archer(this.gridManager, 5, 17, this.client));
+        this.client.addEntity(new Archer(this.gridManager, 7, 17, this.client));
+
+        
         this.gridManager.printGrid();
-            
-        setInterval(this.step.bind(this), 1000);
+        setInterval(this.step.bind(this), 700);
+    }
+
+    getOponentEntities(owner : GamePlayer) : Entity[] {
+        if (owner == this.host)
+            return this.client.getAllEntities();
+        else 
+            return this.host.getAllEntities();
+
     }
 
     step() {
-        process.stdout.write('\x1Bc');
-
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         
         var hostUnits = this.host.getAllUnits();
         var clientUnits = this.client.getAllUnits();
-
         var allUnits = hostUnits.concat(clientUnits);
         
         var hostEntities = this.host.getAllEntities();
         var clientEntities = this.client.getAllEntities();
+        var allEntities = hostEntities.concat(clientEntities);
 
         allUnits.forEach(unit => {
-            var target : Entity = null;
+            var target : Tile = null;
             var shortestDistance = 100;
-            if (unit.owner == this.host) {
 
-               clientEntities.forEach(c_unit => {
-
-                    var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, c_unit.tile.col, c_unit.tile.row, 0);
+            this.getOponentEntities(unit.owner).forEach(other_unit => {
+                
+                if (!(other_unit.getEntityData().width > 1 || other_unit.getEntityData().height > 1)) {
+                    var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, other_unit.tile.col, other_unit.tile.row, 0);
                     if (dist < shortestDistance) {
-                        target = c_unit;
+                        target = other_unit.tile;
                         shortestDistance = dist;
                     }
-                });
-            }
-            else {
-                hostEntities.forEach(h_unit => {
-                    var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, h_unit.tile.col, h_unit.tile.row, 0);
-                    if (dist < shortestDistance) {
-                        target = h_unit;
-                        shortestDistance = dist;
+                }
+                else {
+                    for (var i = 0; i < other_unit.getEntityData().width; i++) {
+                        for (var j = 0; j < other_unit.getEntityData().height; j++) {
+                            var tile : Tile = this.gridManager.grid[other_unit.tile.row+j][other_unit.tile.col+i];
+                            var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, tile.col, tile.row, 0);
+                            if (dist < shortestDistance) {
+                                target = tile;
+                                shortestDistance = dist;
+                            }
+                        }
+                    }                   
+                }
+            });
+
+            if (target != null) {
+                        console.log("target: "+target.row+", "+target.col);
+
+                var nodeA = this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row),
+                nodeB = this.gridManager.aStar.getNode(target.col, target.row);
+            
+                var path = this.gridManager.aStar.path(nodeA, nodeB); 
+
+                if (path.length > 1 ) {
+                    var targetTile : Tile = this.gridManager.grid[path[1].y][path[1].x];
+                    if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, target.col, target.row) <= unit.data.attackRange) {
+                        unit.attack(target.entity);
                     }
-                });
+                    else if (targetTile.entity == null)
+                        unit.moveTo(targetTile);
+                    
+                }
             }
-
-            var nodeA = this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row),
-            nodeB = this.gridManager.aStar.getNode(target.tile.col, target.tile.row);
-        
-            var path = this.gridManager.aStar.path(nodeA, nodeB); 
-
-            if (path.length > 1 ) {
-                if (this.gridManager.grid[path[1].y][path[1].x].entity == null)
-                    unit.moveTo(this.gridManager.grid[path[1].y][path[1].x]);
-            }
-
         });
-
+        allEntities.forEach(entity => {
+            if (entity.getEntityData().hp <= 0)
+                entity.onDeath();
+        });
         
         this.gridManager.printGrid();
+        this.printEntityStatus();
     }
 
     getAllUnits() : Unit[]{
         return this.host.getAllUnits().concat(this.client.getAllUnits());
     }
-
+    getAllEntities() : Entity[] {
+        return this.host.getAllEntities().concat(this.client.getAllEntities());
+    }
     endGame() : void {
         console.log("end game chamado");
         GameServer.instance.endGame(this);
     }
 
-    
+    printEntityStatus() {
+        this.getAllEntities().forEach(e => {
+            console.log(e.getEntityData().name+", owner: "+e.owner.serverPlayer.id+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor);
+        });
+    }
 
 }

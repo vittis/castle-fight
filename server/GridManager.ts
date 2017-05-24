@@ -23,6 +23,7 @@ export class GridManager {
     }
 
     printGrid() : void {
+        process.stdout.write('\x1Bc');
         for (var i = 0; i < this.rows; i++) {
             for (var j = 0; j < this.cols; j++) {
                 process.stdout.write(""+this.grid[i][j]+" ");  
@@ -44,5 +45,11 @@ export class GridManager {
 
         return numberGrid;
     }
+
+
+    getDistance(x1:number, y1:number, x2:number, y2:number) : number {
+	
+		return Math.max(Math.abs(x1- x2), Math.abs(y1-y2));
+	}
 
 }

@@ -10,4 +10,5 @@ export class ManhattenHeuristic extends Heuristic {
 		x2:number, y2:number, z2:number) : number {
 		return Math.abs(x2 - x1) + Math.abs(y2 - y1) + Math.abs(z2 - z1);
 	}
+
 }

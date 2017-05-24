@@ -14,4 +14,5 @@ export class EuclideanHeuristic extends Heuristic {
 			Math.pow(z2 - z1, 2)
 		);
 	}
+	
 }

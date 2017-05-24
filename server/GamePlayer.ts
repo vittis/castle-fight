@@ -31,4 +31,12 @@ export class GamePlayer {
         return this.entities;
     }
 
+    removeEntity(entity : Entity) {
+        for (var i = 0; i < this.entities.length; i++) {
+            if (this.entities[i] == entity) {
+                this.entities.splice(i, 1);
+            }            
+        }
+    }
+
 }

@@ -1,12 +1,20 @@
-import { Entity } from "./Entity";
+import { Entity, EntityData } from "./Entity";
 import { GridManager } from "./GridManager";
 import { Tile } from "./Tile";
 
-export abstract class Unit extends Entity {
+export interface UnitData extends EntityData {
+    attackRange? : number;
+    attackDmg? : number;
+}
 
-    constructor(gm : GridManager, row, col, width, height, owner) {
-        super(gm, row, col, width, height, owner);
-        console.log("uma unidade foi inicializada!");
+export abstract class Unit extends Entity{
+
+    get data() : UnitData {
+        return this.dataq;
+    }
+
+    constructor(gm : GridManager, row, col, unitData : UnitData, owner) {
+        super(gm, row, col, unitData, owner);        
     }
 
     moveTo(tile : Tile) : void {
@@ -15,16 +23,24 @@ export abstract class Unit extends Entity {
         tile.entity = this;
     }
 
+    attack(entity : Entity) : void {
+        entity.receiveAttack(this);
+    }
+
 }
 
 export class Soldado extends Unit {
+    
+    constructor(gm : GridManager, row, col, owner) {
+        super(gm, row, col, require('clone')(require('./data/soldado.json')), owner);
+        
+    }    
+}
 
-    constructor(gm : GridManager, row, col, width, height, owner) {
-        super(gm, row, col, width, height, owner);
-    }
-     public toString = () : string => {
-        return "s";
-    }
-
-
+export class Archer extends Unit {
+    
+    constructor(gm : GridManager, row, col, owner) {
+        super(gm, row, col, require('clone')(require('./data/archer.json')), owner);
+        
+    }    
 }
