@@ -29,11 +29,11 @@ export abstract class Entity {
         this.dataq.hp = data.maxHP;
         this.dataq.armor = data.maxArmor;
 
-        this.tile = gm.grid[row][col];
+        this.tile = gm.tileAt(row, col);
         
         for (var i = 0; i < data.width; i++) {
             for (var j = 0; j < data.height; j++) {
-                gm.grid[row+j][col+i].entity = this;
+                gm.tileAt(row+j, col+i).entity = this;
             }
         }
     }
@@ -51,7 +51,7 @@ export abstract class Entity {
     onDeath() {
         for (var i = 0; i < this.dataq.width; i++) {
             for (var j = 0; j < this.dataq.height; j++) {
-                this.gm.grid[this.tile.row+j][this.tile.col+i].entity = null;
+                this.gm.tileAt(this.tile.row+j, this.tile.col+i).entity = null;
             }
         }
         this.owner.removeEntity(this);

@@ -1,0 +1,10 @@
+{
+    "name": "juggernaut",
+    "width": 1,
+    "height": 1,
+    "maxHP": 20,
+    "maxArmor": 10,
+
+    "attackRange": 1,
+    "attackDmg": 2
+}

@@ -11,12 +11,12 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
-var Archer = (function (_super) {
-    __extends(Archer, _super);
-    function Archer(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/units/archer.json'))) || this;
+var Juggernaut = (function (_super) {
+    __extends(Juggernaut, _super);
+    function Juggernaut(gm, row, col) {
+        return _super.call(this, gm, row, col, require('clone')(require('../data/units/juggernaut.json'))) || this;
     }
-    Archer.prototype.doAction = function (targetTile) {
+    Juggernaut.prototype.doAction = function (targetTile) {
         _super.prototype.doAction.call(this, targetTile);
         var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
         if (path.length > 1) {
@@ -28,6 +28,6 @@ var Archer = (function (_super) {
                 this.moveTo(pathToTargetTile);
         }
     };
-    return Archer;
+    return Juggernaut;
 }(Unit_1.Unit));
-exports.Archer = Archer;
+exports.Juggernaut = Juggernaut;

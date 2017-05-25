@@ -46,10 +46,34 @@ export class GridManager {
         return numberGrid;
     }
 
+    tileAt(row, col) : Tile {
+        return this.grid[row][col];
+    }
+    
+    isValid(row, col) : boolean {
+        if ((row >= 0 && row < this.rows) && (col >= 0 && col < this.cols)) {
+            return true;
+        }
+        return false;
+    }
 
     getDistance(x1:number, y1:number, x2:number, y2:number) : number {
 	
 		return Math.max(Math.abs(x1- x2), Math.abs(y1-y2));
 	}
+
+    getNeighbors(tile : Tile): Tile[] {
+        var tiles: Tile[] = [];
+        for (var dx = -1; dx <= 1; dx++) {
+            for (var dy = -1; dy <= 1; dy++) {
+                if (dx != 0 || dy != 0) {
+                    if (this.isValid(tile.row + dx, tile.col + dy)) {
+                        tiles.push(this.tileAt(tile.row + dx, tile.col + dy));
+                    }
+                }
+            }
+        }
+        return tiles;
+    }
 
 }

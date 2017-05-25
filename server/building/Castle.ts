@@ -6,6 +6,6 @@ export class Castle extends Building {
         
     }
     constructor(gm: GridManager, row, col) {
-        super(gm, row, col, require('clone')(require('../data/castle.json')));
+        super(gm, row, col, require('clone')(require('../data/buildings/castle.json')));
     }
 }

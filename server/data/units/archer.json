@@ -3,7 +3,7 @@
     "width": 1,
     "height": 1,
     "maxHP": 5, 
-    "maxArmor": 2,
+    "maxArmor": 0,
     
     "attackRange": 3,
     "attackDmg": 2

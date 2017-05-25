@@ -12,6 +12,8 @@ import { GameServer } from "./GameServer";
 import { Soldado } from "./unit/soldado";
 import { Archer } from "./unit/Archer";
 import { Unit } from "./Unit";
+import { ArcheryRange } from "./building/ArcheryRange";
+import { JuggerField } from "./building/JuggerField";
 
 export class GameCore {
     id : number;
@@ -36,47 +38,44 @@ export class GameCore {
         this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0));
         this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2));
         
-        this.host.addEntity(new Barracks(this.gridManager, 3, 0));
-        
-        this.client.addEntity(new Barracks(this.gridManager, 3, GameConfig.GRID_COLS-2));
+        //this.host.addEntity(new JuggerField(this.gridManager, 3, 0));
+        this.host.addEntity(new Barracks(this.gridManager, 0, 0));
 
+        
+        this.client.addEntity(new ArcheryRange(this.gridManager, 3, GameConfig.GRID_COLS-2));
+        /*
         this.client.addEntity(new Soldado(this.gridManager, 6, 15));
         this.client.addEntity(new Archer(this.gridManager, 5, 17));
         this.client.addEntity(new Archer(this.gridManager, 7, 17));
+        this.client.addEntity(new Archer(this.gridManager, 4, 17));
 
-        this.host.addEntity(new Soldado(this.gridManager, 6, 2));
-        this.host.addEntity(new Soldado(this.gridManager, 5, 2));
-        
+
+        //this.host.addEntity(new Soldado(this.gridManager, 6, 2));
+        //this.host.addEntity(new Soldado(this.gridManager, 5, 2));
+        this.host.addEntity(new Archer(this.gridManager, 4, 2));
+        this.host.addEntity(new Soldado(this.gridManager, 0, 2));
+        */
+
         this.gridManager.printGrid();
-        setInterval(this.step.bind(this), 700);
-    }
-
-    getOponentEntities(owner : GamePlayer) : Entity[] {
-        if (owner == this.host)
-            return this.client.getAllEntities();
-        else 
-            return this.host.getAllEntities();
-
+        setInterval(this.step.bind(this), 100);
     }
 
     step() {
         this.getAllUnits().forEach(unit => {
-            var target = this.getTargetTile(unit);
+            var targetTile = this.getClosestTargetTile(unit);
 
-            if (target != null) {
-                var nodeA = this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row),
-                nodeB = this.gridManager.aStar.getNode(target.col, target.row);
-            
-                var path = this.gridManager.aStar.path(nodeA, nodeB); 
+            if (targetTile != null) {
+                unit.doAction(targetTile);
+                /*var path = this.gridManager.aStar.path(this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row), this.gridManager.aStar.getNode(targetTile.col, targetTile.row)); 
 
                 if (path.length > 1 ) {
-                    var targetTile : Tile = this.gridManager.grid[path[1].y][path[1].x];
-                    if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, target.col, target.row) <= unit.data.attackRange) {
-                        unit.attack(target.entity);
+                    var pathToTargetTile : Tile = this.gridManager.grid[path[1].y][path[1].x];
+                    if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, targetTile.col, targetTile.row) <= unit.data.attackRange) {
+                        unit.attack(targetTile.entity);
                     }
-                    else if (targetTile.entity == null)
-                        unit.moveTo(targetTile);
-                }
+                    else if (pathToTargetTile.entity == null)
+                        unit.moveTo(pathToTargetTile);
+                }*/
             }
         });
 
@@ -94,7 +93,8 @@ export class GameCore {
         this.printEntityStatus();
     }
 
-    getTargetTile(unit : Unit) : Tile {
+    //returns closest tile with an enemy entity in it
+    getClosestTargetTile(unit : Unit) : Tile {
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
 
         var target : Tile = null;
@@ -110,7 +110,7 @@ export class GameCore {
             else {
                 for (var i = 0; i < other_unit.getEntityData().width; i++) {
                     for (var j = 0; j < other_unit.getEntityData().height; j++) {
-                        var tile : Tile = this.gridManager.grid[other_unit.tile.row+j][other_unit.tile.col+i];
+                        var tile: Tile = this.gridManager.tileAt(other_unit.tile.row + j, other_unit.tile.col + i);
                         var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, tile.col, tile.row, 0);
                         if (dist < shortestDistance) {
                             target = tile;
@@ -128,6 +128,12 @@ export class GameCore {
     }
     getAllEntities() : Entity[] {
         return this.host.getAllEntities().concat(this.client.getAllEntities());
+    }
+    getOponentEntities(owner : GamePlayer) : Entity[] {
+        if (owner == this.host)
+            return this.client.getAllEntities();
+        else 
+            return this.host.getAllEntities();
     }
     endGame() : void {
         console.log("end game chamado");

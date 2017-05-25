@@ -27,6 +27,10 @@ export abstract class Unit extends Entity{
         entity.receiveAttack(this);
     }
 
+    doAction(targetTile : Tile) : void {
+
+    }
+
 }
 
 

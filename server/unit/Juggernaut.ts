@@ -1,11 +1,12 @@
-import { GridManager } from "../GridManager";
 import { Unit } from "../Unit";
+import { GridManager } from "../GridManager";
 import { Tile } from "../Tile";
 
-export class Archer extends Unit {
-    constructor(gm : GridManager, row, col) {
-        super(gm, row, col, require('clone')(require('../data/units/archer.json')));
-    }    
+export class Juggernaut extends Unit {
+    constructor(gm: GridManager, row, col) {
+        super(gm, row, col, require('clone')(require('../data/units/juggernaut.json')));
+    }
+
 
     doAction(targetTile: Tile): void {
         super.doAction(targetTile);
@@ -21,6 +22,6 @@ export class Archer extends Unit {
             else if (pathToTargetTile.entity == null)
                 this.moveTo(pathToTargetTile);
         }
-    }
 
+    }
 }

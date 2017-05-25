@@ -1,0 +1,10 @@
+{
+    "name": "barracks", 
+    "width": 2,
+    "height": 2,
+    "maxHP": 30, 
+    "maxArmor": 5,
+
+    "spamCount": 5,
+    "spamRate": 5
+}

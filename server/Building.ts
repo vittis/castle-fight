@@ -23,20 +23,15 @@ export abstract class Building extends Entity {
 
          for (var i = 0; i < this.data.width; i++) {
             for (var j = 0; j < this.data.height; j++) {
-                var currentTile = this.gm.grid[this.tile.row+j][this.tile.col+i];
-                for (var dx = -1; dx <= 1; dx++) {
-                    for (var dy = -1; dy <= 1; dy++) {
-                        if (dx != 0 || dy != 0) {
-                            if ((currentTile.row+dx > 0 && currentTile.row+dx < this.gm.rows) && (currentTile.col+dy > 0 && currentTile.col+dy < this.gm.cols)) {
-                                if (this.gm.grid[currentTile.row+dx][currentTile.col+dy].entity == null) {
-                                    if (tiles.indexOf(this.gm.grid[currentTile.row+dx][currentTile.col+dy]) == -1)
-                                        tiles.push(this.gm.grid[currentTile.row+dx][currentTile.col+dy]);
-                                }
-                            }
-                        }
+                var currentTile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
+                this.gm.getNeighbors(currentTile).forEach(t => {
+                    if (t.entity == null) {
+                        if (tiles.indexOf(t) == -1)
+                            tiles.push(t);
                     }
-                }
+                });              
             }
+            
         }
         
         return tiles;

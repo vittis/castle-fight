@@ -1,10 +1,9 @@
 {
-    "name": "barracks", 
+    "name": "ArcheryRange",
     "width": 2,
     "height": 2,
-    "maxHP": 30, 
-    "armor": 5,
-
+    "maxHP": 15,
+    "maxArmor": 5,
     "spamCount": 5,
     "spamRate": 5
 }
