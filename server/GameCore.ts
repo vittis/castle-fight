@@ -60,46 +60,10 @@ export class GameCore {
     }
 
     step() {
-        this.gridManager.aStar.load(this.gridManager.getNumberGrid());
-        
-        var hostUnits = this.host.getAllUnits();
-        var clientUnits = this.client.getAllUnits();
-        var allUnits = hostUnits.concat(clientUnits);
-
-        var hostEntities = this.host.getAllEntities();
-        var clientEntities = this.client.getAllEntities();
-        var allEntities = hostEntities.concat(clientEntities);
-
-        allUnits.forEach(unit => {
-            var target : Tile = null;
-            var shortestDistance = 100;
-
-            this.getOponentEntities(unit.owner).forEach(other_unit => {
-                
-                if (!(other_unit.getEntityData().width > 1 || other_unit.getEntityData().height > 1)) {
-                    var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, other_unit.tile.col, other_unit.tile.row, 0);
-                    if (dist < shortestDistance) {
-                        target = other_unit.tile;
-                        shortestDistance = dist;
-                    }
-                }
-                else {
-                    for (var i = 0; i < other_unit.getEntityData().width; i++) {
-                        for (var j = 0; j < other_unit.getEntityData().height; j++) {
-                            var tile : Tile = this.gridManager.grid[other_unit.tile.row+j][other_unit.tile.col+i];
-                            var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, tile.col, tile.row, 0);
-                            if (dist < shortestDistance) {
-                                target = tile;
-                                shortestDistance = dist;
-                            }
-                        }
-                    }                   
-                }
-            });
+        this.getAllUnits().forEach(unit => {
+            var target = this.getTargetTile(unit);
 
             if (target != null) {
-                        console.log("target: "+target.row+", "+target.col);
-
                 var nodeA = this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row),
                 nodeB = this.gridManager.aStar.getNode(target.col, target.row);
             
@@ -112,11 +76,11 @@ export class GameCore {
                     }
                     else if (targetTile.entity == null)
                         unit.moveTo(targetTile);
-                    
                 }
             }
         });
-        allEntities.forEach(entity => {
+
+        this.getAllEntities().forEach(entity => {
             if (entity.getEntityData().hp <= 0)
                 entity.onDeath();
         });
@@ -130,6 +94,35 @@ export class GameCore {
         this.printEntityStatus();
     }
 
+    getTargetTile(unit : Unit) : Tile {
+        this.gridManager.aStar.load(this.gridManager.getNumberGrid());
+
+        var target : Tile = null;
+        var shortestDistance = 100;
+        this.getOponentEntities(unit.owner).forEach(other_unit => {
+            if (!(other_unit.getEntityData().width > 1 || other_unit.getEntityData().height > 1)) {
+                var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, other_unit.tile.col, other_unit.tile.row, 0);
+                if (dist < shortestDistance) {
+                    target = other_unit.tile;
+                    shortestDistance = dist;
+                }
+            }
+            else {
+                for (var i = 0; i < other_unit.getEntityData().width; i++) {
+                    for (var j = 0; j < other_unit.getEntityData().height; j++) {
+                        var tile : Tile = this.gridManager.grid[other_unit.tile.row+j][other_unit.tile.col+i];
+                        var dist = this.gridManager.aStar.heuristic.getHeuristic(unit.tile.col, unit.tile.row, 0, tile.col, tile.row, 0);
+                        if (dist < shortestDistance) {
+                            target = tile;
+                            shortestDistance = dist;
+                        }
+                    }
+                }                   
+            }
+        });
+        return target;
+    }
+    
     getAllUnits() : Unit[]{
         return this.host.getAllUnits().concat(this.client.getAllUnits());
     }
