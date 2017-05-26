@@ -31,13 +31,6 @@ export class GameCore {
 
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
         
-        if (host.socket) {
-            this.host.serverPlayer.socket.emit('startGame', {id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: true});
-        }
-        if (client.socket) {
-            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: false });
-        }
-
         this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0));
         this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2));
         
@@ -63,10 +56,26 @@ export class GameCore {
         */
         //console.log(this.client.entities[0]);
         //console.log(DataSerializer.SerializeEntity(this.client.entities[0]));
-        console.log(DataSerializer.SerializeTile(this.gridManager.tileAt(3, 18)));
+        //console.log(DataSerializer.SerializeTile(this.gridManager.tileAt(3, 18)));
+
+
+        if (host.socket) {
+            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: true });
+        }
+        if (client.socket) {
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: false });
+        }
+
+        var obj = DataSerializer.SerializeGrid(this.gridManager.grid);
+        for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+            for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                console.log(obj[i][j]);
+            }
+        }
+
         //this.gridManager.printGrid();
         //setInterval(this.step.bind(this), 100);
-    }
+    } 
 
     step() {
         this.getAllUnits().forEach(unit => {

@@ -14,9 +14,9 @@ export class GameServer {
         GameServer.instance = this;
         //debug>
         var player = this.onConnected();   
-        //var player2 = this.onConnected();        
+        var player2 = this.onConnected();        
         this.onMatchmaking(player);
-        //this.onMatchmaking(player2);
+        this.onMatchmaking(player2);
 
     }
 

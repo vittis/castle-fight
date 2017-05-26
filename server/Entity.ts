@@ -18,7 +18,8 @@ export abstract class Entity {
     tile : Tile;
     
     owner : GamePlayer;
-
+    id : number;
+    
     protected dataq : EntityData;
 
     gm : GridManager;

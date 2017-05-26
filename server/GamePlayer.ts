@@ -5,6 +5,7 @@ import { Building } from "./Building";
 import { SpamBuilding } from "./building/SpamBuilding";
 
 export class GamePlayer {
+    static lastEntityID = 0;
 
     serverPlayer : ServerPlayer;
 
@@ -16,6 +17,8 @@ export class GamePlayer {
 
     addEntity(e : Entity) {
         e.owner = this;
+        e.id = GamePlayer.lastEntityID;
+        GamePlayer.lastEntityID++;
         this.entities.push(e);
     }
 
