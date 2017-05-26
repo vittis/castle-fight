@@ -2,8 +2,8 @@
     "name": "juggernaut",
     "width": 1,
     "height": 1,
-    "maxHP": 20,
-    "maxArmor": 10,
+    "maxHP": 25,
+    "maxArmor": 20,
 
     "attackRange": 1,
     "attackDmg": 2

@@ -14,6 +14,7 @@ import { Archer } from "./unit/Archer";
 import { Unit } from "./Unit";
 import { ArcheryRange } from "./building/ArcheryRange";
 import { JuggerField } from "./building/JuggerField";
+import { DataSerializer } from "./Serializer";
 
 export class GameCore {
     id : number;
@@ -21,7 +22,7 @@ export class GameCore {
     client  : GamePlayer;
 
     gridManager : GridManager;
-
+ 
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -32,17 +33,22 @@ export class GameCore {
         
         if (host.socket) {
             this.host.serverPlayer.socket.emit('startGame', {id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: true});
-            this.client.serverPlayer.socket.emit('startGame', {id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: false});
+        }
+        if (client.socket) {
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, grid: this.gridManager.grid, host: false });
         }
 
         this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0));
         this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2));
         
-        //this.host.addEntity(new JuggerField(this.gridManager, 3, 0));
-        this.host.addEntity(new Barracks(this.gridManager, 0, 0));
+        this.host.addEntity(new JuggerField(this.gridManager, 3, 0));
+        //this.host.addEntity(new JuggerField(this.gridManager, 0, 0));
 
-        
-        this.client.addEntity(new ArcheryRange(this.gridManager, 3, GameConfig.GRID_COLS-2));
+
+        this.client.addEntity(new Barracks(this.gridManager, 3, 18));
+        //this.client.addEntity(new ArcheryRange(this.gridManager, 0, 18));
+
+
         /*
         this.client.addEntity(new Soldado(this.gridManager, 6, 15));
         this.client.addEntity(new Archer(this.gridManager, 5, 17));
@@ -55,9 +61,11 @@ export class GameCore {
         this.host.addEntity(new Archer(this.gridManager, 4, 2));
         this.host.addEntity(new Soldado(this.gridManager, 0, 2));
         */
-
-        this.gridManager.printGrid();
-        setInterval(this.step.bind(this), 100);
+        //console.log(this.client.entities[0]);
+        //console.log(DataSerializer.SerializeEntity(this.client.entities[0]));
+        console.log(DataSerializer.SerializeTile(this.gridManager.tileAt(3, 18)));
+        //this.gridManager.printGrid();
+        //setInterval(this.step.bind(this), 100);
     }
 
     step() {
@@ -66,16 +74,6 @@ export class GameCore {
 
             if (targetTile != null) {
                 unit.doAction(targetTile);
-                /*var path = this.gridManager.aStar.path(this.gridManager.aStar.getNode(unit.tile.col, unit.tile.row), this.gridManager.aStar.getNode(targetTile.col, targetTile.row)); 
-
-                if (path.length > 1 ) {
-                    var pathToTargetTile : Tile = this.gridManager.grid[path[1].y][path[1].x];
-                    if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, targetTile.col, targetTile.row) <= unit.data.attackRange) {
-                        unit.attack(targetTile.entity);
-                    }
-                    else if (pathToTargetTile.entity == null)
-                        unit.moveTo(pathToTargetTile);
-                }*/
             }
         });
 
