@@ -10,7 +10,16 @@ module Kodo {
             this.load.setPreloadSprite(this.preloadBar);
 
             //  Load our actual games assets
+            //32x32
             this.game.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
+            this.game.load.image('tile0_32', 'assets/tile0_32.png');
+            this.game.load.image('tile1_32', 'assets/tile1_32.png');
+            this.game.load.image('soldadoh_32', 'assets/soldadoh_32.png');
+
+            //64x64
+            this.game.load.image('tile0_64', 'assets/tile0_64.png');
+            this.game.load.image('tile1_64', 'assets/tile1_64.png');
+            this.game.load.image('soldadoh_64', 'assets/soldadoh_64.png');
         }
  
         create() {

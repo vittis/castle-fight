@@ -9,19 +9,33 @@ module Client {
 
     socket.on('startGame',function(data){
         console.log("start game recebido - iniciando jogo!");
-        for (var i = 0; i < data.rows; i++) {
-            for (var j = 0; j < data.cols; j++) {
+        //console.log(data.grid.length + ", " + data.grid[0].length);
+        
+        /*for (var i = 0; i < data.grid.length; i++) {
+            for (var j = 0; j < data.grid[0].length; j++) {
                 console.log(data.grid[i][j]);  
             }
-            console.log("\n");
-        }
+        }*/
         Kodo.Game.instance.state.start('GameScene', true, false);
+        console.log("ih");
+        //Kodo.GameScene.instance.updateState(data.grid);
     });
 
-    socket.on('endGame',function(data){
+    socket.on('updateState', function (data) {
+        console.log("updateState recebido!");
+        Kodo.GameScene.instance.updateState(data);
+    });
+
+    socket.on('updateStateEntities', function (data) {
+        console.log("updateStateENTITEIS recebido!");
+        Kodo.GameScene.instance.updateStateEntities(data);
+    });
+
+    socket.on('endGame', function (data) {
         console.log("end game recebido - finalizando jogo!");
         Kodo.Game.instance.state.start('MainMenu', true, false);
     });
+
     /*
     socket.on('addPlayer',function(data){
         Kodo.GameScene._instance.addNewPlayer(data.id,data.x,data.y, data.name);
