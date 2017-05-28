@@ -50,11 +50,13 @@ module Kodo {
                 idArray.push(element.id);
             });
 
-            this.entities.forEach(myEntity => {
-                if (idArray.indexOf(myEntity.id) == -1) {//se n tem o id da nova entidade nas minhas entidades
-                    myEntity.destroy();
+
+            for (var i = 0; i < this.entities.length; i++) {
+                if (idArray.indexOf(this.entities[i].id) == -1) {//se n tem o id da nova entidade nas minhas entidades
+                    this.entities[i].destroy();
+                    this.entities.splice(i, 1);
                 }
-            });
+            }
         }
 
         idExists(id: number): boolean {
@@ -70,7 +72,6 @@ module Kodo {
         getEntityById(id: number): Entity {
             var entity: Entity = null;
             this.entities.forEach(e => {
-                console.log(id + "  , " + e.id);
                 if (e.id == id) {
                     entity = e;
                 }
