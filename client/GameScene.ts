@@ -10,89 +10,72 @@ module Kodo {
         entities : Entity[] = [];
     
         static instance : GameScene = null;
-
+        
         create() {
-            console.log("aeho");
             GameScene.instance = this;
             this.game.stage.backgroundColor = 'rgb(19,58,43)';
 
-            for (var i = 0; i < 12; i++) {
+            for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
-                for (var j = 0; j < 20; j++) {
-                    this.grid[i][j] = new Tile(this.game, j*64, i*64, i, j);
+                for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize, i * GameConfig.tileSize, i, j);
                 }
             }
-            //setTimeout(this.q.bind(this), 5000);
+        }
 
-        }
-        q() {
-           this.entities.push(new Entity(this.game, this.grid[0][1], 1)); 
-        }
         update() {
            
         }
 
-        updateState(newGrid) {
-            for (var i = 0; i < 12; i++) {
-                for (var j = 0; j < 20; j++) {
-                    if (newGrid[i][j].entity != null) {
-                        var entityID = newGrid[i][j].entity.id;
-                        var jaExisteId : boolean = false;
-                        this.entities.forEach(e => {
-                            if (e.id == entityID) {
-                                jaExisteId = true;
-                            }
-                        });
 
-                        if (jaExisteId) {
-                            this.entities.forEach(e => {
-                                if (e.id == entityID) {
-                                    e.moveTo(this.grid[i][j]);
-                                }
-                            });
-                        }
-                        else {
-                            this.entities.push(new Entity(this.game, this.grid[i][j], entityID)); 
-                        }
-                    }
-                }
-            }
-        }
-
-        updateStateEntities(newEntities : any[]) {
+        updateEntities(newEntities : any[]) {
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
-                var jaExisteId: boolean = false;
-                this.entities.forEach(e => {
-                    if (e.id == entityID) {
-                        jaExisteId = true;
-                    }
-                });
 
-                if (jaExisteId) {
-                    this.entities.forEach(e => {
-                        if (e.id == entityID) {
-                            e.moveTo(this.grid[newEntity.row][newEntity.col]);
-                        }
-                    });
+                if (this.idExists(entityID)) {
+                    this.getEntityById(entityID).moveTo(this.grid[newEntity.row][newEntity.col]);
                 }
                 else {
-                    this.entities.push(new Entity(this.game, this.grid[newEntity.row][newEntity.col], entityID));
+                    this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost));
                 }
             });
 
+            this.cleanDeadEntities(newEntities);
+            
+        }
+
+        cleanDeadEntities(newEntities : Entity[]) {
             var idArray = [];
             newEntities.forEach(element => {
                 idArray.push(element.id);
             });
-
 
             this.entities.forEach(myEntity => {
                 if (idArray.indexOf(myEntity.id) == -1) {//se n tem o id da nova entidade nas minhas entidades
                     myEntity.destroy();
                 }
             });
+        }
 
+        idExists(id: number): boolean {
+            var jaExisteId: boolean = false;
+            this.entities.forEach(e => {
+                if (e.id == id) {
+                    jaExisteId = true;
+                }
+            });
+
+            return jaExisteId;
+        }
+        getEntityById(id: number): Entity {
+            var entity: Entity = null;
+            this.entities.forEach(e => {
+                console.log(id + "  , " + e.id);
+                if (e.id == id) {
+                    entity = e;
+                }
+            });
+            return entity;
         }
     }
 }

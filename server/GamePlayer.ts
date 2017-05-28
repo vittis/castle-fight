@@ -9,10 +9,13 @@ export class GamePlayer {
 
     serverPlayer : ServerPlayer;
 
+    isHost : boolean;
+
     entities : Entity[] = [];
 
-    constructor(player : ServerPlayer) {
+    constructor(player : ServerPlayer, isHost : boolean) {
         this.serverPlayer = player;
+        this.isHost = isHost;
     }
 
     addEntity(e : Entity) {

@@ -9,7 +9,7 @@ export module DataSerializer {
         obj.row = entity.tile.row;
         obj.col = entity.tile.col;
         obj.data = entity.getEntityData();
-        obj.owner = entity.owner.serverPlayer.id;
+        obj.isHost = entity.owner.isHost;
         obj.id = entity.id;
         
         return obj;

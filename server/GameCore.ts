@@ -26,55 +26,27 @@ export class GameCore {
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
-        this.host = new GamePlayer(host);
-        this.client = new GamePlayer(client);
+        this.host = new GamePlayer(host, true);
+        this.client = new GamePlayer(client, false);
 
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
         
-        //this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, 0));
-        //this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2-1, GameConfig.GRID_COLS-2));
+        this.host.addEntity(new Castle(this.gridManager, 5, 0));
+        this.host.addEntity(new Barracks(this.gridManager, 2, 0));
+        this.host.addEntity(new ArcheryRange(this.gridManager, 8, 0));
         
-        //this.host.addEntity(new JuggerField(this.gridManager, 3, 0));
-        //this.host.addEntity(new JuggerField(this.gridManager, 0, 0));
+        
+        this.client.addEntity(new Castle(this.gridManager, 5, 18));
+        this.client.addEntity(new Barracks(this.gridManager, 8, 18));
+        this.client.addEntity(new ArcheryRange(this.gridManager, 2, 18));
 
 
-        //this.client.addEntity(new Barracks(this.gridManager, 3, 18));
-        //this.client.addEntity(new ArcheryRange(this.gridManager, 0, 18));
-        this.client.addEntity(new Soldado(this.gridManager, 6, 15));
-        this.client.addEntity(new Soldado(this.gridManager, 6, 17));
-        this.client.addEntity(new Soldado(this.gridManager, 6, 14));
-
-
-
-        this.host.addEntity(new Soldado(this.gridManager, 6, 2));
-        this.host.addEntity(new Soldado(this.gridManager, 0, 0));
-        this.host.addEntity(new Soldado(this.gridManager, 0, 1));
-        this.host.addEntity(new Soldado(this.gridManager, 6, 3));
-
-
-        /*
-        this.client.addEntity(new Soldado(this.gridManager, 6, 15));
-        this.client.addEntity(new Archer(this.gridManager, 5, 17));
-        this.client.addEntity(new Archer(this.gridManager, 7, 17));
-        this.client.addEntity(new Archer(this.gridManager, 4, 17));
-
-
-        //this.host.addEntity(new Soldado(this.gridManager, 6, 2));
-        //this.host.addEntity(new Soldado(this.gridManager, 5, 2));
-        this.host.addEntity(new Archer(this.gridManager, 4, 2));
-        this.host.addEntity(new Soldado(this.gridManager, 0, 2));
-        */
-        //console.log(this.client.entities[0]);
-        //console.log(DataSerializer.SerializeEntity(this.client.entities[0]));
-        //console.log(DataSerializer.SerializeTile(this.gridManager.tileAt(3, 18)));
-
-        var gridObj = DataSerializer.SerializeGrid(this.gridManager.grid);
 
         if (host.socket) {
-            this.host.serverPlayer.socket.emit('startGame', { id: this.id, host: true });
+            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true });
         }
         if (client.socket) {
-            this.client.serverPlayer.socket.emit('startGame', { id: this.id, host: false });
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false });
         }
         setTimeout(this.sendEntities.bind(this), 100);
 
@@ -90,20 +62,10 @@ export class GameCore {
         });
 
         if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('updateStateEntities', entitiesObj);
+            this.host.serverPlayer.socket.emit('receiveEntities', entitiesObj);
         }
         if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('updateStateEntities', entitiesObj);
-        }
-    }
-    sendGrid() {
-        var gridObj = DataSerializer.SerializeGrid(this.gridManager.grid);
-
-        if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('updateState', gridObj);
-        }
-        if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('updateState', gridObj);
+            this.client.serverPlayer.socket.emit('receiveEntities', entitiesObj);
         }
     }
 

@@ -5,7 +5,7 @@ module Kodo {
         col : number;
 
         constructor(game : Phaser.Game, x : number, y : number, row, col) {
-            super(game, x, y, 'tile' + Math.floor(Math.random() * (1 - 0 + 1))+'_64');
+            super(game, x, y, 'tile' + Math.floor(Math.random() * (1 - 0 + 1)));
             this.row = row;
             this.col = col;
 

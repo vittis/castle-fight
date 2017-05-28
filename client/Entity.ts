@@ -1,10 +1,11 @@
 module Kodo {
-     export class Entity extends Phaser.Sprite {
+     export abstract class Entity extends Phaser.Sprite {
 
         tile : Tile;
         id : number;
-        constructor(game: Phaser.Game, tile : Tile, id : number) {
-            super(game, tile.x, tile.y, 'soldadoh_64');
+
+        constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string) {
+            super(game, tile.x, tile.y, texture);
             this.id = id;
 
             game.add.existing(this);
@@ -12,8 +13,7 @@ module Kodo {
 
 
         update() {
-            if (!this.visible)
-                return;
+
         }
 
         moveTo(tile : Tile) {
