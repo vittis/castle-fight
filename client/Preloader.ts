@@ -24,6 +24,7 @@ module Kodo {
                 this.game.load.image('barracksh', 'assets/32/barracksh_32.png');
                 this.game.load.image('archeryRangeh', 'assets/32/archeryRangeh_32.png');
                 this.game.load.image('archeryRangec', 'assets/32/archeryRangec_32.png');
+                this.game.load.image('tiro', 'assets/32/tiro_32.png');
 
 
 
@@ -42,8 +43,7 @@ module Kodo {
                 this.game.load.image('barracksc', 'assets/64/barracksc_64.png');
                 this.game.load.image('archeryRangeh', 'assets/64/archeryRangeh_64.png');
                 this.game.load.image('archeryRangec', 'assets/64/archeryRangec_64.png');
-
-
+                this.game.load.image('tiro', 'assets/64/tiro_64.png');
             }
         }
  

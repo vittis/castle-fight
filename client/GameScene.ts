@@ -40,8 +40,7 @@ module Kodo {
                 }
             });
 
-            this.cleanDeadEntities(newEntities);
-            
+            this.cleanDeadEntities(newEntities);            
         }
 
         cleanDeadEntities(newEntities : Entity[]) {
@@ -53,11 +52,13 @@ module Kodo {
 
             for (var i = 0; i < this.entities.length; i++) {
                 if (idArray.indexOf(this.entities[i].id) == -1) {//se n tem o id da nova entidade nas minhas entidades
-                    this.entities[i].destroy();
+                    this.entities[i].onDeath();
                     this.entities.splice(i, 1);
                 }
             }
         }
+
+
 
         idExists(id: number): boolean {
             var jaExisteId: boolean = false;

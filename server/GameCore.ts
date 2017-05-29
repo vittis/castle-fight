@@ -38,9 +38,13 @@ export class GameCore {
         this.client.addEntity(new Castle(this.gridManager, 5, 18));
         this.client.addEntity(new Barracks(this.gridManager, 8, 18));
         this.client.addEntity(new ArcheryRange(this.gridManager, 2, 18));
+
+
         
-        //this.host.addEntity(new Soldado(this.gridManager, 2, 0));
-        //this.client.addEntity(new Soldado(this.gridManager, 5, 18));
+        //this.client.addEntity(new Castle(this.gridManager, 5, 18));
+
+       /* this.host.addEntity(new Archer(this.gridManager, 2, 6));
+        this.client.addEntity(new Soldado(this.gridManager, 5, 18));*/
 
 
 
@@ -73,6 +77,7 @@ export class GameCore {
 
     step() {
         this.getAllUnits().forEach(unit => {
+            unit.resetAttackData();
             var targetTile = this.getClosestTargetTile(unit);
 
             if (targetTile != null) {

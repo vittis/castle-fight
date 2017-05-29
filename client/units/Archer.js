@@ -24,6 +24,13 @@ var Kodo;
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
+        Archer.prototype.update = function () {
+            _super.prototype.update.call(this);
+        };
+        Archer.prototype.attack = function (tile) {
+            new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2 + GameConfig.tileSize / 5, this.y + GameConfig.tileSize / 2 - GameConfig.tileSize / 3, tile.entity, this.isHost);
+            _super.prototype.attack.call(this, tile);
+        };
         return Archer;
     }(Kodo.Unit));
     Kodo.Archer = Archer;
