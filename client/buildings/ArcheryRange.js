@@ -12,7 +12,7 @@ var Kodo;
 (function (Kodo) {
     var ArcheryRange = (function (_super) {
         __extends(ArcheryRange, _super);
-        function ArcheryRange(game, tile, id, isHost) {
+        function ArcheryRange(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
@@ -21,10 +21,10 @@ var Kodo;
             else {
                 texture = 'archeryRangec';
             }
-            _this = _super.call(this, game, tile, id, isHost, texture) || this;
+            _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
         return ArcheryRange;
-    }(Kodo.Entity));
+    }(Kodo.Building));
     Kodo.ArcheryRange = ArcheryRange;
 })(Kodo || (Kodo = {}));

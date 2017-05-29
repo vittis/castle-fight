@@ -12,7 +12,7 @@ var Kodo;
 (function (Kodo) {
     var Soldado = (function (_super) {
         __extends(Soldado, _super);
-        function Soldado(game, tile, id, isHost) {
+        function Soldado(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
@@ -21,10 +21,10 @@ var Kodo;
             else {
                 texture = 'soldadoc';
             }
-            _this = _super.call(this, game, tile, id, isHost, texture) || this;
+            _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
         return Soldado;
-    }(Kodo.Entity));
+    }(Kodo.Unit));
     Kodo.Soldado = Soldado;
 })(Kodo || (Kodo = {}));

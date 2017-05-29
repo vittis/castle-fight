@@ -12,7 +12,7 @@ var Kodo;
 (function (Kodo) {
     var Barracks = (function (_super) {
         __extends(Barracks, _super);
-        function Barracks(game, tile, id, isHost) {
+        function Barracks(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
@@ -21,10 +21,10 @@ var Kodo;
             else {
                 texture = 'barracksc';
             }
-            _this = _super.call(this, game, tile, id, isHost, texture) || this;
+            _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
         return Barracks;
-    }(Kodo.Entity));
+    }(Kodo.Building));
     Kodo.Barracks = Barracks;
 })(Kodo || (Kodo = {}));

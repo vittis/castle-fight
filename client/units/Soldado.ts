@@ -1,7 +1,7 @@
 module Kodo {
-    export class Soldado extends Entity {
+    export class Soldado extends Unit {
 
-        constructor(game: Phaser.Game, tile: Tile, id: number, isHost) {
+        constructor(game: Phaser.Game, tile: Tile, id: number, isHost, data) {
             var texture;
             if (isHost) {
                 texture = 'soldadoh'
@@ -9,8 +9,7 @@ module Kodo {
             else {
                 texture = 'soldadoc'
             }
-            super(game, tile, id, isHost, texture);
-            
+            super(game, tile, id, isHost, texture, data);
         }
 
 

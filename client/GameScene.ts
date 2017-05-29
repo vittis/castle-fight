@@ -27,16 +27,16 @@ module Kodo {
            
         }
 
-
         updateEntities(newEntities : any[]) {
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
 
                 if (this.idExists(entityID)) {
-                    this.getEntityById(entityID).moveTo(this.grid[newEntity.row][newEntity.col]);
+                    //this.getEntityById(entityID).moveTo(this.grid[newEntity.row][newEntity.col]);
+                    this.getEntityById(entityID).updateStep(newEntity.data, this.grid[newEntity.row][newEntity.col]);
                 }
                 else {
-                    this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost));
+                    this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
                 }
             });
 

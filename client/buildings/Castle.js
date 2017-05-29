@@ -12,7 +12,7 @@ var Kodo;
 (function (Kodo) {
     var Castle = (function (_super) {
         __extends(Castle, _super);
-        function Castle(game, tile, id, isHost) {
+        function Castle(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
@@ -21,10 +21,10 @@ var Kodo;
             else {
                 texture = 'castlec';
             }
-            _this = _super.call(this, game, tile, id, isHost, texture) || this;
+            _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
         return Castle;
-    }(Kodo.Entity));
+    }(Kodo.Building));
     Kodo.Castle = Castle;
 })(Kodo || (Kodo = {}));
