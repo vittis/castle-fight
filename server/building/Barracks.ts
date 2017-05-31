@@ -9,13 +9,15 @@ export class Barracks extends SpamBuilding {
     }
 
     spamUnit() {
-        if (this.spamRateCounter == 0) {
+        if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
             this.owner.addEntity(new Soldado(this.gm, tile.row, tile.col));
             super.spamUnit();
-            this.spamRateCounter = this.data.spamRate;
+            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.hasSpammed = true;
+
         }
-        this.spamRateCounter--;
+        this.data.spamData.spamRateCounter--;
     }
 
 }

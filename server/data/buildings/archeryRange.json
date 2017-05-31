@@ -4,6 +4,6 @@
     "height": 2,
     "maxHP": 15,
     "maxArmor": 5,
-    "spamCount": 5,
-    "spamRate": 5
+    "spamCount": 3,
+    "spamRate": 15
 }

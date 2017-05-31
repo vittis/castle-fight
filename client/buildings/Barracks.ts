@@ -1,5 +1,5 @@
 module Kodo {
-    export class Barracks extends Building {
+    export class Barracks extends SpamBuilding {
 
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, data) {
             var texture;

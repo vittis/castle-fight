@@ -1,11 +1,12 @@
 import { Entity, EntityData } from "./Entity";
 import { GridManager } from "./GridManager";
 import { Tile } from "./Tile";
+import { SpamData } from "./building/SpamBuilding";
 
 export interface BuildingData extends EntityData {
     spamCount? : number;
     spamRate? : number;
-
+    spamData? : SpamData;
 }
 
 export abstract class Building extends Entity {

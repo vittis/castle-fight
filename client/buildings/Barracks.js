@@ -25,6 +25,6 @@ var Kodo;
             return _this;
         }
         return Barracks;
-    }(Kodo.Building));
+    }(Kodo.SpamBuilding));
     Kodo.Barracks = Barracks;
 })(Kodo || (Kodo = {}));

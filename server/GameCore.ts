@@ -41,9 +41,9 @@ export class GameCore {
 
 
         
-        //this.client.addEntity(new Castle(this.gridManager, 5, 18));
+        /*this.client.addEntity(new Castle(this.gridManager, 5, 18));
 
-       /* this.host.addEntity(new Archer(this.gridManager, 2, 6));
+        this.host.addEntity(new Archer(this.gridManager, 2, 6));
         this.client.addEntity(new Soldado(this.gridManager, 5, 18));*/
 
 
@@ -91,6 +91,7 @@ export class GameCore {
         });
         
         this.host.getSpamBuildings().concat(this.client.getSpamBuildings()).forEach(building => {
+            building.resetSpamData();
             building.spamUnit();
         });
 

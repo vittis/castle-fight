@@ -5,6 +5,7 @@ import { Tile } from "./Tile";
 export interface UnitData extends EntityData {
     attackRange? : number;
     attackDmg? : number;
+    attackRate?: number;
 
     attackData? : AttackData; 
 }
@@ -17,6 +18,8 @@ export interface AttackData {
 
 export abstract class Unit extends Entity{
 
+    attackRateCounter : number;
+
     get data() : UnitData {
         return this.dataq;
     }
@@ -24,6 +27,7 @@ export abstract class Unit extends Entity{
     constructor(gm : GridManager, row, col, unitData : UnitData) {
         super(gm, row, col, unitData);   
         this.data.attackData = {hasAttacked: false, row: -1, col: -1};
+        this.attackRateCounter = this.data.attackRate;
     }
 
     moveTo(tile : Tile) : void {
@@ -38,11 +42,18 @@ export abstract class Unit extends Entity{
         this.data.attackData.col= entity.tile.col;
 
         entity.receiveAttack(this);
+
+        this.attackRateCounter = 0;
+    }
+    canAttack() : boolean {
+        return this.attackRateCounter == this.data.attackRate;
     }
 
     doAction(targetTile : Tile) : void {
-
+        if (this.attackRateCounter < this.data.attackRate)
+            this.attackRateCounter++;
     }
+
     resetAttackData() {
         this.data.attackData.hasAttacked = false;
     }

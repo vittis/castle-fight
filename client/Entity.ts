@@ -17,8 +17,8 @@ module Kodo {
 
         isHost : boolean;
 
-        hpBar : HealthBar;
-        armorBar : ArmorBar;
+        hpBar : HealthBarSmooth;
+        armorBar : ArmorBarSmooth;
 
         barGroup : Phaser.Group;
 
@@ -30,25 +30,29 @@ module Kodo {
             this.dataq = data;
             this.isHost = isHost;
 
-            this.armorBar = new ArmorBar(this.game, this);
-            this.hpBar = new HealthBar(this.game, this);
+            this.armorBar = new ArmorBarSmooth(this.game, this);
+            this.hpBar = new HealthBarSmooth(this.game, this);
             this.barGroup = this.game.add.group();
             this.barGroup.add(this.hpBar);
             this.barGroup.add(this.armorBar);
 
+            //this.events.onInputOver.add(this.onOver.bind(this), this);
+
             game.add.existing(this);
         }
-
+        onOver() {
+            this.hpBar.visible = true;
+            this.armorBar.visible = true;
+        }
 
         update() {
-            //if (this.dataq.armor/this.dataq.maxArmor)
+            
         }
 
         updateStep(newData : EntityData, tile? : Tile) {
             if (newData.hp < this.dataq.hp || newData.armor < this.dataq.armor) {
                 this.armorBar.receiveDamage(newData.armor);
                 this.hpBar.receiveDamage(newData.hp);
-                console.log("hp lenght: "+this.hpBar.lenght+", armor lenght: "+this.armorBar.lenght);
                 if (this.hpBar.lenght < this.armorBar.lenght)
                     this.barGroup.moveUp(this.armorBar);
                 else 
@@ -71,5 +75,6 @@ module Kodo {
             this.hpBar.destroy();
             this.destroy();
         }
+        
     }
 }

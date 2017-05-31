@@ -18,13 +18,14 @@ var ArcheryRange = (function (_super) {
         return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/archeryRange.json'))) || this;
     }
     ArcheryRange.prototype.spamUnit = function () {
-        if (this.spamRateCounter == 0) {
+        if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
             this.owner.addEntity(new Archer_1.Archer(this.gm, tile.row, tile.col));
             _super.prototype.spamUnit.call(this);
-            this.spamRateCounter = this.data.spamRate;
+            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.hasSpammed = true;
         }
-        this.spamRateCounter--;
+        this.data.spamData.spamRateCounter--;
     };
     return ArcheryRange;
 }(SpamBuilding_1.SpamBuilding));

@@ -18,13 +18,14 @@ var JuggerField = (function (_super) {
         return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/juggerField.json'))) || this;
     }
     JuggerField.prototype.spamUnit = function () {
-        if (this.spamRateCounter == 0) {
+        if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
             this.owner.addEntity(new Juggernaut_1.Juggernaut(this.gm, tile.row, tile.col));
             _super.prototype.spamUnit.call(this);
-            this.spamRateCounter = this.data.spamRate;
+            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.hasSpammed = true;
         }
-        this.spamRateCounter--;
+        this.data.spamData.spamRateCounter--;
     };
     return JuggerField;
 }(SpamBuilding_1.SpamBuilding));

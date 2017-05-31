@@ -25,6 +25,6 @@ var Kodo;
             return _this;
         }
         return ArcheryRange;
-    }(Kodo.Building));
+    }(Kodo.SpamBuilding));
     Kodo.ArcheryRange = ArcheryRange;
 })(Kodo || (Kodo = {}));

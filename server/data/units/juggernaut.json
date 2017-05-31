@@ -6,5 +6,6 @@
     "maxArmor": 20,
 
     "attackRange": 1,
-    "attackDmg": 2
+    "attackDmg": 10,
+    "attackRate": 3
 }

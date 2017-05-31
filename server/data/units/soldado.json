@@ -2,9 +2,10 @@
     "name": "Soldado", 
     "width": 1,
     "height": 1,
-    "maxHP": 10, 
+    "maxHP": 6, 
     "maxArmor": 4,
     
     "attackRange": 1,
-    "attackDmg": 2
+    "attackDmg": 2,
+    "attackRate": 1
 }

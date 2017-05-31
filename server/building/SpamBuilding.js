@@ -15,7 +15,7 @@ var SpamBuilding = (function (_super) {
     __extends(SpamBuilding, _super);
     function SpamBuilding(gm, row, col, buildingData) {
         var _this = _super.call(this, gm, row, col, buildingData) || this;
-        _this.spamRateCounter = _this.data.spamRate;
+        _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate };
         return _this;
     }
     SpamBuilding.prototype.spamUnit = function () {
@@ -26,6 +26,9 @@ var SpamBuilding = (function (_super) {
     SpamBuilding.prototype.getTileToSpam = function () {
         var r = Math.floor(Math.random() * this.getOuterTiles().length);
         return this.getOuterTiles()[r];
+    };
+    SpamBuilding.prototype.resetSpamData = function () {
+        this.data.spamData.hasSpammed = false;
     };
     return SpamBuilding;
 }(Building_1.Building));

@@ -17,7 +17,8 @@ export class Soldado extends Unit {
             var pathToTargetTile: Tile = this.gm.grid[path[1].y][path[1].x];
 
             if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange) {
-                this.attack(targetTile.entity);
+                if (this.canAttack())
+                    this.attack(targetTile.entity);
             }
             else if (pathToTargetTile.entity == null)
                 this.moveTo(pathToTargetTile);

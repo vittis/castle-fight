@@ -18,13 +18,14 @@ var Barracks = (function (_super) {
         return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/barracks.json'))) || this;
     }
     Barracks.prototype.spamUnit = function () {
-        if (this.spamRateCounter == 0) {
+        if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
             this.owner.addEntity(new soldado_1.Soldado(this.gm, tile.row, tile.col));
             _super.prototype.spamUnit.call(this);
-            this.spamRateCounter = this.data.spamRate;
+            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.hasSpammed = true;
         }
-        this.spamRateCounter--;
+        this.data.spamData.spamRateCounter--;
     };
     return Barracks;
 }(SpamBuilding_1.SpamBuilding));

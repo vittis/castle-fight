@@ -37,8 +37,8 @@ module Kodo {
             
         }
 
-        updateStep(data : EntityData, tile : Tile) {
-            super.updateStep(data);
+        updateStep(newData : UnitData, tile : Tile) {
+            super.updateStep(newData);
 
             if (Phaser.Math.distance(this.x, this.y, tile.x, tile.y) > 1) {
                 this.moveTo(tile);
