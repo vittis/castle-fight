@@ -18,10 +18,24 @@ var SpamBuilding = (function (_super) {
         _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate };
         return _this;
     }
-    SpamBuilding.prototype.spamUnit = function () {
-        this.data.spamCount--;
-        if (this.data.spamCount <= 0)
-            this.onDeath();
+    Object.defineProperty(SpamBuilding.prototype, "data", {
+        get: function () {
+            return this.dataq;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SpamBuilding.prototype.spamUnit = function (unit) {
+        if (this.data.spamData.spamRateCounter == 0) {
+            var tile = this.getTileToSpam();
+            this.owner.addEntity(new unit(this.gm, tile.row, tile.col));
+            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.hasSpammed = true;
+            this.data.spamCount--;
+            if (this.data.spamCount <= 0)
+                this.onDeath();
+        }
+        this.data.spamData.spamRateCounter--;
     };
     SpamBuilding.prototype.getTileToSpam = function () {
         var r = Math.floor(Math.random() * this.getOuterTiles().length);

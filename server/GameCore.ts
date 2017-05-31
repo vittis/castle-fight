@@ -23,6 +23,8 @@ export class GameCore {
 
     gridManager : GridManager;
  
+    update;
+
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -59,7 +61,7 @@ export class GameCore {
 
 
         this.gridManager.printGrid();
-        setInterval(this.step.bind(this), GameConfig.STEP_RATE);
+        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     } 
     sendEntities() {
         var entitiesObj = [];
@@ -146,6 +148,7 @@ export class GameCore {
     }
     endGame() : void {
         console.log("end game chamado");
+        clearInterval(this.update);
         GameServer.instance.endGame(this);
     }
 

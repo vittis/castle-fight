@@ -9,14 +9,7 @@ export class JuggerField extends SpamBuilding {
     }
 
     spamUnit() {
-        if (this.data.spamData.spamRateCounter == 0) {
-            var tile = this.getTileToSpam();
-            this.owner.addEntity(new Juggernaut(this.gm, tile.row, tile.col));
-            super.spamUnit();
-            this.data.spamData.spamRateCounter = this.data.spamRate;
-            this.data.spamData.hasSpammed = true;
-        }
-        this.data.spamData.spamRateCounter--;
+        super.spamUnit(Juggernaut);
     }
 
 }

@@ -13,7 +13,6 @@ module Kodo {
         
         create() {
             GameScene.instance = this;
-            this.game.stage.backgroundColor = 'rgb(19,58,43)';
 
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];

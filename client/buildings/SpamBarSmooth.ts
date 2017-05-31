@@ -18,7 +18,7 @@ module Kodo {
         unitsCountBar : Phaser.Image[] = [];
 
         currentTime = 0;
-        timeToMove = 0.55;
+        timeToMove = 0.58;
         fadeIn: boolean = false;
         fadeOut: boolean = false;
 
