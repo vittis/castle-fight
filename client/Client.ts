@@ -13,10 +13,11 @@ module Client {
         var rows = data.rows;
         var cols = data.cols;
         var isHost = data.host;
-
+        var stepRate = data.stepRate;
 
         GameConfig.GRID_ROWS = rows;
         GameConfig.GRID_COLS = cols;
+        GameConfig.updateRate = data.stepRate;
 
         Kodo.Game.instance.state.start('GameScene', true, false);
     });

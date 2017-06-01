@@ -5,6 +5,6 @@
     "maxHP": 30, 
     "maxArmor": 5,
 
-    "spamCount": 5,
+    "spamCount": 4,
     "spamRate": 10
 }

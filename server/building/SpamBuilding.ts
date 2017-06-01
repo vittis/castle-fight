@@ -25,7 +25,7 @@ export abstract class SpamBuilding extends Building {
         this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate};
     }
 
-    spamUnit(unit : any) {
+    spamUnit(unit? : any) {
         if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
             this.owner.addEntity(new unit(this.gm, tile.row, tile.col));

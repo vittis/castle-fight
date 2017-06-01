@@ -33,13 +33,15 @@ export class GameCore {
 
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
         
-        this.host.addEntity(new Castle(this.gridManager, 5, 0));
-        this.host.addEntity(new Barracks(this.gridManager, 2, 0));
-        this.host.addEntity(new ArcheryRange(this.gridManager, 8, 0));
+        this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2 -1, 1));
+        this.host.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 2-2, 1));
+        this.host.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 -1 + 3, 0));
 
-        this.client.addEntity(new Castle(this.gridManager, 5, 18));
-        this.client.addEntity(new Barracks(this.gridManager, 8, 18));
-        this.client.addEntity(new ArcheryRange(this.gridManager, 2, 18));
+        this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-3));
+        this.client.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
+        this.client.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
+        this.client.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 + 3+2, GameConfig.GRID_COLS - 3));
 
 
         
@@ -47,14 +49,15 @@ export class GameCore {
 
         this.host.addEntity(new Archer(this.gridManager, 2, 6));
         this.client.addEntity(new Soldado(this.gridManager, 5, 18));*/
-
-
+        /*this.client.addEntity(new Archer(this.gridManager, 2, 6));
+        this.host.addEntity(new Soldado(this.gridManager, 5, 18));
+*/
 
         if (host.socket) {
-            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true });
+            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig.STEP_RATE });
         }
         if (client.socket) {
-            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false });
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig.STEP_RATE  });
         }
         setTimeout(this.sendEntities.bind(this), 100);
 

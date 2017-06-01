@@ -22,8 +22,8 @@ module Kodo {
             this.cuts = 1 / this.maxArmor;
 
 
-            this.lenght = -45;
-            this.smooth = -45;
+            this.lenght = -33;
+            this.smooth = this.lenght;
             game.add.existing(this);
         }
 
@@ -31,11 +31,11 @@ module Kodo {
         update() {
             if (this.visible) {
                 if (this.entity.isHost) {
-                    this.x = this.entity.x + 2 + 4;
+                    this.x = this.entity.x + 2;
                     this.y = this.entity.y + GameConfig.tileSize - 7;
                 }
                 else {
-                    this.x = this.entity.x + GameConfig.tileSize - 5 + 5;
+                    this.x = this.entity.x + GameConfig.tileSize - 5 + 1;
                     this.y = this.entity.y + GameConfig.tileSize - 7;
                 }
                 if (this.smooth < this.lenght) {
@@ -54,7 +54,7 @@ module Kodo {
                 this.receivedDamage = true;
                 var t = this.maxArmor - newArmor;
 
-                this.lenght = Phaser.Math.linear(-45, 0, this.cuts * t);
+                this.lenght = Phaser.Math.linear(-33, 0, this.cuts * t);
                 this.visible = true;
                 this.game.time.events.add(5500, this.hideBar.bind(this), this);
             }

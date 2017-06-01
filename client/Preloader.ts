@@ -29,8 +29,8 @@ module Kodo {
 
 
             }
-            //64x64
-            else {
+            //48x48
+            else if (GameConfig.tileSize == 64){
                 this.game.load.image('tile0', 'assets/64/tile0_64.png');
                 this.game.load.image('tile1', 'assets/64/tile1_64.png');
                 this.game.load.image('soldadoh', 'assets/64/soldadoh_64.png');
@@ -44,6 +44,21 @@ module Kodo {
                 this.game.load.image('archeryRangeh', 'assets/64/archeryRangeh_64.png');
                 this.game.load.image('archeryRangec', 'assets/64/archeryRangec_64.png');
                 this.game.load.image('tiro', 'assets/64/tiro_64.png');
+            }
+            else {
+                this.game.load.image('tile0', 'assets/48/tile0_48.png');
+                this.game.load.image('tile1', 'assets/48/tile1_48.png');
+                this.game.load.image('soldadoh', 'assets/48/soldadoh_48.png');
+                this.game.load.image('soldadoc', 'assets/48/soldadoc_48.png');
+                this.game.load.image('archerh', 'assets/48/archerh_48.png');
+                this.game.load.image('archerc', 'assets/48/archerc_48.png');
+                this.game.load.image('castleh', 'assets/48/castleh_48.png');
+                this.game.load.image('castlec', 'assets/48/castlec_48.png');
+                this.game.load.image('barracksh', 'assets/48/barracksh_48.png');
+                this.game.load.image('barracksc', 'assets/48/barracksc_48.png');
+                this.game.load.image('archeryRangeh', 'assets/48/archeryRangeh_48.png');
+                this.game.load.image('archeryRangec', 'assets/48/archeryRangec_48.png');
+                this.game.load.image('tiro', 'assets/48/tiro_48.png');
             }
         }
  
