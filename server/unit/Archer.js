@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
 var Archer = (function (_super) {
     __extends(Archer, _super);
-    function Archer(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/units/archer.json'))) || this;
+    function Archer(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/units/archer.json'))) || this;
     }
     Archer.prototype.doAction = function (targetTile) {
         _super.prototype.doAction.call(this, targetTile);

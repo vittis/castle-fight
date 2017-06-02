@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Building_1 = require("../Building");
 var SpamBuilding = (function (_super) {
     __extends(SpamBuilding, _super);
-    function SpamBuilding(gm, row, col, buildingData) {
-        var _this = _super.call(this, gm, row, col, buildingData) || this;
+    function SpamBuilding(row, col, buildingData) {
+        var _this = _super.call(this, row, col, buildingData) || this;
         _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate };
         return _this;
     }
@@ -28,7 +28,7 @@ var SpamBuilding = (function (_super) {
     SpamBuilding.prototype.spamUnit = function (unit) {
         if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
-            this.owner.addEntity(new unit(this.gm, tile.row, tile.col));
+            this.owner.addEntity(new unit(tile.row, tile.col));
             this.data.spamData.spamRateCounter = this.data.spamRate;
             this.data.spamData.hasSpammed = true;
             this.data.spamCount--;

@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
 var Soldado = (function (_super) {
     __extends(Soldado, _super);
-    function Soldado(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/units/soldado.json'))) || this;
+    function Soldado(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/units/soldado.json'))) || this;
     }
     Soldado.prototype.doAction = function (targetTile) {
         _super.prototype.doAction.call(this, targetTile);

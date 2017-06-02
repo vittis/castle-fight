@@ -28,55 +28,61 @@ export class GameCore {
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
-        this.host = new GamePlayer(host, true);
-        this.client = new GamePlayer(client, false);
-
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
-        
-        this.host.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS/2 -1, 1));
-        this.host.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 2-2, 1));
-        this.host.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 -1 + 3, 0));
 
-        this.client.addEntity(new Castle(this.gridManager, GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-3));
-        this.client.addEntity(new Barracks(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
-        this.client.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
-        this.client.addEntity(new ArcheryRange(this.gridManager, GameConfig.GRID_ROWS / 2 - 1 + 3+2, GameConfig.GRID_COLS - 3));
+        this.host = new GamePlayer(host, true, this.gridManager);
+        this.client = new GamePlayer(client, false, this.gridManager);
+
+        this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 1));
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
 
 
-        
-        /*this.client.addEntity(new Castle(this.gridManager, 5, 18));
+        this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-3));     
+        this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));
 
-        this.host.addEntity(new Archer(this.gridManager, 2, 6));
-        this.client.addEntity(new Soldado(this.gridManager, 5, 18));*/
-        /*this.client.addEntity(new Archer(this.gridManager, 2, 6));
-        this.host.addEntity(new Soldado(this.gridManager, 5, 18));
-*/
 
         if (host.socket) {
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig.STEP_RATE });
+            this.host.serverPlayer.socket.on('teste1', function (data) {
+                console.log('teste12 voltou');
+            });
+    
         }
         if (client.socket) {
             this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig.STEP_RATE  });
+            this.client.serverPlayer.socket.on('teste1', function (data) {
+                console.log('teste13 voltou');
+            });
         }
-        setTimeout(this.sendEntities.bind(this), 100);
 
+        setTimeout(this.sendaData.bind(this), 100);
+        
+        var barrac = require('./building/Barracks');
+        var q = new barrac.Barracks(0, 0);
+        console.log(q);
 
-
-        this.gridManager.printGrid();
-        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
+        /*this.gridManager.printGrid();
+        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);*/
     } 
-    sendEntities() {
+
+    sendaData() {
         var entitiesObj = [];
         this.getAllEntities().forEach(element => {
             entitiesObj.push(DataSerializer.SerializeEntity(element));
         });
 
+        var hostObj = DataSerializer.SerializePlayer(this.host);
+        var clientObj = DataSerializer.SerializePlayer(this.client);;
+
         if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('receiveEntities', entitiesObj);
+            this.host.serverPlayer.socket.emit('receiveEntities', { entities: entitiesObj, player: hostObj });
         }
         if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('receiveEntities', entitiesObj);
+            this.client.serverPlayer.socket.emit('receiveEntities', { entities: entitiesObj, player: clientObj });
         }
     }
 
@@ -100,11 +106,13 @@ export class GameCore {
             building.spamUnit();
         });
 
+        this.host.resourceManager.step();
+        this.client.resourceManager.step();
 
-        this.gridManager.printGrid();
-        this.printEntityStatus();
+        /*this.gridManager.printGrid();
+        this.printEntityStatus();*/
 
-        this.sendEntities();
+        this.sendaData();
     }
 
     //returns closest tile with an enemy entity in it
@@ -157,8 +165,9 @@ export class GameCore {
 
     printEntityStatus() {
         this.getAllEntities().forEach(e => {
-            console.log(e.getEntityData().name+", owner: "+e.owner.serverPlayer.id+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor);
+            console.log(e.getEntityData().name+", owner: "+e.owner.serverPlayer.id+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor+", owner gold: "+e.owner.resourceManager.gold);
         });
+        
     }
 
 }

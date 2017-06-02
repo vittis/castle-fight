@@ -3,8 +3,8 @@ import { GridManager } from "../GridManager";
 import { Tile } from "../Tile";
 
 export class Soldado extends Unit {
-    constructor(gm : GridManager, row, col) {
-        super(gm, row, col, require('clone')(require('../data/units/soldado.json')));
+    constructor(row, col) {
+        super(row, col, require('clone')(require('../data/units/soldado.json')));
     }    
 
 

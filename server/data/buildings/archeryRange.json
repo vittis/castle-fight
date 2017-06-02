@@ -4,6 +4,9 @@
     "height": 2,
     "maxHP": 15,
     "maxArmor": 5,
+    "goldCost": 70,
+    "woodCost": 0,
+
     "spamCount": 3,
     "spamRate": 15
 }

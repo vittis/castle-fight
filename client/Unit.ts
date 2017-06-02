@@ -30,7 +30,7 @@ module Kodo {
         moveTo(tile: Tile) {
             this.tile.entity = null;
             tile.entity = this;
-            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate+50, Phaser.Easing.Linear.None, true);
+            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate+100, Phaser.Easing.Linear.None, true);
         }
 
         attack(tile: Tile) {

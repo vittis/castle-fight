@@ -14,8 +14,8 @@ var SpamBuilding_1 = require("./SpamBuilding");
 var Juggernaut_1 = require("../unit/Juggernaut");
 var JuggerField = (function (_super) {
     __extends(JuggerField, _super);
-    function JuggerField(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/juggerField.json'))) || this;
+    function JuggerField(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/juggerField.json'))) || this;
     }
     JuggerField.prototype.spamUnit = function () {
         _super.prototype.spamUnit.call(this, Juggernaut_1.Juggernaut);

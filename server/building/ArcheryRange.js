@@ -14,8 +14,8 @@ var SpamBuilding_1 = require("./SpamBuilding");
 var Archer_1 = require("../unit/Archer");
 var ArcheryRange = (function (_super) {
     __extends(ArcheryRange, _super);
-    function ArcheryRange(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/archeryRange.json'))) || this;
+    function ArcheryRange(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/archeryRange.json'))) || this;
     }
     ArcheryRange.prototype.spamUnit = function () {
         _super.prototype.spamUnit.call(this, Archer_1.Archer);

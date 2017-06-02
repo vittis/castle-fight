@@ -3,8 +3,8 @@ import { Unit } from "../Unit";
 import { Tile } from "../Tile";
 
 export class Archer extends Unit {
-    constructor(gm : GridManager, row, col) {
-        super(gm, row, col, require('clone')(require('../data/units/archer.json')));
+    constructor(row, col) {
+        super(row, col, require('clone')(require('../data/units/archer.json')));
     }    
 
     doAction(targetTile: Tile): void {

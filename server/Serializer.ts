@@ -1,6 +1,7 @@
 import { Entity } from "./Entity";
 import { Tile } from "./Tile";
 import { GameConfig } from "./GameConfig";
+import { GamePlayer } from "./GamePlayer";
 
 export module DataSerializer {
     export function SerializeEntity(entity : Entity) {
@@ -14,7 +15,17 @@ export module DataSerializer {
         
         return obj;
     }
+    export function SerializePlayer(player: GamePlayer) {
+        var obj: any = {};
 
+        obj.gold = player.resourceManager.gold;
+        obj.wood = player.resourceManager.wood;
+        obj.income = player.resourceManager.income;
+        obj.incomeRate = player.resourceManager.incomeRate;
+        obj.incomeRateCounter = player.resourceManager.incomeRateCounter;
+
+        return obj;
+    }
     export function SerializeTile(tile : Tile) {
         var obj: any = {};
 

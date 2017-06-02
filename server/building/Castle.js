@@ -13,8 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Building_1 = require("../Building");
 var Castle = (function (_super) {
     __extends(Castle, _super);
-    function Castle(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/castle.json'))) || this;
+    function Castle(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/castle.json'))) || this;
     }
     Castle.prototype.doAction = function () {
     };

@@ -24,8 +24,8 @@ export abstract class Unit extends Entity{
         return this.dataq;
     }
 
-    constructor(gm : GridManager, row, col, unitData : UnitData) {
-        super(gm, row, col, unitData);   
+    constructor(row, col, unitData : UnitData) {
+        super(row, col, unitData);   
         this.data.attackData = {hasAttacked: false, row: -1, col: -1};
         this.attackRateCounter = this.data.attackRate;
     }

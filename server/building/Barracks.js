@@ -14,8 +14,8 @@ var SpamBuilding_1 = require("./SpamBuilding");
 var soldado_1 = require("../unit/soldado");
 var Barracks = (function (_super) {
     __extends(Barracks, _super);
-    function Barracks(gm, row, col) {
-        return _super.call(this, gm, row, col, require('clone')(require('../data/buildings/barracks.json'))) || this;
+    function Barracks(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/barracks.json'))) || this;
     }
     Barracks.prototype.spamUnit = function () {
         _super.prototype.spamUnit.call(this, soldado_1.Soldado);

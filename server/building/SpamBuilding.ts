@@ -20,15 +20,15 @@ export abstract class SpamBuilding extends Building {
         return this.dataq;
     }
 
-    constructor(gm: GridManager, row, col, buildingData : BuildingData) {
-        super(gm, row, col, buildingData);
+    constructor(row, col, buildingData : BuildingData) {
+        super(row, col, buildingData);
         this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate};
     }
 
     spamUnit(unit? : any) {
         if (this.data.spamData.spamRateCounter == 0) {
             var tile = this.getTileToSpam();
-            this.owner.addEntity(new unit(this.gm, tile.row, tile.col));
+           this.owner.addEntity(new unit(tile.row, tile.col));
             this.data.spamData.spamRateCounter = this.data.spamRate;
             this.data.spamData.hasSpammed = true;
             this.data.spamCount--;

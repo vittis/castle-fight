@@ -15,7 +15,9 @@ export interface EntityData {
 
 
 export abstract class Entity {
-    tile : Tile;
+    col: number;
+    row: number;
+    tile: Tile;
     
     owner : GamePlayer;
     id : number;
@@ -24,17 +26,23 @@ export abstract class Entity {
 
     gm : GridManager;
 
-    constructor(gm : GridManager, row, col, data : EntityData) {
-        this.gm = gm;
+    constructor(row, col, data : EntityData) {
         this.dataq = data;
         this.dataq.hp = data.maxHP;
         this.dataq.armor = data.maxArmor;
+        this.row = row;
+        this.col = col;
+        //this.addToGame(gm);
+    }
 
-        this.tile = gm.tileAt(row, col);
-        
-        for (var i = 0; i < data.width; i++) {
-            for (var j = 0; j < data.height; j++) {
-                gm.tileAt(row+j, col+i).entity = this;
+    addToGame(gm) {
+        this.gm = gm;
+
+        this.tile = gm.tileAt(this.row, this.col);
+
+        for (var i = 0; i < this.dataq.width; i++) {
+            for (var j = 0; j < this.dataq.height; j++) {
+                gm.tileAt(this.row + j, this.col + i).entity = this;
             }
         }
     }

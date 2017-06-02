@@ -4,7 +4,8 @@ import { Tile } from "./Tile";
 import { SpamData } from "./building/SpamBuilding";
 
 export interface BuildingData extends EntityData {
-    
+    goldCost? : number;
+    woodCost? : number;
 }
 
 export abstract class Building extends Entity {
@@ -13,8 +14,8 @@ export abstract class Building extends Entity {
         return this.dataq;
     }
 
-    constructor(gm : GridManager, row, col, buildingData : BuildingData) {
-        super(gm, row, col, buildingData);
+    constructor(row, col, buildingData : BuildingData) {
+        super(row, col, buildingData);
     }
 
     getOuterTiles() : Tile[] {

@@ -2,11 +2,6 @@ module Client {
     var socket = io.connect();
     var startPingTime=0;
 
-
-    export function askMatchmaking() {
-        socket.emit('askMatchmaking');
-    }
-
     socket.on('startGame',function(data){
         console.log("start game recebido - iniciando jogo!");
         var gameId = data.id;
@@ -23,12 +18,21 @@ module Client {
     });
 
     socket.on('receiveEntities', function (data) {
-        Kodo.GameScene.instance.updateEntities(data);
+        Kodo.GameScene.instance.updateEntities(data.entities);
+        //console.log(data.player);
     });
 
     socket.on('endGame', function (data) {
         console.log("end game recebido - finalizando jogo!");
         Kodo.Game.instance.state.start('MainMenu', true, false);
     });
+
+
+    export function askMatchmaking() {
+        socket.emit('askMatchmaking');
+    }
+
+
+
 
   }
