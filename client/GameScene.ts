@@ -2,17 +2,21 @@ module Kodo {
     export class GameScene extends Phaser.State {
 
         id : number;
-        host;
-        client;
 
         grid : Tile[][] = [];
 
         entities : Entity[] = [];
     
+        uiManager : UIManager;
+
+        isHost : boolean;
+
         static instance : GameScene = null;
         
         create() {
             GameScene.instance = this;
+
+            this.isHost = GameConfig.isHost;
 
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
@@ -20,10 +24,13 @@ module Kodo {
                     this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize, i * GameConfig.tileSize, i, j);
                 }
             }
+
+            this.uiManager = new UIManager(this.game);
         }
 
+
         update() {
-           
+            this.uiManager.update();
         }
 
         updateEntities(newEntities : any[]) {

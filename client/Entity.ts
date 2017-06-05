@@ -22,13 +22,22 @@ module Kodo {
 
         barGroup : Phaser.Group;
 
+
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
-            this.tile = tile;
-            this.tile.entity = this;
             this.id = id;
             this.dataq = data;
             this.isHost = isHost;
+
+            var row = tile.row;
+            var col = tile.col;
+
+            this.tile = tile;
+            for (var i = 0; i < this.dataq.width; i++) {
+                for (var j = 0; j < this.dataq.height; j++) {
+                    Kodo.GameScene.instance.grid[row + j][col + i].entity = this;
+                }
+            }
 
             this.armorBar = new ArmorBarSmooth(this.game, this);
             this.hpBar = new HealthBarSmooth(this.game, this);
@@ -71,6 +80,11 @@ module Kodo {
             this.tint = 0xFFFFFF;
         }
         onDeath() {
+            for (var i = 0; i < this.dataq.width; i++) {
+                for (var j = 0; j < this.dataq.height; j++) {
+                    Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity = null;
+                }
+            }
             this.armorBar.destroy();
             this.hpBar.destroy();
             this.destroy();

@@ -7,12 +7,13 @@ module Client {
         var gameId = data.id;
         var rows = data.rows;
         var cols = data.cols;
-        var isHost = data.host;
+        var isHost = data.isHost;
         var stepRate = data.stepRate;
 
         GameConfig.GRID_ROWS = rows;
         GameConfig.GRID_COLS = cols;
-        GameConfig.updateRate = data.stepRate;
+        GameConfig.updateRate = stepRate;
+        GameConfig.isHost = isHost;
 
         Kodo.Game.instance.state.start('GameScene', true, false);
     });
@@ -32,7 +33,9 @@ module Client {
         socket.emit('askMatchmaking');
     }
 
-
+    export function askBuild(row, col, name) {
+        socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost});
+    }
 
 
   }

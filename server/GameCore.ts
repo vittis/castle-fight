@@ -29,7 +29,7 @@ export class GameCore {
         this.id = id;
 
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
-
+        
         this.host = new GamePlayer(host, true, this.gridManager);
         this.client = new GamePlayer(client, false, this.gridManager);
 
@@ -44,30 +44,29 @@ export class GameCore {
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));
 
-
-        if (host.socket) {
-            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig.STEP_RATE });
-            this.host.serverPlayer.socket.on('teste1', function (data) {
-                console.log('teste12 voltou');
-            });
-    
-        }
-        if (client.socket) {
-            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig.STEP_RATE  });
-            this.client.serverPlayer.socket.on('teste1', function (data) {
-                console.log('teste13 voltou');
-            });
-        }
+        this.setSocket(this.host.serverPlayer, true);
+        this.setSocket(this.client.serverPlayer, false);
 
         setTimeout(this.sendaData.bind(this), 100);
-        
-        var barrac = require('./building/Barracks');
-        var q = new barrac.Barracks(0, 0);
-        console.log(q);
 
-        /*this.gridManager.printGrid();
-        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);*/
+        this.gridManager.printGrid();
+        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     } 
+
+    setSocket(p : ServerPlayer, isHost : boolean) {
+        if (p.socket) {
+            p.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
+            
+            p.socket.on('askBuild', function (data) {
+                if (data.isHost) {
+                    this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                }
+                else {
+                    this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                }
+            }.bind(this));
+        }
+    }
 
     sendaData() {
         var entitiesObj = [];
