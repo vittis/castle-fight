@@ -8,13 +8,18 @@ var Kodo;
             this.buildingsGroup = game.add.group();
             this.buildingsGroup.inputEnableChildren = true;
             var hostLabel = GameConfig.isHost ? 'h' : 'c';
-            var barracksui = game.add.button(game.width / 2 - 72 / 2, game.height - 100, 'barracks_ui_' + hostLabel, null, this, 1, 0, 2);
-            barracksui.data.previewName = 'barracks' + hostLabel;
+            /*var barracksui = game.add.button(0, 0, 'barracks_ui_'+hostLabel, null, this, 1, 0, 2);
+            barracksui.data.previewName = 'barracks'+hostLabel;
             barracksui.data.buildingName = 'Barracks';
             this.buildingsGroup.add(barracksui);
-            var archeryRangeui = game.add.button(game.width / 2 - 72 / 2, game.height - 100, 'archeryRange_ui_' + hostLabel, null, this, 1, 0, 2);
+
+            var archeryRangeui = game.add.button(0, 0, 'archeryRange_ui_'+hostLabel, null, this, 1, 0, 2);
             archeryRangeui.data.previewName = 'archeryRange' + hostLabel;
             archeryRangeui.data.buildingName = 'ArcheryRange';
+            this.buildingsGroup.add(archeryRangeui);*/
+            var barracksui = new Kodo.UIBuildingButton(game, 'barracks_ui_' + hostLabel, this, 'barracks' + hostLabel, 'Barracks');
+            this.buildingsGroup.add(barracksui);
+            var archeryRangeui = new Kodo.UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
             this.buildingsGroup.add(archeryRangeui);
             this.buildingsGroup.align(2, 1, 85, 48);
             this.buildingsGroup.x = game.width / 2 - 72;
@@ -28,7 +33,7 @@ var Kodo;
         }
         UIManager.prototype.onDown = function (sprite) {
             this.inputDown = true;
-            this.preview.loadTexture(sprite.data.previewName);
+            this.preview.loadTexture(sprite.previewName);
         };
         UIManager.prototype.onOut = function (sprite) {
             if (this.inputDown) {
@@ -43,7 +48,7 @@ var Kodo;
             var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
             if (row < GameConfig.GRID_ROWS - 1 && col < GameConfig.GRID_COLS - 1) {
                 if (Kodo.GameScene.instance.grid[row][col].entity == null) {
-                    Client.askBuild(row, col, sprite.data.buildingName);
+                    Client.askBuild(row, col, sprite.buildingName);
                 }
             }
             else {

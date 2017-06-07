@@ -30,7 +30,7 @@ module Kodo {
         moveTo(tile: Tile) {
             this.tile.entity = null;
             tile.entity = this;
-            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate+100, Phaser.Easing.Linear.None, true);
+            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate+75, Phaser.Easing.Linear.None, true);
         }
 
         attack(tile: Tile) {
@@ -39,9 +39,10 @@ module Kodo {
 
         updateStep(newData : UnitData, tile : Tile) {
             super.updateStep(newData);
-
-            if (Phaser.Math.distance(this.x, this.y, tile.x, tile.y) > 1) {
-                this.moveTo(tile);
+            if (tile != this.tile) {
+                if (Phaser.Math.distance(this.x, this.y, tile.x, tile.y) > 1) {
+                    this.moveTo(tile);
+                }
             }
             if (this.data.attackData.hasAttacked) {
                 this.attack(Kodo.GameScene.instance.grid[this.data.attackData.row][this.data.attackData.col]);

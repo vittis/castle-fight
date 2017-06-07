@@ -18,7 +18,7 @@ module Client {
         Kodo.Game.instance.state.start('GameScene', true, false);
     });
 
-    socket.on('receiveEntities', function (data) {
+    socket.on('receiveData', function (data) {
         Kodo.GameScene.instance.updateEntities(data.entities);
         //console.log(data.player);
     });

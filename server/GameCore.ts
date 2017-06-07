@@ -33,13 +33,13 @@ export class GameCore {
         this.host = new GamePlayer(host, true, this.gridManager);
         this.client = new GamePlayer(client, false, this.gridManager);
 
-        this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 1));
+        this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
         this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
 
 
-        this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-3));     
+        this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-2));     
         this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));
@@ -78,10 +78,10 @@ export class GameCore {
         var clientObj = DataSerializer.SerializePlayer(this.client);;
 
         if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('receiveEntities', { entities: entitiesObj, player: hostObj });
+            this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj });
         }
         if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('receiveEntities', { entities: entitiesObj, player: clientObj });
+            this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj });
         }
     }
 
