@@ -19,8 +19,22 @@ module Client {
     });
 
     socket.on('receiveData', function (data) {
+        Kodo.GameScene.instance.player = data.player;
         Kodo.GameScene.instance.updateEntities(data.entities);
         //console.log(data.player);
+    });
+
+
+    socket.on('receiveBuildingAndUnitData', function (data) {
+        /*data.unitData.forEach(element => {
+            console.log(element);
+        });*/
+        data.buildingData.forEach(element => {
+            if (Kodo[element.name]) {
+                Kodo[element.name].goldCost = element.goldCost;
+                Kodo[element.name].woodCost = element.woodCost;
+            }
+        });
     });
 
     socket.on('endGame', function (data) {

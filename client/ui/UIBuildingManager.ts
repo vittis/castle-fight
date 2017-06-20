@@ -1,5 +1,5 @@
 module Kodo {
-    export class UIManager {
+    export class UIBuildingManager {
 
         buildingsGroup : Phaser.Group;
 
@@ -35,11 +35,10 @@ module Kodo {
             var archeryRangeui = new UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
             this.buildingsGroup.add(archeryRangeui);
 
-            this.buildingsGroup.align(2, 1, 85, 48);
+            this.buildingsGroup.align(2, 1, 100, 48);
 
             this.buildingsGroup.x = game.width / 2 - 72;
             this.buildingsGroup.y = game.height - 100;
-
 
             this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
             this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
@@ -49,6 +48,7 @@ module Kodo {
             this.preview.alpha = 0.8;
             this.preview.visible = false;
         }
+    
         onDown(sprite : UIBuildingButton) {
             this.inputDown = true;
             this.preview.loadTexture(sprite.previewName);
@@ -65,12 +65,15 @@ module Kodo {
             
             this.inputDown = false;
 
-            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
+            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) - 1;
             var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
-
-            if (row < GameConfig.GRID_ROWS-1 && col < GameConfig.GRID_COLS-1) {
+            
+            if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
                 if (Kodo.GameScene.instance.grid[row][col].entity == null) {
                     Client.askBuild(row, col, sprite.buildingName);
+                }
+                else {
+                    console.log("ja tem uma entidade aqui!!");
                 }
             }
             else {

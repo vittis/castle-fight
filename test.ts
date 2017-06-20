@@ -1,36 +1,11 @@
-interface Data {
-    name : string;
-    hp : number;
-    attackRange : number;
-}
 
-interface DataQ extends Data {
-    ehViado? : false;
-}
-
-class Entidade {
-
-    protected dataq : Data;
-
-    constructor(data : Data) {
-        this.dataq = data;
-    }
-
-}
-
-class Unidade extends Entidade {
-
-    get data() : DataQ {
-        return this.dataq;
-    }
-
-    constructor() {
-        super(require('./bixo.json'));
-    }
-
-}
-
-
-var bixao = new Unidade();
-bixao.data.name = "gravido";
-console.log(bixao.data.name+", "+bixao.data.hp+", "+bixao.data.attackRange+", "+bixao.data.ehViado);
+// options is optional
+//glob("**/server/data/units/*.json", function (er, files) {
+  //  console.log(files);
+    // files is an array of filenames.
+    // If the `nonull` option is set, and nothing
+    // was found, then files is ["**/*.js"]
+    // er is an error object or null.
+//})
+var glob = require('glob');
+console.log(glob.sync('**/server/data/units/*.json'));

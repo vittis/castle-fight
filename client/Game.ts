@@ -6,7 +6,7 @@ module Kodo {
         public static instance : Game = null;
 
         constructor() {
-            super(1392, 768, Phaser.AUTO, document.getElementById('game'), null);
+            super(1392, 816, Phaser.AUTO, document.getElementById('game'), null);
 
             Game.instance = this;
 

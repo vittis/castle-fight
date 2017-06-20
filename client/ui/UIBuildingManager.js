@@ -1,7 +1,7 @@
 var Kodo;
 (function (Kodo) {
-    var UIManager = (function () {
-        function UIManager(game) {
+    var UIBuildingManager = (function () {
+        function UIBuildingManager(game) {
             this.buildingSelected = false;
             this.inputDown = false;
             this.game = game;
@@ -21,7 +21,7 @@ var Kodo;
             this.buildingsGroup.add(barracksui);
             var archeryRangeui = new Kodo.UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
             this.buildingsGroup.add(archeryRangeui);
-            this.buildingsGroup.align(2, 1, 85, 48);
+            this.buildingsGroup.align(2, 1, 100, 48);
             this.buildingsGroup.x = game.width / 2 - 72;
             this.buildingsGroup.y = game.height - 100;
             this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
@@ -31,24 +31,27 @@ var Kodo;
             this.preview.alpha = 0.8;
             this.preview.visible = false;
         }
-        UIManager.prototype.onDown = function (sprite) {
+        UIBuildingManager.prototype.onDown = function (sprite) {
             this.inputDown = true;
             this.preview.loadTexture(sprite.previewName);
         };
-        UIManager.prototype.onOut = function (sprite) {
+        UIBuildingManager.prototype.onOut = function (sprite) {
             if (this.inputDown) {
                 this.buildingSelected = true;
                 this.preview.visible = true;
             }
         };
-        UIManager.prototype.onUp = function (sprite) {
+        UIBuildingManager.prototype.onUp = function (sprite) {
             this.buildingSelected = false;
             this.inputDown = false;
-            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
+            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) - 1;
             var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
-            if (row < GameConfig.GRID_ROWS - 1 && col < GameConfig.GRID_COLS - 1) {
+            if (row < GameConfig.GRID_ROWS - 1 && row >= 0 && col < GameConfig.GRID_COLS - 1) {
                 if (Kodo.GameScene.instance.grid[row][col].entity == null) {
                     Client.askBuild(row, col, sprite.buildingName);
+                }
+                else {
+                    console.log("ja tem uma entidade aqui!!");
                 }
             }
             else {
@@ -56,17 +59,17 @@ var Kodo;
             }
             this.game.time.events.add(500, this.hidePreview.bind(this), this);
         };
-        UIManager.prototype.hidePreview = function () {
+        UIBuildingManager.prototype.hidePreview = function () {
             this.preview.visible = false;
         };
-        UIManager.prototype.update = function () {
+        UIBuildingManager.prototype.update = function () {
             if (this.buildingSelected) {
                 this.preview.x = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize) * GameConfig.tileSize;
                 this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize;
                 ;
             }
         };
-        return UIManager;
+        return UIBuildingManager;
     }());
-    Kodo.UIManager = UIManager;
+    Kodo.UIBuildingManager = UIBuildingManager;
 })(Kodo || (Kodo = {}));

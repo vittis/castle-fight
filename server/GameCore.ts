@@ -34,15 +34,15 @@ export class GameCore {
         this.client = new GamePlayer(client, false, this.gridManager);
 
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
-        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        /*this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));*/
 
 
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS-2));     
-        this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
+        /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
-        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));*/
 
         this.setSocket(this.host.serverPlayer, true);
         this.setSocket(this.client.serverPlayer, false);
@@ -108,8 +108,8 @@ export class GameCore {
         this.host.resourceManager.step();
         this.client.resourceManager.step();
 
-        /*this.gridManager.printGrid();
-        this.printEntityStatus();*/
+        //this.gridManager.printGrid();
+        //this.printEntityStatus();
 
         this.sendaData();
     }

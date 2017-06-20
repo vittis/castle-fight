@@ -29,6 +29,26 @@ export class GameServer {
     }
 
     onConnected(socket? : SocketIO.Socket) : ServerPlayer {
+        if (socket) {
+            var glob = require('glob');
+            //console.log(glob.sync('**/server/data/buildings/*.json'));
+
+            var buildingData = [];
+            var buildingArray = glob.sync('**/server/data/buildings/*.json');
+
+            buildingArray.forEach(element => {
+                buildingData.push(require("../"+element));
+            });
+
+            var unitData = [];
+            var unitArray = glob.sync('**/server/data/units/*.json');
+
+            unitArray.forEach(element => {
+                unitData.push(require("../" + element));
+            });
+            
+            socket.emit('receiveBuildingAndUnitData', {buildingData: buildingData, unitData: unitData});
+        }
         return this.addPlayer(socket);
     }
 

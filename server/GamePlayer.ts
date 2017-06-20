@@ -29,6 +29,7 @@ export class GamePlayer {
     buildBuilding(b : Building) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {
             this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
+            
             this.addEntity(b);
         }
         else {

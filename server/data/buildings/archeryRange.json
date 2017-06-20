@@ -5,7 +5,7 @@
     "maxHP": 15,
     "maxArmor": 5,
     "goldCost": 70,
-    "woodCost": 0,
+    "woodCost": 50,
 
     "spamCount": 3,
     "spamRate": 15

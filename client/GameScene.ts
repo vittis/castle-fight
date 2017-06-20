@@ -1,4 +1,11 @@
 module Kodo {
+    export interface PlayerData {
+        gold?: number;
+        wood?: number;
+        income?: number;
+        incomeRate?: number;
+        incomeRateCounter?;
+    }
     export class GameScene extends Phaser.State {
 
         id : number;
@@ -7,33 +14,39 @@ module Kodo {
 
         entities : Entity[] = [];
     
-        uiManager : UIManager;
+        uiBuildingManager : UIBuildingManager;
+        uiResourceManager: UIResourceManager;
 
+        player : PlayerData = {incomeRate: 20, incomeRateCounter: 0, gold: 0, wood: 0, income: 10};
         isHost : boolean;
 
         static instance : GameScene = null;
-        
+
         create() {
             GameScene.instance = this;
-
+            this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
 
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
                 for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize, i * GameConfig.tileSize, i, j);
+                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize, i * GameConfig.tileSize + GameConfig.uiHeight, i, j);
                 }
             }
 
-            this.uiManager = new UIManager(this.game);
+            this.uiBuildingManager = new UIBuildingManager(this.game);
+            this.uiResourceManager = new UIResourceManager(this.game);
+
         }
 
 
         update() {
-            this.uiManager.update();
+            this.uiBuildingManager.update();
         }
 
         updateEntities(newEntities : any[]) {
+            this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
+
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
 
@@ -45,8 +58,7 @@ module Kodo {
                     this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
                 }
             });
-
-            this.cleanDeadEntities(newEntities);            
+            this.cleanDeadEntities(newEntities);       
         }
 
         cleanDeadEntities(newEntities : Entity[]) {
