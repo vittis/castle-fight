@@ -46,6 +46,9 @@ module Kodo {
                 this.game.load.image('tiro', 'assets/64/tiro_64.png');
             }
             else {
+
+                this.game.load.image('arvore1', 'assets/48/arvore1_48.png');
+
                 this.game.load.image('tile0', 'assets/48/tile0_48.png');
                 this.game.load.image('tile1', 'assets/48/tile1_48.png');
                 this.game.load.image('soldadoh', 'assets/48/soldadoh_48.png');

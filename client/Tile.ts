@@ -12,6 +12,8 @@ module Kodo {
             this.col = col;
 
             game.add.existing(this);
+
+            
         }
 
     }
