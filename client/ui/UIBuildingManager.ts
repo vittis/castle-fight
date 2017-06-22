@@ -57,6 +57,27 @@ module Kodo {
             if (this.inputDown) {
                 this.buildingSelected = true;
                 this.preview.visible = true;
+                
+                /*if (GameConfig.isHost) {
+                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                            if (j < 6) {
+                                if (Kodo.GameScene.instance.grid[i][j].entity == null) 
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                            if (j > GameConfig.GRID_COLS - 7) {
+                                if (Kodo.GameScene.instance.grid[i][j].entity == null) 
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
+                            }
+                        }
+                    }
+                }*/
             }
         }
 
@@ -67,10 +88,35 @@ module Kodo {
 
             var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) - 1;
             var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
-            
+
+            var canBuild = true;
+
+            for (var i = 0; i < 2; i++) {
+                for (var j = 0; j < 2; j++) {
+                    if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
+                        canBuild = false;
+                    }
+                }
+            }
+
+            for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
+                }
+            }
+
             if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
-                if (Kodo.GameScene.instance.grid[row][col].entity == null) {
-                    Client.askBuild(row, col, sprite.buildingName);
+                if (canBuild) {
+                    if (GameConfig.isHost) {
+                        if (col < 6) {
+                            Client.askBuild(row, col, sprite.buildingName);
+                       }
+                    }
+                    else {
+                        if (col > GameConfig.GRID_COLS - 7) {
+                            Client.askBuild(row, col, sprite.buildingName);
+                        }
+                    }
                 }
                 else {
                     console.log("ja tem uma entidade aqui!!");
@@ -87,7 +133,36 @@ module Kodo {
         update() {
             if (this.buildingSelected) {
                 this.preview.x = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize) * GameConfig.tileSize;
-                this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize;;
+                this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize;
+
+
+                if (GameConfig.isHost) {
+                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                            if (j < 6) {
+                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
+                                else 
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                            if (j > GameConfig.GRID_COLS - 7) {
+                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
+                                else
+                                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
+                            }
+                        }
+                    }
+                }
+
+
+
             }
         }
 

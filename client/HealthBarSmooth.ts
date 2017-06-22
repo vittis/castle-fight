@@ -14,6 +14,8 @@ module Kodo {
 
         smooth : number;
 
+        maxLenght : number;
+
         constructor(game: Phaser.Game, entity: Entity) {
             super(game, 0, 0);
             this.visible = false;
@@ -21,8 +23,9 @@ module Kodo {
             this.maxHp = entity.dataq.maxHP;
             this.cuts = 1 / this.maxHp;
 
+            this.maxLenght = -33 * entity.dataq.height;
 
-            this.lenght = -33;
+            this.lenght = this.maxLenght;
             this.smooth = this.lenght;
             game.add.existing(this);
         }
@@ -32,11 +35,11 @@ module Kodo {
             if (this.visible) {
                 if (this.entity.isHost) {
                     this.x = this.entity.x + 2;
-                    this.y = this.entity.y + GameConfig.tileSize - 7;                 
+                    this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height-1);                 
                 }
                 else {
-                    this.x = this.entity.x + GameConfig.tileSize - 5 + 1;
-                    this.y = this.entity.y + GameConfig.tileSize - 7;
+                    this.x = this.entity.x + GameConfig.tileSize - 5 + 1 + GameConfig.tileSize * (this.entity.dataq.height - 1);
+                    this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height - 1);
                 }
                 if (this.smooth < this.lenght) {
                     this.smooth += this.game.time.elapsed / 100 * 6;
@@ -53,7 +56,7 @@ module Kodo {
             this.receivedDamage = true;
             var t = this.maxHp - newHealth;
 
-            this.lenght = Phaser.Math.linear(-33, 0, this.cuts * t);
+            this.lenght = Phaser.Math.linear(this.maxLenght, 0, this.cuts * t);
             this.visible = true;
             this.game.time.events.add(5500, this.hideBar.bind(this), this);
         }

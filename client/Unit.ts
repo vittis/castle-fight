@@ -19,9 +19,6 @@ module Kodo {
         }
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, texture: string, data : EntityData) {
             super(game, tile, id, isHost, texture, data);
-
-
-
         }
         update() {
             super.update();
@@ -29,7 +26,8 @@ module Kodo {
         
         moveTo(tile: Tile) {
             this.tile.entity = null;
-            tile.entity = this;
+            this.tile = tile;
+            this.tile.entity = this;
             this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate+75, Phaser.Easing.Linear.None, true);
         }
 

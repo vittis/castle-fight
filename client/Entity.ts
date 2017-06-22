@@ -22,6 +22,8 @@ module Kodo {
 
         barGroup : Phaser.Group;
 
+        static width;
+        static height;
 
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
@@ -80,11 +82,15 @@ module Kodo {
             this.tint = 0xFFFFFF;
         }
         onDeath() {
+            console.log(this.tile.row);
+            console.log(this.tile.col);
+            //Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity
             for (var i = 0; i < this.dataq.width; i++) {
                 for (var j = 0; j < this.dataq.height; j++) {
                     Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity = null;
                 }
             }
+           
             this.armorBar.destroy();
             this.hpBar.destroy();
             this.destroy();

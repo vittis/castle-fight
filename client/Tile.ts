@@ -14,11 +14,5 @@ module Kodo {
             game.add.existing(this);
         }
 
-
-        update() {
-
-
-        }
-
     }
 }

@@ -33,6 +33,8 @@ module Client {
             if (Kodo[element.name]) {
                 Kodo[element.name].goldCost = element.goldCost;
                 Kodo[element.name].woodCost = element.woodCost;
+                Kodo[element.name].width = element.width;
+                Kodo[element.name].height = element.height;
             }
         });
     });

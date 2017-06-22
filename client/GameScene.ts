@@ -42,6 +42,18 @@ module Kodo {
 
         update() {
             this.uiBuildingManager.update();
+           /* console.log(this.grid[14][27].entity == null);
+            for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                    if (this.grid[i][j].entity != null) {
+                        this.grid[i][j].tint = 0xc9e5d4;
+                    }
+                    else {
+                        this.grid[i][j].tint = 0xFFFFFF;
+
+                    }
+                }
+            }*/
         }
 
         updateEntities(newEntities : any[]) {
@@ -50,9 +62,11 @@ module Kodo {
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
 
+                
                 if (this.idExists(entityID)) {
                     //this.getEntityById(entityID).moveTo(this.grid[newEntity.row][newEntity.col]);
                     this.getEntityById(entityID).updateStep(newEntity.data, this.grid[newEntity.row][newEntity.col]);
+
                 }
                 else {
                     this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
