@@ -37,13 +37,13 @@ export class GameCore {
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
+        /*this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));*/
 
 
-        this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
+        /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
-        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));*/
 
         this.setSocket(this.host.serverPlayer, true);
         this.setSocket(this.client.serverPlayer, false);
@@ -89,8 +89,25 @@ export class GameCore {
     step() {
         this.getAllUnits().forEach(unit => {
             unit.resetAttackData();
-            var targetTile = this.getClosestTargetTile(unit);
+            this.gridManager.aStar.load(this.gridManager.getNumberGrid());
+           
+            var targetTileWithEnemy = this.getClosestTargetTile(unit);
+            var targetTile;
 
+            if (targetTileWithEnemy != null) {
+                if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, targetTileWithEnemy.col, targetTileWithEnemy.row) <= 5) {
+                    targetTile = targetTileWithEnemy;
+                }
+                else {
+                    if (unit.row >= 8) {
+                        targetTile = unit.owner.isHost ? this.gridManager.tileAt(12, 22) : this.gridManager.tileAt(12, 6);
+                    }
+                    else {
+                        targetTile = unit.owner.isHost ? this.gridManager.tileAt(3, 22) : this.gridManager.tileAt(3, 6);
+                    }
+                }
+            }
+            
             if (targetTile != null) {
                 unit.doAction(targetTile);
             }

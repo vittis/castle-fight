@@ -6,7 +6,7 @@ export class Tile {
     row : number;
     col : number;
 
-    entity = null;
+    entity : Entity = null;
 
     get walkable() : boolean {
         return this.entity == null;
