@@ -65,8 +65,12 @@ module Kodo {
 
                 this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 72, 72);
                 this.game.load.spritesheet('archeryRange_ui_h', 'assets/48/ui/archeryRange_ui_h.png', 72, 72);
-                this.game.load.spritesheet('barracks_ui_c', 'assets/48/ui/barracks_ui_c.png', 72, 72);
-                this.game.load.spritesheet('archeryRange_ui_c', 'assets/48/ui/archeryRange_ui_c.png', 72, 72);
+                this.game.load.spritesheet('barracks_ui_c', 'assets/48/ui/barracks_ui_c.png', 66, 66);
+                this.game.load.spritesheet('archeryRange_ui_c', 'assets/48/ui/archeryRange_ui_c.png', 66, 66);
+                
+                this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
+                this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');
+                this.game.load.image('wood_icon', 'assets/48/ui/wood_icon.png');
 
             }
         }

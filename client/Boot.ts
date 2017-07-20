@@ -12,6 +12,7 @@ module Kodo {
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
+
             if (this.game.device.android || this.game.device.iOS) {
                 //Phaser.Canvas.setTouchAction(this.game.canvas, "auto"); // disable the default "none"
                 //this.game.input.touch.preventDefault = false;
@@ -21,6 +22,10 @@ module Kodo {
                 this.game.scale.refresh();
                 window.addEventListener('resize', function () { adjust(); });
                 adjust();
+            }
+            else {
+                this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+                this.scale.setUserScale(1, 1);   
             }
             this.game.state.start('Preloader', true, false);
         }

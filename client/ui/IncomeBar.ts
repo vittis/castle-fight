@@ -16,17 +16,19 @@ module Kodo {
 
         constructor(game: Phaser.Game) {
             super(game, 0, 0);
+            var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
 
-            this.x = 200;
-            this.y = GameConfig.uiHeight/2 + 3;
+            this.maxLenght = 120;
+
+            this.x = 275;
+            this.y = game.height - GameConfig.uiHeight / 2;
             this.smooth = 0;
-            this.maxLenght = 124;
 
             game.add.existing(this);
 
             var bar = game.make.graphics(0, 0);
             bar.beginFill();
-            bar.lineStyle(12, 0xffffff, 1);
+            bar.lineStyle(19, 0xffffff, 1);
             bar.moveTo(0, 0);
             bar.lineTo(this.maxLenght, 0);
             bar.endFill();
@@ -35,10 +37,10 @@ module Kodo {
 
             game.world.swap(this, this.containerBar);
             this.containerBar.alpha = 0.5;
-            this.containerBar.y -= 12;
-            this.containerBar.x -= 12;
+            this.containerBar.y -= 19;
+            this.containerBar.x -= 19;
 
-            var style = { font: "Baloo Paaji", fill: '#FEF65B', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
             /*var incomeLabel = game.add.text(0, 0, 'income', style);
             incomeLabel.anchor.setTo(0.5, 0.5);
             incomeLabel.fontSize = 15;
@@ -47,9 +49,13 @@ module Kodo {
 
             this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
-            this.incomeNumberLabel.fontSize = 25;
-            this.incomeNumberLabel.x = this.x + this.maxLenght + 28;
-            this.incomeNumberLabel.y = this.y + 1;
+            this.incomeNumberLabel.fontSize = 30;
+            this.incomeNumberLabel.alignTo(this, Phaser.RIGHT_CENTER, this.maxLenght + 5);
+
+            var goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
+            goldIcon.scale.setTo(0.7, 0.7);
+            goldIcon.alignTo(this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3);
+
         }
         update() {
             if (this.smooth < this.maxLenght) {
@@ -60,7 +66,7 @@ module Kodo {
             //    this.currentTime = 0;
             //}
             this.clear();
-            this.lineStyle(12, 0xFEF65B, 1);
+            this.lineStyle(19, 0xecec3a, 1);
             this.moveTo(0, 0);
             this.lineTo(this.smooth, 0);
         }

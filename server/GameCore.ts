@@ -37,12 +37,14 @@ export class GameCore {
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        /*this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));*/
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
 
 
-        /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
-        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
+        /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
+
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
+
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));*/
 
         this.setSocket(this.host.serverPlayer, true);
@@ -91,19 +93,29 @@ export class GameCore {
             unit.resetAttackData();
             this.gridManager.aStar.load(this.gridManager.getNumberGrid());
            
-            var targetTileWithEnemy = this.getClosestTargetTile(unit);
+            var closestTileWithEnemy = this.getClosestTargetTile(unit);
             var targetTile;
 
-            if (targetTileWithEnemy != null) {
-                if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, targetTileWithEnemy.col, targetTileWithEnemy.row) <= 5) {
-                    targetTile = targetTileWithEnemy;
+            if (closestTileWithEnemy != null) {
+                if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, closestTileWithEnemy.col, closestTileWithEnemy.row) <= 4) {
+                    targetTile = closestTileWithEnemy;
                 }
                 else {
-                    if (unit.row >= 8) {
-                        targetTile = unit.owner.isHost ? this.gridManager.tileAt(12, 22) : this.gridManager.tileAt(12, 6);
+                    if (unit.tile.row>= 8) {//parte de baixo
+                        if (unit.owner.isHost) {
+                            targetTile = unit.tile.col < 20 ? this.gridManager.tileAt(12, 20) : this.gridManager.tileAt(7, 23);
+                        }
+                        else {
+                            targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(7, 3) : this.gridManager.tileAt(12, 6);
+                        }
                     }
-                    else {
-                        targetTile = unit.owner.isHost ? this.gridManager.tileAt(3, 22) : this.gridManager.tileAt(3, 6);
+                    else {//parte de cima
+                        if (unit.owner.isHost) {
+                            targetTile = unit.tile.col >= 20 ? this.gridManager.tileAt(8, 23) : this.gridManager.tileAt(3, 20);
+                        }
+                        else {
+                            targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(8, 3) : this.gridManager.tileAt(3, 6);
+                        }
                     }
                 }
             }

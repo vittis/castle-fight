@@ -21,9 +21,12 @@ var Kodo;
             this.buildingsGroup.add(barracksui);
             var archeryRangeui = new Kodo.UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
             this.buildingsGroup.add(archeryRangeui);
-            this.buildingsGroup.align(2, 1, 100, 48);
-            this.buildingsGroup.x = game.width / 2 - 72;
-            this.buildingsGroup.y = game.height - 100;
+            this.buildingsGroup.align(2, 1, 120, 0);
+            var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
+            this.buildingsGroup.x = 650;
+            this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
+            this.buildingsGroup.setAll('anchor.x', 0.5);
+            this.buildingsGroup.setAll('anchor.y', 0.5);
             this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
             this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
             this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
@@ -39,38 +42,26 @@ var Kodo;
             if (this.inputDown) {
                 this.buildingSelected = true;
                 this.preview.visible = true;
-                /*if (GameConfig.isHost) {
-                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                            if (j < 6) {
-                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
-                            }
-                        }
-                    }
-                }
-                else {
-                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                            if (j > GameConfig.GRID_COLS - 7) {
-                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
-                            }
-                        }
-                    }
-                }*/
             }
         };
         UIBuildingManager.prototype.onUp = function (sprite) {
             this.buildingSelected = false;
             this.inputDown = false;
-            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) - 1;
+            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
             var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
             var canBuild = true;
-            for (var i = 0; i < 2; i++) {
-                for (var j = 0; j < 2; j++) {
-                    if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
-                        canBuild = false;
+            if (row >= GameConfig.GRID_ROWS - 1) {
+                canBuild = false;
+            }
+            if (col > GameConfig.GRID_COLS - 1) {
+                canBuild = false;
+            }
+            if (canBuild) {
+                for (var i = 0; i < 2; i++) {
+                    for (var j = 0; j < 2; j++) {
+                        if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
+                            canBuild = false;
+                        }
                     }
                 }
             }

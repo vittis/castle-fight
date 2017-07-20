@@ -27,36 +27,24 @@ module Kodo {
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
 
+            var uiArea = this.isHost ? GameConfig.uiWidth : 0; 
+
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
                 for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize, i * GameConfig.tileSize + GameConfig.uiHeight, i, j);
+                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, i, j);
                     if((i >= 6 && i <= 9) && (j >= 8 && j <= 20)){ //para 16x29
-                        this.game.add.sprite(j * GameConfig.tileSize, i * GameConfig.tileSize + GameConfig.uiHeight, 'arvore1');
+                        this.game.add.sprite(j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, 'arvore1');
                     }
                 }
             }
 
             this.uiBuildingManager = new UIBuildingManager(this.game);
             this.uiResourceManager = new UIResourceManager(this.game);
-
         }
-
 
         update() {
             this.uiBuildingManager.update();
-           /* console.log(this.grid[14][27].entity == null);
-            for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    if (this.grid[i][j].entity != null) {
-                        this.grid[i][j].tint = 0xc9e5d4;
-                    }
-                    else {
-                        this.grid[i][j].tint = 0xFFFFFF;
-
-                    }
-                }
-            }*/
         }
 
         updateEntities(newEntities : any[]) {

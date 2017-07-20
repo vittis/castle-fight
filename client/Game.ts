@@ -6,7 +6,9 @@ module Kodo {
         public static instance : Game = null;
 
         constructor() {
-            super(1392, 816, Phaser.AUTO, document.getElementById('game'), null);
+            //1296, 844
+            //super(1296+GameConfig.uiWidth, 816-48, Phaser.AUTO, document.getElementById('game'), null);
+            super(1392, 844-6, Phaser.AUTO, document.getElementById('game'), null);
 
             Game.instance = this;
 
@@ -16,7 +18,6 @@ module Kodo {
             this.state.add('GameScene', GameScene, false);
             
             this.state.start('Boot'); 
-            
         }
  
     }
