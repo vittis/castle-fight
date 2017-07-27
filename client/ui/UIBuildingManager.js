@@ -27,6 +27,7 @@ var Kodo;
             this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);
+            this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
             this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
             this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
             this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
@@ -34,6 +35,9 @@ var Kodo;
             this.preview.alpha = 0.8;
             this.preview.visible = false;
         }
+        UIBuildingManager.prototype.onHover = function (sprite) {
+            sprite.onOver();
+        };
         UIBuildingManager.prototype.onDown = function (sprite) {
             this.inputDown = true;
             this.preview.loadTexture(sprite.previewName);
@@ -43,6 +47,7 @@ var Kodo;
                 this.buildingSelected = true;
                 this.preview.visible = true;
             }
+            sprite.onOut();
         };
         UIBuildingManager.prototype.onUp = function (sprite) {
             this.buildingSelected = false;

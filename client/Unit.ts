@@ -3,7 +3,7 @@ module Kodo {
     export interface UnitData extends EntityData {
         attackRange?: number;
         attackDmg?: number;
-
+        attackRate?: number;
         attackData?: AttackData;
     }
 
@@ -19,6 +19,7 @@ module Kodo {
         }
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, texture: string, data : EntityData) {
             super(game, tile, id, isHost, texture, data);
+            this.events.onInputDown.add(Kodo.GameScene.instance.uiEntityManager.onDownUnit, this);
         }
         update() {
             super.update();

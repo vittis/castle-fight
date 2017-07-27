@@ -30,6 +30,34 @@ var Kodo;
             _this.woodCostText.alignTo(_this, Phaser.RIGHT_BOTTOM, 3);
             _this.game.time.events.add(500, _this.updateTextPos.bind(_this), _this);
             _this.game.time.events.add(1000, _this.updateTextPos.bind(_this), _this);
+            _this.descricaoString = Kodo[buildingName].nome + "\nHP: " + Kodo[buildingName].maxHP +
+                "\nArmor: " + Kodo[buildingName].maxArmor + "\nUnit Count: " + Kodo[buildingName].spamCount + "\nTraining Rate: " + Kodo[buildingName].spamRate;
+            var style = {
+                font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "left"
+            };
+            _this.descTexto = _this.game.add.text(200, 100, _this.descricaoString, style);
+            _this.descTexto.fontSize = 16;
+            _this.descTexto.alpha = 0.8;
+            _this.descTexto.anchor.setTo(0.5, 1);
+            var box = _this.game.make.graphics(0, 0);
+            box.beginFill(0x000000);
+            box.lineStyle(5, 0x000000, 1);
+            box.moveTo(0, 0);
+            box.lineTo(_this.descTexto.width + 10, 0);
+            box.lineTo(_this.descTexto.width + 10, _this.descTexto.height + 10);
+            box.lineTo((_this.descTexto.width + 10) / 2 + 10, _this.descTexto.height + 10);
+            box.lineTo((_this.descTexto.width + 10) / 2, _this.descTexto.height + 20);
+            box.lineTo((_this.descTexto.width + 10) / 2 - 10, _this.descTexto.height + 10);
+            box.lineTo(0, _this.descTexto.height + 10);
+            box.lineTo(0, 0);
+            box.endFill();
+            _this.descricaoBox = _this.game.add.sprite(_this.descTexto.x, _this.descTexto.y, box.generateTexture());
+            _this.descricaoBox.alpha = 0.6;
+            _this.descricaoBox.anchor.setTo(0.5, 1);
+            box.destroy();
+            _this.game.world.swap(_this.descricaoBox, _this.descTexto);
+            _this.descricaoBox.visible = false;
+            _this.descTexto.visible = false;
             return _this;
         }
         UIBuildingButton.prototype.updateTextPos = function () {
@@ -37,6 +65,19 @@ var Kodo;
             this.goldCostText.y = Math.round(this.world.y - this.height / 2 + 23);
             this.woodCostText.x = Math.round(this.world.x - 50);
             this.woodCostText.y = Math.round(this.world.y + this.height / 2 - 23);
+        };
+        UIBuildingButton.prototype.onOver = function () {
+            this.descricaoBox.x = this.world.x;
+            this.descricaoBox.y = this.world.y - this.height / 2;
+            this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
+            this.descTexto.x += 10;
+            this.descTexto.y += 10;
+            this.descricaoBox.visible = true;
+            this.descTexto.visible = true;
+        };
+        UIBuildingButton.prototype.onOut = function () {
+            this.descricaoBox.visible = false;
+            this.descTexto.visible = false;
         };
         return UIBuildingButton;
     }(Phaser.Button));

@@ -44,7 +44,7 @@ module Kodo {
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);
 
-
+            this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
             this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
             this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
             this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
@@ -53,7 +53,10 @@ module Kodo {
             this.preview.alpha = 0.8;
             this.preview.visible = false;
         }
-    
+        onHover(sprite: UIBuildingButton) {
+            sprite.onOver();
+        }
+
         onDown(sprite : UIBuildingButton) {
             this.inputDown = true;
             this.preview.loadTexture(sprite.previewName);
@@ -63,6 +66,7 @@ module Kodo {
                 this.buildingSelected = true;
                 this.preview.visible = true;
             }
+            sprite.onOut();
         }
 
         onUp(sprite: UIBuildingButton) {

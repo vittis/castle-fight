@@ -22,8 +22,13 @@ module Kodo {
 
         barGroup : Phaser.Group;
 
+        static nome;
         static width;
         static height;
+
+        descricaoBox: Phaser.Image;
+        descTexto: Phaser.Text;
+        descricaoString: string;
 
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
@@ -47,18 +52,25 @@ module Kodo {
             this.barGroup.add(this.hpBar);
             this.barGroup.add(this.armorBar);
 
-            //this.events.onInputOver.add(this.onOver.bind(this), this);
+            this.inputEnabled = true;
+            this.input.useHandCursor = true;
+            this.events.onInputOver.add(this.onOver.bind(this), this);
+            this.events.onInputOut.add(this.onOut.bind(this), this);
 
             game.add.existing(this);
         }
+
         onOver() {
             this.hpBar.visible = true;
             this.armorBar.visible = true;
-        }
 
-        update() {
-            
         }
+         onOut() {
+             this.hpBar.visible = false;
+             this.armorBar.visible = false;
+         }
+         /* update(){
+         } */
 
         updateStep(newData : EntityData, tile? : Tile) {
             if (newData.hp < this.dataq.hp || newData.armor < this.dataq.armor) {
@@ -82,9 +94,6 @@ module Kodo {
             this.tint = 0xFFFFFF;
         }
         onDeath() {
-            console.log(this.tile.row);
-            console.log(this.tile.col);
-            //Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity
             for (var i = 0; i < this.dataq.width; i++) {
                 for (var j = 0; j < this.dataq.height; j++) {
                     Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity = null;
@@ -93,7 +102,11 @@ module Kodo {
            
             this.armorBar.destroy();
             this.hpBar.destroy();
-            this.destroy();
+            this.destroy(); 
+            if (Kodo.GameScene.instance.uiEntityManager.target == this) {
+                Kodo.GameScene.instance.uiEntityManager.descricaoBox.destroy();
+                Kodo.GameScene.instance.uiEntityManager.descTexto.destroy();
+            }
         }
         
     }

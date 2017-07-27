@@ -31,10 +31,15 @@ module Client {
         });*/
         data.buildingData.forEach(element => {
             if (Kodo[element.name]) {
+                Kodo[element.name].nome = element.name;
                 Kodo[element.name].goldCost = element.goldCost;
                 Kodo[element.name].woodCost = element.woodCost;
                 Kodo[element.name].width = element.width;
                 Kodo[element.name].height = element.height;
+                Kodo[element.name].maxHP = element.maxHP;
+                Kodo[element.name].maxArmor = element.maxArmor;
+                Kodo[element.name].spamCount = element.spamCount;
+                Kodo[element.name].spamRate = element.spamRate;
             }
         });
     });
