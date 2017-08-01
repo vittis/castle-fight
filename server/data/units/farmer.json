@@ -1,11 +1,11 @@
 {
-    "name": "Soldado", 
+    "name": "Farmer",
     "width": 1,
     "height": 1,
-    "maxHP": 10, 
-    "maxArmor": 5,
+    "maxHP": 10,
+    "maxArmor": 0,
     
     "attackRange": 1,
-    "attackDmg": 2,
+    "attackDmg": 1,
     "attackRate": 2
 }

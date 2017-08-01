@@ -1,0 +1,11 @@
+{
+    "name": "Barn",
+    "width": 2,
+    "height": 2,
+    "maxHP": 15,
+    "maxArmor": 5,
+    "goldCost": 35,
+    "woodCost": 0,
+    "spamCount": 2,
+    "spamRate": 10
+}

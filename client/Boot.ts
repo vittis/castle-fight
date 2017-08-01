@@ -17,8 +17,8 @@ module Kodo {
                 //Phaser.Canvas.setTouchAction(this.game.canvas, "auto"); // disable the default "none"
                 //this.game.input.touch.preventDefault = false;
                 this.game.scale.forceLandscape = true;
-                this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
-                this.game.scale.startFullScreen()
+                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                this.game.scale.startFullScreen();
                 this.game.scale.refresh();
                 window.addEventListener('resize', function () { adjust(); });
                 adjust();
@@ -31,7 +31,6 @@ module Kodo {
         }
         
     }
-    
 }
 
 function adjust() { var divgame = document.getElementById("game"); divgame.style.width = window.innerWidth + "px"; divgame.style.height = window.innerHeight + "px"; }

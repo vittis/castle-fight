@@ -29,11 +29,13 @@ export class GamePlayer {
     buildBuilding(b : Building) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {
             this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
-            
+            if (b.data.woodCost == 0) {
+                this.resourceManager.add(0, b.data.goldCost);
+            }
             this.addEntity(b);
         }
         else {
-            //throw Error("n tem recursos");
+            console.log("nao ha recursos");
         }
     }
 

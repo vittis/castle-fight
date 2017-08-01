@@ -62,7 +62,8 @@ module Kodo {
 
         onOver() {
             this.hpBar.visible = true;
-            this.armorBar.visible = true;
+            if (this.dataq.maxArmor > 0)
+                this.armorBar.visible = true;
 
         }
          onOut() {

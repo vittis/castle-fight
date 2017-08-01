@@ -62,12 +62,23 @@ module Kodo {
                 this.game.load.image('archeryRangeh', 'assets/48/archeryRangeh_48.png');
                 this.game.load.image('archeryRangec', 'assets/48/archeryRangec_48.png');
                 this.game.load.image('tiro', 'assets/48/tiro_48.png');
+                this.game.load.image('barnh', 'assets/48/barnh_48.png');
+                this.game.load.image('barnc', 'assets/48/barnc_48.png');
+                this.game.load.image('storageBarnh', 'assets/48/storageBarnh_48.png');
+                this.game.load.image('storageBarnc', 'assets/48/storageBarnc_48.png')
+                this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
+                this.game.load.image('farmerc', 'assets/48/farmerc_48.png');
 
-                this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 72, 72);
-                this.game.load.spritesheet('archeryRange_ui_h', 'assets/48/ui/archeryRange_ui_h.png', 72, 72);
+                this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 66, 66);
+                this.game.load.spritesheet('archeryRange_ui_h', 'assets/48/ui/archeryRange_ui_h.png', 66, 66);
                 this.game.load.spritesheet('barracks_ui_c', 'assets/48/ui/barracks_ui_c.png', 66, 66);
                 this.game.load.spritesheet('archeryRange_ui_c', 'assets/48/ui/archeryRange_ui_c.png', 66, 66);
-                
+                this.game.load.spritesheet('barn_ui_h', 'assets/48/ui/barn_ui_h.png', 66, 66);
+                this.game.load.spritesheet('barn_ui_c', 'assets/48/ui/barn_ui_c.png', 66, 66);
+                this.game.load.spritesheet('storageBarn_ui_h', 'assets/48/ui/storageBarn_ui_h.png', 66, 66);
+                this.game.load.spritesheet('storageBarn_ui_c', 'assets/48/ui/storageBarn_ui_c.png', 66, 66);
+
+
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');
                 this.game.load.image('wood_icon', 'assets/48/ui/wood_icon.png');

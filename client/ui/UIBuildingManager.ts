@@ -35,7 +35,13 @@ module Kodo {
             var archeryRangeui = new UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
             this.buildingsGroup.add(archeryRangeui);
 
-            this.buildingsGroup.align(2, 1, 120, 0);
+            var barnui = new UIBuildingButton(game, 'barn_ui_' + hostLabel, this, 'barn' + hostLabel, 'Barn');
+            this.buildingsGroup.add(barnui);
+
+            var storageBarnui = new UIBuildingButton(game, 'storageBarn_ui_' + hostLabel, this, 'storageBarn' + hostLabel, 'StorageBarn');
+            this.buildingsGroup.add(storageBarnui);
+
+            this.buildingsGroup.align(4, 1, 105, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
