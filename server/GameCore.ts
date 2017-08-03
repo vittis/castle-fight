@@ -15,6 +15,8 @@ import { Unit } from "./Unit";
 import { ArcheryRange } from "./building/ArcheryRange";
 import { JuggerField } from "./building/JuggerField";
 import { DataSerializer } from "./Serializer";
+import { StorageBarn } from "./building/StorageBarn";
+import { Barn } from "./building/Barn";
 
 export class GameCore {
     id : number;
@@ -36,9 +38,11 @@ export class GameCore {
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
-        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
+        this.host.buildBuilding(new StorageBarn(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new Barn(0, 0));
+
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
 
 
         /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
@@ -97,7 +101,7 @@ export class GameCore {
             var targetTile;
 
             if (closestTileWithEnemy != null) {
-                if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, closestTileWithEnemy.col, closestTileWithEnemy.row) <= 4) {
+                if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, closestTileWithEnemy.col, closestTileWithEnemy.row) <= 4 || this.gridManager.getDistance(unit.tile.col, unit.tile.row, closestTileWithEnemy.col, closestTileWithEnemy.row) <= unit.data.attackRange) {
                     targetTile = closestTileWithEnemy;
                 }
                 else {

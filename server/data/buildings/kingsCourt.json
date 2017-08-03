@@ -1,0 +1,13 @@
+{
+    "name": "KingsCourt",
+    "width": 2,
+    "height": 2,
+    "maxHP": 35,
+    "maxArmor": 10,
+    "goldCost": 150,
+    "woodCost": 150,
+    "spamUnit": "King",
+    "spamCount": 1,
+    "spamRate": 10,
+    "description": "Trains King"
+}

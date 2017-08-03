@@ -1,0 +1,13 @@
+{
+    "name": "SpecialFacility",
+    "width": 2,
+    "height": 2,
+    "maxHP": 25,
+    "maxArmor": 5,
+    "goldCost": 120,
+    "woodCost": 150,
+    "spamUnit": "Sniper",
+    "spamCount": 2,
+    "spamRate": 30,
+    "description": "Trains Sniper"
+}

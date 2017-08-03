@@ -35,6 +35,10 @@ export abstract class Unit extends Entity{
         this.tile = tile;
         tile.entity = this;
     }
+    
+    receiveAttack(unit: Unit) {
+        super.receiveAttack(unit);
+    }
 
     attack(entity : Entity) : void {
         this.data.attackData.hasAttacked = true;

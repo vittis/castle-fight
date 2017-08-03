@@ -66,8 +66,17 @@ module Kodo {
                 this.game.load.image('barnc', 'assets/48/barnc_48.png');
                 this.game.load.image('storageBarnh', 'assets/48/storageBarnh_48.png');
                 this.game.load.image('storageBarnc', 'assets/48/storageBarnc_48.png')
+                this.game.load.image('specialFacilityh', 'assets/48/specialFacilityh_48.png');
+                this.game.load.image('specialFacilityc', 'assets/48/specialFacilityc_48.png')
+                this.game.load.image('kingsCourth', 'assets/48/kingsCourth_48.png');
+                this.game.load.image('kingsCourtc', 'assets/48/kingsCourtc_48.png')
+
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
                 this.game.load.image('farmerc', 'assets/48/farmerc_48.png');
+                this.game.load.image('sniperh', 'assets/48/sniperh_48.png');
+                this.game.load.image('sniperc', 'assets/48/sniperc_48.png');
+                this.game.load.image('kingh', 'assets/48/kingh_48.png');
+                this.game.load.image('kingc', 'assets/48/kingc_48.png');
 
                 this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 66, 66);
                 this.game.load.spritesheet('archeryRange_ui_h', 'assets/48/ui/archeryRange_ui_h.png', 66, 66);
@@ -77,7 +86,10 @@ module Kodo {
                 this.game.load.spritesheet('barn_ui_c', 'assets/48/ui/barn_ui_c.png', 66, 66);
                 this.game.load.spritesheet('storageBarn_ui_h', 'assets/48/ui/storageBarn_ui_h.png', 66, 66);
                 this.game.load.spritesheet('storageBarn_ui_c', 'assets/48/ui/storageBarn_ui_c.png', 66, 66);
-
+                this.game.load.spritesheet('specialFacility_ui_h', 'assets/48/ui/specialFacility_ui_h.png', 66, 66);
+                this.game.load.spritesheet('specialFacility_ui_c', 'assets/48/ui/specialFacility_ui_c.png', 66, 66);
+                this.game.load.spritesheet('kingsCourt_ui_h', 'assets/48/ui/kingsCourt_ui_h.png', 66, 66);
+                this.game.load.spritesheet('kingsCourt_ui_c', 'assets/48/ui/kingsCourt_ui_c.png', 66, 66);
 
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');

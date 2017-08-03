@@ -1,0 +1,11 @@
+{
+    "name": "King",
+    "width": 1,
+    "height": 1,
+    "maxHP": 15,
+    "maxArmor": 15,
+    "attackRange": 1,
+    "attackDmg": 3,
+    "attackRate": 2,
+    "description": "Regenerates 3 armor for each 5 attacks received"
+}

@@ -4,7 +4,7 @@ export module GameConfig {
     export const STEP_RATE = 550;//550
 
     export const STARTING_GOLD = 400;
-    export const STARTING_WOOD = 0;
+    export const STARTING_WOOD = 200;
     export const STARTING_INCOME = 50;
     export const STARTING_INCOME_RATE = 20;
 
