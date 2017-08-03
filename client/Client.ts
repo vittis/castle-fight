@@ -26,9 +26,20 @@ module Client {
 
 
     socket.on('receiveBuildingAndUnitData', function (data) {
-        /*data.unitData.forEach(element => {
-            console.log(element);
-        });*/
+        data.unitData.forEach(element => {
+            if (Kodo[element.name]) {
+                Kodo[element.name].nome = element.name;
+                Kodo[element.name].width = element.width;
+                Kodo[element.name].height = element.height;
+                Kodo[element.name].maxHP = element.maxHP;
+                Kodo[element.name].maxArmor = element.maxArmor;
+                Kodo[element.name].attackDmg = element.attackDmg;
+                Kodo[element.name].attackRate = element.attackRate;
+                Kodo[element.name].attackRange = element.attackRange;
+                Kodo[element.name].description = element.description;
+
+            }
+        });
         data.buildingData.forEach(element => {
             if (Kodo[element.name]) {
                 Kodo[element.name].nome = element.name;
@@ -38,8 +49,10 @@ module Client {
                 Kodo[element.name].height = element.height;
                 Kodo[element.name].maxHP = element.maxHP;
                 Kodo[element.name].maxArmor = element.maxArmor;
+                Kodo[element.name].spamUnit = element.spamUnit;
                 Kodo[element.name].spamCount = element.spamCount;
                 Kodo[element.name].spamRate = element.spamRate;
+                Kodo[element.name].description = element.description;
             }
         });
     });

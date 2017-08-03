@@ -7,6 +7,9 @@
     "goldCost": 70,
     "woodCost": 0,
 
+    "spamUnit": "Archer",
     "spamCount": 3,
-    "spamRate": 15
+    "spamRate": 15,
+
+    "description": "Trains Archer"
 }

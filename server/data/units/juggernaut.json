@@ -7,5 +7,6 @@
 
     "attackRange": 1,
     "attackDmg": 10,
-    "attackRate": 3
+    "attackRate": 3,
+    "description": "Jugger Boy"
 }

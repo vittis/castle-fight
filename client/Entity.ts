@@ -25,6 +25,7 @@ module Kodo {
         static nome;
         static width;
         static height;
+        static description;
 
         descricaoBox: Phaser.Image;
         descTexto: Phaser.Text;
@@ -105,8 +106,8 @@ module Kodo {
             this.hpBar.destroy();
             this.destroy(); 
             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
-                Kodo.GameScene.instance.uiEntityManager.descricaoBox.destroy();
-                Kodo.GameScene.instance.uiEntityManager.descTexto.destroy();
+                Kodo.GameScene.instance.uiEntityManager.isShowing = false;
+                Kodo.GameScene.instance.uiEntityManager.boxGroup.removeAll();
             }
         }
         

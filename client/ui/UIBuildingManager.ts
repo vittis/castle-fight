@@ -10,6 +10,7 @@ module Kodo {
         preview : Phaser.Sprite;
 
         inputDown : boolean = false;
+        inputOver : boolean = false;
 
         constructor(game : Phaser.Game) {
             this.game = game;
@@ -50,24 +51,35 @@ module Kodo {
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);
 
-            this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
-            this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
-            this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
-            this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
+            if (!this.game.device.android) {
+                this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
+                this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
+                this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
+                this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
+            }
+            else {
+                this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
+                this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
+                this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
+                this.buildingsGroup.onChildInputOut.add(this.onUp.bind(this), this);
+            }
 
             this.preview = game.add.sprite(0, 0, null);
             this.preview.alpha = 0.8;
             this.preview.visible = false;
         }
         onHover(sprite: UIBuildingButton) {
+            this.inputOver = true;
             sprite.onOver();
         }
 
         onDown(sprite : UIBuildingButton) {
+            sprite.onDown();
             this.inputDown = true;
             this.preview.loadTexture(sprite.previewName);
         }
         onOut(sprite: UIBuildingButton) {
+            this.inputOver = false;
             if (this.inputDown) {
                 this.buildingSelected = true;
                 this.preview.visible = true;
@@ -76,58 +88,59 @@ module Kodo {
         }
 
         onUp(sprite: UIBuildingButton) {
-            this.buildingSelected = false;
-            
             this.inputDown = false;
+            this.buildingSelected = false;
 
-            var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
-            var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
+            if (!this.inputOver) {
+                var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
+                var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
 
-            var canBuild = true;
+                var canBuild = true;
 
-            if (row >= GameConfig.GRID_ROWS - 1) {
-                canBuild = false;
-            }
-            if (col > GameConfig.GRID_COLS - 1) {
-                canBuild = false;
-            }
-            if (canBuild) {
-                for (var i = 0; i < 2; i++) {
-                    for (var j = 0; j < 2; j++) {
-                        if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
-                            canBuild = false;
+                if (row >= GameConfig.GRID_ROWS - 1) {
+                    canBuild = false;
+                }
+                if (col > GameConfig.GRID_COLS - 1) {
+                    canBuild = false;
+                }
+                if (canBuild) {
+                    for (var i = 0; i < 2; i++) {
+                        for (var j = 0; j < 2; j++) {
+                            if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
+                                canBuild = false;
+                            }
                         }
                     }
                 }
-            }
 
-            for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
+                for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
+                    for (var j = 0; j < GameConfig.GRID_COLS; j++) {
+                        Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
+                    }
                 }
-            }
 
-            if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
-                if (canBuild) {
-                    if (GameConfig.isHost) {
-                        if (col < 6) {
-                            Client.askBuild(row, col, sprite.buildingName);
-                       }
+                if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
+                    if (canBuild) {
+                        if (GameConfig.isHost) {
+                            if (col < 6) {
+                                Client.askBuild(row, col, sprite.buildingName);
+                        }
+                        }
+                        else {
+                            if (col > GameConfig.GRID_COLS - 7) {
+                                Client.askBuild(row, col, sprite.buildingName);
+                            }
+                        }
                     }
                     else {
-                        if (col > GameConfig.GRID_COLS - 7) {
-                            Client.askBuild(row, col, sprite.buildingName);
-                        }
+                        console.log("ja tem uma entidade aqui!!");
                     }
                 }
                 else {
-                    console.log("ja tem uma entidade aqui!!");
+                    console.log("n pode construir aqui");
                 }
+                this.game.time.events.add(500, this.hidePreview.bind(this), this);
             }
-            else {
-                console.log("n pode construir aqui");
-            }
-            this.game.time.events.add(500, this.hidePreview.bind(this), this);
         }   
         hidePreview() {
             this.preview.visible = false;

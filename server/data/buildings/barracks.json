@@ -2,11 +2,14 @@
     "name": "Barracks", 
     "width": 2,
     "height": 2,
-    "maxHP": 30, 
-    "maxArmor": 5,
+    "maxHP": 20, 
+    "maxArmor": 10,
     "goldCost": 70,
     "woodCost": 0,
 
+    "spamUnit": "Soldado",
     "spamCount": 3,
-    "spamRate": 15
+    "spamRate": 15,
+
+    "description": "Trains Footman"
 }

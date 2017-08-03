@@ -10,13 +10,15 @@ var Kodo;
         UIEntityManager.prototype.updateText = function () {
             if (this.descTexto) {
                 if (this.target instanceof Kodo.Building) {
-                    this.descTexto.text = this.target.dataq.name + "\nHP: " + this.target.dataq.hp + "/" + this.target.dataq.maxHP +
-                        "\nArmor: " + this.target.dataq.armor + "/" + this.target.dataq.maxArmor;
+                    this.descTexto.text = this.target.dataq.name + "\n";
+                    this.hpTexto.text = "" + this.target.dataq.hp;
+                    this.armorTexto.text = "" + this.target.dataq.armor;
                 }
                 if (this.target instanceof Kodo.Unit) {
-                    this.descTexto.text = this.target.dataq.name + "\nHP: " + this.target.dataq.hp + "/" + this.target.dataq.maxHP +
-                        "\nArmor: " + this.target.dataq.armor + "/" + this.target.dataq.maxArmor + "\nDamage: "
+                    this.descTexto.text = this.target.dataq.name + "\n" + "\nDamage: "
                         + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
+                    this.hpTexto.text = "" + this.target.dataq.hp;
+                    this.armorTexto.text = "" + this.target.dataq.armor;
                 }
             }
             this.game.world.bringToTop(this.boxGroup);
@@ -28,25 +30,24 @@ var Kodo;
                 this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
                 this.descTexto.x += 10;
                 this.descTexto.y += 10;
+                this.boxGroup.getTop().alignIn(this.descTexto, Phaser.TOP_CENTER, 0, -20);
             }
         };
         UIEntityManager.prototype.onDownUnit = function (unit) {
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             if (entityManager.descricaoBox) {
-                entityManager.descricaoBox.destroy();
-                entityManager.descTexto.destroy();
+                entityManager.boxGroup.removeAll();
             }
             if (entityManager.target != unit || !entityManager.isShowing) {
                 entityManager.isShowing = true;
-                entityManager.descricaoString = unit.dataq.name + "\nHP: " + unit.dataq.hp + "/" + unit.dataq.maxHP +
-                    "\nArmor: " + unit.dataq.armor + "/" + unit.dataq.maxArmor
+                entityManager.descricaoString = unit.dataq.name + "\n"
                     + "\nDamage: " + unit.data.attackDmg + "\nRange: " + unit.data.attackRange + "\nAtk Speed: " + unit.data.attackRate;
                 var style = {
-                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "left"
+                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;
-                entityManager.descTexto.alpha = 0.8;
+                entityManager.descTexto.alpha = 0.85;
                 entityManager.descTexto.anchor.setTo(0.5, 0.5);
                 var box = this.game.make.graphics(0, 0);
                 box.beginFill(0x000000);
@@ -70,8 +71,26 @@ var Kodo;
                 entityManager.descTexto.alignIn(entityManager.descricaoBox, Phaser.TOP_LEFT);
                 entityManager.descTexto.x += 10;
                 entityManager.descTexto.y += 10;
+                var hp_icon = this.game.add.sprite(50, 50, 'hp_icon');
+                var armor_icon = this.game.add.sprite(50, 50, 'armor_icon');
+                armor_icon.alignTo(hp_icon, Phaser.RIGHT_CENTER, 10);
+                entityManager.hpTexto = this.game.add.text(200, 100, "" + unit.dataq.hp, style);
+                entityManager.hpTexto.fontSize = 16;
+                entityManager.hpTexto.alpha = 0.9;
+                entityManager.hpTexto.alignIn(hp_icon, Phaser.CENTER, 0, 1);
+                entityManager.armorTexto = this.game.add.text(200, 100, "" + unit.dataq.armor, style);
+                entityManager.armorTexto.fontSize = 16;
+                entityManager.armorTexto.alpha = 0.9;
+                entityManager.armorTexto.alignIn(armor_icon, Phaser.CENTER, 0, 3);
+                var iconGroup = this.game.add.group();
+                iconGroup.add(hp_icon);
+                iconGroup.add(armor_icon);
+                iconGroup.add(entityManager.hpTexto);
+                iconGroup.add(entityManager.armorTexto);
+                iconGroup.alignIn(entityManager.descTexto, Phaser.TOP_CENTER, 0, -20);
                 entityManager.boxGroup.add(entityManager.descricaoBox);
                 entityManager.boxGroup.add(entityManager.descTexto);
+                entityManager.boxGroup.add(iconGroup);
                 this.game.world.bringToTop(entityManager.boxGroup);
             }
             else {
@@ -82,19 +101,22 @@ var Kodo;
         UIEntityManager.prototype.onDownBuilding = function (building) {
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             if (entityManager.descricaoBox) {
-                entityManager.descricaoBox.destroy();
+                /* entityManager.descricaoBox.destroy();
                 entityManager.descTexto.destroy();
+                entityManager.iconGroup.removeAll(); */
+                entityManager.boxGroup.removeAll();
             }
             if (entityManager.target != building || !entityManager.isShowing) {
                 entityManager.isShowing = true;
-                entityManager.descricaoString = building.dataq.name + "\nHP: " + building.dataq.hp + "/" + building.dataq.maxHP +
-                    "\nArmor: " + building.dataq.armor + "/" + building.dataq.maxArmor;
+                /* entityManager.descricaoString = building.dataq.name + "\nHP: " + building.dataq.hp + "/" + building.dataq.maxHP +
+                    "\nArmor: " + building.dataq.armor + "/" + building.dataq.maxArmor; */
+                entityManager.descricaoString = building.dataq.name + "\n";
                 var style = {
-                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "left"
+                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;
-                entityManager.descTexto.alpha = 0.8;
+                entityManager.descTexto.alpha = 0.85;
                 entityManager.descTexto.anchor.setTo(0.5, 0.5);
                 var box = this.game.make.graphics(0, 0);
                 box.beginFill(0x000000);
@@ -118,8 +140,26 @@ var Kodo;
                 entityManager.descTexto.alignIn(entityManager.descricaoBox, Phaser.TOP_LEFT);
                 entityManager.descTexto.x += 10;
                 entityManager.descTexto.y += 10;
+                var hp_icon = this.game.add.sprite(50, 50, 'hp_icon');
+                var armor_icon = this.game.add.sprite(50, 50, 'armor_icon');
+                armor_icon.alignTo(hp_icon, Phaser.RIGHT_CENTER, 10);
+                entityManager.hpTexto = this.game.add.text(200, 100, "" + building.dataq.hp, style);
+                entityManager.hpTexto.fontSize = 16;
+                entityManager.hpTexto.alpha = 0.9;
+                entityManager.hpTexto.alignIn(hp_icon, Phaser.CENTER, 0, 1);
+                entityManager.armorTexto = this.game.add.text(200, 100, "" + building.dataq.armor, style);
+                entityManager.armorTexto.fontSize = 16;
+                entityManager.armorTexto.alpha = 0.9;
+                entityManager.armorTexto.alignIn(armor_icon, Phaser.CENTER, 0, 3);
+                var iconGroup = this.game.add.group();
+                iconGroup.add(hp_icon);
+                iconGroup.add(armor_icon);
+                iconGroup.add(entityManager.hpTexto);
+                iconGroup.add(entityManager.armorTexto);
+                iconGroup.alignIn(entityManager.descTexto, Phaser.TOP_CENTER, 0, -20);
                 entityManager.boxGroup.add(entityManager.descricaoBox);
                 entityManager.boxGroup.add(entityManager.descTexto);
+                entityManager.boxGroup.add(iconGroup);
                 this.game.world.bringToTop(entityManager.boxGroup);
             }
             else {

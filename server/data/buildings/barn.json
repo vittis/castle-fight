@@ -6,6 +6,10 @@
     "maxArmor": 5,
     "goldCost": 35,
     "woodCost": 0,
+
+    "spamUnit": "Farmer",
     "spamCount": 2,
-    "spamRate": 10
+    "spamRate": 10,
+
+    "description": "Trains Farmer"
 }

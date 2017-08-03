@@ -82,6 +82,8 @@ module Kodo {
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');
                 this.game.load.image('wood_icon', 'assets/48/ui/wood_icon.png');
+                this.game.load.image('hp_icon', 'assets/48/ui/hp_icon.png');
+                this.game.load.image('armor_icon', 'assets/48/ui/armor_icon.png');
 
             }
         }

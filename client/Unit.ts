@@ -14,6 +14,14 @@ module Kodo {
     }
 
     export abstract class Unit extends Entity {
+
+        static maxHP;
+        static maxArmor;
+
+        static attackDmg;
+        static attackRange;
+        static attackRate;
+
         get data(): UnitData {
             return this.dataq;
         }

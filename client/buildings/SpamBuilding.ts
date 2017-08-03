@@ -15,6 +15,8 @@ module Kodo {
 
         bar : SpamBarSmooth;
 
+        static spamUnit : string;
+
         get data(): SpamBuildingData {
             return this.dataq;
         }

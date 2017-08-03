@@ -8,5 +8,7 @@
     "woodCost": 150,
 
     "spamCount": 2,
-    "spamRate": 20
+    "spamRate": 20,
+
+    "description": "Trains Juggernaut"
 }

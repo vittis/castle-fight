@@ -7,5 +7,7 @@
     
     "attackRange": 3,
     "attackDmg": 3,
-    "attackRate": 2
+    "attackRate": 2,
+
+    "description": "Nice Archer"
 }

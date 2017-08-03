@@ -1790,7 +1790,7 @@ declare module Phaser {
         forEachDead(callback: Function, callbackContext: any, ...args: any[]): void;
         forEachExists(callback: Function, callbackContext: any): void;
         filter(predicate: Function, checkExists?: boolean): ArraySet;
-        getAt(index: number): PIXI.DisplayObject | number;
+        getAt(index: number): PIXI.DisplayObject | number | Phaser.Image;
         getBottom(): any;
         getByName(name: string): any;
         getClosestTo(object: any, callback?: Function, callbackContext?: any): any;

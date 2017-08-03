@@ -7,5 +7,7 @@
     
     "attackRange": 1,
     "attackDmg": 2,
-    "attackRate": 2
+    "attackRate": 2,
+
+    "description": "Nice Footman"
 }
