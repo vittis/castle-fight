@@ -17,6 +17,7 @@ import { JuggerField } from "./building/JuggerField";
 import { DataSerializer } from "./Serializer";
 import { StorageBarn } from "./building/StorageBarn";
 import { Barn } from "./building/Barn";
+import { IncomeBallManager } from "./IncomeBallManager";
 
 export class GameCore {
     id : number;
@@ -24,7 +25,8 @@ export class GameCore {
     client  : GamePlayer;
 
     gridManager : GridManager;
- 
+    ballManager : IncomeBallManager;
+
     update;
 
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
@@ -34,6 +36,8 @@ export class GameCore {
         
         this.host = new GamePlayer(host, true, this.gridManager);
         this.client = new GamePlayer(client, false, this.gridManager);
+        this.ballManager = new IncomeBallManager(new GamePlayer(null, null, this.gridManager));
+        this.ballManager.addBallToGame();
 
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
@@ -142,8 +146,8 @@ export class GameCore {
         this.host.resourceManager.step();
         this.client.resourceManager.step();
 
-        //this.gridManager.printGrid();
-        //this.printEntityStatus();
+        /* this.gridManager.printGrid();
+        this.printEntityStatus(); */
 
         this.sendaData();
     }
@@ -182,13 +186,13 @@ export class GameCore {
         return this.host.getAllUnits().concat(this.client.getAllUnits());
     }
     getAllEntities() : Entity[] {
-        return this.host.getAllEntities().concat(this.client.getAllEntities());
+        return this.host.getAllEntities().concat(this.client.getAllEntities()).concat(this.ballManager.gp.getAllEntities());
     }
     getOponentEntities(owner : GamePlayer) : Entity[] {
         if (owner == this.host)
-            return this.client.getAllEntities();
+            return this.client.getAllEntities().concat(this.ballManager.gp.getAllEntities());
         else 
-            return this.host.getAllEntities();
+            return this.host.getAllEntities().concat(this.ballManager.gp.getAllEntities());
     }
     endGame() : void {
         console.log("end game chamado");
@@ -198,7 +202,7 @@ export class GameCore {
 
     printEntityStatus() {
         this.getAllEntities().forEach(e => {
-            console.log(e.getEntityData().name+", owner: "+e.owner.serverPlayer.id+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor+", owner gold: "+e.owner.resourceManager.gold);
+            console.log(e.getEntityData().name+", owner: "+e.owner.isHost+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor+", owner gold: "+e.owner.resourceManager.gold);
         });
         
     }

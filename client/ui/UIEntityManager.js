@@ -10,7 +10,8 @@ var Kodo;
         UIEntityManager.prototype.updateText = function () {
             if (this.descTexto) {
                 if (this.target instanceof Kodo.Building) {
-                    this.descTexto.text = this.target.dataq.name + "\n";
+                    this.descTexto.text = this.target.dataq.name + "\n" + "\n" + Kodo[this.target.dataq.name].description;
+                    ;
                     this.hpTexto.text = "" + this.target.dataq.hp;
                     this.armorTexto.text = "" + this.target.dataq.armor;
                 }
@@ -110,7 +111,7 @@ var Kodo;
                 entityManager.isShowing = true;
                 /* entityManager.descricaoString = building.dataq.name + "\nHP: " + building.dataq.hp + "/" + building.dataq.maxHP +
                     "\nArmor: " + building.dataq.armor + "/" + building.dataq.maxArmor; */
-                entityManager.descricaoString = building.dataq.name + "\n";
+                entityManager.descricaoString = building.dataq.name + "\n" + "\n" + Kodo[building.dataq.name].description;
                 var style = {
                     font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
                 };

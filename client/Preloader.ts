@@ -97,6 +97,7 @@ module Kodo {
                 this.game.load.image('hp_icon', 'assets/48/ui/hp_icon.png');
                 this.game.load.image('armor_icon', 'assets/48/ui/armor_icon.png');
 
+                this.game.load.image('incomeBall', 'assets/48/incomeBall_48.png');
             }
         }
  

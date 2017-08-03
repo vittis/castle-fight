@@ -1,0 +1,11 @@
+{
+    "name": "IncomeBall",
+    "width": 1,
+    "height": 1,
+    "maxHP": 15,
+    "maxArmor": 0,
+    "goldCost": 0,
+    "woodCost": 0,
+
+    "description": "Grants 50G and 50W"
+}
