@@ -20,8 +20,8 @@ module Client {
 
     socket.on('receiveData', function (data) {
         Kodo.GameScene.instance.player = data.player;
+        Kodo.GameScene.instance.ballData = data.ballData;
         Kodo.GameScene.instance.updateEntities(data.entities);
-        //console.log(data.player);
     });
 
 
@@ -53,6 +53,7 @@ module Client {
                 Kodo[element.name].spamCount = element.spamCount;
                 Kodo[element.name].spamRate = element.spamRate;
                 Kodo[element.name].description = element.description;
+                Kodo[element.name].incomeGain = element.incomeGain;
             }
         });
     });

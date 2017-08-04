@@ -51,7 +51,7 @@ module Kodo {
             }
 
         }
-
+        timerEvento;
         receiveDamage(newArmor: number) {
             if (this.maxArmor > 0){
                 this.receivedDamage = true;
@@ -59,7 +59,9 @@ module Kodo {
 
                 this.lenght = Phaser.Math.linear(this.maxLenght, 0, this.cuts * t);
                 this.visible = true;
-                this.game.time.events.add(5500, this.hideBar.bind(this), this);
+
+                this.game.time.events.remove(this.timerEvento);
+                this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
             }
         }
         hideBar() {

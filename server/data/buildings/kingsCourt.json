@@ -9,5 +9,6 @@
     "spamUnit": "King",
     "spamCount": 1,
     "spamRate": 10,
-    "description": "Trains King"
+    "description": "Trains King",
+    "incomeGain": 10
 }

@@ -16,7 +16,6 @@ module Kodo {
 
         constructor(game: Phaser.Game) {
             super(game, 0, 0);
-            var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
 
             this.maxLenght = 120;
 
@@ -41,11 +40,6 @@ module Kodo {
             this.containerBar.x -= 19;
 
             var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
-            /*var incomeLabel = game.add.text(0, 0, 'income', style);
-            incomeLabel.anchor.setTo(0.5, 0.5);
-            incomeLabel.fontSize = 15;
-            incomeLabel.x = this.x + 124/2;
-            incomeLabel.y = this.y - 12;*/
 
             this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
@@ -62,9 +56,7 @@ module Kodo {
                 this.currentTime += this.game.time.elapsed / 1000;
                 this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght/20, this.currentTime / (this.timeToMove * Kodo.GameScene.instance.player.incomeRate));
             }
-            //else {
-            //    this.currentTime = 0;
-            //}
+
             this.clear();
             this.lineStyle(19, 0xecec3a, 1);
             this.moveTo(0, 0);
@@ -84,7 +76,6 @@ module Kodo {
 
         updateIncomeLabel() {
             this.incomeNumberLabel.text = '+' + Kodo.GameScene.instance.player.income;
-            
         }
        
     }

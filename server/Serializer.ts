@@ -2,6 +2,7 @@ import { Entity } from "./Entity";
 import { Tile } from "./Tile";
 import { GameConfig } from "./GameConfig";
 import { GamePlayer } from "./GamePlayer";
+import { IncomeBallManager } from "./IncomeBallManager";
 
 export module DataSerializer {
     export function SerializeEntity(entity : Entity) {
@@ -23,6 +24,14 @@ export module DataSerializer {
         obj.income = player.resourceManager.income;
         obj.incomeRate = player.resourceManager.incomeRate;
         obj.incomeRateCounter = player.resourceManager.incomeRateCounter;
+
+        return obj;
+    }
+    export function SerializeBall(bm: IncomeBallManager) {
+        var obj: any = {};
+
+        obj.spamRate = bm.spamRate;
+        obj.spamRateCounter = bm.spamRateCounter;
 
         return obj;
     }

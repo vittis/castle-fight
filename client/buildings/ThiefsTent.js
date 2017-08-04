@@ -10,28 +10,21 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Kodo;
 (function (Kodo) {
-    var Archer = (function (_super) {
-        __extends(Archer, _super);
-        function Archer(game, tile, id, isHost, data) {
+    var ThiefsTent = (function (_super) {
+        __extends(ThiefsTent, _super);
+        function ThiefsTent(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
-                texture = 'archerh';
+                texture = 'thiefsTenth';
             }
             else {
-                texture = 'archerc';
+                texture = 'thiefsTentc';
             }
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
-        Archer.prototype.update = function () {
-            _super.prototype.update.call(this);
-        };
-        Archer.prototype.attack = function (tile) {
-            new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2 + GameConfig.tileSize / 5, this.y + GameConfig.tileSize / 2 - GameConfig.tileSize / 3, tile, this.isHost);
-            _super.prototype.attack.call(this, tile);
-        };
-        return Archer;
-    }(Kodo.Unit));
-    Kodo.Archer = Archer;
+        return ThiefsTent;
+    }(Kodo.SpamBuilding));
+    Kodo.ThiefsTent = ThiefsTent;
 })(Kodo || (Kodo = {}));

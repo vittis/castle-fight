@@ -36,21 +36,6 @@ var Kodo;
             this.woodLabel.text = '' + Kodo.GameScene.instance.player.wood;
             this.goldIcon.alignTo(this.goldLabel, Phaser.RIGHT_CENTER, 5);
             this.woodIcon.alignTo(this.woodLabel, Phaser.RIGHT_CENTER, 5);
-            /*if (GameScene.instance.player.gold >= 100) {
-                this.goldIcon.x = GameConfig.uiWidth / 2 + 18 + 7 + this.offsetX;
-            }
-            else {
-                this.goldIcon.x = GameConfig.uiWidth / 2 + 18 + this.offsetX;
-            }
-            if (GameScene.instance.player.wood == 0) {
-                this.woodIcon.x = GameConfig.uiWidth / 2 + 14 + this.offsetX;
-            }
-            else if (GameScene.instance.player.wood < 100) {
-                this.woodIcon.x = GameConfig.uiWidth / 2 + 14 + 7 + this.offsetX;
-            }
-            else {
-                this.woodIcon.x = GameConfig.uiWidth / 2 + 14 + 12 + this.offsetX;
-            }*/
         };
         return UIResourceManager;
     }());

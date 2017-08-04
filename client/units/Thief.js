@@ -10,28 +10,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Kodo;
 (function (Kodo) {
-    var Archer = (function (_super) {
-        __extends(Archer, _super);
-        function Archer(game, tile, id, isHost, data) {
+    var Thief = (function (_super) {
+        __extends(Thief, _super);
+        function Thief(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
-                texture = 'archerh';
+                texture = 'thiefh';
             }
             else {
-                texture = 'archerc';
+                texture = 'thiefc';
             }
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
-        Archer.prototype.update = function () {
-            _super.prototype.update.call(this);
-        };
-        Archer.prototype.attack = function (tile) {
-            new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2 + GameConfig.tileSize / 5, this.y + GameConfig.tileSize / 2 - GameConfig.tileSize / 3, tile, this.isHost);
+        Thief.prototype.attack = function (tile) {
+            var tweenA = this.game.add.tween(this).to({ x: tile.x, y: tile.y }, 100, Phaser.Easing.Linear.None);
+            var tweenB = this.game.add.tween(this).to({ x: this.x, y: this.y }, 100, Phaser.Easing.Linear.None);
+            tweenA.chain(tweenB);
+            tweenA.start();
             _super.prototype.attack.call(this, tile);
         };
-        return Archer;
+        return Thief;
     }(Kodo.Unit));
-    Kodo.Archer = Archer;
+    Kodo.Thief = Thief;
 })(Kodo || (Kodo = {}));

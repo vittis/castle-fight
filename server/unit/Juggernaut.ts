@@ -8,7 +8,7 @@ export class Juggernaut extends Unit {
     }
 
 
-    doAction(targetTile: Tile): void {
+    /* doAction(targetTile: Tile): void {
         super.doAction(targetTile);
 
         var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
@@ -24,5 +24,5 @@ export class Juggernaut extends Unit {
                 this.moveTo(pathToTargetTile);
         }
 
-    }
+    } */
 }

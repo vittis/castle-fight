@@ -3,11 +3,11 @@
     "width": 1,
     "height": 1,
     "maxHP": 10, 
-    "maxArmor": 5,
+    "maxArmor": 3,
     
     "attackRange": 1,
     "attackDmg": 2,
-    "attackRate": 2,
+    "attackRate": 3,
 
     "description": "Nice Footman"
 }

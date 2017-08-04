@@ -15,6 +15,7 @@ var Kodo;
         function UIBuildingButton(game, sprite, context, previewName, buildingName) {
             var _this = _super.call(this, game, 0, 0, sprite, null, context, 1, 0, 2) || this;
             _this.mostrarUnit = false;
+            _this.over = false;
             _this.previewName = previewName;
             _this.buildingName = buildingName;
             _this.tudoGroup = _this.game.add.group();
@@ -36,7 +37,7 @@ var Kodo;
                 "\nArmor: " + Kodo[buildingName].maxArmor + "\nUnit Count: " + Kodo[buildingName].spamCount + "\nTraining Rate: " + Kodo[buildingName].spamRate +
                 "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
             _this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount
-                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
+                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
             var style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
@@ -44,6 +45,12 @@ var Kodo;
             _this.descTexto.fontSize = 16;
             _this.descTexto.alpha = 0.85;
             _this.descTexto.anchor.setTo(0.5, 1);
+            var indice = _this.descricaoString.indexOf('in: ');
+            _this.descTexto.addColor('#ecec3a', indice);
+            if (Kodo[buildingName].incomeGain >= 10)
+                _this.descTexto.addColor('#ffffff', indice + 2);
+            else
+                _this.descTexto.addColor('#ffffff', indice + 1);
             _this.iconGroup = _this.game.add.group();
             var hp_icon = _this.game.add.sprite(50, 50, 'hp_icon');
             var armor_icon = _this.game.add.sprite(50, 50, 'armor_icon');
@@ -131,6 +138,7 @@ var Kodo;
             _this.unitDescTexto.visible = false;
             _this.unitIconGroup.visible = false;
             _this.unitImage.visible = false;
+            _this.alive = false;
             _this.tudoGroup.add(_this.descricaoBox);
             _this.tudoGroup.add(_this.descTexto);
             _this.tudoGroup.add(_this.iconGroup);
@@ -148,6 +156,11 @@ var Kodo;
         };
         UIBuildingButton.prototype.onOver = function () {
             this.game.world.bringToTop(this.tudoGroup);
+            this.alive = true;
+            if (!this.over) {
+                this.mostrarUnit = false;
+            }
+            this.over = true;
             if (!this.mostrarUnit) {
                 this.unitDescricaoBox.visible = false;
                 this.unitDescTexto.visible = false;
@@ -184,6 +197,7 @@ var Kodo;
             this.mostrarUnit = !this.mostrarUnit;
         };
         UIBuildingButton.prototype.onOut = function () {
+            this.over = false;
             this.descricaoBox.visible = false;
             this.descTexto.visible = false;
             this.unitDescricaoBox.visible = false;
@@ -191,6 +205,7 @@ var Kodo;
             this.iconGroup.visible = false;
             this.unitIconGroup.visible = false;
             this.unitImage.visible = false;
+            this.alive = false;
         };
         return UIBuildingButton;
     }(Phaser.Button));

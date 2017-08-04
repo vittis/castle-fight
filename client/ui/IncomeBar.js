@@ -16,7 +16,6 @@ var Kodo;
             var _this = _super.call(this, game, 0, 0) || this;
             _this.currentTime = 0;
             _this.timeToMove = GameConfig.updateRate / 1000 + 0.045;
-            var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
             _this.maxLenght = 120;
             _this.x = 275;
             _this.y = game.height - GameConfig.uiHeight / 2;
@@ -35,11 +34,6 @@ var Kodo;
             _this.containerBar.y -= 19;
             _this.containerBar.x -= 19;
             var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
-            /*var incomeLabel = game.add.text(0, 0, 'income', style);
-            incomeLabel.anchor.setTo(0.5, 0.5);
-            incomeLabel.fontSize = 15;
-            incomeLabel.x = this.x + 124/2;
-            incomeLabel.y = this.y - 12;*/
             _this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             _this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
             _this.incomeNumberLabel.fontSize = 30;
@@ -54,9 +48,6 @@ var Kodo;
                 this.currentTime += this.game.time.elapsed / 1000;
                 this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght / 20, this.currentTime / (this.timeToMove * Kodo.GameScene.instance.player.incomeRate));
             }
-            //else {
-            //    this.currentTime = 0;
-            //}
             this.clear();
             this.lineStyle(19, 0xecec3a, 1);
             this.moveTo(0, 0);

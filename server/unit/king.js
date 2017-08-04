@@ -15,34 +15,69 @@ var King = (function (_super) {
     __extends(King, _super);
     function King(row, col) {
         var _this = _super.call(this, row, col, require('clone')(require('../data/units/king.json'))) || this;
-        _this.attacksReceived = 0;
+        _this.grappleRate = 10;
+        _this.grappleCounter = 10;
+        _this.canGrapple = true;
+        _this.data.attackRange = 6;
         return _this;
     }
+    King.prototype.step = function () {
+        _super.prototype.step.call(this);
+        if (this.grappleCounter < this.grappleRate)
+            this.grappleCounter++;
+        else {
+            this.canGrapple = true;
+            this.data.attackRange = 6;
+        }
+    };
     King.prototype.doAction = function (targetTile) {
         _super.prototype.doAction.call(this, targetTile);
-        var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
-        if (path.length > 1) {
-            var pathToTargetTile = this.gm.grid[path[1].y][path[1].x];
-            if (targetTile.entity != null && targetTile.entity.owner != this.owner) {
-                if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange) {
+        if (this.canGrapple) {
+            if (targetTile.entity instanceof Unit_1.Unit) {
+                if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= 6 && this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) >= 2) {
+                    this.grapple(targetTile.entity);
+                    this.data.attackRange = 1;
+                    this.grappleCounter = 0;
+                    this.canGrapple = false;
+                }
+                else {
                     if (this.canAttack())
                         this.attack(targetTile.entity);
                 }
-                else if (pathToTargetTile.entity == null)
-                    this.moveTo(pathToTargetTile);
             }
             else {
-                if (pathToTargetTile.entity == null)
-                    this.moveTo(pathToTargetTile);
+                this.data.attackRange = 1;
+                if (this.canAttack() && this.inRange(targetTile))
+                    this.attack(targetTile.entity);
             }
         }
+        else {
+            if (this.canAttack())
+                this.attack(targetTile.entity);
+        }
     };
-    King.prototype.receiveAttack = function (unit) {
-        _super.prototype.receiveAttack.call(this, unit);
-        this.attacksReceived++;
-        if (this.attacksReceived == 5) {
-            this.dataq.armor += 3;
-            this.attacksReceived = 0;
+    King.prototype.grapple = function (unit) {
+        if (!this.owner.isHost) {
+            if (this.gm.tileAt(this.tile.row, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col - 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col - 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col - 1]);
+            }
+        }
+        else {
+            if (this.gm.tileAt(this.tile.row, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col + 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col + 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col + 1]);
+            }
         }
     };
     return King;

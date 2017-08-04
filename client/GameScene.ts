@@ -17,8 +17,10 @@ module Kodo {
         uiBuildingManager : UIBuildingManager;
         uiResourceManager: UIResourceManager;
         uiEntityManager : UIEntityManager;
+        incomeBallBar : IncomeBallBar;
 
-        player : PlayerData = {incomeRate: 20, incomeRateCounter: 0, gold: 0, wood: 0, income: 10};
+        player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 0, wood: 0, income: 10};
+        ballData = {spamRate: 1, spamRateCounter: 0};
         isHost : boolean;
 
         static instance : GameScene = null;
@@ -43,32 +45,7 @@ module Kodo {
             this.uiBuildingManager = new UIBuildingManager(this.game);
             this.uiResourceManager = new UIResourceManager(this.game);
             this.uiEntityManager = new UIEntityManager(this.game);
-
-            /* var style = {font: "Baloo Paaji", fill: 'white', wordWrap: true, align: "left"
-            };
-            var text = this.game.add.text(200, 100, "teste: qweqdsadasssssssssssd\nqqqq: asdasdsd\nwes: aa", style);
-            text.fontSize = 16;
-            text.alpha = 0.8;
-
-            var box = this.game.make.graphics(0, 0);
-            box.beginFill(0x000000);
-            box.lineStyle(5, 0x000000, 1);
-            box.moveTo(0, 0);
-            box.lineTo(text.width+10, 0);
-            box.lineTo(text.width+10, text.height+10);
-
-            box.lineTo((text.width + 10) / 2 + 10, text.height + 10);
-            box.lineTo((text.width + 10) / 2, text.height + 20);
-            box.lineTo((text.width + 10) / 2 - 10, text.height + 10); 
-
-            box.lineTo(0, text.height+10);
-            box.lineTo(0, 0);
-            box.endFill();
-            var descricaoBox = this.game.add.sprite(200-10, 100-10, box.generateTexture());
-            descricaoBox.alpha = 0.6;
-            box.destroy();
-
-            this.world.swap(descricaoBox, text); */
+            this.incomeBallBar = new IncomeBallBar(this.game);
         }
 
         update() {
@@ -78,15 +55,18 @@ module Kodo {
 
         updateEntities(newEntities : any[]) {
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
+            this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
 
+            this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
+                this.world.bringToTop(item.tudoGroup);
+            }.bind(this), this);
+
+            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+            
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
-
-                
                 if (this.idExists(entityID)) {
-                    //this.getEntityById(entityID).moveTo(this.grid[newEntity.row][newEntity.col]);
                     this.getEntityById(entityID).updateStep(newEntity.data, this.grid[newEntity.row][newEntity.col]);
-
                 }
                 else {
                     this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
@@ -111,8 +91,6 @@ module Kodo {
                 }
             }
         }
-
-
 
         idExists(id: number): boolean {
             var jaExisteId: boolean = false;

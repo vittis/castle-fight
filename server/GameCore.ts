@@ -18,6 +18,7 @@ import { DataSerializer } from "./Serializer";
 import { StorageBarn } from "./building/StorageBarn";
 import { Barn } from "./building/Barn";
 import { IncomeBallManager } from "./IncomeBallManager";
+import { KingsCourt } from "./building/KingsCourt";
 
 export class GameCore {
     id : number;
@@ -37,23 +38,20 @@ export class GameCore {
         this.host = new GamePlayer(host, true, this.gridManager);
         this.client = new GamePlayer(client, false, this.gridManager);
         this.ballManager = new IncomeBallManager(new GamePlayer(null, null, this.gridManager));
-        this.ballManager.addBallToGame();
 
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
-        this.host.buildBuilding(new StorageBarn(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new Barn(0, 0));
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new Barn(0, 0));   
+        this.host.buildBuilding(new Barn(2, 3));     
 
-        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
+       /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
+        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
+        //this.host.addEntity(new Soldado(15, 28));
+        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));    
 
-
-        /*this.client.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 + 3, GameConfig.GRID_COLS - 2));
-
-        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 3, GameConfig.GRID_COLS - 2));
-
-        this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3 + 2, GameConfig.GRID_COLS - 3));*/
 
         this.setSocket(this.host.serverPlayer, true);
         this.setSocket(this.client.serverPlayer, false);
@@ -86,18 +84,76 @@ export class GameCore {
         });
 
         var hostObj = DataSerializer.SerializePlayer(this.host);
-        var clientObj = DataSerializer.SerializePlayer(this.client);;
+        var clientObj = DataSerializer.SerializePlayer(this.client);
+
+        var ballObj = DataSerializer.SerializeBall(this.ballManager);
 
         if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj });
+            this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj });
         }
         if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj });
+            this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
         }
     }
 
     step() {
+        //tentar atacar
+        this.gridManager.aStar.load(this.gridManager.getNumberGrid());
+
         this.getAllUnits().forEach(unit => {
+            unit.resetAttackData();
+
+            var closestTileWithEnemy = this.getClosestTargetTile(unit);
+            if (closestTileWithEnemy != null) {
+                if (unit.inRange(closestTileWithEnemy)) {
+                    //if (unit.canAttack()) {
+
+                        unit.doAction(closestTileWithEnemy);
+                    //}
+                    //else {
+                    //    unit.step();//wait
+                    //}
+                }
+            }
+        });
+        //tentar mover
+        this.getAllUnits().forEach(unit => {
+            this.gridManager.aStar.load(this.gridManager.getNumberGrid());
+
+            var closestTileWithEnemy = this.getClosestTargetTile(unit);
+            if (closestTileWithEnemy != null) {
+                if (!unit.inRange(closestTileWithEnemy)) {
+                    if (!unit.data.attackData.hasAttacked)  {
+                        var targetTile;
+                        
+                        if (this.gridManager.getDistance(unit.tile.col, unit.tile.row, closestTileWithEnemy.col, closestTileWithEnemy.row) <= 4) {
+                            targetTile = closestTileWithEnemy;
+                        }
+                        else {
+                            if (unit.tile.row >= 8) {//parte de baixo
+                                if (unit.owner.isHost) {
+                                    targetTile = unit.tile.col < 20 ? this.gridManager.tileAt(12, 20) : this.gridManager.tileAt(7, 23);
+                                }
+                                else {
+                                    targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(7, 3) : this.gridManager.tileAt(12, 6);
+                                }
+                            }
+                            else {//parte de cima
+                                if (unit.owner.isHost) {
+                                    targetTile = unit.tile.col >= 20 ? this.gridManager.tileAt(8, 23) : this.gridManager.tileAt(3, 20);
+                                }
+                                else {
+                                    targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(8, 3) : this.gridManager.tileAt(3, 6);
+                                }
+                            }
+                        }
+                        unit.moveTowards(targetTile);
+                    }
+                }
+            }   
+        });
+        
+        /* this.getAllUnits().forEach(unit => {
             unit.resetAttackData();
             this.gridManager.aStar.load(this.gridManager.getNumberGrid());
            
@@ -131,7 +187,7 @@ export class GameCore {
             if (targetTile != null) {
                 unit.doAction(targetTile);
             }
-        });
+        }); */
 
         this.getAllEntities().forEach(entity => {
             if (entity.getEntityData().hp <= 0)
@@ -142,6 +198,8 @@ export class GameCore {
             building.resetSpamData();
             building.spamUnit();
         });
+
+        this.ballManager.step();
 
         this.host.resourceManager.step();
         this.client.resourceManager.step();
@@ -154,7 +212,7 @@ export class GameCore {
 
     //returns closest tile with an enemy entity in it
     getClosestTargetTile(unit : Unit) : Tile {
-        this.gridManager.aStar.load(this.gridManager.getNumberGrid());
+     //   this.gridManager.aStar.load(this.gridManager.getNumberGrid());
 
         var target : Tile = null;
         var shortestDistance = 100;

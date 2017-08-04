@@ -1,6 +1,7 @@
 import { Building } from "../Building";
 import { GridManager } from "../GridManager";
 import { IncomeBallManager } from "../IncomeBallManager";
+import { Unit } from "../Unit";
 
 export class IncomeBall extends Building {
 
@@ -14,9 +15,10 @@ export class IncomeBall extends Building {
         this.ballManager = ballManager;
     }
 
-    onDeath() {
-        console.log("bola morreu doida");
-        //this.ballManager.ballInGame = false;
-        super.onDeath();
+    receiveAttack(unit: Unit) {
+        super.receiveAttack(unit);
+        if (this.data.hp <= 0) {
+            unit.owner.resourceManager.add(50, 50);
+        }
     }
 }

@@ -8,8 +8,9 @@
     "woodCost": 0,
 
     "spamUnit": "Archer",
-    "spamCount": 3,
-    "spamRate": 15,
+    "spamCount": 2,
+    "spamRate": 20,
 
-    "description": "Trains Archer"
+    "description": "Trains Archer",
+    "incomeGain": 3
 }

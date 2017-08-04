@@ -51,14 +51,16 @@ module Kodo {
             }
             
         }
-
+        timerEvento;
         receiveDamage(newHealth: number) {
             this.receivedDamage = true;
             var t = this.maxHp - newHealth;
 
             this.lenght = Phaser.Math.linear(this.maxLenght, 0, this.cuts * t);
             this.visible = true;
-            this.game.time.events.add(5500, this.hideBar.bind(this), this);
+
+            this.game.time.events.remove(this.timerEvento);
+            this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
         }
         hideBar() {
             this.clear();

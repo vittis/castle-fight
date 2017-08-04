@@ -7,5 +7,5 @@
     "attackRange": 1,
     "attackDmg": 3,
     "attackRate": 2,
-    "description": "Regenerates 3 armor for each 5 attacks received"
+    "description": "Grapples units within 6 range"
 }

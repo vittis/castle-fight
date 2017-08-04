@@ -35,16 +35,45 @@ export abstract class Unit extends Entity{
         this.tile = tile;
         tile.entity = this;
     }
-    
+
     receiveAttack(unit: Unit) {
         super.receiveAttack(unit);
     }
 
-    attack(entity : Entity) : void {
+
+    canAttack() : boolean {
+        return this.attackRateCounter == this.data.attackRate;
+    }
+    inRange(targetTile : Tile) : boolean{
+        return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+    }
+
+    step() : void {
+        if (this.attackRateCounter < this.data.attackRate)
+            this.attackRateCounter++;
+    }
+
+    moveTowards(targetTile: Tile): void {
+        this.step();
+
+        var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
+
+        if (path.length > 1) {
+            var pathToTargetTile: Tile = this.gm.grid[path[1].y][path[1].x];
+
+            if (pathToTargetTile.entity == null)
+                this.moveTo(pathToTargetTile);
+        }
+    }
+    doAction(targetTile: Tile) {
+        this.step();
+    }
+
+    attack(entity: Entity): void {
         this.data.attackData.hasAttacked = true;
         var target: Tile = null;
         var shortestDistance = 100;
-        
+
         for (var i = 0; i < entity.getEntityData().width; i++) {
             for (var j = 0; j < entity.getEntityData().height; j++) {
                 var tile: Tile = this.gm.tileAt(entity.tile.row + j, entity.tile.col + i);
@@ -62,14 +91,6 @@ export abstract class Unit extends Entity{
         entity.receiveAttack(this);
 
         this.attackRateCounter = 0;
-    }
-    canAttack() : boolean {
-        return this.attackRateCounter == this.data.attackRate;
-    }
-
-    doAction(targetTile : Tile) : void {
-        if (this.attackRateCounter < this.data.attackRate)
-            this.attackRateCounter++;
     }
 
     resetAttackData() {

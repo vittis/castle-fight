@@ -56,7 +56,7 @@ module Kodo {
                 "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
 
             this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount 
-            + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\n"+ Kodo[buildingName].description + "\n(click to unit info)";
+                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\n" + Kodo[buildingName].description+"\n(click to unit info)";
 
 
             var style = {
@@ -66,6 +66,13 @@ module Kodo {
             this.descTexto.fontSize = 16;
             this.descTexto.alpha = 0.85;
             this.descTexto.anchor.setTo(0.5, 1);
+
+            var indice = this.descricaoString.indexOf('in: ');
+            this.descTexto.addColor('#ecec3a', indice);
+            if (Kodo[buildingName].incomeGain >=10)
+                this.descTexto.addColor('#ffffff', indice+2);
+            else 
+                this.descTexto.addColor('#ffffff', indice + 1);
 
             this.iconGroup = this.game.add.group();
             var hp_icon = this.game.add.sprite(50, 50, 'hp_icon');
@@ -173,6 +180,7 @@ module Kodo {
             this.unitDescTexto.visible = false;
             this.unitIconGroup.visible = false;
             this.unitImage.visible = false;
+            this.alive = false;
 
             this.tudoGroup.add(this.descricaoBox);
             this.tudoGroup.add(this.descTexto);
@@ -189,8 +197,15 @@ module Kodo {
             this.woodCostText.x = Math.round(this.world.x - 50);
             this.woodCostText.y = Math.round(this.world.y + this.height/2-23);
         }
+        over : boolean = false;
         onOver() {
             this.game.world.bringToTop(this.tudoGroup);
+            this.alive = true;
+            if (!this.over) {
+                this.mostrarUnit = false;
+            }
+            this.over = true;
+
             if (!this.mostrarUnit) {
                 this.unitDescricaoBox.visible = false;
                 this.unitDescTexto.visible = false;
@@ -237,6 +252,8 @@ module Kodo {
             this.mostrarUnit = !this.mostrarUnit;
         }
         onOut() {
+            this.over = false;
+
             this.descricaoBox.visible = false;
             this.descTexto.visible = false;
             this.unitDescricaoBox.visible = false;
@@ -244,6 +261,7 @@ module Kodo {
             this.iconGroup.visible = false;
             this.unitIconGroup.visible = false;
             this.unitImage.visible = false;
+            this.alive = false;
         }
     }
 }

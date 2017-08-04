@@ -11,16 +11,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
-var Archer = (function (_super) {
-    __extends(Archer, _super);
-    function Archer(row, col) {
-        return _super.call(this, row, col, require('clone')(require('../data/units/archer.json'))) || this;
+var Thief = (function (_super) {
+    __extends(Thief, _super);
+    function Thief(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/units/thief.json'))) || this;
     }
-    Archer.prototype.doAction = function (targetTile) {
+    Thief.prototype.doAction = function (targetTile) {
         _super.prototype.doAction.call(this, targetTile);
-        if (this.canAttack())
+        if (this.canAttack()) {
             this.attack(targetTile.entity);
+            this.owner.resourceManager.add(3, 0);
+        }
     };
-    return Archer;
+    return Thief;
 }(Unit_1.Unit));
-exports.Archer = Archer;
+exports.Thief = Thief;

@@ -39,6 +39,9 @@ module Kodo {
             var barnui = new UIBuildingButton(game, 'barn_ui_' + hostLabel, this, 'barn' + hostLabel, 'Barn');
             this.buildingsGroup.add(barnui);
 
+            var thiefsTentui = new UIBuildingButton(game, 'thiefsTent_ui_' + hostLabel, this, 'thiefsTent' + hostLabel, 'ThiefsTent');
+            this.buildingsGroup.add(thiefsTentui);
+
             var storageBarnui = new UIBuildingButton(game, 'storageBarn_ui_' + hostLabel, this, 'storageBarn' + hostLabel, 'StorageBarn');
             this.buildingsGroup.add(storageBarnui);
 
@@ -48,7 +51,7 @@ module Kodo {
             var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
             this.buildingsGroup.add(kingsCourtui);
 
-            this.buildingsGroup.align(6, 1, 105, 0);
+            this.buildingsGroup.align(7, 1, 105, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;

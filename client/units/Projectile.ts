@@ -1,10 +1,10 @@
 module Kodo {
     export class Projectile extends Phaser.Sprite {
         
-        target : Entity;
+        target : Tile;
 
 
-        constructor(game: Phaser.Game, x, y, target : Entity, isHost) {
+        constructor(game: Phaser.Game, x, y, target : Tile, isHost) {
             super(game, x, y, 'tiro');
             if (isHost)
                 this.tint = 0xd42a2a;
@@ -18,6 +18,7 @@ module Kodo {
                 this.game.time.events.add(350, function(){this.destroy();}.bind(this), this);
             }
             else {
+                console.log("ihhh");
                 this.destroy();
             }
         }
@@ -25,6 +26,8 @@ module Kodo {
         update() {
             if (Phaser.Math.distance(this.x, this.y, this.target.x + GameConfig.tileSize / 2, this.target.y + GameConfig.tileSize / 2) < 30) {
                 this.destroy();
+                console.log("xiba sam");
+
             } 
             
         }

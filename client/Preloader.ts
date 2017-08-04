@@ -69,7 +69,9 @@ module Kodo {
                 this.game.load.image('specialFacilityh', 'assets/48/specialFacilityh_48.png');
                 this.game.load.image('specialFacilityc', 'assets/48/specialFacilityc_48.png')
                 this.game.load.image('kingsCourth', 'assets/48/kingsCourth_48.png');
-                this.game.load.image('kingsCourtc', 'assets/48/kingsCourtc_48.png')
+                this.game.load.image('kingsCourtc', 'assets/48/kingsCourtc_48.png');
+                this.game.load.image('thiefsTenth', 'assets/48/thiefsTenth_48.png');
+                this.game.load.image('thiefsTentc', 'assets/48/thiefsTentc_48.png');
 
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
                 this.game.load.image('farmerc', 'assets/48/farmerc_48.png');
@@ -77,6 +79,8 @@ module Kodo {
                 this.game.load.image('sniperc', 'assets/48/sniperc_48.png');
                 this.game.load.image('kingh', 'assets/48/kingh_48.png');
                 this.game.load.image('kingc', 'assets/48/kingc_48.png');
+                this.game.load.image('thiefh', 'assets/48/thiefh_48.png');
+                this.game.load.image('thiefc', 'assets/48/thiefc_48.png');
 
                 this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 66, 66);
                 this.game.load.spritesheet('archeryRange_ui_h', 'assets/48/ui/archeryRange_ui_h.png', 66, 66);
@@ -90,6 +94,8 @@ module Kodo {
                 this.game.load.spritesheet('specialFacility_ui_c', 'assets/48/ui/specialFacility_ui_c.png', 66, 66);
                 this.game.load.spritesheet('kingsCourt_ui_h', 'assets/48/ui/kingsCourt_ui_h.png', 66, 66);
                 this.game.load.spritesheet('kingsCourt_ui_c', 'assets/48/ui/kingsCourt_ui_c.png', 66, 66);
+                this.game.load.spritesheet('thiefsTent_ui_h', 'assets/48/ui/thiefsTent_ui_h.png', 66, 66);
+                this.game.load.spritesheet('thiefsTent_ui_c', 'assets/48/ui/thiefsTent_ui_c.png', 66, 66);
 
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');

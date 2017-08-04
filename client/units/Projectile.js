@@ -25,6 +25,7 @@ var Kodo;
                 _this.game.time.events.add(350, function () { this.destroy(); }.bind(_this), _this);
             }
             else {
+                console.log("ihhh");
                 _this.destroy();
             }
             return _this;
@@ -32,6 +33,7 @@ var Kodo;
         Projectile.prototype.update = function () {
             if (Phaser.Math.distance(this.x, this.y, this.target.x + GameConfig.tileSize / 2, this.target.y + GameConfig.tileSize / 2) < 30) {
                 this.destroy();
+                console.log("xiba sam");
             }
         };
         return Projectile;

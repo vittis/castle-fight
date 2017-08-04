@@ -32,6 +32,7 @@ export class GamePlayer {
             if (b.data.woodCost == 0) {
                 this.resourceManager.add(0, b.data.goldCost);
             }
+            this.resourceManager.income += b.data.incomeGain;
             this.addEntity(b);
         }
         else {

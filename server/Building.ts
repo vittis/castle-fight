@@ -6,6 +6,7 @@ import { SpamData } from "./building/SpamBuilding";
 export interface BuildingData extends EntityData {
     goldCost? : number;
     woodCost? : number;
+    incomeGain? : number;
 }
 
 export abstract class Building extends Entity {

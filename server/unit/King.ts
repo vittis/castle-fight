@@ -1,44 +1,82 @@
 import { Unit } from "../Unit";
 import { GridManager } from "../GridManager";
 import { Tile } from "../Tile";
+import { Entity } from "../Entity";
+import { Building } from "../Building";
 
 export class King extends Unit {
 
-    attacksReceived = 0;
+    grappleRate = 10;
+    grappleCounter = 10;
+
+    canGrapple : boolean = true;
 
     constructor(row, col) {
         super(row, col, require('clone')(require('../data/units/king.json')));
+        this.data.attackRange = 6;
+    }
+
+    step() {
+        super.step();
+        if (this.grappleCounter < this.grappleRate)
+            this.grappleCounter++;
+        else {
+            this.canGrapple = true;
+            this.data.attackRange = 6;
+        }
     }
 
     doAction(targetTile: Tile): void {
         super.doAction(targetTile);
-
-        var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
-
-        if (path.length > 1) {
-            var pathToTargetTile: Tile = this.gm.grid[path[1].y][path[1].x];
-
-            if (targetTile.entity != null && targetTile.entity.owner != this.owner) {
-                if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange) {
+        
+        if (this.canGrapple) {
+            if (targetTile.entity instanceof Unit) {
+                if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= 6 && this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) >= 2) {
+                    this.grapple(targetTile.entity);
+                    this.data.attackRange = 1;
+                    this.grappleCounter=0;
+                    this.canGrapple = false;
+                }
+                else {
                     if (this.canAttack())
                         this.attack(targetTile.entity);
                 }
-                else if (pathToTargetTile.entity == null)
-                    this.moveTo(pathToTargetTile);
             }
             else {
-                if (pathToTargetTile.entity == null)
-                    this.moveTo(pathToTargetTile);
+                this.data.attackRange = 1;
+                if (this.canAttack() && this.inRange(targetTile))
+                    this.attack(targetTile.entity);
+            }
+        }
+        else {
+            if (this.canAttack())
+                this.attack(targetTile.entity);
+        }
+    }
+
+    grapple(unit : Unit) {
+        if (!this.owner.isHost) {
+            if (this.gm.tileAt(this.tile.row, this.tile.col -1).entity == null){
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col-1]);
+            }
+            else if (this.gm.tileAt(this.tile.row+1, this.tile.col - 1).entity == null){
+                unit.moveTo(this.gm.grid[this.tile.row+1][this.tile.col - 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col - 1]);
+            }
+        }
+        else {
+            if (this.gm.tileAt(this.tile.row, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col+1]);
+            }
+            else if (this.gm.tileAt(this.tile.row+1, this.tile.col + 1).entity == null){
+                unit.moveTo(this.gm.grid[this.tile.row+1][this.tile.col + 1]);
+            }
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col + 1]);
             }
         }
     }
 
-     receiveAttack(unit: Unit) {
-        super.receiveAttack(unit);
-        this.attacksReceived++;
-        if (this.attacksReceived == 5) {
-            this.dataq.armor += 3;
-            this.attacksReceived = 0;
-        }
-    }
 }

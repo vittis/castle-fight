@@ -20,10 +20,11 @@ var IncomeBall = (function (_super) {
     }
     IncomeBall.prototype.doAction = function () {
     };
-    IncomeBall.prototype.onDeath = function () {
-        console.log("bola morreu doida");
-        //this.ballManager.ballInGame = false;
-        _super.prototype.onDeath.call(this);
+    IncomeBall.prototype.receiveAttack = function (unit) {
+        _super.prototype.receiveAttack.call(this, unit);
+        if (this.data.hp <= 0) {
+            unit.owner.resourceManager.add(50, 50);
+        }
     };
     return IncomeBall;
 }(Building_1.Building));

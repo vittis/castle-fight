@@ -8,8 +8,9 @@
     "woodCost": 0,
 
     "spamUnit": "Soldado",
-    "spamCount": 3,
-    "spamRate": 15,
+    "spamCount": 2,
+    "spamRate": 20,
 
-    "description": "Trains Footman"
+    "description": "Trains Footman",
+    "incomeGain": 3
 }

@@ -7,6 +7,8 @@ module Kodo {
         static maxArmor;
         static spamCount;
         static spamRate;
+        static incomeGain;
+
 
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, texture: string, data : EntityData) {
             super(game, tile, id, isHost, texture, data);

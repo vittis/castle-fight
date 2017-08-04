@@ -8,6 +8,7 @@
     "woodCost": 150,
     "spamUnit": "Sniper",
     "spamCount": 2,
-    "spamRate": 30,
-    "description": "Trains Sniper"
+    "spamRate": 25,
+    "description": "Trains Sniper",
+    "incomeGain": 8
 }
