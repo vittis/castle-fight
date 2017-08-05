@@ -93,24 +93,24 @@ var Kodo;
                 entityManager.boxGroup.add(entityManager.descTexto);
                 entityManager.boxGroup.add(iconGroup);
                 this.game.world.bringToTop(entityManager.boxGroup);
+                entityManager.target = unit;
             }
             else {
                 entityManager.isShowing = false;
+                entityManager.target = null;
             }
-            entityManager.target = unit;
         };
         UIEntityManager.prototype.onDownBuilding = function (building) {
+            var _this = this;
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             if (entityManager.descricaoBox) {
-                /* entityManager.descricaoBox.destroy();
-                entityManager.descTexto.destroy();
-                entityManager.iconGroup.removeAll(); */
                 entityManager.boxGroup.removeAll();
+                if (entityManager.tileMark) {
+                    entityManager.tileMark.destroy();
+                }
             }
             if (entityManager.target != building || !entityManager.isShowing) {
                 entityManager.isShowing = true;
-                /* entityManager.descricaoString = building.dataq.name + "\nHP: " + building.dataq.hp + "/" + building.dataq.maxHP +
-                    "\nArmor: " + building.dataq.armor + "/" + building.dataq.maxArmor; */
                 entityManager.descricaoString = building.dataq.name + "\n" + "\n" + Kodo[building.dataq.name].description;
                 var style = {
                     font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
@@ -162,11 +162,28 @@ var Kodo;
                 entityManager.boxGroup.add(entityManager.descTexto);
                 entityManager.boxGroup.add(iconGroup);
                 this.game.world.bringToTop(entityManager.boxGroup);
+                entityManager.target = building;
+                if (building instanceof Kodo.SpamBuilding) {
+                    entityManager.tileMark = this.game.add.sprite(Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].x, Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].y, 'tileSelected');
+                    Kodo.GameScene.instance.getOuterTiles(building).forEach(function (tile) {
+                        tile.inputEnabled = true;
+                        tile.input.useHandCursor = true;
+                        tile.events.onInputDown.add(entityManager.onDownTile.bind(_this), _this);
+                        //tile.events.onInputOut.add(this.onOut.bind(this), this);
+                    });
+                }
             }
             else {
                 entityManager.isShowing = false;
+                entityManager.target = null;
             }
-            entityManager.target = building;
+        };
+        UIEntityManager.prototype.onDownTile = function (tile) {
+            var entityManager = Kodo.GameScene.instance.uiEntityManager;
+            entityManager.tileMark.x = tile.x;
+            entityManager.tileMark.y = tile.y;
+            //mandar pro server
+            Client.askSpamTileMark(tile.row, tile.col, entityManager.target.id);
         };
         return UIEntityManager;
     }());

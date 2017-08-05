@@ -5,6 +5,9 @@ module Kodo {
         spamRate?: number;
 
         spamData? : SpamData;
+
+        tileRow?: number;
+        tileCol?: number;
     }
     export interface SpamData {
         hasSpammed: boolean;
@@ -28,7 +31,7 @@ module Kodo {
 
         updateStep(newData : SpamBuildingData, tile?: Tile) {
             super.updateStep(newData);
-            
+            //console.log(newData.tileRow+", "+newData.tileCol);
             if (this.data.spamData.hasSpammed) {
                 this.bar.resetCounter();
             }

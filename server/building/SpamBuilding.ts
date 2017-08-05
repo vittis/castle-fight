@@ -8,6 +8,8 @@ export interface SpamBuildingData extends BuildingData {
     spamCount?: number;
     spamRate?: number;
     spamData?: SpamData;
+    tileRow?: number;
+    tileCol?: number;
 }
 export interface SpamData {
     hasSpammed: boolean;
@@ -25,9 +27,26 @@ export abstract class SpamBuilding extends Building {
         this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate};
     }
 
+    addToGame(gm) {
+        super.addToGame(gm);
+        var tile = this.getTileToSpam();
+        this.data.tileRow = tile.row;
+        this.data.tileCol = tile.col;
+    }
+
     spamUnit(unit? : any) {
         if (this.data.spamData.spamRateCounter == 0) {
-            var tile = this.getTileToSpam();
+            /* var tile = this.getTileToSpam();
+            this.data.tileRow = tile.row;
+            this.data.tileCol = tile.col; */
+
+            var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
+            if (tile.entity != null) {
+                tile = this.getTileToSpam();
+                this.data.tileRow = tile.row;
+                this.data.tileCol = tile.col;
+            }
+
             if (tile) {
                 this.owner.addEntity(new unit(tile.row, tile.col));
             }
@@ -48,4 +67,5 @@ export abstract class SpamBuilding extends Building {
     resetSpamData() {
         this.data.spamData.hasSpammed = false;
     }
+    
 }

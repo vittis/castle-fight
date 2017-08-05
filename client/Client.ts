@@ -72,5 +72,8 @@ module Client {
         socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost});
     }
 
+    export function askSpamTileMark(row, col, buildingId) {
+        socket.emit('askSpamTileMark', { row: row, col: col, buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
+    }
 
   }

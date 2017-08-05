@@ -46,6 +46,8 @@ module Kodo {
             this.uiResourceManager = new UIResourceManager(this.game);
             this.uiEntityManager = new UIEntityManager(this.game);
             this.incomeBallBar = new IncomeBallBar(this.game);
+
+            //var q = this.game.add.sprite(this.grid[10][4].x, this.grid[10][4].y, 'tileSelected');
         }
 
         update() {
@@ -110,6 +112,44 @@ module Kodo {
                 }
             });
             return entity;
+        }
+
+        getOuterTiles(building : Building): Tile[] {
+            var tiles: Tile[] = [];
+
+            for (var i = 0; i < building.dataq.width; i++) {
+                for (var j = 0; j < building.dataq.height; j++) {
+                    var currentTile = this.grid[building.tile.row + j][building.tile.col + i];
+                    this.getNeighbors(currentTile).forEach(t => {
+                        if (t.entity == null) {
+                            if (tiles.indexOf(t) == -1)
+                                tiles.push(t);
+                        }
+                    });
+                }
+
+            }
+
+            return tiles;
+        }
+        getNeighbors(tile: Tile): Tile[] {
+            var tiles: Tile[] = [];
+            for (var dx = -1; dx <= 1; dx++) {
+                for (var dy = -1; dy <= 1; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        if (this.isValid(tile.row + dx, tile.col + dy)) {
+                            tiles.push(this.grid[tile.row + dx][tile.col + dy]);
+                        }
+                    }
+                }
+            }
+            return tiles;
+        }
+        isValid(row, col): boolean {
+            if ((row >= 0 && row < GameConfig.GRID_ROWS) && (col >= 0 && col < GameConfig.GRID_COLS)) {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -16,6 +16,7 @@ module Kodo {
         hpTexto : Phaser.Text;
         armorTexto: Phaser.Text;
 
+        tileMark : Phaser.Sprite;
 
         constructor(game: Phaser.Game) {
             this.game = game;
@@ -121,26 +122,27 @@ module Kodo {
                 entityManager.boxGroup.add(iconGroup);
 
                 this.game.world.bringToTop(entityManager.boxGroup);
+
+                entityManager.target = unit;
             }
             else {
                 entityManager.isShowing = false;
+                entityManager.target = null;
             }
-            entityManager.target = unit;
         }
 
         onDownBuilding(building : Building) {
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             if (entityManager.descricaoBox) {
-                /* entityManager.descricaoBox.destroy();
-                entityManager.descTexto.destroy();
-                entityManager.iconGroup.removeAll(); */
                 entityManager.boxGroup.removeAll();
+                if (entityManager.tileMark) {
+                    entityManager.tileMark.destroy();
+                }
             }
 
             if (entityManager.target != building || !entityManager.isShowing) {
                 entityManager.isShowing = true; 
-                /* entityManager.descricaoString = building.dataq.name + "\nHP: " + building.dataq.hp + "/" + building.dataq.maxHP +
-                    "\nArmor: " + building.dataq.armor + "/" + building.dataq.maxArmor; */
+
                 entityManager.descricaoString = building.dataq.name + "\n" + "\n"+Kodo[building.dataq.name].description;
                 var style = {
                     font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
@@ -204,11 +206,35 @@ module Kodo {
                 entityManager.boxGroup.add(iconGroup);
 
                 this.game.world.bringToTop(entityManager.boxGroup);
+
+                entityManager.target = building;
+
+                if (building instanceof SpamBuilding) {
+                    entityManager.tileMark = this.game.add.sprite(Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].x, 
+                        Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].y, 'tileSelected');
+
+
+                    Kodo.GameScene.instance.getOuterTiles(building).forEach(tile => {
+                        tile.inputEnabled = true;
+                        tile.input.useHandCursor = true;
+                        tile.events.onInputDown.add(entityManager.onDownTile.bind(this), this);
+                        //tile.events.onInputOut.add(this.onOut.bind(this), this);
+                    });  
+                }
             }
             else {
                 entityManager.isShowing = false; 
+                entityManager.target = null;
             }
-            entityManager.target = building;
+        }
+        onDownTile(tile : Tile) {
+            var entityManager = Kodo.GameScene.instance.uiEntityManager;
+
+            entityManager.tileMark.x = tile.x;
+            entityManager.tileMark.y = tile.y;
+
+            //mandar pro server
+            Client.askSpamTileMark(tile.row, tile.col, entityManager.target.id);
         }
     }
 }

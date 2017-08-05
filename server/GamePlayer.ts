@@ -84,6 +84,16 @@ export class GamePlayer {
         return this.entities;
     }
 
+    getEntityById(id: number): Entity {
+        var entity: Entity = null;
+        this.entities.forEach(e => {
+            if (e.id == id) {
+                entity = e;
+            }
+        });
+        return entity;
+    }
+
     removeEntity(entity : Entity) {
         for (var i = 0; i < this.entities.length; i++) {
             if (this.entities[i] == entity) {

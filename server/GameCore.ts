@@ -42,10 +42,10 @@ export class GameCore {
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
-        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        /* this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
         this.host.buildBuilding(new Barn(0, 0));   
-        this.host.buildBuilding(new Barn(2, 3));     
+        this.host.buildBuilding(new Barn(2, 3));     */ 
 
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
@@ -73,6 +73,18 @@ export class GameCore {
                 else {
                     this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
                 }
+            }.bind(this));
+
+            p.socket.on('askSpamTileMark', function (data) {
+                if (data.isHost) {
+                    this.host.getEntityById(data.buildingId).data.tileRow = data.row;
+                    this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                }
+                else {
+                    this.client.getEntityById(data.buildingId).data.tileRow = data.row;
+                    this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                }
+                //console.log(data.row+", "+data.col+": "+data.buildingId);
             }.bind(this));
         }
     }

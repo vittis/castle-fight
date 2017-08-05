@@ -25,9 +25,23 @@ var SpamBuilding = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    SpamBuilding.prototype.addToGame = function (gm) {
+        _super.prototype.addToGame.call(this, gm);
+        var tile = this.getTileToSpam();
+        this.data.tileRow = tile.row;
+        this.data.tileCol = tile.col;
+    };
     SpamBuilding.prototype.spamUnit = function (unit) {
         if (this.data.spamData.spamRateCounter == 0) {
-            var tile = this.getTileToSpam();
+            /* var tile = this.getTileToSpam();
+            this.data.tileRow = tile.row;
+            this.data.tileCol = tile.col; */
+            var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
+            if (tile.entity != null) {
+                tile = this.getTileToSpam();
+                this.data.tileRow = tile.row;
+                this.data.tileCol = tile.col;
+            }
             if (tile) {
                 this.owner.addEntity(new unit(tile.row, tile.col));
             }

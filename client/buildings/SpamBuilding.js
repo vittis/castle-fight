@@ -26,6 +26,7 @@ var Kodo;
         });
         SpamBuilding.prototype.updateStep = function (newData, tile) {
             _super.prototype.updateStep.call(this, newData);
+            //console.log(newData.tileRow+", "+newData.tileCol);
             if (this.data.spamData.hasSpammed) {
                 this.bar.resetCounter();
             }
