@@ -5,6 +5,7 @@ import { Building } from "./Building";
 import { SpamBuilding } from "./building/SpamBuilding";
 import { ResourceManager } from "./ResourceManager";
 import { GridManager } from "./GridManager";
+import { AttackBuilding } from "./building/AttackBuilding";
 
 export class GamePlayer {
     static lastEntityID = 0;
@@ -70,6 +71,17 @@ export class GamePlayer {
         });
         return buildings;
     }
+
+    getAttackBuildings(): AttackBuilding[] {
+        var buildings: AttackBuilding[] = [];
+        this.entities.forEach(e => {
+            if (e instanceof AttackBuilding) {
+                buildings.push(e);
+            }
+        });
+        return buildings;
+    }
+
     getSpamBuildings() : SpamBuilding[] {
         var buildings : SpamBuilding[] = [];
         this.getAllBuildings().forEach(e => {

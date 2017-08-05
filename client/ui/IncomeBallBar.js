@@ -17,7 +17,7 @@ var Kodo;
             _this.currentTime = 0;
             _this.timeToMove = GameConfig.updateRate / 1000 + 0.045;
             _this.maxLenght = 624;
-            _this.x = 384;
+            _this.x = 384 + 46;
             _this.y = 20;
             _this.smooth = 0;
             _this.alpha = 0.7;

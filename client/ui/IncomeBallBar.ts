@@ -23,7 +23,7 @@ module Kodo {
 
             this.maxLenght = 624;
 
-            this.x = 384;
+            this.x = 384+46;
             this.y = 20;
             this.smooth = 0;
             this.alpha = 0.7;

@@ -10,25 +10,30 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Kodo;
 (function (Kodo) {
-    var Archer = (function (_super) {
-        __extends(Archer, _super);
-        function Archer(game, tile, id, isHost, data) {
+    var Tower = (function (_super) {
+        __extends(Tower, _super);
+        function Tower(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
-                texture = 'archerh';
+                texture = 'towerh';
             }
             else {
-                texture = 'archerc';
+                texture = 'towerc';
             }
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
-        Archer.prototype.attack = function (tile) {
-            new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2 + GameConfig.tileSize / 5, this.y + GameConfig.tileSize / 2 - GameConfig.tileSize / 3, tile, this.isHost);
-            _super.prototype.attack.call(this, tile);
+        Tower.prototype.attack = function (tile) {
+            new Kodo.Projectile(this.game, this.x + this.width / 2, this.y + this.height / 2, tile, this.isHost).scale.setTo(1.6, 1.6);
         };
-        return Archer;
-    }(Kodo.Unit));
-    Kodo.Archer = Archer;
+        Tower.prototype.updateStep = function (newData, tile) {
+            _super.prototype.updateStep.call(this, newData);
+            if (this.data.attackData.hasAttacked) {
+                this.attack(Kodo.GameScene.instance.grid[this.data.attackData.row][this.data.attackData.col]);
+            }
+        };
+        return Tower;
+    }(Kodo.Building));
+    Kodo.Tower = Tower;
 })(Kodo || (Kodo = {}));

@@ -1,4 +1,7 @@
 module GameConfig {
+    export var GAME_WIDTH;
+    export var GAME_HEIGHT;
+
     export var GRID_ROWS;
     export var GRID_COLS;
 

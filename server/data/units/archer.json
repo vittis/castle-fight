@@ -6,7 +6,7 @@
     "maxArmor": 0,
     
     "attackRange": 3,
-    "attackDmg": 3,
+    "attackDmg": 2,
     "attackRate": 2,
 
     "description": "Nice Archer"

@@ -56,7 +56,7 @@ module Kodo {
                 "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
 
             this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount 
-                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\n" + Kodo[buildingName].description+"\n(click to unit info)";
+                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) +"\n" + Kodo[buildingName].description+"\n(click to unit info)";
 
 
             var style = {
@@ -72,6 +72,13 @@ module Kodo {
             if (Kodo[buildingName].incomeGain >=10)
                 this.descTexto.addColor('#ffffff', indice+2);
             else 
+                this.descTexto.addColor('#ffffff', indice + 1);
+
+            indice = this.descricaoString.indexOf('Wood Gain: ') + 6;
+            this.descTexto.addColor('#a8cc7f', indice);
+            if ((Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) >= 10)
+                this.descTexto.addColor('#ffffff', indice + 2);
+            else
                 this.descTexto.addColor('#ffffff', indice + 1);
 
             this.iconGroup = this.game.add.group();

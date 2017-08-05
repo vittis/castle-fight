@@ -6,6 +6,6 @@
     "maxArmor": 0,
     "attackRange": 1,
     "attackDmg": 1,
-    "attackRate": 3,
-    "description": "Grants +3G for each hit"
+    "attackRate": 2,
+    "description": "Grants +1G for each hit"
 }

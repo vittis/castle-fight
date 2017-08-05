@@ -9,6 +9,10 @@ module Kodo {
         static spamRate;
         static incomeGain;
 
+        
+        get data(): UnitData {
+            return this.dataq;
+        }
 
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, texture: string, data : EntityData) {
             super(game, tile, id, isHost, texture, data);

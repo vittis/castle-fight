@@ -37,7 +37,7 @@ var Kodo;
                 "\nArmor: " + Kodo[buildingName].maxArmor + "\nUnit Count: " + Kodo[buildingName].spamCount + "\nTraining Rate: " + Kodo[buildingName].spamRate +
                 "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
             _this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount
-                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
+                + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
             var style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
@@ -48,6 +48,12 @@ var Kodo;
             var indice = _this.descricaoString.indexOf('in: ');
             _this.descTexto.addColor('#ecec3a', indice);
             if (Kodo[buildingName].incomeGain >= 10)
+                _this.descTexto.addColor('#ffffff', indice + 2);
+            else
+                _this.descTexto.addColor('#ffffff', indice + 1);
+            indice = _this.descricaoString.indexOf('Wood Gain: ') + 6;
+            _this.descTexto.addColor('#a8cc7f', indice);
+            if ((Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) >= 10)
                 _this.descTexto.addColor('#ffffff', indice + 2);
             else
                 _this.descTexto.addColor('#ffffff', indice + 1);

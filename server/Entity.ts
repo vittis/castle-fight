@@ -2,6 +2,7 @@ import {Tile} from './Tile';
 import { GridManager} from './GridManager';
 import { GamePlayer } from "./GamePlayer";
 import { Unit } from "./Unit";
+import { AttackBuilding } from "./building/AttackBuilding";
 
 export interface EntityData {
     name : string;
@@ -48,6 +49,11 @@ export abstract class Entity {
     }
 
     receiveAttack(unit : Unit) {
+        this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
+        if (this.dataq.armor > 0)
+            this.dataq.armor--;
+    }
+    receiveAttackFromBuilding(unit: AttackBuilding) {
         this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
         if (this.dataq.armor > 0)
             this.dataq.armor--;

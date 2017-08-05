@@ -8,7 +8,7 @@ module Kodo {
         constructor() {
             //1296, 844
             //super(1296+GameConfig.uiWidth, 816-48, Phaser.AUTO, document.getElementById('game'), null);
-            super(1392, 844-6, Phaser.AUTO, document.getElementById('game'), null);
+            super(1392 + 96, 838, Phaser.AUTO, document.getElementById('game'), null);
 
             Game.instance = this;
 

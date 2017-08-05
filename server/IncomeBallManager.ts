@@ -15,8 +15,8 @@ export class IncomeBallManager {
     }
 
     addBallsToGame() {
-        this.gp.addEntity(new IncomeBall(12, 14, this));
-        this.gp.addEntity(new IncomeBall(3, 14, this));
+        this.gp.addEntity(new IncomeBall(12, 15, this));
+        this.gp.addEntity(new IncomeBall(3, 15, this));
 
     }
     step() {

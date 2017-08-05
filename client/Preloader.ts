@@ -72,6 +72,8 @@ module Kodo {
                 this.game.load.image('kingsCourtc', 'assets/48/kingsCourtc_48.png');
                 this.game.load.image('thiefsTenth', 'assets/48/thiefsTenth_48.png');
                 this.game.load.image('thiefsTentc', 'assets/48/thiefsTentc_48.png');
+                this.game.load.image('towerh', 'assets/48/towerh_48.png');
+                this.game.load.image('towerc', 'assets/48/towerc_48.png');
 
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
                 this.game.load.image('farmerc', 'assets/48/farmerc_48.png');
@@ -110,7 +112,6 @@ module Kodo {
         }
  
         create() {
- 
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
             tween.onComplete.add(this.startMainMenu, this);
             

@@ -10,7 +10,7 @@ module Kodo {
                 this.tint = 0xd42a2a;
             else
                 this.tint = 0x008000;
-
+            this.anchor.setTo(0.5, 0.5);
             this.target = target;
             this.game.add.existing(this);
             if (target != null) {

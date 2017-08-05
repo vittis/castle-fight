@@ -54,6 +54,7 @@ module Client {
                 Kodo[element.name].spamRate = element.spamRate;
                 Kodo[element.name].description = element.description;
                 Kodo[element.name].incomeGain = element.incomeGain;
+
             }
         });
     });

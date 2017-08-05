@@ -7,7 +7,7 @@
     
     "attackRange": 1,
     "attackDmg": 1,
-    "attackRate": 2,
+    "attackRate": 3,
 
     "description": "Gains +3 HP and +1 Damage if there are 4 or more Farmers when this unit is trained"
 }

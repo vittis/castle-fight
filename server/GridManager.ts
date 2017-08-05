@@ -39,7 +39,7 @@ export class GridManager {
         for (var i = 0; i < this.rows; i++) {
             numberGrid[i] = [];
             for (var j = 0; j < this.cols; j++) {
-                if ((i>=6 && i<=9) && (j>=8 && j<=20)){ //para 16x29
+                if ((i>=6 && i<=9) && (j>=8 && j<=22)){ //para 16x31
                     numberGrid[i][j] = 5;
                 }
                 else if (this.grid[i][j].entity == null) {

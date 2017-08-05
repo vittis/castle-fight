@@ -16,8 +16,6 @@ var Castle = (function (_super) {
     function Castle(row, col) {
         return _super.call(this, row, col, require('clone')(require('../data/buildings/castle.json'))) || this;
     }
-    Castle.prototype.doAction = function () {
-    };
     return Castle;
 }(Building_1.Building));
 exports.Castle = Castle;

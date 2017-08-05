@@ -12,10 +12,7 @@ module Kodo {
             super(game, tile, id, isHost, texture, data);
 
         }
-        update() {
-            super.update();
 
-        }
         attack(tile: Tile) {
             new Projectile(this.game, this.x + GameConfig.tileSize / 2 + GameConfig.tileSize / 5, this.y + GameConfig.tileSize / 2 - GameConfig.tileSize / 3, tile, this.isHost);
             super.attack(tile);

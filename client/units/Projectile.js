@@ -18,6 +18,7 @@ var Kodo;
                 _this.tint = 0xd42a2a;
             else
                 _this.tint = 0x008000;
+            _this.anchor.setTo(0.5, 0.5);
             _this.target = target;
             _this.game.add.existing(_this);
             if (target != null) {

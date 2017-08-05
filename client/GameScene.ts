@@ -36,7 +36,7 @@ module Kodo {
                 this.grid[i] = [];
                 for (var j = 0; j < GameConfig.GRID_COLS; j++) {
                     this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, i, j);
-                    if((i >= 6 && i <= 9) && (j >= 8 && j <= 20)){ //para 16x29
+                    if((i >= 6 && i <= 9) && (j >= 8 && j <= 22)){ //para 16x31
                         this.game.add.sprite(j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, 'arvore1');
                     }
                 }
