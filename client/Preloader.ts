@@ -108,6 +108,9 @@ module Kodo {
                 this.game.load.image('incomeBall', 'assets/48/incomeBall_48.png');
 
                 this.game.load.image('tileSelected', 'assets/48/tileSelected_48.png');
+                this.game.load.spritesheet('trainButton', 'assets/48/trainButton_48.png', 26 ,26);
+                this.game.load.spritesheet('pauseButton', 'assets/48/pauseButton_48.png', 26, 26);
+
             }
         }
  

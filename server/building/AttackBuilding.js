@@ -30,19 +30,21 @@ var AttackBuilding = (function (_super) {
         return this.attackRateCounter == this.data.attackRate;
     };
     AttackBuilding.prototype.inRange = function (targetTile) {
+        //console.log(targetTile.row+", "+targetTile.col);
+        // console.log(this.gm.getDistance(tile.col, tile.row, targetTile.col, targetTile.row));
         var shortestDistance = 100;
-        var target = null;
+        var myTile = null;
         for (var i = 0; i < this.getEntityData().width; i++) {
             for (var j = 0; j < this.getEntityData().height; j++) {
                 var tile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
-                var dist = this.gm.aStar.heuristic.getHeuristic(this.col, this.row, 0, targetTile.col, targetTile.row, 0);
+                var dist = this.gm.aStar.heuristic.getHeuristic(tile.col, tile.row, 0, targetTile.col, targetTile.row, 0);
                 if (dist < shortestDistance) {
-                    target = tile;
+                    myTile = tile;
                     shortestDistance = dist;
                 }
             }
         }
-        return (this.gm.getDistance(tile.col, tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+        return (this.gm.getDistance(myTile.col, myTile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
     };
     AttackBuilding.prototype.step = function () {
         if (this.attackRateCounter < this.data.attackRate)

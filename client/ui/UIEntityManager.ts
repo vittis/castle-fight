@@ -17,6 +17,8 @@ module Kodo {
         armorTexto: Phaser.Text;
 
         tileMark : Phaser.Sprite;
+        trainButton: Phaser.Button;
+
 
         tileArray : Tile[] = [];
 
@@ -157,6 +159,9 @@ module Kodo {
                 if (entityManager.tileMark) {
                     entityManager.tileMark.destroy();
                 }
+                if (entityManager.trainButton) {
+                    entityManager.trainButton.destroy();
+                }
                 if (entityManager.tileArray.length > 0) {
                     entityManager.tileArray.forEach(tile => {
                         if (tile.inputEnabled == true) {
@@ -169,7 +174,9 @@ module Kodo {
                 }
 
             }
-
+            if (entityManager.trainButton) {
+                entityManager.trainButton.destroy();
+            }
             if (entityManager.target != building || !entityManager.isShowing) {
                 entityManager.isShowing = true; 
                 if (building instanceof Tower) {
@@ -257,6 +264,12 @@ module Kodo {
                         entityManager.tileArray.push(tile);
                         //tile.events.onInputOut.add(this.onOut.bind(this), this);
                     });  
+
+                    var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
+
+                    entityManager.trainButton = this.game.add.button(building.x + building.width / 2, building.y + building.height / 2, texture, entityManager.onClickTrainButton.bind(this), this, 1, 0, 2);
+                    entityManager.trainButton.anchor.setTo(0.5, 0.5);
+                    entityManager.trainButton.alpha = 0.9;
                 }
             }
             else {
@@ -264,6 +277,32 @@ module Kodo {
                 entityManager.target = null;
             }
         }
+        onClickTrainButton(button : Phaser.Button) {
+            var entityManager = Kodo.GameScene.instance.uiEntityManager;
+
+            if (entityManager.target.data.spamData.isTraining) {
+                button.loadTexture('trainButton');
+                Client.askPauseUnit(entityManager.target.id);
+            }
+            else {
+                button.loadTexture('pauseButton');
+                Client.askTrainUnit(entityManager.target.id);
+            }
+        }
+        /* onClickPauseButton(button: Phaser.Button) {
+            var entityManager = Kodo.GameScene.instance.uiEntityManager;
+
+            Client.askPauseUnit(entityManager.target.id);
+
+            button.loadTexture('trainButton');
+            button.events.onInputDown.removeAll();
+            button.events.onInputDown.add(entityManager.onClickTrainButton.bind(this), this);
+        } */
+        /* appearTrainButton(building) {
+            this.trainButton = this.game.add.button(building.x + building.width / 2, building.y + building.height / 2, 'trainButton', this.onClickTrainButton.bind(this), this, 1, 0, 2);
+            this.trainButton.anchor.setTo(0.5, 0.5);
+            this.trainButton.alpha = 0.9;
+        } */
         onDownTile(tile : Tile) {
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
 

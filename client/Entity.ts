@@ -110,6 +110,7 @@ module Kodo {
                 Kodo.GameScene.instance.uiEntityManager.boxGroup.removeAll();
                 if (this instanceof SpamBuilding) {
                     Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
+                    Kodo.GameScene.instance.uiEntityManager.trainButton.destroy();
                 }
             }
         }

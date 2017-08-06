@@ -4,7 +4,7 @@
     "height": 2,
     "maxHP": 15,
     "maxArmor": 5,
-    "goldCost": 70,
+    "goldCost": 50,
     "woodCost": 0,
 
     "spamUnit": "Archer",
@@ -12,5 +12,5 @@
     "spamRate": 20,
 
     "description": "Trains Archer",
-    "incomeGain": 3
+    "incomeGain": 2
 }

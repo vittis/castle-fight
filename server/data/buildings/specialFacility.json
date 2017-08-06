@@ -4,11 +4,11 @@
     "height": 2,
     "maxHP": 25,
     "maxArmor": 5,
-    "goldCost": 120,
-    "woodCost": 150,
+    "goldCost": 100,
+    "woodCost": 130,
     "spamUnit": "Sniper",
     "spamCount": 2,
     "spamRate": 25,
     "description": "Trains Sniper",
-    "incomeGain": 8
+    "incomeGain": 6
 }

@@ -15,7 +15,7 @@ var SpamBuilding = (function (_super) {
     __extends(SpamBuilding, _super);
     function SpamBuilding(row, col, buildingData) {
         var _this = _super.call(this, row, col, buildingData) || this;
-        _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate };
+        _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate, isTraining: true };
         return _this;
     }
     Object.defineProperty(SpamBuilding.prototype, "data", {
@@ -33,9 +33,6 @@ var SpamBuilding = (function (_super) {
     };
     SpamBuilding.prototype.spamUnit = function (unit) {
         if (this.data.spamData.spamRateCounter == 0) {
-            /* var tile = this.getTileToSpam();
-            this.data.tileRow = tile.row;
-            this.data.tileCol = tile.col; */
             var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
             if (tile.entity != null) {
                 tile = this.getTileToSpam();
@@ -50,8 +47,14 @@ var SpamBuilding = (function (_super) {
             this.data.spamCount--;
             if (this.data.spamCount <= 0)
                 this.onDeath();
+            //this.data.spamData.isTraining = false;
         }
-        this.data.spamData.spamRateCounter--;
+        if (this.data.spamData.isTraining) {
+            this.data.spamData.spamRateCounter--;
+        }
+    };
+    SpamBuilding.prototype.trainUnit = function () {
+        this.data.spamData.isTraining = true;
     };
     SpamBuilding.prototype.getTileToSpam = function () {
         var r = Math.floor(Math.random() * this.getOuterTiles().length);

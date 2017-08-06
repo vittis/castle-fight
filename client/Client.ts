@@ -77,4 +77,10 @@ module Client {
         socket.emit('askSpamTileMark', { row: row, col: col, buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
     }
 
+    export function askTrainUnit(buildingId) {
+        socket.emit('askTrainUnit', { buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
+    }
+    export function askPauseUnit(buildingId) {
+        socket.emit('askPauseUnit', { buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
+    }
   }

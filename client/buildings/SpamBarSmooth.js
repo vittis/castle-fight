@@ -72,14 +72,16 @@ var Kodo;
             });
         }*/
         SpamBarSmooth.prototype.update = function () {
-            if (this.smooth < this.maxLenght) {
-                this.currentTime += this.game.time.elapsed / 1000;
-                this.smooth = Phaser.Math.linear(0, this.maxLenght, this.currentTime / (this.timeToMove * this.spamRate));
+            if (this.building.data.spamData.isTraining) {
+                if (this.smooth < this.maxLenght) {
+                    this.currentTime += this.game.time.elapsed / 1000;
+                    this.smooth = Phaser.Math.linear(0, this.maxLenght, this.currentTime / (this.timeToMove * this.spamRate));
+                }
+                this.clear();
+                this.lineStyle(6, 0xffd700, 1);
+                this.moveTo(0, 0);
+                this.lineTo(this.smooth, 0);
             }
-            this.clear();
-            this.lineStyle(6, 0xffd700, 1);
-            this.moveTo(0, 0);
-            this.lineTo(this.smooth, 0);
             /*if (this.fadeIn) {
                 this.unitsCountBar.forEach(element => {
                     element.alpha += this.game.time.elapsed/1000;
@@ -102,6 +104,10 @@ var Kodo;
             if (counter != 0) {
                 counter = counter * -1 + this.spamRate;
                 this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
+                this.clear();
+                this.lineStyle(6, 0xffd700, 1);
+                this.moveTo(0, 0);
+                this.lineTo(this.smooth, 0);
             }
         };
         SpamBarSmooth.prototype.resetCounter = function () {

@@ -14,6 +14,7 @@ export interface SpamBuildingData extends BuildingData {
 export interface SpamData {
     hasSpammed: boolean;
     spamRateCounter : number;
+    isTraining : boolean;
 }
 
 export abstract class SpamBuilding extends Building {
@@ -24,7 +25,7 @@ export abstract class SpamBuilding extends Building {
 
     constructor(row, col, buildingData : BuildingData) {
         super(row, col, buildingData);
-        this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate};
+        this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate, isTraining: true};
     }
 
     addToGame(gm) {
@@ -36,9 +37,6 @@ export abstract class SpamBuilding extends Building {
 
     spamUnit(unit? : any) {
         if (this.data.spamData.spamRateCounter == 0) {
-            /* var tile = this.getTileToSpam();
-            this.data.tileRow = tile.row;
-            this.data.tileCol = tile.col; */
 
             var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
             if (tile.entity != null) {
@@ -55,10 +53,18 @@ export abstract class SpamBuilding extends Building {
             this.data.spamCount--;
             if (this.data.spamCount <= 0)
                 this.onDeath();
+
+            //this.data.spamData.isTraining = false;
         }
-       
-        this.data.spamData.spamRateCounter--;
+       if (this.data.spamData.isTraining) {
+            this.data.spamData.spamRateCounter--;
+       }
     }
+
+    trainUnit() {//n sendo usado
+        this.data.spamData.isTraining = true;
+    }
+
     getTileToSpam() : Tile {
         var r = Math.floor(Math.random() * this.getOuterTiles().length);
         return this.getOuterTiles()[r];

@@ -43,17 +43,17 @@ export class GameCore {
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
-        this.client.buildBuilding(new Tower(11, 24));  
-        this.client.buildBuilding(new Tower(3, 24));     
+        this.client.buildBuilding(new Tower(3, 24));  
+         this.client.buildBuilding(new Tower(11, 24));     
    
         this.host.buildBuilding(new Tower(11, 5));     
-        this.host.buildBuilding(new Tower(3, 5));
+        this.host.buildBuilding(new Tower(3, 5)); 
 
 
-        /* this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        /*this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
         this.host.buildBuilding(new Barn(0, 0));   
-        this.host.buildBuilding(new Barn(2, 3));   */    
+        this.host.buildBuilding(new Barn(2, 3)); */        
 
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
@@ -66,9 +66,18 @@ export class GameCore {
 
         setTimeout(this.sendaData.bind(this), 100);
 
+        setTimeout(this.trainCoisa.bind(this), 5000);
+
+
         this.gridManager.printGrid();
         this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     } 
+
+    trainCoisa() {
+        this.host.getSpamBuildings().forEach(b => {
+            b.data.spamData.isTraining = true;
+        });
+    }
 
     setSocket(p : ServerPlayer, isHost : boolean) {
         if (p.socket) {
@@ -92,7 +101,24 @@ export class GameCore {
                     this.client.getEntityById(data.buildingId).data.tileRow = data.row;
                     this.client.getEntityById(data.buildingId).data.tileCol = data.col;
                 }
-                //console.log(data.row+", "+data.col+": "+data.buildingId);
+            }.bind(this));
+
+            p.socket.on('askTrainUnit', function (data) {
+                if (data.isHost) {
+                    this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                }
+                else {
+                    this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                }
+            }.bind(this));
+
+            p.socket.on('askPauseUnit', function (data) {
+                if (data.isHost) {
+                    this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                }
+                else {
+                    this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                }
             }.bind(this));
         }
     }
