@@ -17,7 +17,6 @@ export class GameServer {
         //var player2 = this.onConnected();        
         this.onMatchmaking(player);
         //this.onMatchmaking(player2);
-
     }
 
     addPlayer(socket : SocketIO.Socket): ServerPlayer {

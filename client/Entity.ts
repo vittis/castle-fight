@@ -106,12 +106,15 @@ module Kodo {
             this.hpBar.destroy();
             this.destroy(); 
             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
+                if (this instanceof SpamBuilding) {
+                    if (Kodo.GameScene.instance.uiEntityManager.isShowing) {
+                        Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
+                    }
+                    Kodo.GameScene.instance.uiEntityManager.trainButton.visible = false;
+                }
                 Kodo.GameScene.instance.uiEntityManager.isShowing = false;
                 Kodo.GameScene.instance.uiEntityManager.boxGroup.removeAll();
-                if (this instanceof SpamBuilding) {
-                    Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
-                    Kodo.GameScene.instance.uiEntityManager.trainButton.destroy();
-                }
+
             }
         }
         

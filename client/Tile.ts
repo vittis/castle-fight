@@ -12,8 +12,8 @@ module Kodo {
             this.col = col;
 
             game.add.existing(this);
-                 /* var style = { font: "Baloo Paaji", fill: '#FEF65B', wordWrap: true,  align: "center" };
-            var q = game.add.text(x, y, row+", "+col, style);   */  
+           /*  var style = { font: "Baloo Paaji", fill: '#FEF65B', wordWrap: true,  align: "center" };
+            var q = game.add.text(x, y, row+", "+col, style);    */
         }
 
     }

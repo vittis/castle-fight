@@ -36,6 +36,14 @@ var Kodo;
                 this.bar.updateCounter(newData.spamData.spamRateCounter);
             }
         };
+        SpamBuilding.prototype.onOver = function () {
+            _super.prototype.onOver.call(this);
+            Kodo.GameScene.instance.uiEntityManager.onOverSpamBuilding(this);
+        };
+        SpamBuilding.prototype.onOut = function () {
+            _super.prototype.onOut.call(this);
+            Kodo.GameScene.instance.uiEntityManager.onOutSpamBuilding(this);
+        };
         SpamBuilding.prototype.onDeath = function () {
             this.bar.destroy();
             _super.prototype.onDeath.call(this);

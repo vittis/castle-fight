@@ -196,6 +196,8 @@ module Kodo {
             this.tudoGroup.add(this.unitDescTexto);
             this.tudoGroup.add(this.unitIconGroup);
             this.tudoGroup.add(this.unitImage);
+
+            
         }
         updateTextPos() {
             this.goldCostText.x = Math.round(this.world.x - 50);

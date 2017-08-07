@@ -60,18 +60,16 @@ module Kodo {
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);
 
-            if (!this.game.device.android) {
-                this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
-                this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
-                this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
-                this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
-            }
-            else {
-                this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
-                this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
-                this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
-                this.buildingsGroup.onChildInputOut.add(this.onUp.bind(this), this);
-            }
+            this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
+            this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
+            this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
+            this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
+
+            /* this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
+            this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
+            this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
+            this.buildingsGroup.onChildInputOut.add(this.onUp.bind(this), this); */
+            
 
             this.preview = game.add.sprite(0, 0, null);
             this.preview.alpha = 0.8;
@@ -155,10 +153,32 @@ module Kodo {
             this.preview.visible = false;
         }
         update() {
+             if (this.game.input.activePointer.isDown) {
+                var clicouNaBuilding = false;
+                var taMostrando = false;
+                this.buildingsGroup.forEach(function (b: UIBuildingButton) {
+                    if (b.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                        clicouNaBuilding = true;
+                    }
+                    if (b.over)
+                        taMostrando = true;
+                }.bind(this), this); 
+                if (!clicouNaBuilding && taMostrando) {
+                    console.log("qqq");
+                    this.buildingsGroup.forEach(function (b: UIBuildingButton) {
+                        if (b.over) {
+                            b.input.stop();
+                            b.onOut();
+                            b.input.start(1, true);
+                        }
+                    }.bind(this), this); 
+                }
+            } 
+
+
             if (this.buildingSelected) {
                 this.preview.x = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize) * GameConfig.tileSize;
-                this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize;
-
+                this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize; 
 
                 if (GameConfig.isHost) {
                     for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
@@ -189,6 +209,5 @@ module Kodo {
 
             }
         }
-
     }
 }

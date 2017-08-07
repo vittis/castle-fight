@@ -8,7 +8,7 @@
     "woodCost": 0,
     "spamUnit": "Thief",
     "spamCount": 2,
-    "spamRate": 15,
+    "spamRate": 10,
     "description": "Trains Thief",
     "incomeGain": 3
 }

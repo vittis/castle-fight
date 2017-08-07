@@ -22,7 +22,7 @@ module Kodo {
             this.maxArmor = entity.dataq.maxArmor;
             this.cuts = 1 / this.maxArmor;
 
-
+            //this.alpha = 0.5;
             this.maxLenght =  -33 * entity.dataq.height;
 
             this.lenght = this.maxLenght;

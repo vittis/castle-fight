@@ -184,7 +184,7 @@ export class GameCore {
                         else {
                             if (unit.tile.row >= 8) {//parte de baixo
                                 if (unit.owner.isHost) {
-                                    targetTile = unit.tile.col < 20 ? this.gridManager.tileAt(12, 20) : this.gridManager.tileAt(7, 23);
+                                    targetTile = unit.tile.col < 20 ? this.gridManager.tileAt(12, 22) : this.gridManager.tileAt(7, 25);
                                 }
                                 else {
                                     targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(7, 3) : this.gridManager.tileAt(12, 6);
@@ -192,10 +192,10 @@ export class GameCore {
                             }
                             else {//parte de cima
                                 if (unit.owner.isHost) {
-                                    targetTile = unit.tile.col >= 20 ? this.gridManager.tileAt(8, 23) : this.gridManager.tileAt(3, 20);
+                                    targetTile = unit.tile.col >= 20 ? this.gridManager.tileAt(8, 25) : this.gridManager.tileAt(3, 22);
                                 }
                                 else {
-                                    targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(8, 3) : this.gridManager.tileAt(3, 6);
+                                    targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(8, 5) : this.gridManager.tileAt(3, 8);
                                 }
                             }
                         }

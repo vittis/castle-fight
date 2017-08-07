@@ -8,7 +8,7 @@
     "woodCost": 160,
     "spamUnit": "King",
     "spamCount": 1,
-    "spamRate": 25,
+    "spamRate": 20,
     "description": "Trains King",
     "incomeGain": 8
 }

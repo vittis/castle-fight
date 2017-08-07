@@ -43,7 +43,14 @@ module Kodo {
                 
             }
         }
-
+        onOver() {
+            super.onOver();
+            Kodo.GameScene.instance.uiEntityManager.onOverSpamBuilding(this);
+        }
+        onOut() {
+           super.onOut();
+           Kodo.GameScene.instance.uiEntityManager.onOutSpamBuilding(this);
+        } 
         onDeath() {
             this.bar.destroy();
             super.onDeath();

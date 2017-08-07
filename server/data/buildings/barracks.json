@@ -9,7 +9,7 @@
 
     "spamUnit": "Soldado",
     "spamCount": 2,
-    "spamRate": 20,
+    "spamRate": 15,
 
     "description": "Trains Footman",
     "incomeGain": 2

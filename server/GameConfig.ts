@@ -8,5 +8,4 @@ export module GameConfig {
     export const STARTING_INCOME = 15;
     export const STARTING_INCOME_RATE = 20;
     export const BALL_SPAM_RATE = 80;
-
 }
