@@ -4,6 +4,7 @@ import * as socketio from "socket.io";
 
 var app = express();
 var server = http.createServer(app);
+
 var io = socketio.listen(server);
 
 app.use('/client',express.static(__dirname + '/client'));

@@ -58,7 +58,6 @@ var Kodo;
             this.game.world.bringToTop(this.boxGroup);
         };
         UIEntityManager.prototype.onDownTile = function (tile) {
-            //var entityManager = Kodo.GameScene.instance.uiEntityManager;
             this.tileMark.x = tile.x;
             this.tileMark.y = tile.y;
             //mandar pro server
@@ -83,13 +82,6 @@ var Kodo;
                             this.tileMark.destroy();
                         }
                         if (this.tileArray.length > 0) {
-                            /* this.tileArray.forEach(tile => {
-                                if (tile.inputEnabled == true) {
-                                    tile.inputEnabled = false;
-                                    tile.input.useHandCursor = false;
-                                    tile.events.onInputDown.removeAll();
-                                }
-                            }); */
                             this.tileArray = [];
                         }
                     }
@@ -112,13 +104,6 @@ var Kodo;
                                 this.tileMark.destroy();
                             }
                             if (this.tileArray.length > 0) {
-                                /*  this.tileArray.forEach(tile => {
-                                     if (tile.inputEnabled == true) {
-                                         tile.inputEnabled = false;
-                                         tile.input.useHandCursor = false;
-                                         tile.events.onInputDown.removeAll();
-                                     }
-                                 }); */
                                 this.tileArray = [];
                             }
                         }
@@ -151,7 +136,7 @@ var Kodo;
                 entityManager.descricaoString = unit.dataq.name + "\n"
                     + "\nDamage: " + unit.data.attackDmg + "\nRange: " + unit.data.attackRange + "\nAtk Speed: " + unit.data.attackRate;
                 var style = {
-                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                    fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;
@@ -218,13 +203,6 @@ var Kodo;
                     entityManager.trainButton.visible = false;
                 }
                 if (entityManager.tileArray.length > 0) {
-                    /* entityManager.tileArray.forEach(tile => {
-                        if (tile.inputEnabled == true) {
-                            tile.inputEnabled = false;
-                            tile.input.useHandCursor = false;
-                            tile.events.onInputDown.removeAll();
-                        }
-                    }); */
                     entityManager.tileArray = [];
                 }
             }
@@ -243,7 +221,7 @@ var Kodo;
                     entityManager.descricaoString = building.dataq.name + "\n" + "\n" + Kodo[building.dataq.name].description;
                 }
                 var style = {
-                    font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                    fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;

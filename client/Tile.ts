@@ -10,8 +10,6 @@ module Kodo {
             super(x, y, 48, 48);
             this.row = row;
             this.col = col;
-           /*  var style = { font: "Baloo Paaji", fill: '#FEF65B', wordWrap: true,  align: "center" };
-            var q = game.add.text(x, y, row+", "+col, style);    */
         }
 
     }

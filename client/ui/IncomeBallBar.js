@@ -41,7 +41,7 @@ var Kodo;
             _this.containerBar.inputEnabled = true;
             _this.containerBar.events.onInputOver.add(_this.onOver.bind(_this), _this);
             _this.containerBar.events.onInputOut.add(_this.onOut.bind(_this), _this);
-            _this.counterText = _this.game.add.text(0, 0, '0', { font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center" });
+            _this.counterText = _this.game.add.text(0, 0, '0', { fill: 'white', wordWrap: false, align: "center" });
             _this.counterText.anchor.setTo(0.5, 0.5);
             _this.counterText.fontSize = 18;
             _this.counterText.visible = false;

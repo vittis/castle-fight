@@ -1,5 +1,5 @@
 module Client { 
-    var socket = io.connect();
+    var socket = io.connect('http://192.168.0.25:8081');
     var startPingTime=0;
 
     socket.on('startGame',function(data){
@@ -57,6 +57,7 @@ module Client {
 
             }
         });
+        console.log("recebi data");
     });
 
     socket.on('endGame', function (data) {

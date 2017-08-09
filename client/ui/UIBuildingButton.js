@@ -19,7 +19,7 @@ var Kodo;
             _this.previewName = previewName;
             _this.buildingName = buildingName;
             _this.tudoGroup = _this.game.add.group();
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
             _this.goldCostText = game.add.text(0, 0, Kodo[buildingName].goldCost, style);
             _this.goldCostText.anchor.setTo(0.5, 0.5);
             _this.goldCostText.fontSize = 20;
@@ -27,14 +27,14 @@ var Kodo;
             _this.woodCostText = game.add.text(0, 0, Kodo[buildingName].woodCost, style);
             _this.woodCostText.anchor.setTo(0.5, 0.5);
             _this.woodCostText.fontSize = 20;
-            _this.goldCostText.alignTo(_this, Phaser.RIGHT_TOP, 3);
-            _this.woodCostText.alignTo(_this, Phaser.RIGHT_BOTTOM, 3);
+            /* this.goldCostText.alignTo(this, Phaser.RIGHT_TOP, 30);
+            this.woodCostText.alignTo(this, Phaser.RIGHT_BOTTOM, 30); */
             _this.game.time.events.add(500, _this.updateTextPos.bind(_this), _this);
             _this.game.time.events.add(1000, _this.updateTextPos.bind(_this), _this);
             _this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount
                 + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
             style = {
-                font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                fill: 'white', wordWrap: false, align: "center"
             };
             _this.descTexto = _this.game.add.text(200, 100, _this.descricaoString, style);
             _this.descTexto.fontSize = 16;
@@ -93,7 +93,7 @@ var Kodo;
                 + "\n   \nDamage: " + Kodo[Kodo[buildingName].spamUnit].attackDmg + "\nRange: " + Kodo[Kodo[buildingName].spamUnit].attackRange + "\nAtk Speed: " + Kodo[Kodo[buildingName].spamUnit].attackRate
                 + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;
             style = {
-                font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                fill: 'white', wordWrap: false, align: "center"
             };
             _this.unitDescTexto = _this.game.add.text(200, 100, _this.unitDescricaoString, style);
             _this.unitDescTexto.fontSize = 16;
@@ -150,10 +150,18 @@ var Kodo;
             return _this;
         }
         UIBuildingButton.prototype.updateTextPos = function () {
-            this.goldCostText.x = Math.round(this.world.x - 50);
-            this.goldCostText.y = Math.round(this.world.y - this.height / 2 + 23);
-            this.woodCostText.x = Math.round(this.world.x - 50);
-            this.woodCostText.y = Math.round(this.world.y + this.height / 2 - 23);
+            if (Kodo[this.buildingName].goldCost >= 100 || Kodo[this.buildingName].woodCost >= 100) {
+                this.goldCostText.x = Math.round(this.world.x - 54);
+                this.goldCostText.y = Math.round(this.world.y - this.height / 2 + 23);
+                this.woodCostText.x = Math.round(this.world.x - 54);
+                this.woodCostText.y = Math.round(this.world.y + this.height / 2 - 23);
+            }
+            else {
+                this.goldCostText.x = Math.round(this.world.x - 48);
+                this.goldCostText.y = Math.round(this.world.y - this.height / 2 + 23);
+                this.woodCostText.x = Math.round(this.world.x - 48);
+                this.woodCostText.y = Math.round(this.world.y + this.height / 2 - 23);
+            }
         };
         UIBuildingButton.prototype.onOver = function () {
             this.game.world.bringToTop(this.tudoGroup);

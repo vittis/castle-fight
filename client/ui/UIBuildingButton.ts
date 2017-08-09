@@ -31,7 +31,7 @@ module Kodo {
 
             this.tudoGroup = this.game.add.group();
 
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
             this.goldCostText = game.add.text(0, 0, Kodo[buildingName].goldCost, style);
             this.goldCostText.anchor.setTo(0.5, 0.5);
             this.goldCostText.fontSize = 20;
@@ -39,8 +39,9 @@ module Kodo {
             this.woodCostText = game.add.text(0, 0, Kodo[buildingName].woodCost, style);
             this.woodCostText.anchor.setTo(0.5, 0.5);
             this.woodCostText.fontSize = 20;
-            this.goldCostText.alignTo(this, Phaser.RIGHT_TOP, 3);
-            this.woodCostText.alignTo(this, Phaser.RIGHT_BOTTOM, 3);
+
+            /* this.goldCostText.alignTo(this, Phaser.RIGHT_TOP, 30);
+            this.woodCostText.alignTo(this, Phaser.RIGHT_BOTTOM, 30); */
 
             this.game.time.events.add(500, this.updateTextPos.bind(this), this);
             this.game.time.events.add(1000, this.updateTextPos.bind(this), this);
@@ -51,7 +52,7 @@ module Kodo {
 
 
             style = {
-                font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                fill: 'white', wordWrap: false, align: "center"
             };
             this.descTexto = this.game.add.text(200, 100, this.descricaoString, style);
             this.descTexto.fontSize = 16;
@@ -122,7 +123,7 @@ module Kodo {
             + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;
 
             style = {
-                font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
+                fill: 'white', wordWrap: false, align: "center"
             };
             this.unitDescTexto = this.game.add.text(200, 100, this.unitDescricaoString, style);
             this.unitDescTexto.fontSize = 16;
@@ -189,11 +190,20 @@ module Kodo {
             this.tudoGroup.add(this.unitImage); 
         }
         updateTextPos() {
-            this.goldCostText.x = Math.round(this.world.x - 50);
-            this.goldCostText.y = Math.round(this.world.y - this.height/2+23);
+            if (Kodo[this.buildingName].goldCost >= 100 || Kodo[this.buildingName].woodCost >= 100){
+                this.goldCostText.x = Math.round(this.world.x - 54);
+                this.goldCostText.y = Math.round(this.world.y - this.height/2+23);
 
-            this.woodCostText.x = Math.round(this.world.x - 50);
-            this.woodCostText.y = Math.round(this.world.y + this.height/2-23);
+                this.woodCostText.x = Math.round(this.world.x - 54);
+                this.woodCostText.y = Math.round(this.world.y + this.height/2-23);
+            }
+            else {
+                this.goldCostText.x = Math.round(this.world.x - 48);
+                this.goldCostText.y = Math.round(this.world.y - this.height / 2 + 23);
+
+                this.woodCostText.x = Math.round(this.world.x - 48);
+                this.woodCostText.y = Math.round(this.world.y + this.height / 2 - 23);
+            }
         }
         over : boolean = false;
         onOver() {

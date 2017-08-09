@@ -33,14 +33,14 @@ var Kodo;
             _this.containerBar.alpha = 0.5;
             _this.containerBar.y -= 19;
             _this.containerBar.x -= 19;
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
             _this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             _this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
             _this.incomeNumberLabel.fontSize = 30;
             _this.incomeNumberLabel.alignTo(_this, Phaser.RIGHT_CENTER, _this.maxLenght + 5);
             var goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
             goldIcon.scale.setTo(0.7, 0.7);
-            goldIcon.alignTo(_this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3);
+            goldIcon.alignTo(_this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3, -2);
             return _this;
         }
         IncomeBar.prototype.update = function () {

@@ -39,7 +39,7 @@ module Kodo {
             this.containerBar.y -= 19;
             this.containerBar.x -= 19;
 
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
 
             this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
@@ -48,7 +48,7 @@ module Kodo {
 
             var goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
             goldIcon.scale.setTo(0.7, 0.7);
-            goldIcon.alignTo(this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3);
+            goldIcon.alignTo(this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3, -2);
 
         }
         update() {

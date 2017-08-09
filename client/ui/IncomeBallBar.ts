@@ -53,7 +53,7 @@ module Kodo {
             this.containerBar.events.onInputOver.add(this.onOver.bind(this), this);
             this.containerBar.events.onInputOut.add(this.onOut.bind(this), this);
 
-            this.counterText = this.game.add.text(0, 0, '0', {font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"});
+            this.counterText = this.game.add.text(0, 0, '0', { fill: 'white', wordWrap: false, align: "center"});
             this.counterText.anchor.setTo(0.5, 0.5);
             this.counterText.fontSize = 18;
             this.counterText.visible = false;

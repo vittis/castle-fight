@@ -43,7 +43,7 @@ module Kodo {
             var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
             this.buildingsGroup.add(kingsCourtui);
 
-            this.buildingsGroup.align(7, 1, 105, 0);
+            this.buildingsGroup.align(7, 1, 110, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;

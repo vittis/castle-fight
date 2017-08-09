@@ -17,7 +17,7 @@ module Kodo {
         constructor(game : Phaser.Game) {
             this.offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
 
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
             this.goldLabel = game.add.text(0, 0, '150', style);
             this.goldLabel.anchor.setTo(0.5, 0.5);
             this.goldLabel.fontSize = 40;
@@ -25,7 +25,7 @@ module Kodo {
             this.goldLabel.y = game.height - GameConfig.uiHeight / 2;
             
             this.goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
-            this.goldIcon.alignTo(this.goldLabel, Phaser.RIGHT_CENTER, 5);
+            //this.goldIcon.alignTo(this.goldLabel, Phaser.RIGHT_CENTER, 5);
 
             style.fill = '#0D6032';
             this.woodLabel = game.add.text(0, 0, '250', style);
@@ -35,7 +35,7 @@ module Kodo {
             this.woodLabel.y = game.height - GameConfig.uiHeight / 2;
             
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');
-            this.woodIcon.alignTo(this.woodLabel, Phaser.RIGHT_CENTER, 5);
+            //this.woodIcon.alignTo(this.woodLabel, Phaser.RIGHT_CENTER, 5);
 
             this.incomeBar = new IncomeBar(game);
 
@@ -44,10 +44,10 @@ module Kodo {
             this.eraLabel.anchor.setTo(0.5, 0.5);
             this.eraLabel.fontSize = 40;
             this.eraLabel.x = 530;
-            this.eraLabel.y = game.height - GameConfig.uiHeight / 2 - 15;
+            this.eraLabel.y = game.height - GameConfig.uiHeight / 2 - 11;
 
             this.upgradeButton = game.add.button(this.incomeBar.x, this.incomeBar.y+17, 'upgrade_button');
-            this.upgradeButton.alignTo(this.eraLabel, Phaser.BOTTOM_CENTER,0, -6);
+            this.upgradeButton.alignTo(this.eraLabel, Phaser.BOTTOM_CENTER,0, -10);
         }
 
         updateResources(incomeRateCounter : number) {
@@ -56,8 +56,8 @@ module Kodo {
             this.goldLabel.text = '' + Kodo.GameScene.instance.player.gold;
             this.woodLabel.text = '' + Kodo.GameScene.instance.player.wood;
 
-            this.goldIcon.alignTo(this.goldLabel, Phaser.RIGHT_CENTER, 5);
-            this.woodIcon.alignTo(this.woodLabel, Phaser.RIGHT_CENTER, 5);
+            this.goldIcon.alignTo(this.goldLabel, Phaser.RIGHT_CENTER, 5, -3);
+            this.woodIcon.alignTo(this.woodLabel, Phaser.RIGHT_CENTER, 5, -3);
         }
             
     }
