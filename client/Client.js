@@ -1,6 +1,6 @@
 var Client;
 (function (Client) {
-    var socket = io.connect('http://192.168.0.25:8081');
+    var socket = io.connect();
     var startPingTime = 0;
     socket.on('startGame', function (data) {
         console.log("start game recebido - iniciando jogo!");
