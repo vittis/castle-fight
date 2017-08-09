@@ -105,7 +105,7 @@ module Kodo {
             this.armorBar.destroy();
             this.hpBar.destroy();
             this.destroy(); 
-            if (Kodo.GameScene.instance.uiEntityManager.target == this) {
+             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
                 if (this instanceof SpamBuilding) {
                     if (Kodo.GameScene.instance.uiEntityManager.isShowing) {
                         Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
@@ -115,7 +115,7 @@ module Kodo {
                 Kodo.GameScene.instance.uiEntityManager.isShowing = false;
                 Kodo.GameScene.instance.uiEntityManager.boxGroup.removeAll();
 
-            }
+            } 
         }
         
     }

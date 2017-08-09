@@ -12,6 +12,8 @@ module Kodo {
         inputDown : boolean = false;
         inputOver : boolean = false;
 
+        buildArea : Phaser.Sprite;
+
         constructor(game : Phaser.Game) {
             this.game = game;
 
@@ -20,16 +22,6 @@ module Kodo {
 
             var hostLabel = GameConfig.isHost ? 'h' : 'c'
 
-
-            /*var barracksui = game.add.button(0, 0, 'barracks_ui_'+hostLabel, null, this, 1, 0, 2);
-            barracksui.data.previewName = 'barracks'+hostLabel;
-            barracksui.data.buildingName = 'Barracks';
-            this.buildingsGroup.add(barracksui);
-
-            var archeryRangeui = game.add.button(0, 0, 'archeryRange_ui_'+hostLabel, null, this, 1, 0, 2);
-            archeryRangeui.data.previewName = 'archeryRange' + hostLabel;
-            archeryRangeui.data.buildingName = 'ArcheryRange';
-            this.buildingsGroup.add(archeryRangeui);*/
             var barracksui = new UIBuildingButton(game, 'barracks_ui_'+hostLabel, this, 'barracks'+hostLabel, 'Barracks');
             this.buildingsGroup.add(barracksui);
 
@@ -65,15 +57,19 @@ module Kodo {
             this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
             this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this);
 
-            /* this.buildingsGroup.onChildInputOver.add(this.onHover.bind(this), this);
-            this.buildingsGroup.onChildInputDown.add(this.onDown.bind(this), this);
-            this.buildingsGroup.onChildInputUp.add(this.onUp.bind(this), this);
-            this.buildingsGroup.onChildInputOut.add(this.onUp.bind(this), this); */
-            
-
             this.preview = game.add.sprite(0, 0, null);
             this.preview.alpha = 0.8;
             this.preview.visible = false;
+
+            var posX = GameConfig.isHost ? 0 : (GameConfig.GRID_COLS - 6) * 48;
+            var buildArea = game.make.graphics(0, 0);
+            buildArea.beginFill(0x000000, 0.1);
+            buildArea.drawRect(0, 0, 6 * 48, 16 * 48);
+            buildArea.endFill();
+            this.buildArea = game.add.sprite(posX, 0, buildArea.generateTexture());
+            buildArea.destroy();
+
+            this.buildArea.visible = false;
         }
         onHover(sprite: UIBuildingButton) {
             this.inputOver = true;
@@ -90,6 +86,8 @@ module Kodo {
             if (this.inputDown) {
                 this.buildingSelected = true;
                 this.preview.visible = true;
+                this.buildArea.visible = true;
+                this.game.world.bringToTop(this.preview);
             }
             sprite.onOut();
         }
@@ -107,9 +105,10 @@ module Kodo {
                 if (row >= GameConfig.GRID_ROWS - 1) {
                     canBuild = false;
                 }
-                if (col > GameConfig.GRID_COLS - 1) {
+                if (col > GameConfig.GRID_COLS - 2) {
                     canBuild = false;
                 }
+
                 if (canBuild) {
                     for (var i = 0; i < 2; i++) {
                         for (var j = 0; j < 2; j++) {
@@ -120,11 +119,7 @@ module Kodo {
                     }
                 }
 
-                for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                    for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                        Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
-                    }
-                }
+                this.buildArea.visible = false;
 
                 if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
                     if (canBuild) {
@@ -140,11 +135,11 @@ module Kodo {
                         }
                     }
                     else {
-                        console.log("ja tem uma entidade aqui!!");
+                        //console.log("ja tem uma entidade aqui!!");
                     }
                 }
                 else {
-                    console.log("n pode construir aqui");
+                    //console.log("n pode construir aqui");
                 }
                 this.game.time.events.add(500, this.hidePreview.bind(this), this);
             }
@@ -164,7 +159,6 @@ module Kodo {
                         taMostrando = true;
                 }.bind(this), this); 
                 if (!clicouNaBuilding && taMostrando) {
-                    console.log("qqq");
                     this.buildingsGroup.forEach(function (b: UIBuildingButton) {
                         if (b.over) {
                             b.input.stop();
@@ -175,37 +169,43 @@ module Kodo {
                 }
             } 
 
-
             if (this.buildingSelected) {
-                this.preview.x = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize) * GameConfig.tileSize;
-                this.preview.y = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize) * GameConfig.tileSize; 
+                var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
+                var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
+                this.preview.x = col * GameConfig.tileSize;
+                this.preview.y = row * GameConfig.tileSize; 
 
-                if (GameConfig.isHost) {
-                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                            if (j < 6) {
-                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
-                                else 
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
-                            }
-                        }
+                if (row <= GameConfig.GRID_ROWS - 1 && col <= GameConfig.GRID_COLS - 1) {
+                    var paint = false;
+
+                    if (col > 4 && col < GameConfig.GRID_COLS - 6) {
+                        paint = true
+                    }
+                    else if (row+1 >= GameConfig.GRID_ROWS || col+1 >= GameConfig.GRID_COLS) {
+                        paint = true;
+                    }
+                    else if (Kodo.GameScene.instance.grid[row][col].entity != null || Kodo.GameScene.instance.grid[row][col + 1].entity != null ||
+                        Kodo.GameScene.instance.grid[row + 1][col].entity != null || Kodo.GameScene.instance.grid[row + 1][col + 1].entity != null) {
+                        paint = true;
+                    }
+                    else if (col >= GameConfig.GRID_COLS - 1) {
+                        paint = true;
+                    }
+                    else if (row >= GameConfig.GRID_ROWS - 1) {
+                        paint = true;
+                    }
+                    else {
+                        paint = false;
+                    }
+
+                    if (this.preview.tint == 0xffffff && paint) {
+                        this.preview.tint = 0xff0000;
+                    }
+                    if (this.preview.tint == 0xff0000 && !paint) {
+                        this.preview.tint = 0xffffff;
                     }
                 }
-                else {
-                    for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
-                        for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                            if (j > GameConfig.GRID_COLS - 7) {
-                                if (Kodo.GameScene.instance.grid[i][j].entity == null)
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xc9e5d4;
-                                else
-                                    Kodo.GameScene.instance.grid[i][j].tint = 0xFFFFFF;
-                            }
-                        }
-                    }
-                }
-
-
+                
 
             }
         }

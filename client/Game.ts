@@ -1,14 +1,10 @@
-
 module Kodo {
- 
     export class Game extends Phaser.Game {
         
         public static instance : Game = null;
 
         constructor() {
-            //1296, 844
-            //super(1296+GameConfig.uiWidth, 816-48, Phaser.AUTO, document.getElementById('game'), null);
-            super(1392 + 96, 838, Phaser.AUTO, document.getElementById('game'), null);
+            super(1488, 838, Phaser.CANVAS, document.getElementById('game'), null);
 
             Game.instance = this;
 

@@ -31,6 +31,9 @@ var Kodo;
             this.trainButton.anchor.setTo(0.5, 0.5);
             this.trainButton.alpha = 0.9;
             this.trainButton.visible = false;
+            if (this.game.device.android || this.game.device.iOS) {
+                this.trainButton.scale.setTo(1.4, 1.4);
+            }
         }
         UIEntityManager.prototype.updateText = function () {
             if (this.descTexto) {
@@ -54,6 +57,13 @@ var Kodo;
             }
             this.game.world.bringToTop(this.boxGroup);
         };
+        UIEntityManager.prototype.onDownTile = function (tile) {
+            //var entityManager = Kodo.GameScene.instance.uiEntityManager;
+            this.tileMark.x = tile.x;
+            this.tileMark.y = tile.y;
+            //mandar pro server
+            Client.askSpamTileMark(tile.row, tile.col, this.target.id);
+        };
         UIEntityManager.prototype.update = function () {
             var _this = this;
             if (this.isShowing) {
@@ -68,17 +78,18 @@ var Kodo;
                         this.isShowing = false;
                         this.target = null;
                         this.boxGroup.removeAll();
+                        // this.trainButton.visible = false;
                         if (this.tileMark) {
                             this.tileMark.destroy();
                         }
                         if (this.tileArray.length > 0) {
-                            this.tileArray.forEach(function (tile) {
+                            /* this.tileArray.forEach(tile => {
                                 if (tile.inputEnabled == true) {
                                     tile.inputEnabled = false;
                                     tile.input.useHandCursor = false;
                                     tile.events.onInputDown.removeAll();
                                 }
-                            });
+                            }); */
                             this.tileArray = [];
                         }
                     }
@@ -86,8 +97,9 @@ var Kodo;
                         var clicouNumTile = false;
                         if (this.tileArray.length > 0) {
                             this.tileArray.forEach(function (tile) {
-                                if (tile.getBounds().contains(_this.game.input.x, _this.game.input.y)) {
+                                if (tile.contains(_this.game.input.x, _this.game.input.y)) {
                                     clicouNumTile = true;
+                                    _this.onDownTile(tile);
                                 }
                             });
                         }
@@ -95,17 +107,18 @@ var Kodo;
                             this.isShowing = false;
                             this.target = null;
                             this.boxGroup.removeAll();
+                            //this.trainButton.visible = false;
                             if (this.tileMark) {
                                 this.tileMark.destroy();
                             }
                             if (this.tileArray.length > 0) {
-                                this.tileArray.forEach(function (tile) {
-                                    if (tile.inputEnabled == true) {
-                                        tile.inputEnabled = false;
-                                        tile.input.useHandCursor = false;
-                                        tile.events.onInputDown.removeAll();
-                                    }
-                                });
+                                /*  this.tileArray.forEach(tile => {
+                                     if (tile.inputEnabled == true) {
+                                         tile.inputEnabled = false;
+                                         tile.input.useHandCursor = false;
+                                         tile.events.onInputDown.removeAll();
+                                     }
+                                 }); */
                                 this.tileArray = [];
                             }
                         }
@@ -121,13 +134,13 @@ var Kodo;
                     entityManager.tileMark.destroy();
                 }
                 if (entityManager.tileArray.length > 0) {
-                    entityManager.tileArray.forEach(function (tile) {
+                    /* entityManager.tileArray.forEach(tile => {
                         if (tile.inputEnabled == true) {
                             tile.inputEnabled = false;
                             tile.input.useHandCursor = false;
                             tile.events.onInputDown.removeAll();
                         }
-                    });
+                    }); */
                     entityManager.tileArray = [];
                 }
             }
@@ -195,7 +208,6 @@ var Kodo;
             }
         };
         UIEntityManager.prototype.onDownBuilding = function (building) {
-            var _this = this;
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             if (entityManager.descricaoBox) {
                 entityManager.boxGroup.removeAll();
@@ -206,13 +218,13 @@ var Kodo;
                     entityManager.trainButton.visible = false;
                 }
                 if (entityManager.tileArray.length > 0) {
-                    entityManager.tileArray.forEach(function (tile) {
+                    /* entityManager.tileArray.forEach(tile => {
                         if (tile.inputEnabled == true) {
                             tile.inputEnabled = false;
                             tile.input.useHandCursor = false;
                             tile.events.onInputDown.removeAll();
                         }
-                    });
+                    }); */
                     entityManager.tileArray = [];
                 }
             }
@@ -284,9 +296,9 @@ var Kodo;
                 if (building instanceof Kodo.SpamBuilding && building.isHost == GameConfig.isHost) {
                     entityManager.tileMark = this.game.add.sprite(Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].x, Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].y, 'tileSelected');
                     Kodo.GameScene.instance.getOuterTiles(building).forEach(function (tile) {
-                        tile.inputEnabled = true;
+                        /* tile.inputEnabled = true;
                         tile.input.useHandCursor = true;
-                        tile.events.onInputDown.add(entityManager.onDownTile.bind(_this), _this);
+                        tile.events.onInputDown.add(entityManager.onDownTile.bind(this), this); */
                         entityManager.tileArray.push(tile);
                         //tile.events.onInputOut.add(this.onOut.bind(this), this);
                     });
@@ -339,13 +351,6 @@ var Kodo;
         UIEntityManager.prototype.justOpenedFalse = function () {
             var entityManager = Kodo.GameScene.instance.uiEntityManager;
             entityManager.justOpened = false;
-        };
-        UIEntityManager.prototype.onDownTile = function (tile) {
-            var entityManager = Kodo.GameScene.instance.uiEntityManager;
-            entityManager.tileMark.x = tile.x;
-            entityManager.tileMark.y = tile.y;
-            //mandar pro server
-            Client.askSpamTileMark(tile.row, tile.col, entityManager.target.id);
         };
         return UIEntityManager;
     }());

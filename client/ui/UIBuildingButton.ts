@@ -26,40 +26,31 @@ module Kodo {
 
         constructor(game, sprite : string, context, previewName, buildingName) {
             super(game, 0, 0, sprite, null, context, 1, 0, 2);
-            this.previewName = previewName;
+             this.previewName = previewName;
             this.buildingName = buildingName;
 
             this.tudoGroup = this.game.add.group();
 
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, align: "center" };
             this.goldCostText = game.add.text(0, 0, Kodo[buildingName].goldCost, style);
             this.goldCostText.anchor.setTo(0.5, 0.5);
             this.goldCostText.fontSize = 20;
-            //this.goldCostText.alpha = 0.9;
-
             style.fill = '#0D6032';
             this.woodCostText = game.add.text(0, 0, Kodo[buildingName].woodCost, style);
             this.woodCostText.anchor.setTo(0.5, 0.5);
             this.woodCostText.fontSize = 20;
-            //this.woodCostText.alpha = 0.9;
-
             this.goldCostText.alignTo(this, Phaser.RIGHT_TOP, 3);
             this.woodCostText.alignTo(this, Phaser.RIGHT_BOTTOM, 3);
-
 
             this.game.time.events.add(500, this.updateTextPos.bind(this), this);
             this.game.time.events.add(1000, this.updateTextPos.bind(this), this);
 
 
-            /* this.descricaoString = Kodo[buildingName].nome + "\nHP: " + Kodo[buildingName].maxHP + 
-                "\nArmor: " + Kodo[buildingName].maxArmor + "\nUnit Count: " + Kodo[buildingName].spamCount + "\nTraining Rate: " + Kodo[buildingName].spamRate +
-                "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
-
             this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount 
                 + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) +"\n" + Kodo[buildingName].description+"\n(click to unit info)";
 
 
-            var style = {
+            style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
             this.descTexto = this.game.add.text(200, 100, this.descricaoString, style);
@@ -130,7 +121,7 @@ module Kodo {
             + "\n   \nDamage: " + Kodo[Kodo[buildingName].spamUnit].attackDmg + "\nRange: " + Kodo[Kodo[buildingName].spamUnit].attackRange + "\nAtk Speed: " + Kodo[Kodo[buildingName].spamUnit].attackRate
             + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;
 
-            var style = {
+            style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
             this.unitDescTexto = this.game.add.text(200, 100, this.unitDescricaoString, style);
@@ -195,9 +186,7 @@ module Kodo {
             this.tudoGroup.add(this.unitDescricaoBox);
             this.tudoGroup.add(this.unitDescTexto);
             this.tudoGroup.add(this.unitIconGroup);
-            this.tudoGroup.add(this.unitImage);
-
-            
+            this.tudoGroup.add(this.unitImage); 
         }
         updateTextPos() {
             this.goldCostText.x = Math.round(this.world.x - 50);

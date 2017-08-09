@@ -47,10 +47,10 @@ module Kodo {
             }
             else {
 
-                this.game.load.image('arvore1', 'assets/48/arvore1_48.png');
+                //this.game.load.image('arvore1', 'assets/48/arvore1_48.png');
 
-                this.game.load.image('tile0', 'assets/48/tile0_48.png');
-                this.game.load.image('tile1', 'assets/48/tile1_48.png');
+                //this.game.load.image('tile0', 'assets/48/tile0_48.png');
+                //this.game.load.image('tile1', 'assets/48/tile1_48.png');
                 this.game.load.image('soldadoh', 'assets/48/soldadoh_48.png');
                 this.game.load.image('soldadoc', 'assets/48/soldadoc_48.png');
                 this.game.load.image('archerh', 'assets/48/archerh_48.png');
@@ -110,6 +110,9 @@ module Kodo {
                 this.game.load.image('tileSelected', 'assets/48/tileSelected_48.png');
                 this.game.load.spritesheet('trainButton', 'assets/48/trainButton_48.png', 26 ,26);
                 this.game.load.spritesheet('pauseButton', 'assets/48/pauseButton_48.png', 26, 26);
+
+                this.game.load.image('tileFundo', 'assets/48/tileFundo_48.png');
+                this.game.load.image('arvores', 'assets/48/arvores_48.png');
 
             }
         }

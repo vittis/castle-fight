@@ -53,8 +53,8 @@ module Kodo {
         }
         update() {
             if (this.smooth < this.maxLenght) {
-                this.currentTime += this.game.time.elapsed / 1000;
-                this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght/20, this.currentTime / (this.timeToMove * Kodo.GameScene.instance.player.incomeRate));
+                this.currentTime += this.game.time.elapsed * 0.001;
+                this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght*0.05, this.currentTime / (this.timeToMove * Kodo.GameScene.instance.player.incomeRate));
             }
 
             this.clear();

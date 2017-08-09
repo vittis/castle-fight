@@ -12,6 +12,13 @@ module Kodo {
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
+            this.game.forceSingleUpdate = true;
+
+            this.game.forceSingleUpdate = true;
+            this.game.preserveDrawingBuffer = true;
+            this.game.clearBeforeRender = false;
+            this.game.lockRender = false;
+
 
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
@@ -31,17 +38,16 @@ module Kodo {
                 //this.scale.setUserScale(1, 1);  
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-                window.addEventListener('resize', function () { adjust(); });
-                adjust();
+                //window.addEventListener('resize', function () { adjust(); });
+                //adjust();
 
                 this.scale.setMinMax(0, 0, 1488, 838);
 
 
-                if (window.innerWidth < GameConfig.GAME_WIDTH || window.innerHeight < GameConfig.GAME_HEIGHT) {
-                    
-                    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                    this.game.scale.refresh();
-                }
+                //if (window.innerWidth < GameConfig.GAME_WIDTH || window.innerHeight < GameConfig.GAME_HEIGHT) {   
+                    //this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                    //this.game.scale.refresh();
+                //}
             }
 
             this.game.state.start('Preloader', true, false);

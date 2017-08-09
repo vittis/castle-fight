@@ -74,7 +74,7 @@ var Kodo;
         SpamBarSmooth.prototype.update = function () {
             if (this.building.data.spamData.isTraining) {
                 if (this.smooth < this.maxLenght) {
-                    this.currentTime += this.game.time.elapsed / 1000;
+                    this.currentTime += this.game.time.elapsed * 0.001;
                     this.smooth = Phaser.Math.linear(0, this.maxLenght, this.currentTime / (this.timeToMove * this.spamRate));
                 }
                 this.clear();
@@ -92,7 +92,7 @@ var Kodo;
             }*/
             if (this.fadeOut) {
                 var bar = this.unitsCountBar[this.unitsCountBar.length - 1];
-                bar.alpha -= this.game.time.elapsed / 1000;
+                bar.alpha -= this.game.time.elapsed * 0.001;
                 if (bar.alpha < 0) {
                     bar.destroy();
                     this.unitsCountBar.splice(this.unitsCountBar.length - 1, 1);

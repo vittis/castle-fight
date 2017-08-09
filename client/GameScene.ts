@@ -35,35 +35,39 @@ module Kodo {
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
                 for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    this.grid[i][j] = new Tile(this.game, j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, i, j);
-                    if((i >= 6 && i <= 9) && (j >= 8 && j <= 22)){ //para 16x31
+                    this.grid[i][j] = new Tile(j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, i, j);
+                    /* if((i >= 6 && i <= 9) && (j >= 8 && j <= 22)){ //para 16x31
                         this.game.add.sprite(j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, 'arvore1');
-                    }
+                    } */
                 }
             }
+            this.game.add.sprite(0, 0, 'tileFundo');
+            this.game.add.sprite(this.grid[6][8].x, this.grid[6][8].y, 'arvores');
+
 
             this.uiBuildingManager = new UIBuildingManager(this.game);
             this.uiResourceManager = new UIResourceManager(this.game);
             this.uiEntityManager = new UIEntityManager(this.game);
-            this.incomeBallBar = new IncomeBallBar(this.game);
-
-            //var q = this.game.add.sprite(this.grid[10][4].x, this.grid[10][4].y, 'tileSelected');
+            this.incomeBallBar = new IncomeBallBar(this.game);  
         }
 
-        update() {
-            this.uiBuildingManager.update();
-            this.uiEntityManager.update();
+         update() {
+             this.uiBuildingManager.update();
+            this.uiEntityManager.update(); 
+        } 
+        render() {
+            this.game.debug.text(this.game.time.fps+"", 2, 14, "#00ff00");
         }
-
+        
         updateEntities(newEntities : any[]) {
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
 
-            this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
+              this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
                 this.world.bringToTop(item.tudoGroup);
-            }.bind(this), this);
+            }.bind(this), this); 
 
-            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);   
             
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
@@ -77,7 +81,7 @@ module Kodo {
             this.cleanDeadEntities(newEntities);  
             
             this.uiEntityManager.updateText();
-        }
+         }
 
         cleanDeadEntities(newEntities : Entity[]) {
             var idArray = [];

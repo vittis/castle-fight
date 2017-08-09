@@ -19,26 +19,21 @@ var Kodo;
             _this.previewName = previewName;
             _this.buildingName = buildingName;
             _this.tudoGroup = _this.game.add.group();
-            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, align: "center" };
             _this.goldCostText = game.add.text(0, 0, Kodo[buildingName].goldCost, style);
             _this.goldCostText.anchor.setTo(0.5, 0.5);
             _this.goldCostText.fontSize = 20;
-            //this.goldCostText.alpha = 0.9;
             style.fill = '#0D6032';
             _this.woodCostText = game.add.text(0, 0, Kodo[buildingName].woodCost, style);
             _this.woodCostText.anchor.setTo(0.5, 0.5);
             _this.woodCostText.fontSize = 20;
-            //this.woodCostText.alpha = 0.9;
             _this.goldCostText.alignTo(_this, Phaser.RIGHT_TOP, 3);
             _this.woodCostText.alignTo(_this, Phaser.RIGHT_BOTTOM, 3);
             _this.game.time.events.add(500, _this.updateTextPos.bind(_this), _this);
             _this.game.time.events.add(1000, _this.updateTextPos.bind(_this), _this);
-            /* this.descricaoString = Kodo[buildingName].nome + "\nHP: " + Kodo[buildingName].maxHP +
-                "\nArmor: " + Kodo[buildingName].maxArmor + "\nUnit Count: " + Kodo[buildingName].spamCount + "\nTraining Rate: " + Kodo[buildingName].spamRate +
-                "\n"+Kodo[buildingName].description+"\n(click to unit info)"; */
             _this.descricaoString = Kodo[buildingName].nome + "\n\n" + "Unit Count: " + Kodo[buildingName].spamCount
                 + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) + "\n" + Kodo[buildingName].description + "\n(click to unit info)";
-            var style = {
+            style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
             _this.descTexto = _this.game.add.text(200, 100, _this.descricaoString, style);
@@ -97,7 +92,7 @@ var Kodo;
             _this.unitDescricaoString = Kodo[Kodo[buildingName].spamUnit].nome
                 + "\n   \nDamage: " + Kodo[Kodo[buildingName].spamUnit].attackDmg + "\nRange: " + Kodo[Kodo[buildingName].spamUnit].attackRange + "\nAtk Speed: " + Kodo[Kodo[buildingName].spamUnit].attackRate
                 + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;
-            var style = {
+            style = {
                 font: "Baloo Paaji", fill: 'white', wordWrap: false, align: "center"
             };
             _this.unitDescTexto = _this.game.add.text(200, 100, _this.unitDescricaoString, style);
