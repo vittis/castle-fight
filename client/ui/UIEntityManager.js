@@ -23,6 +23,7 @@ var Kodo;
             this.isShowing = false;
             this.tileArray = [];
             this.justOpened = false;
+            this.tileClickArray = [];
             this.game = game;
             this.isShowing = false;
             this.boxGroup = game.add.group();
@@ -33,6 +34,13 @@ var Kodo;
             this.trainButton.visible = false;
             if (this.game.device.android || this.game.device.iOS) {
                 this.trainButton.scale.setTo(1.4, 1.4);
+            }
+            for (var i = 0; i < 12; i++) {
+                var q = this.game.add.sprite(0, 0, 'tileClickMark');
+                q.anchor.setTo(0.5, 0.5);
+                q.alpha = 0.6;
+                q.visible = false;
+                this.tileClickArray.push(q);
             }
         }
         UIEntityManager.prototype.updateText = function () {
@@ -100,6 +108,9 @@ var Kodo;
                             this.target = null;
                             this.boxGroup.removeAll();
                             //this.trainButton.visible = false;
+                            this.tileClickArray.forEach(function (t) {
+                                t.visible = false;
+                            });
                             if (this.tileMark) {
                                 this.tileMark.destroy();
                             }
@@ -119,15 +130,11 @@ var Kodo;
                     entityManager.tileMark.destroy();
                 }
                 if (entityManager.tileArray.length > 0) {
-                    /* entityManager.tileArray.forEach(tile => {
-                        if (tile.inputEnabled == true) {
-                            tile.inputEnabled = false;
-                            tile.input.useHandCursor = false;
-                            tile.events.onInputDown.removeAll();
-                        }
-                    }); */
                     entityManager.tileArray = [];
                 }
+                entityManager.tileClickArray.forEach(function (t) {
+                    t.visible = false;
+                });
             }
             if (entityManager.target != unit || !entityManager.isShowing) {
                 entityManager.justOpened = true;
@@ -205,6 +212,9 @@ var Kodo;
                 if (entityManager.tileArray.length > 0) {
                     entityManager.tileArray = [];
                 }
+                entityManager.tileClickArray.forEach(function (t) {
+                    t.visible = false;
+                });
             }
             if (entityManager.trainButton) {
                 entityManager.trainButton.visible = false;
@@ -273,22 +283,24 @@ var Kodo;
                 entityManager.target = building;
                 if (building instanceof Kodo.SpamBuilding && building.isHost == GameConfig.isHost) {
                     entityManager.tileMark = this.game.add.sprite(Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].x, Kodo.GameScene.instance.grid[building.data.tileRow][building.data.tileCol].y, 'tileSelected');
+                    this.game.world.bringToTop(entityManager.tileMark);
+                    var i = 0;
                     Kodo.GameScene.instance.getOuterTiles(building).forEach(function (tile) {
-                        /* tile.inputEnabled = true;
-                        tile.input.useHandCursor = true;
-                        tile.events.onInputDown.add(entityManager.onDownTile.bind(this), this); */
                         entityManager.tileArray.push(tile);
-                        //tile.events.onInputOut.add(this.onOut.bind(this), this);
+                        if (!(tile.row == building.data.tileRow && tile.col == building.data.tileCol)) {
+                            entityManager.tileClickArray[i].x = tile.x + tile.width / 2;
+                            entityManager.tileClickArray[i].y = tile.y + tile.height / 2;
+                            entityManager.tileClickArray[i].visible = true;
+                        }
+                        i++;
+                        console.log("q");
                     });
                     var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
                     entityManager.trainButton.loadTexture(texture);
-                    entityManager.trainButton.x = building.x + building.width / 2;
-                    entityManager.trainButton.y = building.y + building.height / 2;
+                    entityManager.trainButton.x = building.x + building.width - 8;
+                    entityManager.trainButton.y = building.y + building.height - 12;
                     entityManager.trainButton.visible = true;
                     this.game.world.bringToTop(entityManager.trainButton);
-                    /*                     entityManager.trainButton = this.game.add.button(building.x + building.width / 2, building.y + building.height / 2, texture, entityManager.onClickTrainButton.bind(this), this, 1, 0, 2);
-                                        entityManager.trainButton.anchor.setTo(0.5, 0.5);
-                                        entityManager.trainButton.alpha = 0.9; */
                 }
             }
             else {
@@ -312,8 +324,8 @@ var Kodo;
                 this.trainButton.visible = true;
                 var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
                 this.trainButton.loadTexture(texture);
-                this.trainButton.x = building.x + building.width / 2;
-                this.trainButton.y = building.y + building.height / 2;
+                this.trainButton.x = building.x + building.width - 8;
+                this.trainButton.y = building.y + building.height - 12;
                 this.game.world.bringToTop(this.trainButton);
                 this.trainButtonTarget = building;
             }

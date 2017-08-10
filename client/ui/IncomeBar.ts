@@ -19,7 +19,7 @@ module Kodo {
 
             this.maxLenght = 120;
 
-            this.x = 275;
+            this.x = 270;
             this.y = game.height - GameConfig.uiHeight / 2;
             this.smooth = 0;
 

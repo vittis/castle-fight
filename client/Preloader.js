@@ -120,6 +120,7 @@ var Kodo;
                 this.game.load.image('armor_icon', 'assets/48/ui/armor_icon.png');
                 this.game.load.image('incomeBall', 'assets/48/incomeBall_48.png');
                 this.game.load.image('tileSelected', 'assets/48/tileSelected_48.png');
+                this.game.load.image('tileClickMark', 'assets/48/tileClickMark_48.png');
                 this.game.load.spritesheet('trainButton', 'assets/48/trainButton_48.png', 26, 26);
                 this.game.load.spritesheet('pauseButton', 'assets/48/pauseButton_48.png', 26, 26);
                 this.game.load.image('tileFundo', 'assets/48/tileFundo_48.png');

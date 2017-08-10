@@ -18,7 +18,7 @@ module Kodo {
         unitsCountBar : Phaser.Image[] = [];
 
         currentTime = 0;
-        timeToMove = GameConfig.updateRate/1000 + 0.05;
+        timeToMove = GameConfig.updateRate/1000;// + 0.05;
         fadeIn: boolean = false;
         fadeOut: boolean = false;
 

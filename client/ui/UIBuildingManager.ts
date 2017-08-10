@@ -34,6 +34,9 @@ module Kodo {
             var thiefsTentui = new UIBuildingButton(game, 'thiefsTent_ui_' + hostLabel, this, 'thiefsTent' + hostLabel, 'ThiefsTent');
             this.buildingsGroup.add(thiefsTentui);
 
+            var techStationui = new UIBuildingButton(game, 'techStation_ui_' + hostLabel, this, 'techStation' + hostLabel, 'TechStation');
+            this.buildingsGroup.add(techStationui);
+
             var gravityChamberui = new UIBuildingButton(game, 'gravityChamber_ui_' + hostLabel, this, 'gravityChamber' + hostLabel, 'GravityChamber');
             this.buildingsGroup.add(gravityChamberui);
             
@@ -43,18 +46,16 @@ module Kodo {
             var specialFacilityui = new UIBuildingButton(game, 'specialFacility_ui_' + hostLabel, this, 'specialFacility' + hostLabel, 'SpecialFacility');
             this.buildingsGroup.add(specialFacilityui);
 
-            /* var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
-            this.buildingsGroup.add(kingsCourtui); */
-
-            var techStationui = new UIBuildingButton(game, 'techStation_ui_' + hostLabel, this, 'techStation' + hostLabel, 'TechStation');
-            this.buildingsGroup.add(techStationui);
+            var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
+            this.buildingsGroup.add(kingsCourtui); 
 
 
-            this.buildingsGroup.align(8, 1, 110, 0);
+
+            this.buildingsGroup.align(9, 1, 110, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
-            this.buildingsGroup.x = 650;
+            this.buildingsGroup.x = 560;
             this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);

@@ -95,6 +95,9 @@ var Kodo;
                 if (this instanceof Kodo.SpamBuilding) {
                     if (Kodo.GameScene.instance.uiEntityManager.isShowing) {
                         Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
+                        Kodo.GameScene.instance.uiEntityManager.tileClickArray.forEach(function (t) {
+                            t.visible = false;
+                        });
                     }
                     Kodo.GameScene.instance.uiEntityManager.trainButton.visible = false;
                 }
