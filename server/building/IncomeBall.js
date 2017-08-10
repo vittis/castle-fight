@@ -14,7 +14,7 @@ var Building_1 = require("../Building");
 var IncomeBall = (function (_super) {
     __extends(IncomeBall, _super);
     function IncomeBall(row, col, ballManager) {
-        var _this = _super.call(this, row, col, require('clone')(require('../data/buildings/IncomeBall.json'))) || this;
+        var _this = _super.call(this, row, col, require('clone')(require('../data/buildings/incomeBall.json'))) || this;
         _this.ballManager = ballManager;
         return _this;
     }
