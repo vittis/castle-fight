@@ -88,6 +88,15 @@ var GamePlayer = (function () {
             }
         }
     };
+    GamePlayer.prototype.idExists = function (id) {
+        var jaExisteId = false;
+        this.entities.forEach(function (e) {
+            if (e.id == id) {
+                jaExisteId = true;
+            }
+        });
+        return jaExisteId;
+    };
     GamePlayer.lastEntityID = 0;
     return GamePlayer;
 }());

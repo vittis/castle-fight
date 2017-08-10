@@ -113,5 +113,14 @@ export class GamePlayer {
             }            
         }
     }
+    idExists(id: number): boolean {
+        var jaExisteId: boolean = false;
+        this.entities.forEach(e => {
+            if (e.id == id) {
+                jaExisteId = true;
+            }
+        });
 
+        return jaExisteId;
+    }
 }

@@ -100,22 +100,25 @@ export class GameCore {
             }.bind(this));
 
             p.socket.on('askTrainUnit', function (data) {
+                console.log(data.buildingId);
                 if (data.isHost) {
-                    if (this.host.getEntityById(data.buildingId) != null)
+                    if (this.host.idExists(data.buildingId))
                         this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
                 }
                 else {
-                    if (this.client.getEntityById(data.buildingId) != null)
+                    if (this.client.idExists(data.buildingId))
                         this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
                 }
             }.bind(this));
 
             p.socket.on('askPauseUnit', function (data) {
                 if (data.isHost) {
-                    this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                    if (this.host.idExists(data.buildingId))
+                        this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
                 }
                 else {
-                    this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                    if (this.client.idExists(data.buildingId))
+                        this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
                 }
             }.bind(this));
         }
