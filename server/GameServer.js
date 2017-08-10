@@ -10,9 +10,9 @@ var GameServer = (function () {
         this.clients = new Array();
         GameServer.instance = this;
         //debug>
-        var player = this.onConnected();
+        //var player = this.onConnected();   
         //var player2 = this.onConnected();        
-        this.onMatchmaking(player);
+        //this.onMatchmaking(player);
         //this.onMatchmaking(player2);
     }
     GameServer.prototype.addPlayer = function (socket) {
