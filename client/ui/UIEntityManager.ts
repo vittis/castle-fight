@@ -362,7 +362,7 @@ module Kodo {
         }
 
         onOverSpamBuilding(building) {
-            if (this.trainButton.visible == false) {
+            if (this.trainButton.visible == false && GameConfig.isHost == building.isHost) {
                 this.trainButton.visible = true;
                 var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
                 this.trainButton.loadTexture(texture);
