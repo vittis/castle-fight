@@ -11,7 +11,7 @@ export class IncomeBall extends Building {
 
     }
     constructor(row, col, ballManager) {
-        super(row, col, require('clone')(require('../data/buildings/IncomeBall.json')));
+        super(row, col, require('clone')(require('../data/buildings/incomeBall.json')));
         this.ballManager = ballManager;
     }
 
