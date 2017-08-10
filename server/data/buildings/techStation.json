@@ -4,7 +4,7 @@
     "height": 2,
     "maxHP": 20,
     "maxArmor": 10,
-    "goldCost": 150,
+    "goldCost": 110,
     "woodCost": 0,
     "spamUnit": "Engineer",
     "spamCount": 2,
