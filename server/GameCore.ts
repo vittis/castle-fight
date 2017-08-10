@@ -66,18 +66,14 @@ export class GameCore {
 
         setTimeout(this.sendaData.bind(this), 100);
 
-        setTimeout(this.trainCoisa.bind(this), 5000);
+        //setTimeout(this.trainCoisa.bind(this), 5000);
 
 
         this.gridManager.printGrid();
         this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     } 
 
-    trainCoisa() {
-        this.host.getSpamBuildings().forEach(b => {
-            b.data.spamData.isTraining = true;
-        });
-    }
+
 
     setSocket(p : ServerPlayer, isHost : boolean) {
         if (p.socket) {
@@ -105,10 +101,12 @@ export class GameCore {
 
             p.socket.on('askTrainUnit', function (data) {
                 if (data.isHost) {
-                    this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                    if (this.host.getEntityById(data.buildingId) != null)
+                        this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
                 }
                 else {
-                    this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                    if (this.client.getEntityById(data.buildingId) != null)
+                        this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
                 }
             }.bind(this));
 

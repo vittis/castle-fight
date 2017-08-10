@@ -308,14 +308,13 @@ var Kodo;
             }
         };
         UIEntityManager.prototype.onOverSpamBuilding = function (building) {
-            if (this.trainButton.visible == false) {
+            if (this.trainButton.visible == false && GameConfig.isHost == building.isHost) {
                 this.trainButton.visible = true;
                 var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
                 this.trainButton.loadTexture(texture);
                 this.trainButton.x = building.x + building.width / 2;
                 this.trainButton.y = building.y + building.height / 2;
                 this.game.world.bringToTop(this.trainButton);
-                console.log("qqkarpov");
                 this.trainButtonTarget = building;
             }
         };
