@@ -4,7 +4,7 @@
   "description": "castle fight bom",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "cls & tsc & node server.js"
   },
   "author": "vitor bichara",
   "license": "MIT",

@@ -1,0 +1,14 @@
+{
+    "name": "GravityChamber",
+    "width": 2,
+    "height": 2,
+    "maxHP": 20,
+    "maxArmor": 10,
+    "goldCost": 85,
+    "woodCost": 85,
+    "spamUnit": "Propeller",
+    "spamCount": 3,
+    "spamRate": 10,
+    "description": "Trains Propeller",
+    "incomeGain": 5
+}

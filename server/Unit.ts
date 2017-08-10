@@ -49,8 +49,17 @@ export abstract class Unit extends Entity{
     }
 
     step() : void {
-        if (this.attackRateCounter < this.data.attackRate)
-            this.attackRateCounter++;
+        if (!this.getEntityData().statusData.stunned) {
+            if (this.attackRateCounter < this.data.attackRate)
+                this.attackRateCounter++;
+            }
+        else {
+            this.stunCounter++;
+            if (this.stunCounter >= 2) {
+                this.getEntityData().statusData.stunned = false;
+                this.stunCounter = 0;
+            }
+        }
     }
 
     moveTowards(targetTile: Tile): void {

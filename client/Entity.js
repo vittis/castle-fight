@@ -12,6 +12,7 @@ var Kodo;
 (function (Kodo) {
     var Entity = (function (_super) {
         __extends(Entity, _super);
+        //justBeenStunned = false;
         function Entity(game, tile, id, isHost, texture, data) {
             var _this = _super.call(this, game, tile.x, tile.y, texture) || this;
             _this.id = id;
@@ -56,16 +57,30 @@ var Kodo;
                     this.barGroup.moveUp(this.armorBar);
                 else
                     this.barGroup.moveUp(this.hpBar);
+                this.dataq = newData;
                 this.receiveDamage();
             }
-            this.dataq = newData;
+            else {
+                if (newData.statusData.stunned) {
+                    this.tint = 0xbedbff;
+                }
+                else {
+                    this.resetColor();
+                }
+                this.dataq = newData;
+            }
         };
         Entity.prototype.receiveDamage = function () {
             this.tint = 0xff3030;
             this.game.time.events.add(200, this.resetColor.bind(this), this);
         };
         Entity.prototype.resetColor = function () {
-            this.tint = 0xFFFFFF;
+            if (!this.dataq.statusData.stunned) {
+                this.tint = 0xFFFFFF;
+            }
+            else {
+                this.tint = 0xbedbff;
+            }
         };
         Entity.prototype.onDeath = function () {
             for (var i = 0; i < this.dataq.width; i++) {

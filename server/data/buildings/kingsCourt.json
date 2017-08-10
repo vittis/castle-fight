@@ -7,7 +7,7 @@
     "goldCost": 130,
     "woodCost": 160,
     "spamUnit": "King",
-    "spamCount": 1,
+    "spamCount": 2,
     "spamRate": 20,
     "description": "Trains King",
     "incomeGain": 8

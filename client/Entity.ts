@@ -7,8 +7,11 @@ module Kodo {
         hp?: number;
         maxArmor: number;
         armor: number;
+        statusData: StatusData;
     }
-
+    export interface StatusData {
+        stunned?: boolean;
+    }
      export abstract class Entity extends Phaser.Sprite {
 
         tile : Tile;
@@ -31,6 +34,8 @@ module Kodo {
         descTexto: Phaser.Text;
         descricaoString: string;
 
+        //justBeenStunned = false;
+
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
             this.id = id;
@@ -41,6 +46,7 @@ module Kodo {
             var col = tile.col;
 
             this.tile = tile;
+            
             for (var i = 0; i < this.dataq.width; i++) {
                 for (var j = 0; j < this.dataq.height; j++) {
                     Kodo.GameScene.instance.grid[row + j][col + i].entity = this;
@@ -83,17 +89,30 @@ module Kodo {
                 else 
                     this.barGroup.moveUp(this.hpBar);
 
+                this.dataq = newData;
                 this.receiveDamage();
             }
-
-            this.dataq = newData;
+            else {
+                if (newData.statusData.stunned) {
+                    this.tint = 0xbedbff;
+                }
+                else {
+                    this.resetColor();
+                } 
+                this.dataq = newData;
+            } 
         }
         receiveDamage() {
             this.tint = 0xff3030;
             this.game.time.events.add(200, this.resetColor.bind(this), this);
         }
         resetColor() {
-            this.tint = 0xFFFFFF;
+            if (!this.dataq.statusData.stunned) {
+                this.tint = 0xFFFFFF;
+            }
+            else {
+                this.tint = 0xbedbff;
+            }
         }
         onDeath() {
             for (var i = 0; i < this.dataq.width; i++) {

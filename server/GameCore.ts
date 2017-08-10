@@ -44,16 +44,16 @@ export class GameCore {
         this.client.buildBuilding(new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2));     
 
         this.client.buildBuilding(new Tower(3, 24));  
-         this.client.buildBuilding(new Tower(11, 24));     
+        this.client.buildBuilding(new Tower(11, 24));     
    
         this.host.buildBuilding(new Tower(11, 5));     
         this.host.buildBuilding(new Tower(3, 5)); 
 
 
         //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        /* this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new Barn(0, 0));   
-        this.host.buildBuilding(new Barn(2, 3)); */         
+       //  this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+       // this.host.buildBuilding(new Barn(0, 0));   
+       // this.host.buildBuilding(new Barn(2, 3));          
 
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
@@ -154,6 +154,9 @@ export class GameCore {
             if (closestTileWithEnemy != null) {
                 if (building.inRange(closestTileWithEnemy)) {
                     building.doAction(closestTileWithEnemy);
+                }
+                else {
+                    building.step();
                 }
             }
 

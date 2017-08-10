@@ -1,0 +1,11 @@
+{
+    "name": "Propeller",
+    "width": 1,
+    "height": 1,
+    "maxHP": 8,
+    "maxArmor": 2,
+    "attackRange": 1,
+    "attackDmg": 2,
+    "attackRate": 3,
+    "description": "Has double move speed until first attack"
+}

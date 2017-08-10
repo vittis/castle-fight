@@ -34,16 +34,23 @@ module Kodo {
             var thiefsTentui = new UIBuildingButton(game, 'thiefsTent_ui_' + hostLabel, this, 'thiefsTent' + hostLabel, 'ThiefsTent');
             this.buildingsGroup.add(thiefsTentui);
 
+            var gravityChamberui = new UIBuildingButton(game, 'gravityChamber_ui_' + hostLabel, this, 'gravityChamber' + hostLabel, 'GravityChamber');
+            this.buildingsGroup.add(gravityChamberui);
+            
             var storageBarnui = new UIBuildingButton(game, 'storageBarn_ui_' + hostLabel, this, 'storageBarn' + hostLabel, 'StorageBarn');
             this.buildingsGroup.add(storageBarnui);
 
             var specialFacilityui = new UIBuildingButton(game, 'specialFacility_ui_' + hostLabel, this, 'specialFacility' + hostLabel, 'SpecialFacility');
             this.buildingsGroup.add(specialFacilityui);
 
-            var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
-            this.buildingsGroup.add(kingsCourtui);
+            /* var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
+            this.buildingsGroup.add(kingsCourtui); */
 
-            this.buildingsGroup.align(7, 1, 110, 0);
+            var techStationui = new UIBuildingButton(game, 'techStation_ui_' + hostLabel, this, 'techStation' + hostLabel, 'TechStation');
+            this.buildingsGroup.add(techStationui);
+
+
+            this.buildingsGroup.align(8, 1, 110, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
@@ -124,7 +131,7 @@ module Kodo {
                 if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
                     if (canBuild) {
                         if (GameConfig.isHost) {
-                            if (col < 6) {
+                            if (col < 5) {
                                 Client.askBuild(row, col, sprite.buildingName);
                         }
                         }

@@ -1,0 +1,14 @@
+{
+    "name": "TechStation",
+    "width": 2,
+    "height": 2,
+    "maxHP": 20,
+    "maxArmor": 10,
+    "goldCost": 150,
+    "woodCost": 0,
+    "spamUnit": "Engineer",
+    "spamCount": 2,
+    "spamRate": 20,
+    "description": "Trains Engineer",
+    "incomeGain": 2
+}

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Entity = (function () {
     function Entity(row, col, data) {
         var _this = this;
+        this.stunCounter = 0;
         this.toString = function () {
             return _this.dataq.name[0];
         };
@@ -11,7 +12,7 @@ var Entity = (function () {
         this.dataq.armor = data.maxArmor;
         this.row = row;
         this.col = col;
-        //this.addToGame(gm);
+        this.dataq.statusData = { stunned: false };
     }
     Entity.prototype.addToGame = function (gm) {
         this.gm = gm;

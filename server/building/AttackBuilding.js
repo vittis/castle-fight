@@ -47,8 +47,17 @@ var AttackBuilding = (function (_super) {
         return (this.gm.getDistance(myTile.col, myTile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
     };
     AttackBuilding.prototype.step = function () {
-        if (this.attackRateCounter < this.data.attackRate)
-            this.attackRateCounter++;
+        if (!this.getEntityData().statusData.stunned) {
+            if (this.attackRateCounter < this.data.attackRate)
+                this.attackRateCounter++;
+        }
+        else {
+            this.stunCounter++;
+            if (this.stunCounter >= 2) {
+                this.getEntityData().statusData.stunned = false;
+                this.stunCounter = 0;
+            }
+        }
     };
     AttackBuilding.prototype.doAction = function (targetTile) {
         this.step();

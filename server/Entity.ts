@@ -12,8 +12,11 @@ export interface EntityData {
     hp? : number;
     maxArmor : number;
     armor : number;
+    statusData : StatusData;
 }
-
+export interface StatusData {
+    stunned? : boolean;
+}
 
 export abstract class Entity {
     col: number;
@@ -27,13 +30,16 @@ export abstract class Entity {
 
     gm : GridManager;
 
+    stunCounter = 0;
+
     constructor(row, col, data : EntityData) {
         this.dataq = data;
         this.dataq.hp = data.maxHP;
         this.dataq.armor = data.maxArmor;
         this.row = row;
         this.col = col;
-        //this.addToGame(gm);
+        
+        this.dataq.statusData = {stunned : false};
     }
 
     addToGame(gm) {

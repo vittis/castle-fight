@@ -41,8 +41,17 @@ var Unit = (function (_super) {
         return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
     };
     Unit.prototype.step = function () {
-        if (this.attackRateCounter < this.data.attackRate)
-            this.attackRateCounter++;
+        if (!this.getEntityData().statusData.stunned) {
+            if (this.attackRateCounter < this.data.attackRate)
+                this.attackRateCounter++;
+        }
+        else {
+            this.stunCounter++;
+            if (this.stunCounter >= 2) {
+                this.getEntityData().statusData.stunned = false;
+                this.stunCounter = 0;
+            }
+        }
     };
     Unit.prototype.moveTowards = function (targetTile) {
         this.step();

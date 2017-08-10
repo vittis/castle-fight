@@ -146,7 +146,7 @@ module Kodo {
             if (entityManager.target != unit || !entityManager.isShowing) {
 
                 entityManager.justOpened = true;
-                this.game.time.events.add(500, entityManager.justOpenedFalse.bind(this), this);
+                this.game.time.events.add(150, entityManager.justOpenedFalse.bind(this), this);
 
                 entityManager.isShowing = true;
                 entityManager.descricaoString = unit.dataq.name + "\n" 
@@ -242,7 +242,7 @@ module Kodo {
             }
             if (entityManager.target != building || !entityManager.isShowing) {
                 entityManager.justOpened = true;
-                this.game.time.events.add(500, entityManager.justOpenedFalse.bind(this), this);
+                this.game.time.events.add(150, entityManager.justOpenedFalse.bind(this), this);
 
                 entityManager.isShowing = true; 
                 if (building instanceof Tower) {
