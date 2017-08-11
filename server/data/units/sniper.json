@@ -2,7 +2,7 @@
     "name": "Sniper",
     "width": 1,
     "height": 1,
-    "maxHP": 6,
+    "maxHP": 8,
     "maxArmor": 3,
     "attackRange": 4,
     "attackDmg": 4,

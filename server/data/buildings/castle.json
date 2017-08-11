@@ -2,8 +2,8 @@
     "name": "Castle", 
     "width": 2,
     "height": 2,
-    "maxHP": 50, 
-    "maxArmor": 10,
+    "maxHP": 60, 
+    "maxArmor": 20,
     "goldCost": 0,
     "woodCost": 0,
 

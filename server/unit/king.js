@@ -31,7 +31,6 @@ var King = (function (_super) {
         }
     };
     King.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
         if (this.canGrapple) {
             if (targetTile.entity instanceof Unit_1.Unit) {
                 if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= 6 && this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) >= 2) {

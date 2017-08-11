@@ -15,6 +15,7 @@ var Unit = (function (_super) {
     __extends(Unit, _super);
     function Unit(row, col, unitData) {
         var _this = _super.call(this, row, col, unitData) || this;
+        _this.target = null;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;
@@ -38,7 +39,24 @@ var Unit = (function (_super) {
         return this.attackRateCounter == this.data.attackRate;
     };
     Unit.prototype.inRange = function (targetTile) {
-        return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+        if (targetTile.entity.getEntityData().width == 1) {
+            return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+        }
+        else {
+            var target = null;
+            var shortestDistance = 100;
+            for (var i = 0; i < targetTile.entity.getEntityData().width; i++) {
+                for (var j = 0; j < targetTile.entity.getEntityData().height; j++) {
+                    var tile = this.gm.tileAt(targetTile.entity.tile.row + j, targetTile.entity.tile.col + i);
+                    var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
+                    if (dist < shortestDistance) {
+                        target = tile;
+                        shortestDistance = dist;
+                    }
+                }
+            }
+            return (this.gm.getDistance(this.tile.col, this.tile.row, target.col, target.row) <= this.data.attackRange);
+        }
     };
     Unit.prototype.step = function () {
         if (!this.getEntityData().statusData.stunned) {
@@ -52,9 +70,14 @@ var Unit = (function (_super) {
                 this.stunCounter = 0;
             }
         }
+        if (this.target != null) {
+            if (this.target.getEntityData().hp <= 0) {
+                this.target = null;
+            }
+        }
     };
     Unit.prototype.moveTowards = function (targetTile) {
-        this.step();
+        //this.step();
         var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
         if (path.length > 1) {
             var pathToTargetTile = this.gm.grid[path[1].y][path[1].x];
@@ -81,6 +104,7 @@ var Unit = (function (_super) {
         }
         this.data.attackData.row = target.row;
         this.data.attackData.col = target.col;
+        this.target = entity;
         entity.receiveAttack(this);
         this.attackRateCounter = 0;
     };

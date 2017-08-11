@@ -2,7 +2,7 @@
     "name": "Archer", 
     "width": 1,
     "height": 1,
-    "maxHP": 7, 
+    "maxHP": 9, 
     "maxArmor": 0,
     
     "attackRange": 3,

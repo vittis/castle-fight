@@ -19,7 +19,6 @@ var Propeller = (function (_super) {
         return _this;
     }
     Propeller.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             this.firstAttacked = true;

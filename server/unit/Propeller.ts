@@ -12,7 +12,6 @@ export class Propeller extends Unit {
     }
 
     doAction(targetTile: Tile) {
-        super.doAction(targetTile);
 
         if (this.canAttack()) {
             this.attack(targetTile.entity);

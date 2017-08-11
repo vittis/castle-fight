@@ -17,7 +17,6 @@ var Engineer = (function (_super) {
         return _super.call(this, row, col, require('clone')(require('../data/units/engineer.json'))) || this;
     }
     Engineer.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             targetTile.entity.getEntityData().statusData.stunned = true;

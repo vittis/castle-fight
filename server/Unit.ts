@@ -1,5 +1,4 @@
 import { Entity, EntityData } from "./Entity";
-import { GridManager } from "./GridManager";
 import { Tile } from "./Tile";
 
 export interface UnitData extends EntityData {
@@ -19,6 +18,8 @@ export interface AttackData {
 export abstract class Unit extends Entity{
 
     attackRateCounter : number;
+
+    target : Entity = null;
 
     get data() : UnitData {
         return this.dataq;
@@ -44,8 +45,25 @@ export abstract class Unit extends Entity{
     canAttack() : boolean {
         return this.attackRateCounter == this.data.attackRate;
     }
-    inRange(targetTile : Tile) : boolean{
-        return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+    inRange(targetTile : Tile) : boolean {
+        if (targetTile.entity.getEntityData().width == 1) {
+            return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+        }
+        else {
+            var target: Tile = null;
+            var shortestDistance = 100;
+            for (var i = 0; i < targetTile.entity.getEntityData().width; i++) {
+                for (var j = 0; j < targetTile.entity.getEntityData().height; j++) {
+                    var tile: Tile = this.gm.tileAt(targetTile.entity.tile.row + j, targetTile.entity.tile.col + i);
+                    var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
+                    if (dist < shortestDistance) {
+                        target = tile;
+                        shortestDistance = dist;
+                    }
+                }
+            }
+            return (this.gm.getDistance(this.tile.col, this.tile.row, target.col, target.row) <= this.data.attackRange);
+        }
     }
 
     step() : void {
@@ -60,10 +78,15 @@ export abstract class Unit extends Entity{
                 this.stunCounter = 0;
             }
         }
+        if (this.target != null) {
+            if (this.target.getEntityData().hp <= 0) {
+                this.target = null;
+            }
+        }
     }
 
     moveTowards(targetTile: Tile): void {
-        this.step();
+        //this.step();
 
         var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
 
@@ -96,6 +119,8 @@ export abstract class Unit extends Entity{
 
         this.data.attackData.row = target.row;
         this.data.attackData.col = target.col;
+
+        this.target = entity;
 
         entity.receiveAttack(this);
 

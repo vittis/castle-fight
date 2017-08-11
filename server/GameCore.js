@@ -6,8 +6,11 @@ var AStar_1 = require("./lib/AStar");
 var EuclideanHeuristic_1 = require("./lib/Heuristics/EuclideanHeuristic");
 var GameConfig_1 = require("./GameConfig");
 var Castle_1 = require("./building/Castle");
+var Barracks_1 = require("./building/Barracks");
 var GameServer_1 = require("./GameServer");
+var ArcheryRange_1 = require("./building/ArcheryRange");
 var Serializer_1 = require("./Serializer");
+var Barn_1 = require("./building/Barn");
 var IncomeBallManager_1 = require("./IncomeBallManager");
 var Tower_1 = require("./building/Tower");
 var GameCore = (function () {
@@ -23,10 +26,10 @@ var GameCore = (function () {
         this.client.buildBuilding(new Tower_1.Tower(11, 24));
         this.host.buildBuilding(new Tower_1.Tower(11, 5));
         this.host.buildBuilding(new Tower_1.Tower(3, 5));
-        //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        //  this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        // this.host.buildBuilding(new Barn(0, 0));   
-        // this.host.buildBuilding(new Barn(2, 3));          
+        this.host.buildBuilding(new ArcheryRange_1.ArcheryRange(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barracks_1.Barracks(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new Barn_1.Barn(0, 0));
+        this.host.buildBuilding(new Barn_1.Barn(2, 3));
         /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
          this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
         //this.host.addEntity(new Soldado(15, 28));
@@ -34,7 +37,6 @@ var GameCore = (function () {
         this.setSocket(this.host.serverPlayer, true);
         this.setSocket(this.client.serverPlayer, false);
         setTimeout(this.sendaData.bind(this), 100);
-        //setTimeout(this.trainCoisa.bind(this), 5000);
         this.gridManager.printGrid();
         this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
     }
@@ -103,21 +105,37 @@ var GameCore = (function () {
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(function (building) {
             building.resetAttackData();
+            building.step();
             var closestTileWithEnemy = _this.getClosestTargetTile(building);
-            if (closestTileWithEnemy != null) {
-                if (building.inRange(closestTileWithEnemy)) {
-                    building.doAction(closestTileWithEnemy);
+            if (building.target == null) {
+                if (closestTileWithEnemy != null) {
+                    if (building.inRange(closestTileWithEnemy)) {
+                        building.doAction(closestTileWithEnemy);
+                    }
                 }
-                else {
-                    building.step();
+            }
+            else {
+                if (building.inRange(building.target.tile)) {
+                    building.doAction(building.target.tile);
                 }
             }
         });
         this.getAllUnits().forEach(function (unit) {
             unit.resetAttackData();
+            unit.step();
             var closestTileWithEnemy = _this.getClosestTargetTile(unit);
-            if (closestTileWithEnemy != null) {
-                if (unit.inRange(closestTileWithEnemy)) {
+            if (unit.target == null) {
+                if (closestTileWithEnemy != null) {
+                    if (unit.inRange(closestTileWithEnemy)) {
+                        unit.doAction(closestTileWithEnemy);
+                    }
+                }
+            }
+            else {
+                if (unit.inRange(unit.target.tile)) {
+                    unit.doAction(unit.target.tile);
+                }
+                else {
                     unit.doAction(closestTileWithEnemy);
                 }
             }

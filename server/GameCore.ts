@@ -50,10 +50,10 @@ export class GameCore {
         this.host.buildBuilding(new Tower(3, 5)); 
 
 
-        //this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-       //  this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-       // this.host.buildBuilding(new Barn(0, 0));   
-       // this.host.buildBuilding(new Barn(2, 3));          
+        this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        this.host.buildBuilding(new Barn(0, 0));   
+        this.host.buildBuilding(new Barn(2, 3));          
 
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
@@ -65,9 +65,6 @@ export class GameCore {
         this.setSocket(this.client.serverPlayer, false);
 
         setTimeout(this.sendaData.bind(this), 100);
-
-        //setTimeout(this.trainCoisa.bind(this), 5000);
-
 
         this.gridManager.printGrid();
         this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
@@ -100,7 +97,6 @@ export class GameCore {
             }.bind(this));
 
             p.socket.on('askTrainUnit', function (data) {
-                console.log(data.buildingId);
                 if (data.isHost) {
                     if (this.host.idExists(data.buildingId))
                         this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
@@ -149,25 +145,42 @@ export class GameCore {
 
          this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(building => {
             building.resetAttackData();
+            building.step();
 
             var closestTileWithEnemy = this.getClosestTargetTile(building);
-            if (closestTileWithEnemy != null) {
-                if (building.inRange(closestTileWithEnemy)) {
-                    building.doAction(closestTileWithEnemy);
-                }
-                else {
-                    building.step();
+           
+            if (building.target == null) {
+                if (closestTileWithEnemy != null) {
+                    if (building.inRange(closestTileWithEnemy)) {
+                        building.doAction(closestTileWithEnemy);
+                    }
                 }
             }
-
+            else {
+                if (building.inRange(building.target.tile)) {
+                    building.doAction(building.target.tile);
+                }
+            }
         }); 
 
         this.getAllUnits().forEach(unit => {
             unit.resetAttackData();
+            unit.step();
 
             var closestTileWithEnemy = this.getClosestTargetTile(unit);
-            if (closestTileWithEnemy != null) {
-                if (unit.inRange(closestTileWithEnemy)) {
+
+            if (unit.target == null) {
+                if (closestTileWithEnemy != null) {
+                    if (unit.inRange(closestTileWithEnemy)) {
+                        unit.doAction(closestTileWithEnemy);
+                    }
+                }
+            }
+            else {
+                if (unit.inRange(unit.target.tile)) {
+                    unit.doAction(unit.target.tile);
+                }
+                else {
                     unit.doAction(closestTileWithEnemy);
                 }
             }

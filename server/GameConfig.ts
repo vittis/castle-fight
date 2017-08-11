@@ -5,7 +5,7 @@ export module GameConfig {
 
     export const STARTING_GOLD = 150;
     export const STARTING_WOOD = 0;
-    export const STARTING_INCOME = 15;
-    export const STARTING_INCOME_RATE = 20;
+    export const STARTING_INCOME = 10;
+    export const STARTING_INCOME_RATE = 10;
     export const BALL_SPAM_RATE = 80;
 }

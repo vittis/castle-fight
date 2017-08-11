@@ -2,7 +2,7 @@
     "name": "King",
     "width": 1,
     "height": 1,
-    "maxHP": 15,
+    "maxHP": 17,
     "maxArmor": 5,
     "attackRange": 1,
     "attackDmg": 3,

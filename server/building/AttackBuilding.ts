@@ -16,7 +16,7 @@ export interface AttackData {
 export abstract class AttackBuilding extends Building {
 
     attackRateCounter: number;
-
+    target: Entity = null;
 
     get data(): AttackBuildingData {
         return this.dataq;
@@ -32,8 +32,6 @@ export abstract class AttackBuilding extends Building {
         return this.attackRateCounter == this.data.attackRate;
     }
     inRange(targetTile: Tile): boolean {
-        //console.log(targetTile.row+", "+targetTile.col);
-       // console.log(this.gm.getDistance(tile.col, tile.row, targetTile.col, targetTile.row));
         var shortestDistance = 100;
         var myTile: Tile = null;
 
@@ -63,7 +61,13 @@ export abstract class AttackBuilding extends Building {
                 this.stunCounter = 0;
             }
         }
+        if (this.target != null) {
+            if(this.target.getEntityData().hp <= 0) {
+                this.target = null;
+            }
+        }
     }
+    
     doAction(targetTile: Tile) {
         this.step();
     }
@@ -86,6 +90,8 @@ export abstract class AttackBuilding extends Building {
 
         this.data.attackData.row = target.row;
         this.data.attackData.col = target.col;
+
+        this.target = entity;
 
         entity.receiveAttackFromBuilding(this);
 

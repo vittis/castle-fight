@@ -14,7 +14,6 @@ export class Sniper extends Unit {
     }
 
     doAction(targetTile: Tile): void {
-        super.doAction(targetTile);
 
         if (this.canAttack()) {
             this.attack(targetTile.entity);

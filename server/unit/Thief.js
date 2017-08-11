@@ -17,7 +17,6 @@ var Thief = (function (_super) {
         return _super.call(this, row, col, require('clone')(require('../data/units/thief.json'))) || this;
     }
     Thief.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             this.owner.resourceManager.add(3, 0);

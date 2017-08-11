@@ -3,13 +3,13 @@
     "width": 2,
     "height": 2,
     "maxHP": 60,
-    "maxArmor": 15,
+    "maxArmor": 20,
     "goldCost": 0,
     "woodCost": 0,
     "description": "Protective tower",
     "incomeGain": 0,
 
     "attackRange": 4,
-    "attackDmg": 3,
+    "attackDmg": 4,
     "attackRate": 2
 }

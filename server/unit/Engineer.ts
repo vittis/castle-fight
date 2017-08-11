@@ -9,8 +9,6 @@ export class Engineer extends Unit {
     }
 
     doAction(targetTile: Tile) {
-        super.doAction(targetTile);
-
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             targetTile.entity.getEntityData().statusData.stunned = true;

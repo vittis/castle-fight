@@ -21,7 +21,6 @@ var Sniper = (function (_super) {
         return _this;
     }
     Sniper.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             if (!this.hasAttacked) {

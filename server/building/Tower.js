@@ -19,7 +19,7 @@ var Tower = (function (_super) {
         return _this;
     }
     Tower.prototype.doAction = function (targetTile) {
-        _super.prototype.doAction.call(this, targetTile);
+        // super.doAction(targetTile);
         if (this.canAttack())
             this.attack(targetTile.entity);
     };

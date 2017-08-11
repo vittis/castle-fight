@@ -27,7 +27,6 @@ export class King extends Unit {
     }
 
     doAction(targetTile: Tile): void {
-        super.doAction(targetTile);
         
         if (this.canGrapple) {
             if (targetTile.entity instanceof Unit) {

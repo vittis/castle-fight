@@ -15,6 +15,7 @@ var AttackBuilding = (function (_super) {
     __extends(AttackBuilding, _super);
     function AttackBuilding(row, col, buildingData) {
         var _this = _super.call(this, row, col, buildingData) || this;
+        _this.target = null;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;
@@ -30,8 +31,6 @@ var AttackBuilding = (function (_super) {
         return this.attackRateCounter == this.data.attackRate;
     };
     AttackBuilding.prototype.inRange = function (targetTile) {
-        //console.log(targetTile.row+", "+targetTile.col);
-        // console.log(this.gm.getDistance(tile.col, tile.row, targetTile.col, targetTile.row));
         var shortestDistance = 100;
         var myTile = null;
         for (var i = 0; i < this.getEntityData().width; i++) {
@@ -58,6 +57,11 @@ var AttackBuilding = (function (_super) {
                 this.stunCounter = 0;
             }
         }
+        if (this.target != null) {
+            if (this.target.getEntityData().hp <= 0) {
+                this.target = null;
+            }
+        }
     };
     AttackBuilding.prototype.doAction = function (targetTile) {
         this.step();
@@ -78,6 +82,7 @@ var AttackBuilding = (function (_super) {
         }
         this.data.attackData.row = target.row;
         this.data.attackData.col = target.col;
+        this.target = entity;
         entity.receiveAttackFromBuilding(this);
         this.attackRateCounter = 0;
     };
