@@ -4,7 +4,7 @@
     "height": 2,
     "maxHP": 20,
     "maxArmor": 5,
-    "goldCost": 40,
+    "goldCost": 50,
     "woodCost": 0,
     "spamUnit": "Thief",
     "spamCount": 2,
