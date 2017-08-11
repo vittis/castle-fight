@@ -1,10 +1,4 @@
 module Kodo {
-    export class TrainButton extends Phaser.Button {
-        constructor (game : Phaser.Game, callback, context) {
-            super(game, 0, 0, 'trainButton', callback, context, 1, 0, 2);
-        }
-    }
-
     export class UIEntityManager {
         
         game: Phaser.Game;
@@ -39,7 +33,7 @@ module Kodo {
             this.boxGroup = game.add.group();
 
             this.trainButton = this.game.add.button(0, 0, 'trainButton', this.onClickTrainButton.bind(this), this, 1, 0, 2);
-            //this.trainButton = new TrainButton(game, this.onClickTrainButton.bind(this), this);
+            this.trainButton.events.onInputOut.add(this.onOutTrainingButton.bind(this), this);
             this.trainButton.anchor.setTo(0.5, 0.5);
             this.trainButton.alpha = 0.9;
             this.trainButton.visible = false;
@@ -52,6 +46,11 @@ module Kodo {
                 q.alpha = 0.6;
                 q.visible = false;
                 this.tileClickArray.push(q);
+            }
+        }
+        onOutTrainingButton() {
+            if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                this.trainButton.visible = false;
             }
         }
         updateText() {

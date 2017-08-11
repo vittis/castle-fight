@@ -1,23 +1,5 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var Kodo;
 (function (Kodo) {
-    var TrainButton = (function (_super) {
-        __extends(TrainButton, _super);
-        function TrainButton(game, callback, context) {
-            return _super.call(this, game, 0, 0, 'trainButton', callback, context, 1, 0, 2) || this;
-        }
-        return TrainButton;
-    }(Phaser.Button));
-    Kodo.TrainButton = TrainButton;
     var UIEntityManager = (function () {
         function UIEntityManager(game) {
             this.isShowing = false;
@@ -28,7 +10,7 @@ var Kodo;
             this.isShowing = false;
             this.boxGroup = game.add.group();
             this.trainButton = this.game.add.button(0, 0, 'trainButton', this.onClickTrainButton.bind(this), this, 1, 0, 2);
-            //this.trainButton = new TrainButton(game, this.onClickTrainButton.bind(this), this);
+            this.trainButton.events.onInputOut.add(this.onOutTrainingButton.bind(this), this);
             this.trainButton.anchor.setTo(0.5, 0.5);
             this.trainButton.alpha = 0.9;
             this.trainButton.visible = false;
@@ -43,6 +25,11 @@ var Kodo;
                 this.tileClickArray.push(q);
             }
         }
+        UIEntityManager.prototype.onOutTrainingButton = function () {
+            if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                this.trainButton.visible = false;
+            }
+        };
         UIEntityManager.prototype.updateText = function () {
             if (this.descTexto) {
                 if (this.target instanceof Kodo.Building) {

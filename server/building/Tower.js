@@ -14,9 +14,7 @@ var AttackBuilding_1 = require("./AttackBuilding");
 var Tower = (function (_super) {
     __extends(Tower, _super);
     function Tower(row, col) {
-        var _this = _super.call(this, row, col, require('clone')(require('../data/buildings/tower.json'))) || this;
-        console.log(_this.data);
-        return _this;
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/tower.json'))) || this;
     }
     Tower.prototype.doAction = function (targetTile) {
         // super.doAction(targetTile);

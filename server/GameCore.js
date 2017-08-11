@@ -62,7 +62,6 @@ var GameCore = (function () {
                 }
             }.bind(this));
             p.socket.on('askTrainUnit', function (data) {
-                console.log(data.buildingId);
                 if (data.isHost) {
                     if (this.host.idExists(data.buildingId))
                         this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;

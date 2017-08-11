@@ -26,11 +26,8 @@ var Kodo;
         });
         SpamBuilding.prototype.updateStep = function (newData, tile) {
             _super.prototype.updateStep.call(this, newData);
-            //console.log(newData.tileRow+", "+newData.tileCol);
             if (this.data.spamData.hasSpammed) {
                 this.bar.resetCounter();
-                /* if (Kodo.GameScene.instance.uiEntityManager.target == this && this.isHost == GameConfig.isHost)
-                    Kodo.GameScene.instance.uiEntityManager.appearTrainButton(this); */
             }
             else {
                 this.bar.updateCounter(newData.spamData.spamRateCounter);
