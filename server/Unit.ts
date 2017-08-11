@@ -46,23 +46,28 @@ export abstract class Unit extends Entity{
         return this.attackRateCounter == this.data.attackRate;
     }
     inRange(targetTile : Tile) : boolean {
-        if (targetTile.entity.getEntityData().width == 1) {
-            return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
-        }
-        else {
-            var target: Tile = null;
-            var shortestDistance = 100;
-            for (var i = 0; i < targetTile.entity.getEntityData().width; i++) {
-                for (var j = 0; j < targetTile.entity.getEntityData().height; j++) {
-                    var tile: Tile = this.gm.tileAt(targetTile.entity.tile.row + j, targetTile.entity.tile.col + i);
-                    var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
-                    if (dist < shortestDistance) {
-                        target = tile;
-                        shortestDistance = dist;
+        if (targetTile.entity != null) {
+            if (targetTile.entity.getEntityData().width == 1) {
+                return (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= this.data.attackRange);
+            }
+            else {
+                var target: Tile = null;
+                var shortestDistance = 100;
+                for (var i = 0; i < targetTile.entity.getEntityData().width; i++) {
+                    for (var j = 0; j < targetTile.entity.getEntityData().height; j++) {
+                        var tile: Tile = this.gm.tileAt(targetTile.entity.tile.row + j, targetTile.entity.tile.col + i);
+                        var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
+                        if (dist < shortestDistance) {
+                            target = tile;
+                            shortestDistance = dist;
+                        }
                     }
                 }
+                return (this.gm.getDistance(this.tile.col, this.tile.row, target.col, target.row) <= this.data.attackRange);
             }
-            return (this.gm.getDistance(this.tile.col, this.tile.row, target.col, target.row) <= this.data.attackRange);
+        }
+        else {
+            return false;
         }
     }
 

@@ -19,7 +19,7 @@ var Thief = (function (_super) {
     Thief.prototype.doAction = function (targetTile) {
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            this.owner.resourceManager.add(3, 0);
+            this.owner.resourceManager.add(1, 0);
         }
     };
     return Thief;

@@ -12,7 +12,7 @@ export class Thief extends Unit {
 
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            this.owner.resourceManager.add(3, 0);
+            this.owner.resourceManager.add(1, 0);
         }
     }
 }

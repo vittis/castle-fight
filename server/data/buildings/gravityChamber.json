@@ -4,7 +4,7 @@
     "height": 2,
     "maxHP": 20,
     "maxArmor": 10,
-    "goldCost": 95,
+    "goldCost": 75,
     "woodCost": 95,
     "spamUnit": "Propeller",
     "spamCount": 3,

@@ -4,7 +4,7 @@
     "height": 2,
     "maxHP": 30,
     "maxArmor": 5,
-    "goldCost": 90,
+    "goldCost": 80,
     "woodCost": 100,
 
     "spamUnit": "Farmer",
