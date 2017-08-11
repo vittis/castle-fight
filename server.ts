@@ -21,10 +21,11 @@ server.listen(process.env.PORT || 8081, function () {
 //configs^--------------
 import {GameServer} from './server/GameServer';
 
-var gameServer : GameServer = new GameServer();
-//setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
+var gameServer : GameServer = new GameServer(io);
 
+setInterval(gameServer.broadCastAllPlayers.bind(gameServer), 5000);
 
+//io.sockets.emit
 io.on('connection',function(socket){
 
     var player = gameServer.onConnected(socket);

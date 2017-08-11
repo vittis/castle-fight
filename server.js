@@ -17,8 +17,9 @@ server.listen(process.env.PORT || 8081, function () {
 });
 //configs^--------------
 var GameServer_1 = require("./server/GameServer");
-var gameServer = new GameServer_1.GameServer();
-//setInterval(gameServer.listAllPlayer.bind(gameServer), 8000);
+var gameServer = new GameServer_1.GameServer(io);
+setInterval(gameServer.broadCastAllPlayers.bind(gameServer), 5000);
+//io.sockets.emit
 io.on('connection', function (socket) {
     var player = gameServer.onConnected(socket);
     socket.on('askMatchmaking', function (data) {

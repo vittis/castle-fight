@@ -56,6 +56,11 @@ var Client;
         console.log("end game recebido - finalizando jogo!");
         Kodo.Game.instance.state.start('MainMenu', true, false);
     });
+    socket.on('receivePlayers', function (data) {
+        data.forEach(function (p) {
+            console.log(p.id + " - " + p.status);
+        });
+    });
     function askMatchmaking() {
         socket.emit('askMatchmaking');
     }

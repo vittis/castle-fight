@@ -65,6 +65,11 @@ module Client {
         Kodo.Game.instance.state.start('MainMenu', true, false);
     });
 
+    socket.on('receivePlayers', function (data : any[]) {
+        data.forEach(p => {
+            console.log(p.id+" - "+p.status);
+        });
+    });
 
     export function askMatchmaking() {
         socket.emit('askMatchmaking');

@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ServerPlayer_1 = require("./ServerPlayer");
 var GameCore_1 = require("./GameCore");
 var GameServer = (function () {
-    function GameServer() {
+    function GameServer(io) {
         this.lastPlayerID = 0;
         this.lastGameID = 0;
         this.games = new Array();
         this.clients = new Array();
         GameServer.instance = this;
+        this.io = io;
         //debug>
         //var player = this.onConnected();   
         //var player2 = this.onConnected();        
@@ -86,6 +87,14 @@ var GameServer = (function () {
         });
         return players;
     };
+    GameServer.prototype.getPlayersOnLobby = function () {
+        var players = new Array();
+        this.clients.forEach(function (p) {
+            if (p.status != ServerPlayer_1.PlayerStatus.ingame)
+                players.push(p);
+        });
+        return players;
+    };
     GameServer.prototype.onDisconnect = function (player) {
         console.log("player id " + player.id + " saiu");
         for (var i = 0; i < this.clients.length; i++) {
@@ -114,6 +123,15 @@ var GameServer = (function () {
             console.log("id: " + player.id + ", status: " + ServerPlayer_1.PlayerStatus[player.status]);
         });
         console.log("\n");
+    };
+    GameServer.prototype.broadCastAllPlayers = function () {
+        if (this.getPlayersOnLobby().length > 0) {
+            var players = [];
+            this.clients.forEach(function (p) {
+                players.push({ id: p.id, status: p.status });
+            });
+            this.io.sockets.emit('receivePlayers', players);
+        }
     };
     GameServer.instance = null;
     return GameServer;

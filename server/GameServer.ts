@@ -10,8 +10,10 @@ export class GameServer {
 
     public static instance : GameServer = null;
 
-    constructor() {
+    io : SocketIO.Server;
+    constructor(io) {
         GameServer.instance = this;
+        this.io = io;
         //debug>
         //var player = this.onConnected();   
         //var player2 = this.onConnected();        
@@ -102,6 +104,14 @@ export class GameServer {
         });
         return players;
     }
+    getPlayersOnLobby(): Array<ServerPlayer> {
+        var players: Array<ServerPlayer> = new Array<ServerPlayer>();
+        this.clients.forEach(p => {
+            if (p.status != PlayerStatus.ingame)
+                players.push(p);
+        });
+        return players;
+    }
 
     onDisconnect(player) : void {
         console.log("player id "+player.id+" saiu");
@@ -134,4 +144,17 @@ export class GameServer {
         });
         console.log("\n");
     }
+
+    broadCastAllPlayers() : void {
+        if (this.getPlayersOnLobby().length > 0) {
+            var players: any[] = [];
+
+            this.clients.forEach(p => {
+                players.push({ id: p.id, status: p.status });
+            });
+
+            this.io.sockets.emit('receivePlayers', players);
+        }
+    }
+
 }
