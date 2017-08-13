@@ -27,7 +27,7 @@ var Kodo;
             this.game.forceSingleUpdate = true;
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
-            var versaoAndroid = false;
+            var versaoAndroid = true;
             if (this.game.device.android || this.game.device.iOS) {
                 /* this.game.scale.forceLandscape = true;
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
