@@ -13,4 +13,6 @@ module GameConfig {
     export var updateRate = 500;
 
     export var isHost;
+
+    export var buildingNameData: String[] = [] ;
 }

@@ -26,6 +26,11 @@ module Client {
 
 
     socket.on('receiveBuildingAndUnitData', function (data) {
+        data.buildingData.forEach(element => {
+            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower"))
+                GameConfig.buildingNameData.push(element.name);
+        });
+
         data.unitData.forEach(element => {
             if (Kodo[element.name]) {
                 Kodo[element.name].nome = element.name;
@@ -66,9 +71,9 @@ module Client {
     });
 
     socket.on('receivePlayers', function (data : any[]) {
-        data.forEach(p => {
-            console.log(p.id+" - "+p.status);
-        });
+         if (Kodo.Game.instance.state.current == 'MainMenu') {
+             Kodo.MainMenu.instance.updatePlayersConnected(data);
+         }
     });
 
     export function askMatchmaking() {

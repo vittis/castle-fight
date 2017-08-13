@@ -125,12 +125,15 @@ var GameServer = (function () {
         console.log("\n");
     };
     GameServer.prototype.broadCastAllPlayers = function () {
-        if (this.getPlayersOnLobby().length > 0) {
+        var playersOnLobby = this.getPlayersOnLobby();
+        if (playersOnLobby.length > 0) {
             var players = [];
             this.clients.forEach(function (p) {
                 players.push({ id: p.id, status: p.status });
             });
-            this.io.sockets.emit('receivePlayers', players);
+            playersOnLobby.forEach(function (p) {
+                p.socket.emit('receivePlayers', players);
+            });
         }
     };
     GameServer.instance = null;

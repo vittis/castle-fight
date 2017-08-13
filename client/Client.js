@@ -21,6 +21,10 @@ var Client;
         Kodo.GameScene.instance.updateEntities(data.entities);
     });
     socket.on('receiveBuildingAndUnitData', function (data) {
+        data.buildingData.forEach(function (element) {
+            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower"))
+                GameConfig.buildingNameData.push(element.name);
+        });
         data.unitData.forEach(function (element) {
             if (Kodo[element.name]) {
                 Kodo[element.name].nome = element.name;
@@ -57,9 +61,9 @@ var Client;
         Kodo.Game.instance.state.start('MainMenu', true, false);
     });
     socket.on('receivePlayers', function (data) {
-        data.forEach(function (p) {
-            console.log(p.id + " - " + p.status);
-        });
+        if (Kodo.Game.instance.state.current == 'MainMenu') {
+            Kodo.MainMenu.instance.updatePlayersConnected(data);
+        }
     });
     function askMatchmaking() {
         socket.emit('askMatchmaking');

@@ -108,7 +108,7 @@ module Kodo {
             box.lineTo(0, 0);
             box.endFill();
             this.descricaoBox = this.game.add.sprite(this.descTexto.x, this.descTexto.y, box.generateTexture());
-            this.descricaoBox.alpha = 0.6;
+            this.descricaoBox.alpha = 0.8;
             this.descricaoBox.anchor.setTo(0.5, 1);
             box.destroy();
 
@@ -170,7 +170,7 @@ module Kodo {
             box2.lineTo(0, 0);
             box2.endFill();
             this.unitDescricaoBox = this.game.add.sprite(this.unitDescTexto.x, this.unitDescTexto.y, box2.generateTexture());
-            this.unitDescricaoBox.alpha = 0.6;
+            this.unitDescricaoBox.alpha = 0.8;
             this.unitDescricaoBox.anchor.setTo(0.5, 1);
             box2.destroy();
 

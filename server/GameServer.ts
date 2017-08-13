@@ -146,14 +146,17 @@ export class GameServer {
     }
 
     broadCastAllPlayers() : void {
-        if (this.getPlayersOnLobby().length > 0) {
+        var playersOnLobby = this.getPlayersOnLobby();
+        if (playersOnLobby.length > 0) {
             var players: any[] = [];
 
             this.clients.forEach(p => {
                 players.push({ id: p.id, status: p.status });
             });
-
-            this.io.sockets.emit('receivePlayers', players);
+            
+            playersOnLobby.forEach(p => {
+                p.socket.emit('receivePlayers', players);
+            });
         }
     }
 
