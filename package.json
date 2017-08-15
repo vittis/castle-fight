@@ -25,5 +25,8 @@
   "keywords": [
     "castle-fight",
     "heroku"
-  ]
+  ],
+  "devDependencies": {
+    "@orange-games/phaser-input": "2.0.5"
+  }
 }

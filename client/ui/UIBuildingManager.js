@@ -2,6 +2,7 @@ var Kodo;
 (function (Kodo) {
     var UIBuildingManager = (function () {
         function UIBuildingManager(game) {
+            var _this = this;
             this.buildingSelected = false;
             this.inputDown = false;
             this.inputOver = false;
@@ -9,27 +10,12 @@ var Kodo;
             this.buildingsGroup = game.add.group();
             this.buildingsGroup.inputEnableChildren = true;
             var hostLabel = GameConfig.isHost ? 'h' : 'c';
-            var barracksui = new Kodo.UIBuildingButton(game, 'barracks_ui_' + hostLabel, this, 'barracks' + hostLabel, 'Barracks');
-            this.buildingsGroup.add(barracksui);
-            var archeryRangeui = new Kodo.UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
-            this.buildingsGroup.add(archeryRangeui);
-            var barnui = new Kodo.UIBuildingButton(game, 'barn_ui_' + hostLabel, this, 'barn' + hostLabel, 'Barn');
-            this.buildingsGroup.add(barnui);
-            var thiefsTentui = new Kodo.UIBuildingButton(game, 'thiefsTent_ui_' + hostLabel, this, 'thiefsTent' + hostLabel, 'ThiefsTent');
-            this.buildingsGroup.add(thiefsTentui);
-            var techStationui = new Kodo.UIBuildingButton(game, 'techStation_ui_' + hostLabel, this, 'techStation' + hostLabel, 'TechStation');
-            this.buildingsGroup.add(techStationui);
-            var gravityChamberui = new Kodo.UIBuildingButton(game, 'gravityChamber_ui_' + hostLabel, this, 'gravityChamber' + hostLabel, 'GravityChamber');
-            this.buildingsGroup.add(gravityChamberui);
-            var storageBarnui = new Kodo.UIBuildingButton(game, 'storageBarn_ui_' + hostLabel, this, 'storageBarn' + hostLabel, 'StorageBarn');
-            this.buildingsGroup.add(storageBarnui);
-            var specialFacilityui = new Kodo.UIBuildingButton(game, 'specialFacility_ui_' + hostLabel, this, 'specialFacility' + hostLabel, 'SpecialFacility');
-            this.buildingsGroup.add(specialFacilityui);
-            var kingsCourtui = new Kodo.UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
-            this.buildingsGroup.add(kingsCourtui);
-            this.buildingsGroup.align(9, 1, 110, 0);
+            GameConfig.deck.forEach(function (name) {
+                _this.buildingsGroup.add(new Kodo.UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, _this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name));
+            });
+            this.buildingsGroup.align(8, 1, 110, 0);
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
-            this.buildingsGroup.x = 560;
+            this.buildingsGroup.x = 620;
             this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);

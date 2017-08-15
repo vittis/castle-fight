@@ -14,5 +14,9 @@ module GameConfig {
 
     export var isHost;
 
-    export var buildingNameData: String[] = [] ;
+    export var buildingNameData: String[] = [];
+
+    export var deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'GravityChamber', 'SpecialFacility', 'KingsCourt'];
+
+    export var deckName = "<default deck>";
 }

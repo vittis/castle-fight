@@ -129,6 +129,14 @@ module Kodo {
 
                 this.game.load.image('tileFundo', 'assets/48/tileFundo_48.png');
                 this.game.load.image('arvores', 'assets/48/arvores_48.png');
+                this.game.load.image('tileFundoMaior', 'assets/48/tileFundoMaior_48.png');
+
+                this.game.load.image('editDeck', 'assets/48/menu_ui/editDeck.png');
+                this.game.load.image('panelGrande', 'assets/48/menu_ui/panelGrande.png');
+                this.game.load.image('panelMenor', 'assets/48/menu_ui/panelMenor.png');
+                this.game.load.image('playButton', 'assets/48/menu_ui/playButton.png');
+                this.game.load.image('roomsButton', 'assets/48/menu_ui/roomsButton.png');
+                this.game.load.image('backButton', 'assets/48/menu_ui/backButton.png');
 
             }
         }

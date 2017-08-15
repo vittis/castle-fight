@@ -23,10 +23,11 @@ module Kodo {
         unitImage : Phaser.Sprite;
 
         tudoGroup : Phaser.Group;
-
+        spriteName;
         constructor(game, sprite : string, context, previewName, buildingName) {
             super(game, 0, 0, sprite, null, context, 1, 0, 2);
-             this.previewName = previewName;
+            this.spriteName = sprite;
+            this.previewName = previewName;
             this.buildingName = buildingName;
 
             this.tudoGroup = this.game.add.group();

@@ -20,6 +20,8 @@ var Kodo;
         };
         Boot.prototype.create = function () {
             document.body.style.margin = '0px';
+            document.body.style.backgroundColor = '#29B865';
+            this.game.add.plugin(new PhaserInput.Plugin(this.game, this.game.plugins));
             this.input.maxPointers = 1;
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;
@@ -27,7 +29,7 @@ var Kodo;
             this.game.forceSingleUpdate = true;
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
-            var versaoAndroid = true;
+            var versaoAndroid = false;
             if (this.game.device.android || this.game.device.iOS) {
                 /* this.game.scale.forceLandscape = true;
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

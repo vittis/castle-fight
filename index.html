@@ -3,18 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <title>castle fight!</title>
-
+        <style>
+            body {
+                background-image: url("/assets/48/tileFundoPagina.png");
+                background-repeat: repeat;
+            }
+        </style>
         <!-- https://castle-fight.herokuapp.com  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Baloo+Paaji"> -->
         
         
-        <script src="https://castle-fight.herokuapp.com/socket.io/socket.io.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script src="libs/phaser.min.js"></script>        
         
+        <script src="libs/phaser-input.min.js"></script>
+
         <script src="client/Boot.js"></script>
         <script src="client/Client.js"></script>
         <script src="client/Game.js"></script>
         <script src="client/GameScene.js"></script>
         <script src="client/MainMenu.js"></script>
+        <script src="client/DeckScene.js"></script>
         <script src="client/Preloader.js"></script>
         <script src="client/Tile.js"></script>
         <script src="client/Entity.js"></script>
@@ -68,5 +76,6 @@
     </head>
     <body>
         <center><div id='game'></div></center>
+
     </body>
 </html>

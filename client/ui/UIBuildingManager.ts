@@ -22,40 +22,15 @@ module Kodo {
 
             var hostLabel = GameConfig.isHost ? 'h' : 'c'
 
-            var barracksui = new UIBuildingButton(game, 'barracks_ui_'+hostLabel, this, 'barracks'+hostLabel, 'Barracks');
-            this.buildingsGroup.add(barracksui);
+            GameConfig.deck.forEach(name => {
+                this.buildingsGroup.add(new UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name));
+            });
 
-            var archeryRangeui = new UIBuildingButton(game, 'archeryRange_ui_' + hostLabel, this, 'archeryRange' + hostLabel, 'ArcheryRange');
-            this.buildingsGroup.add(archeryRangeui);
-
-            var barnui = new UIBuildingButton(game, 'barn_ui_' + hostLabel, this, 'barn' + hostLabel, 'Barn');
-            this.buildingsGroup.add(barnui);
-
-            var thiefsTentui = new UIBuildingButton(game, 'thiefsTent_ui_' + hostLabel, this, 'thiefsTent' + hostLabel, 'ThiefsTent');
-            this.buildingsGroup.add(thiefsTentui);
-
-            var techStationui = new UIBuildingButton(game, 'techStation_ui_' + hostLabel, this, 'techStation' + hostLabel, 'TechStation');
-            this.buildingsGroup.add(techStationui);
-
-            var gravityChamberui = new UIBuildingButton(game, 'gravityChamber_ui_' + hostLabel, this, 'gravityChamber' + hostLabel, 'GravityChamber');
-            this.buildingsGroup.add(gravityChamberui);
-            
-            var storageBarnui = new UIBuildingButton(game, 'storageBarn_ui_' + hostLabel, this, 'storageBarn' + hostLabel, 'StorageBarn');
-            this.buildingsGroup.add(storageBarnui);
-
-            var specialFacilityui = new UIBuildingButton(game, 'specialFacility_ui_' + hostLabel, this, 'specialFacility' + hostLabel, 'SpecialFacility');
-            this.buildingsGroup.add(specialFacilityui);
-
-            var kingsCourtui = new UIBuildingButton(game, 'kingsCourt_ui_' + hostLabel, this, 'kingsCourt' + hostLabel, 'KingsCourt');
-            this.buildingsGroup.add(kingsCourtui); 
-
-
-
-            this.buildingsGroup.align(9, 1, 110, 0);
+            this.buildingsGroup.align(8, 1, 110, 0);
             
 
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
-            this.buildingsGroup.x = 560;
+            this.buildingsGroup.x = 620;
             this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);

@@ -5,4 +5,6 @@ var GameConfig;
     GameConfig.uiWidth = 0;
     GameConfig.updateRate = 500;
     GameConfig.buildingNameData = [];
+    GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'GravityChamber', 'SpecialFacility', 'KingsCourt'];
+    GameConfig.deckName = "<default deck>";
 })(GameConfig || (GameConfig = {}));

@@ -16,6 +16,7 @@ var Kodo;
             var _this = _super.call(this, game, 0, 0, sprite, null, context, 1, 0, 2) || this;
             _this.mostrarUnit = false;
             _this.over = false;
+            _this.spriteName = sprite;
             _this.previewName = previewName;
             _this.buildingName = buildingName;
             _this.tudoGroup = _this.game.add.group();
