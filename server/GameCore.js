@@ -30,16 +30,23 @@ var GameCore = (function () {
         /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
          this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
         //this.host.addEntity(new Soldado(15, 28));
-        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));    
-        this.setSocket(this.host.serverPlayer, true);
-        this.setSocket(this.client.serverPlayer, false);
-        setTimeout(this.sendaData.bind(this), 100);
-        this.gridManager.printGrid();
-        this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
+        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));  
+        if (client.socket)
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig_1.GameConfig.STEP_RATE });
+        if (host.socket)
+            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig_1.GameConfig.STEP_RATE });
+        setTimeout(this.sendaData.bind(this), 1000);
+        setTimeout(this.startGame.bind(this), 3000);
+        //this.gridManager.printGrid();
     }
+    GameCore.prototype.startGame = function () {
+        this.setSocket(this.client.serverPlayer, false);
+        this.setSocket(this.host.serverPlayer, true);
+        this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
+    };
     GameCore.prototype.setSocket = function (p, isHost) {
         if (p.socket) {
-            p.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig_1.GameConfig.STEP_RATE });
+            p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig_1.GameConfig.STEP_RATE });
             p.socket.on('askBuild', function (data) {
                 if (data.isHost) {
                     this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));

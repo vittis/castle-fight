@@ -77,8 +77,6 @@ module Kodo {
              this.hpBar.visible = false;
              this.armorBar.visible = false;
          }
-         /* update(){
-         } */
 
         updateStep(newData : EntityData, tile? : Tile) {
             if (newData.hp < this.dataq.hp || newData.armor < this.dataq.armor) {

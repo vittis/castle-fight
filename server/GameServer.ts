@@ -118,7 +118,8 @@ export class GameServer {
         for (var i = 0; i < this.clients.length; i++) {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == PlayerStatus.ingame) {
-                   this.getGameByPlayerId(this.clients[i].id).endGame();
+                    if (this.getGameByPlayerId(this.clients[i].id) != null)
+                        this.getGameByPlayerId(this.clients[i].id).endGame();
                 }
                     this.clients[i] = null;
                     this.clients.splice(i, 1);

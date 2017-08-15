@@ -100,7 +100,8 @@ var GameServer = (function () {
         for (var i = 0; i < this.clients.length; i++) {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == ServerPlayer_1.PlayerStatus.ingame) {
-                    this.getGameByPlayerId(this.clients[i].id).endGame();
+                    if (this.getGameByPlayerId(this.clients[i].id) != null)
+                        this.getGameByPlayerId(this.clients[i].id).endGame();
                 }
                 this.clients[i] = null;
                 this.clients.splice(i, 1);

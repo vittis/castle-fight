@@ -47,8 +47,6 @@ var Kodo;
             this.hpBar.visible = false;
             this.armorBar.visible = false;
         };
-        /* update(){
-        } */
         Entity.prototype.updateStep = function (newData, tile) {
             if (newData.hp < this.dataq.hp || newData.armor < this.dataq.armor) {
                 this.armorBar.receiveDamage(newData.armor);

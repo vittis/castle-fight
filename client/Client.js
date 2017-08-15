@@ -15,7 +15,12 @@ var Client;
         GameConfig.isHost = isHost;
         Kodo.Game.instance.state.start('GameScene', true, false);
     });
+    socket.on('startGameLoop', function (data) {
+        console.log("start game LOOP recebido - iniciando loop!");
+        Kodo.GameScene.instance.uiResourceManager.startGame();
+    });
     socket.on('receiveData', function (data) {
+        console.log("porrna diacho");
         Kodo.GameScene.instance.player = data.player;
         Kodo.GameScene.instance.ballData = data.ballData;
         Kodo.GameScene.instance.updateEntities(data.entities);

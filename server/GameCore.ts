@@ -58,24 +58,30 @@ export class GameCore {
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
         //this.host.addEntity(new Soldado(15, 28));
-        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));    
+        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));  
+        if (client.socket)  
+            this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig.STEP_RATE });
+        if (host.socket)
+            this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig.STEP_RATE });
+        
+        setTimeout(this.sendaData.bind(this), 1000);
 
+        setTimeout(this.startGame.bind(this), 3000);
 
-        this.setSocket(this.host.serverPlayer, true);
-        this.setSocket(this.client.serverPlayer, false);
-
-        setTimeout(this.sendaData.bind(this), 100);
-
-        this.gridManager.printGrid();
-        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
+        //this.gridManager.printGrid();
     } 
 
+    startGame() {
+        this.setSocket(this.client.serverPlayer, false);
+        this.setSocket(this.host.serverPlayer, true);
 
+        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
+    }
 
     setSocket(p : ServerPlayer, isHost : boolean) {
         if (p.socket) {
-            p.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
-            
+            p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
+
             p.socket.on('askBuild', function (data) {
                 if (data.isHost) {
                     this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));

@@ -64,21 +64,9 @@ module Kodo {
                 this.unitsCountBar[i].x -= 5;
                 this.unitsCountBar[i].x += i * (this.maxLenght / building.data.spamCount) + 5/2;
             }
-            //this.fadeUnitBarIn();
-            //this.game.time.events.add(4000, this.fadeUnitBarOut.bind(this), this);
+
         }
-        /*fadeUnitBarIn() {
-            this.fadeIn = true;
-            this.unitsCountBar.forEach(element => {
-                element.alpha = 0;
-            });
-        }
-        fadeUnitBarOut() {
-            this.fadeOut = true;
-            this.unitsCountBar.forEach(element => {
-                element.alpha = 1;
-            });
-        }*/
+
         update() {
             if (this.building.data.spamData.isTraining) {
                 if (this.smooth < this.maxLenght) {
@@ -91,14 +79,6 @@ module Kodo {
                 this.lineTo(this.smooth, 0);
             }
 
-            /*if (this.fadeIn) {
-                this.unitsCountBar.forEach(element => {
-                    element.alpha += this.game.time.elapsed/1000;
-                    if (element.alpha > 1) {
-                        this.fadeIn = false;
-                    }
-                });
-            }*/
             if (this.fadeOut) {
                 var bar = this.unitsCountBar[this.unitsCountBar.length - 1];
                 bar.alpha -= this.game.time.elapsed*0.001;
@@ -129,9 +109,6 @@ module Kodo {
             this.currentTime = 0;
 
             this.fadeOut = true;
-            //this.fadeUnitBarIn();
-            //this.game.time.events.add(4000, this.fadeUnitBarOut.bind(this), this);
-
         }
         destroy() {
             this.unitsCountBar.forEach(element => {

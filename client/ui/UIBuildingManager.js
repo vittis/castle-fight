@@ -13,9 +13,9 @@ var Kodo;
             GameConfig.deck.forEach(function (name) {
                 _this.buildingsGroup.add(new Kodo.UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, _this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name));
             });
-            this.buildingsGroup.align(8, 1, 110, 0);
+            this.buildingsGroup.align(8, 1, 116, 0);
             var offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
-            this.buildingsGroup.x = 620;
+            this.buildingsGroup.x = 600;
             this.buildingsGroup.y = game.height - GameConfig.uiHeight / 2;
             this.buildingsGroup.setAll('anchor.x', 0.5);
             this.buildingsGroup.setAll('anchor.y', 0.5);
