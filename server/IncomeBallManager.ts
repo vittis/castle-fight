@@ -10,6 +10,9 @@ export class IncomeBallManager {
     spamRate = GameConfig.BALL_SPAM_RATE;
     spamRateCounter = 0;
 
+    hostMatou = false;
+    clientMatou = false;
+
     constructor(gamePlayer : GamePlayer) {
         this.gp = gamePlayer;
     }
@@ -20,6 +23,8 @@ export class IncomeBallManager {
 
     }
     step() {
+        this.hostMatou = false;
+        this.clientMatou = false;
         if (this.gp.entities.length == 0) {
             this.spamRateCounter++;
             if (this.spamRateCounter == this.spamRate) {

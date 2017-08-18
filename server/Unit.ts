@@ -5,7 +5,8 @@ export interface UnitData extends EntityData {
     attackRange? : number;
     attackDmg? : number;
     attackRate?: number;
-
+    goldCost?: number;
+    woodCost?: number;
     attackData? : AttackData; 
 }
 
@@ -20,6 +21,8 @@ export abstract class Unit extends Entity{
     attackRateCounter : number;
 
     target : Entity = null;
+
+    justSpawned : boolean = false;
 
     get data() : UnitData {
         return this.dataq;

@@ -31,6 +31,12 @@ io.on('connection',function(socket){
     var player = gameServer.onConnected(socket);
 
     socket.on('askMatchmaking', function(data) {
+        if (data.nick == "") {
+            player.nick = "Guest_" + player.id;
+        }
+        else {
+            player.nick = data.nick;
+        }
         gameServer.onMatchmaking(player);
     });
 

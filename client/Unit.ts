@@ -22,6 +22,9 @@ module Kodo {
         static attackRange;
         static attackRate;
 
+        static goldCost = 0;
+        static woodCost = 0;
+
         get data(): UnitData {
             return this.dataq;
         }

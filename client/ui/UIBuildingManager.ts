@@ -14,6 +14,8 @@ module Kodo {
 
         buildArea : Phaser.Sprite;
 
+        isUnit = false;
+
         constructor(game : Phaser.Game) {
             this.game = game;
 
@@ -23,7 +25,8 @@ module Kodo {
             var hostLabel = GameConfig.isHost ? 'h' : 'c'
 
             GameConfig.deck.forEach(name => {
-                this.buildingsGroup.add(new UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name));
+                let isUnit = (GameConfig.unitNameData.indexOf(name) >= 0);
+                this.buildingsGroup.add(new UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name, isUnit));
             });
 
             this.buildingsGroup.align(8, 1, 116, 0);
@@ -68,6 +71,7 @@ module Kodo {
             this.inputOver = false;
             if (this.inputDown) {
                 this.buildingSelected = true;
+                this.isUnit = sprite.isUnit;
                 this.preview.visible = true;
                 this.buildArea.visible = true;
                 this.game.world.bringToTop(this.preview);
@@ -85,44 +89,89 @@ module Kodo {
 
                 var canBuild = true;
 
-                if (row >= GameConfig.GRID_ROWS - 1) {
-                    canBuild = false;
-                }
-                if (col > GameConfig.GRID_COLS - 2) {
-                    canBuild = false;
-                }
+                if (!sprite.isUnit) {
 
-                if (canBuild) {
-                    for (var i = 0; i < 2; i++) {
-                        for (var j = 0; j < 2; j++) {
-                            if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
-                                canBuild = false;
+                    if (row >= GameConfig.GRID_ROWS - 1) {
+                        console.log("tenta de nv otario");
+
+                        canBuild = false;
+                    }
+                    if (col > GameConfig.GRID_COLS - 2) {
+                        canBuild = false;
+                        console.log("n opode porra");
+
+                    }
+                    
+                    if (canBuild) {
+                        for (var i = 0; i < 2; i++) {
+                            for (var j = 0; j < 2; j++) {
+                                if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
+                                    canBuild = false;
+                                    console.log("vai da n monstrao");
+                                }
                             }
                         }
                     }
-                }
 
-                this.buildArea.visible = false;
+                    this.buildArea.visible = false;
 
-                if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
-                    if (canBuild) {
-                        if (GameConfig.isHost) {
-                            if (col < 5) {
-                                Client.askBuild(row, col, sprite.buildingName);
-                        }
+                    if (row < GameConfig.GRID_ROWS-1 && row >=0 && col < GameConfig.GRID_COLS-1) {
+                        if (canBuild) {
+                            if (GameConfig.isHost) {
+                                if (col < 5) {
+                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                            }
+                            }
+                            else {
+                                if (col > GameConfig.GRID_COLS - 7) {
+                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                }
+                            }
                         }
                         else {
-                            if (col > GameConfig.GRID_COLS - 7) {
-                                Client.askBuild(row, col, sprite.buildingName);
-                            }
+                            console.log("ja tem uma entidade aqui!!");
                         }
                     }
                     else {
-                        //console.log("ja tem uma entidade aqui!!");
+                        console.log("n pode construir aqui");
                     }
                 }
                 else {
-                    //console.log("n pode construir aqui");
+                    if (row > GameConfig.GRID_ROWS - 1) {
+                        canBuild = false;
+                    }
+                    if (col > GameConfig.GRID_COLS - 1) {
+                        canBuild = false;
+                    } 
+
+                    if (canBuild) {
+                        if (Kodo.GameScene.instance.grid[row][col].entity != null) {
+                            canBuild = false;
+                        } 
+                    }
+
+                    this.buildArea.visible = false;
+
+                    if (row <= GameConfig.GRID_ROWS - 1 && row >= 0 && col <= GameConfig.GRID_COLS - 1) {
+                        if (canBuild) {
+                            if (GameConfig.isHost) {
+                                if (col < 6) {
+                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                }
+                            }
+                            else {
+                                if (col > GameConfig.GRID_COLS - 7) {
+                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                }
+                            }
+                        }
+                        else {
+                            console.log("ja tem uma entidade aqui!! UNIT");
+                        }
+                    }
+                    else {
+                        console.log("n pode construir aqui UNIT");
+                    }
                 }
                 this.game.time.events.add(500, this.hidePreview.bind(this), this);
             }
@@ -130,10 +179,23 @@ module Kodo {
         hidePreview() {
             this.preview.visible = false;
         }
+        tintBuyable(gold, wood) {
+            this.buildingsGroup.forEach(function (b: UIBuildingButton) {
+                if (Kodo[b.buildingName].goldCost > gold || Kodo[b.buildingName].woodCost > wood) {
+                    if (b.tint != 0x906666)
+                        b.tint = 0x906666;
+                }
+                else {
+                    if (b.tint != 0xffffff)
+                        b.tint = 0xffffff;
+                }
+            }.bind(this), this); 
+        }
+
         update() {
              if (this.game.input.activePointer.isDown) {
-                var clicouNaBuilding = false;
-                var taMostrando = false;
+                let clicouNaBuilding = false;
+                let taMostrando = false;
                 this.buildingsGroup.forEach(function (b: UIBuildingButton) {
                     if (b.getBounds().contains(this.game.input.x, this.game.input.y)) {
                         clicouNaBuilding = true;
@@ -153,32 +215,44 @@ module Kodo {
             } 
 
             if (this.buildingSelected) {
-                var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
-                var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
+                let row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
+                let col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
                 this.preview.x = col * GameConfig.tileSize;
                 this.preview.y = row * GameConfig.tileSize; 
 
                 if (row <= GameConfig.GRID_ROWS - 1 && col <= GameConfig.GRID_COLS - 1) {
-                    var paint = false;
-
-                    if (col > 4 && col < GameConfig.GRID_COLS - 6) {
-                        paint = true
-                    }
-                    else if (row+1 >= GameConfig.GRID_ROWS || col+1 >= GameConfig.GRID_COLS) {
-                        paint = true;
-                    }
-                    else if (Kodo.GameScene.instance.grid[row][col].entity != null || Kodo.GameScene.instance.grid[row][col + 1].entity != null ||
-                        Kodo.GameScene.instance.grid[row + 1][col].entity != null || Kodo.GameScene.instance.grid[row + 1][col + 1].entity != null) {
-                        paint = true;
-                    }
-                    else if (col >= GameConfig.GRID_COLS - 1) {
-                        paint = true;
-                    }
-                    else if (row >= GameConfig.GRID_ROWS - 1) {
-                        paint = true;
+                    let paint = false;
+                    if (!this.isUnit) {
+                        if (col > 4 && col < GameConfig.GRID_COLS - 6) {
+                            paint = true
+                        }
+                        else if (row+1 >= GameConfig.GRID_ROWS || col+1 >= GameConfig.GRID_COLS) {
+                            paint = true;
+                        }
+                        else if (Kodo.GameScene.instance.grid[row][col].entity != null || Kodo.GameScene.instance.grid[row][col + 1].entity != null ||
+                            Kodo.GameScene.instance.grid[row + 1][col].entity != null || Kodo.GameScene.instance.grid[row + 1][col + 1].entity != null) {
+                            paint = true;
+                        }
+                        else if (col >= GameConfig.GRID_COLS - 1) {
+                            paint = true;
+                        }
+                        else if (row >= GameConfig.GRID_ROWS - 1) {
+                            paint = true;
+                        }
+                        else {
+                            paint = false;
+                        }
                     }
                     else {
-                        paint = false;
+                        if (col > 5 && col < GameConfig.GRID_COLS - 6) {
+                            paint = true
+                        }
+                        else if (Kodo.GameScene.instance.grid[row][col].entity != null) {
+                            paint = true;
+                        }
+                        else {
+                            paint = false;
+                        }
                     }
 
                     if (this.preview.tint == 0xffffff && paint) {
@@ -187,8 +261,8 @@ module Kodo {
                     if (this.preview.tint == 0xff0000 && !paint) {
                         this.preview.tint = 0xffffff;
                     }
+                    
                 }
-                
 
             }
         }

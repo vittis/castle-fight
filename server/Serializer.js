@@ -27,6 +27,8 @@ var DataSerializer;
         var obj = {};
         obj.spamRate = bm.spamRate;
         obj.spamRateCounter = bm.spamRateCounter;
+        obj.hostMatou = bm.hostMatou;
+        obj.clientMatou = bm.clientMatou;
         return obj;
     }
     DataSerializer.SerializeBall = SerializeBall;

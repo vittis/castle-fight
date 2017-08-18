@@ -32,7 +32,8 @@ export module DataSerializer {
 
         obj.spamRate = bm.spamRate;
         obj.spamRateCounter = bm.spamRateCounter;
-
+        obj.hostMatou = bm.hostMatou;
+        obj.clientMatou = bm.clientMatou;
         return obj;
     }
     export function SerializeTile(tile : Tile) {

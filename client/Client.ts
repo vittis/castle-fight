@@ -15,7 +15,13 @@ module Client {
         GameConfig.updateRate = stepRate;
         GameConfig.isHost = isHost;
 
-        Kodo.Game.instance.state.start('GameScene', true, false);
+        if (GameConfig.yourNick == "") {
+            GameConfig.yourNick = "Guest_"+data.playerId;
+        }
+        
+        GameConfig.opponentNick = data.opponentNick;
+
+        Kodo.MainMenu.instance.startGame();
     });
 
     socket.on('startGameLoop', function (data) {
@@ -24,7 +30,6 @@ module Client {
     });
 
     socket.on('receiveData', function (data) {
-        console.log("porrna diacho");
         Kodo.GameScene.instance.player = data.player;
         Kodo.GameScene.instance.ballData = data.ballData;
         Kodo.GameScene.instance.updateEntities(data.entities);
@@ -37,7 +42,9 @@ module Client {
                 GameConfig.buildingNameData.push(element.name);
         });
 
+
         data.unitData.forEach(element => {
+            GameConfig.unitNameData.push(element.name);
             if (Kodo[element.name]) {
                 Kodo[element.name].nome = element.name;
                 Kodo[element.name].width = element.width;
@@ -48,7 +55,8 @@ module Client {
                 Kodo[element.name].attackRate = element.attackRate;
                 Kodo[element.name].attackRange = element.attackRange;
                 Kodo[element.name].description = element.description;
-
+                Kodo[element.name].goldCost = element.goldCost;
+                Kodo[element.name].woodCost = element.woodCost;
             }
         });
         data.buildingData.forEach(element => {
@@ -69,6 +77,12 @@ module Client {
             }
         });
         console.log("recebi data");
+        if (Kodo.GravityChamber.spamUnit) {
+            console.log("certo")
+        }
+        else {
+            console.log("deu ruim")
+        }
     });
 
     socket.on('endGame', function (data) {
@@ -83,11 +97,11 @@ module Client {
     });
 
     export function askMatchmaking() {
-        socket.emit('askMatchmaking');
+        socket.emit('askMatchmaking', {nick: GameConfig.yourNick});
     }
 
-    export function askBuild(row, col, name) {
-        socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost});
+    export function askBuild(row, col, name, isUnit) {
+        socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost, isUnit: isUnit});
     }
 
     export function askSpamTileMark(row, col, buildingId) {

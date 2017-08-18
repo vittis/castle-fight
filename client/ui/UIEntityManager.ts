@@ -54,11 +54,13 @@ module Kodo {
             }
         }
         updateText() {
-            if (this.descTexto) {
+            if (this.target != null) {
                 if (this.target instanceof Building) {
                     if (this.target instanceof Tower) {
                         this.descTexto.text = this.target.dataq.name + "\n\nDamage: " 
                             + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
+                        this.hpTexto.text = "" + this.target.dataq.hp;
+                        this.armorTexto.text = "" + this.target.dataq.armor;
                     }
                     else {
                         this.descTexto.text = this.target.dataq.name + "\n" + "\n" + Kodo[this.target.dataq.name].description;
@@ -340,7 +342,6 @@ module Kodo {
 
                         }
                         i++;
-                        console.log("q");
                     });  
 
                     var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';

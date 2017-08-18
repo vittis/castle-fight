@@ -113,6 +113,24 @@ module Kodo {
                 this.game.load.spritesheet('techStation_ui_h', 'assets/48/ui/techStation_ui_h.png', 66, 66);
                 this.game.load.spritesheet('techStation_ui_c', 'assets/48/ui/techStation_ui_c.png', 66, 66);
 
+                this.game.load.spritesheet('archer_ui_c', 'assets/48/ui/archer_ui_c.png', 66, 66);
+                this.game.load.spritesheet('farmer_ui_c', 'assets/48/ui/farmer_ui_c.png', 66, 66);
+                this.game.load.spritesheet('soldado_ui_c', 'assets/48/ui/soldado_ui_c.png', 66, 66);
+                this.game.load.spritesheet('propeller_ui_c', 'assets/48/ui/propeller_ui_c.png', 66, 66);
+                this.game.load.spritesheet('king_ui_c', 'assets/48/ui/king_ui_c.png', 66, 66);
+                this.game.load.spritesheet('thief_ui_c', 'assets/48/ui/thief_ui_c.png', 66, 66);
+                this.game.load.spritesheet('engineer_ui_c', 'assets/48/ui/engineer_ui_c.png', 66, 66);
+                this.game.load.spritesheet('sniper_ui_c', 'assets/48/ui/sniper_ui_c.png', 66, 66);
+
+                this.game.load.spritesheet('archer_ui_h', 'assets/48/ui/archer_ui_h.png', 66, 66);
+                this.game.load.spritesheet('farmer_ui_h', 'assets/48/ui/farmer_ui_h.png', 66, 66);
+                this.game.load.spritesheet('soldado_ui_h', 'assets/48/ui/soldado_ui_h.png', 66, 66);
+                this.game.load.spritesheet('propeller_ui_h', 'assets/48/ui/propeller_ui_h.png', 66, 66);
+                this.game.load.spritesheet('king_ui_h', 'assets/48/ui/king_ui_h.png', 66, 66);
+                this.game.load.spritesheet('thief_ui_h', 'assets/48/ui/thief_ui_h.png', 66, 66);
+                this.game.load.spritesheet('engineer_ui_h', 'assets/48/ui/engineer_ui_h.png', 66, 66);
+                this.game.load.spritesheet('sniper_ui_h', 'assets/48/ui/sniper_ui_h.png', 66, 66);
+
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');
                 this.game.load.image('wood_icon', 'assets/48/ui/wood_icon.png');
@@ -137,7 +155,6 @@ module Kodo {
                 this.game.load.image('playButton', 'assets/48/menu_ui/playButton.png');
                 this.game.load.image('roomsButton', 'assets/48/menu_ui/roomsButton.png');
                 this.game.load.image('backButton', 'assets/48/menu_ui/backButton.png');
-
             }
         }
  

@@ -7,5 +7,7 @@
     "attackRange": 1,
     "attackDmg": 3,
     "attackRate": 2,
-    "description": "Grapples units within 6 range"
+    "description": "Grapples units within 6 range",
+    "goldCost": 100,
+    "woodCost": 160
 }

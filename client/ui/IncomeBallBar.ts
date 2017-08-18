@@ -87,7 +87,7 @@ module Kodo {
             }
         }
         updateCounter(counter: number) {
-            if (counter == 0) {
+            if (counter === 0) {
                 this.tudoGroup.visible = false;
                 this.currentTime = 0;
             }

@@ -7,5 +7,7 @@
     "attackRange": 1,
     "attackDmg": 3,
     "attackRate": 3,
-    "description": "Stuns on hit"
+    "description": "Stuns on hit",
+    "goldCost": 100,
+    "woodCost": 0
 }

@@ -84,6 +84,8 @@ var Kodo;
             tweenA.chain(tweenB);
             tweenA.start();
             this.game.time.advancedTiming = true;
+            this.game.scale.pageAlignHorizontally = true;
+            this.game.scale.pageAlignVertically = true;
         };
         MainMenu.prototype.onOverButton = function (sprite) {
             sprite.scale.setTo(1.02, 1.02);
@@ -92,6 +94,7 @@ var Kodo;
             sprite.scale.setTo(1, 1);
         };
         MainMenu.prototype.onPlayButton = function () {
+            GameConfig.yourNick = this.inputField.value;
             Client.askMatchmaking();
             this.playText.text = 'Matchmaking...';
         };
@@ -103,6 +106,7 @@ var Kodo;
             this.game.state.start('DeckScene', true, false);
         };
         MainMenu.prototype.startGame = function () {
+            console.log(this.inputField.value);
             this.game.state.start('GameScene', true, false);
         };
         MainMenu.prototype.render = function () {

@@ -16,6 +16,7 @@ var Unit = (function (_super) {
     function Unit(row, col, unitData) {
         var _this = _super.call(this, row, col, unitData) || this;
         _this.target = null;
+        _this.justSpawned = false;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;

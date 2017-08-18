@@ -31,11 +31,13 @@ var Kodo;
             }
         };
         UIEntityManager.prototype.updateText = function () {
-            if (this.descTexto) {
+            if (this.target != null) {
                 if (this.target instanceof Kodo.Building) {
                     if (this.target instanceof Kodo.Tower) {
                         this.descTexto.text = this.target.dataq.name + "\n\nDamage: "
                             + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
+                        this.hpTexto.text = "" + this.target.dataq.hp;
+                        this.armorTexto.text = "" + this.target.dataq.armor;
                     }
                     else {
                         this.descTexto.text = this.target.dataq.name + "\n" + "\n" + Kodo[this.target.dataq.name].description;
@@ -280,7 +282,6 @@ var Kodo;
                             entityManager.tileClickArray[i].visible = true;
                         }
                         i++;
-                        console.log("q");
                     });
                     var texture = building.data.spamData.isTraining ? 'pauseButton' : 'trainButton';
                     entityManager.trainButton.loadTexture(texture);

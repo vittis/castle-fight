@@ -34,8 +34,6 @@ module Kodo {
         descTexto: Phaser.Text;
         descricaoString: string;
 
-        //justBeenStunned = false;
-
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
             this.id = id;
@@ -118,11 +116,17 @@ module Kodo {
                     Kodo.GameScene.instance.grid[this.tile.row + j][this.tile.col + i].entity = null;
                 }
             }
-           
             this.armorBar.destroy();
             this.hpBar.destroy();
-            this.destroy(); 
+            let fade = this.game.add.tween(this).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None);
+            fade.onComplete.add(function destroyMe() {
+                console.log(this.dataq.hp);
+                this.destroy();
+            }, this); 
+            fade.start();
+            //this.destroy(); 
              if (Kodo.GameScene.instance.uiEntityManager.target == this) {
+                 Kodo.GameScene.instance.uiEntityManager.target = null;
                 if (this instanceof SpamBuilding) {
                     if (Kodo.GameScene.instance.uiEntityManager.isShowing) {
                         Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();

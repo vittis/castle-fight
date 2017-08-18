@@ -15,12 +15,19 @@ var GamePlayer = (function () {
     }
     GamePlayer.prototype.buildBuilding = function (b) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {
-            this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
-            if (b.data.woodCost == 0) {
-                this.resourceManager.add(0, b.data.goldCost);
+            if (!(b instanceof Unit_1.Unit)) {
+                this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
+                if (b.data.woodCost == 0) {
+                    this.resourceManager.add(0, b.data.goldCost);
+                }
+                this.resourceManager.income += b.data.incomeGain;
+                this.addEntity(b);
             }
-            this.resourceManager.income += b.data.incomeGain;
-            this.addEntity(b);
+            else {
+                this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
+                b.justSpawned = true;
+                this.addEntity(b);
+            }
         }
         else {
             console.log("nao ha recursos");

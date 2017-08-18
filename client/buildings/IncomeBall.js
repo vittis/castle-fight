@@ -18,6 +18,64 @@ var Kodo;
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
+        IncomeBall.prototype.onDeath = function () {
+            var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
+            if (Kodo.GameScene.instance.ballData.hostMatou && GameConfig.isHost) {
+                var goldLabel_1 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+50', style);
+                goldLabel_1.anchor.setTo(0.5, 0.5);
+                goldLabel_1.fontSize = 24;
+                goldLabel_1.scale.setTo(0.3, 0.3);
+                style.fill = '#0D6032';
+                var woodLabel_1 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+50', style);
+                woodLabel_1.anchor.setTo(0.5, 0.5);
+                woodLabel_1.fontSize = 24;
+                woodLabel_1.scale.setTo(0.3, 0.3);
+                var tweenA = this.game.add.tween(goldLabel_1.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
+                var tweenB = this.game.add.tween(goldLabel_1.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
+                var tweenC = this.game.add.tween(goldLabel_1).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+                var tweenD = this.game.add.tween(woodLabel_1.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
+                var tweenE = this.game.add.tween(woodLabel_1.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
+                var tweenF = this.game.add.tween(woodLabel_1).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+                tweenC.onComplete.add(function removeText() {
+                    goldLabel_1.destroy();
+                    woodLabel_1.destroy();
+                }, this);
+                tweenA.chain(tweenB);
+                tweenB.chain(tweenC);
+                tweenA.start();
+                tweenD.chain(tweenE);
+                tweenE.chain(tweenF);
+                tweenD.start();
+            }
+            if (Kodo.GameScene.instance.ballData.clientMatou && !GameConfig.isHost) {
+                var goldLabel_2 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+50', style);
+                goldLabel_2.anchor.setTo(0.5, 0.5);
+                goldLabel_2.fontSize = 24;
+                goldLabel_2.scale.setTo(0.3, 0.3);
+                style.fill = '#0D6032';
+                var woodLabel_2 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+50', style);
+                woodLabel_2.anchor.setTo(0.5, 0.5);
+                woodLabel_2.fontSize = 24;
+                woodLabel_2.scale.setTo(0.3, 0.3);
+                var tweenA = this.game.add.tween(goldLabel_2.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
+                var tweenB = this.game.add.tween(goldLabel_2.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
+                var tweenC = this.game.add.tween(goldLabel_2).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+                var tweenD = this.game.add.tween(woodLabel_2.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
+                var tweenE = this.game.add.tween(woodLabel_2.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
+                var tweenF = this.game.add.tween(woodLabel_2).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+                tweenC.onComplete.add(function removeText() {
+                    goldLabel_2.destroy();
+                    woodLabel_2.destroy();
+                }, this);
+                tweenA.chain(tweenB);
+                tweenB.chain(tweenC);
+                tweenA.start();
+                tweenD.chain(tweenE);
+                tweenE.chain(tweenF);
+                tweenD.start();
+            }
+            _super.prototype.onDeath.call(this);
+        };
         return IncomeBall;
     }(Kodo.Building));
     Kodo.IncomeBall = IncomeBall;

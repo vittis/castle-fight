@@ -70,10 +70,10 @@ var GameServer = (function () {
         console.log("jogo id " + game.id + " foi finalizado");
     };
     GameServer.prototype.onMatchmaking = function (player) {
-        console.log("askMatchmaking requisitado por player id: " + player.id);
+        console.log("askMatchmaking requisitado por player id: " + player.id + " " + player.nick);
         player.status = ServerPlayer_1.PlayerStatus.matchmaking;
         var players = this.getPlayersMatchmaking();
-        if (players.length == 2) {
+        if (players.length >= 2) {
             players[0].status = ServerPlayer_1.PlayerStatus.ingame;
             players[1].status = ServerPlayer_1.PlayerStatus.ingame;
             this.createGame(players[0], players[1]);
@@ -133,7 +133,8 @@ var GameServer = (function () {
                 players.push({ id: p.id, status: p.status });
             });
             playersOnLobby.forEach(function (p) {
-                p.socket.emit('receivePlayers', players);
+                if (p.socket)
+                    p.socket.emit('receivePlayers', players);
             });
         }
     };

@@ -7,6 +7,9 @@ export class IncomeBall extends Building {
 
     ballManager : IncomeBallManager;
 
+    hostMatou : boolean = false;
+    clientMatou : boolean = false;
+
     doAction() {
 
     }
@@ -18,7 +21,12 @@ export class IncomeBall extends Building {
     receiveAttack(unit: Unit) {
         super.receiveAttack(unit);
         if (this.data.hp <= 0) {
-            unit.owner.resourceManager.add(50, 50);
+            if (unit.owner.isHost) {
+                this.hostMatou = true;
+            }
+            if (!unit.owner.isHost) {
+                this.clientMatou = true;
+            }
         }
     }
 }

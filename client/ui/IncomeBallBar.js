@@ -73,7 +73,7 @@ var Kodo;
             }
         };
         IncomeBallBar.prototype.updateCounter = function (counter) {
-            if (counter == 0) {
+            if (counter === 0) {
                 this.tudoGroup.visible = false;
                 this.currentTime = 0;
             }

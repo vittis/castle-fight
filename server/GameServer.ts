@@ -53,7 +53,7 @@ export class GameServer {
         return this.addPlayer(socket);
     }
 
-    createGame(host : ServerPlayer, client : ServerPlayer) : GameCore{
+    createGame(host : ServerPlayer, client : ServerPlayer) : GameCore {
         var game = new GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
@@ -86,10 +86,10 @@ export class GameServer {
     }
 
     onMatchmaking(player : ServerPlayer) {
-        console.log("askMatchmaking requisitado por player id: "+player.id);
+        console.log("askMatchmaking requisitado por player id: "+player.id+" "+player.nick);
         player.status = PlayerStatus.matchmaking;
         var players : Array<ServerPlayer> = this.getPlayersMatchmaking();
-        if (players.length == 2) {
+        if (players.length >= 2) {
             players[0].status = PlayerStatus.ingame;
             players[1].status = PlayerStatus.ingame;
             this.createGame(players[0], players[1]);
@@ -156,7 +156,8 @@ export class GameServer {
             });
             
             playersOnLobby.forEach(p => {
-                p.socket.emit('receivePlayers', players);
+                if (p.socket)
+                    p.socket.emit('receivePlayers', players);
             });
         }
     }

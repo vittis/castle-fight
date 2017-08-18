@@ -10,6 +10,7 @@ var ServerPlayer = (function () {
     function ServerPlayer(id, socket) {
         this.id = id;
         this.status = PlayerStatus.connected;
+        this.nick = "Guest_" + id;
         if (socket)
             this.socket = socket;
     }

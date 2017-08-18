@@ -6,6 +6,8 @@ var IncomeBallManager = (function () {
     function IncomeBallManager(gamePlayer) {
         this.spamRate = GameConfig_1.GameConfig.BALL_SPAM_RATE;
         this.spamRateCounter = 0;
+        this.hostMatou = false;
+        this.clientMatou = false;
         this.gp = gamePlayer;
     }
     IncomeBallManager.prototype.addBallsToGame = function () {
@@ -13,6 +15,8 @@ var IncomeBallManager = (function () {
         this.gp.addEntity(new IncomeBall_1.IncomeBall(3, 15, this));
     };
     IncomeBallManager.prototype.step = function () {
+        this.hostMatou = false;
+        this.clientMatou = false;
         if (this.gp.entities.length == 0) {
             this.spamRateCounter++;
             if (this.spamRateCounter == this.spamRate) {

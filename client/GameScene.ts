@@ -19,8 +19,8 @@ module Kodo {
         uiEntityManager : UIEntityManager;
         incomeBallBar : IncomeBallBar;
 
-        player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 0, wood: 0, income: 10};
-        ballData = {spamRate: 1, spamRateCounter: 0};
+        player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10};
+        ballData = {spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false};
         isHost : boolean;
 
         static instance : GameScene = null;
@@ -46,6 +46,29 @@ module Kodo {
             this.uiResourceManager = new UIResourceManager(this.game);
             this.uiEntityManager = new UIEntityManager(this.game);
             this.incomeBallBar = new IncomeBallBar(this.game);  
+
+            var style = { font: "14px Lucida Console", fill: 'white', align: "center" };
+            var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
+            yourNickLabel.stroke = '#E27952';
+            yourNickLabel.strokeThickness = 4;
+            if (!GameConfig.isHost) {
+                yourNickLabel.x = this.game.width - yourNickLabel.width;
+                yourNickLabel.stroke = '#0D6032';
+                yourNickLabel.strokeThickness = 4;
+            }
+
+            var opponentNick = this.game.add.text(0, 0, GameConfig.opponentNick, style);
+            opponentNick.stroke = '#E27952';
+            opponentNick.strokeThickness = 4;
+            if (GameConfig.isHost) {
+                opponentNick.x = this.game.width - yourNickLabel.width;
+                opponentNick.stroke = '#0D6032';
+                opponentNick.strokeThickness = 4;
+            }
+
+            console.log(GameConfig.yourNick);
+            console.log(GameConfig.opponentNick);
+
         }
 
          update() {
@@ -59,8 +82,9 @@ module Kodo {
         updateEntities(newEntities : any[]) {
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
+            this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
 
-              this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
+            this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
                 this.world.bringToTop(item.tudoGroup);
             }.bind(this), this); 
 

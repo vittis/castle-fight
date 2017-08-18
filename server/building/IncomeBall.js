@@ -15,6 +15,8 @@ var IncomeBall = (function (_super) {
     __extends(IncomeBall, _super);
     function IncomeBall(row, col, ballManager) {
         var _this = _super.call(this, row, col, require('clone')(require('../data/buildings/incomeBall.json'))) || this;
+        _this.hostMatou = false;
+        _this.clientMatou = false;
         _this.ballManager = ballManager;
         return _this;
     }
@@ -23,7 +25,12 @@ var IncomeBall = (function (_super) {
     IncomeBall.prototype.receiveAttack = function (unit) {
         _super.prototype.receiveAttack.call(this, unit);
         if (this.data.hp <= 0) {
-            unit.owner.resourceManager.add(50, 50);
+            if (unit.owner.isHost) {
+                this.hostMatou = true;
+            }
+            if (!unit.owner.isHost) {
+                this.clientMatou = true;
+            }
         }
     };
     return IncomeBall;

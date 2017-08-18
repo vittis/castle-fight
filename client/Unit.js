@@ -49,6 +49,8 @@ var Kodo;
         Unit.prototype.onDeath = function () {
             _super.prototype.onDeath.call(this);
         };
+        Unit.goldCost = 0;
+        Unit.woodCost = 0;
         return Unit;
     }(Kodo.Entity));
     Kodo.Unit = Unit;

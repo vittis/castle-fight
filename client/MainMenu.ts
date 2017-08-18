@@ -95,8 +95,11 @@ module Kodo {
             tweenA.start();
          
             this.game.time.advancedTiming = true;
-
+            this.game.scale.pageAlignHorizontally = true;
+            this.game.scale.pageAlignVertically = true;
         }
+        
+
         onOverButton(sprite) {
             sprite.scale.setTo(1.02, 1.02);
         }
@@ -104,6 +107,8 @@ module Kodo {
             sprite.scale.setTo(1, 1);
         }
         onPlayButton() {
+            GameConfig.yourNick = this.inputField.value;
+
             Client.askMatchmaking();
             this.playText.text = 'Matchmaking...'
         }
@@ -118,6 +123,7 @@ module Kodo {
         }
 
         startGame() {
+            console.log(this.inputField.value);
             this.game.state.start('GameScene', true, false);
         }
         render() {

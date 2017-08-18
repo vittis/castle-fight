@@ -9,5 +9,7 @@
     "attackDmg": 2,
     "attackRate": 3,
 
-    "description": "Solid standard footman"
+    "description": "Solid standard footman",
+    "goldCost": 60,
+    "woodCost": 0
 }

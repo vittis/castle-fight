@@ -12,7 +12,6 @@ var Kodo;
 (function (Kodo) {
     var Entity = (function (_super) {
         __extends(Entity, _super);
-        //justBeenStunned = false;
         function Entity(game, tile, id, isHost, texture, data) {
             var _this = _super.call(this, game, tile.x, tile.y, texture) || this;
             _this.id = id;
@@ -88,8 +87,15 @@ var Kodo;
             }
             this.armorBar.destroy();
             this.hpBar.destroy();
-            this.destroy();
+            var fade = this.game.add.tween(this).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None);
+            fade.onComplete.add(function destroyMe() {
+                console.log(this.dataq.hp);
+                this.destroy();
+            }, this);
+            fade.start();
+            //this.destroy(); 
             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
+                Kodo.GameScene.instance.uiEntityManager.target = null;
                 if (this instanceof Kodo.SpamBuilding) {
                     if (Kodo.GameScene.instance.uiEntityManager.isShowing) {
                         Kodo.GameScene.instance.uiEntityManager.tileMark.destroy();
