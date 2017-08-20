@@ -4,11 +4,11 @@
     "height": 2,
     "maxHP": 20,
     "maxArmor": 5,
-    "goldCost": 50,
+    "goldCost": 40,
     "woodCost": 0,
     "spamUnit": "Thief",
     "spamCount": 2,
-    "spamRate": 10,
+    "spamRate": 20,
     "description": "Trains Thief",
     "incomeGain": 2
 }

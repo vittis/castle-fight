@@ -16,6 +16,10 @@ module Kodo {
 
         isUnit = false;
 
+        clickedHotkey = false;
+
+        hotKeySprite = {buildingName: "0", isUnit : false};
+
         constructor(game : Phaser.Game) {
             this.game = game;
 
@@ -56,7 +60,71 @@ module Kodo {
             buildArea.destroy();
 
             this.buildArea.visible = false;
+
+            var key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+            key1.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+            key2.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key3 = game.input.keyboard.addKey(Phaser.Keyboard.THREE);
+            key3.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key4 = game.input.keyboard.addKey(Phaser.Keyboard.FOUR);
+            key4.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key5 = game.input.keyboard.addKey(Phaser.Keyboard.FIVE);
+            key5.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key6 = game.input.keyboard.addKey(Phaser.Keyboard.SIX);
+            key6.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key7 = game.input.keyboard.addKey(Phaser.Keyboard.SEVEN);
+            key7.onDown.add(this.onDownNumber.bind(this), this);
+
+            var key8 = game.input.keyboard.addKey(Phaser.Keyboard.EIGHT);
+            key8.onDown.add(this.onDownNumber.bind(this), this);
         }
+        onDownNumber(param) {
+            var hostLabel = GameConfig.isHost ? 'h' : 'c'
+            var number;
+            if (param.keyCode == Phaser.Keyboard.ONE) {
+                number = 0;
+            }
+            if (param.keyCode == Phaser.Keyboard.TWO) {
+                number = 1;
+            }
+            if (param.keyCode == Phaser.Keyboard.THREE) {
+                number = 2;
+            }
+            if (param.keyCode == Phaser.Keyboard.FOUR) {
+                number = 3;
+            }
+            if (param.keyCode == Phaser.Keyboard.FIVE) {
+                number = 4;
+            }
+            if (param.keyCode == Phaser.Keyboard.SIX) {
+                number = 5;
+            }
+            if (param.keyCode == Phaser.Keyboard.SEVEN) {
+                number = 6;
+            }
+            if (param.keyCode == Phaser.Keyboard.EIGHT) {
+                number = 7;
+            }
+
+            this.buildingSelected = true;
+            this.isUnit = GameConfig.buildingNameData.indexOf(GameConfig.deck[number]) == -1 ? true : false;
+            this.preview.loadTexture(GameConfig.deck[number][0].toLowerCase() + GameConfig.deck[number].slice(1) + "" + hostLabel);
+            this.preview.visible = true;
+            this.buildArea.visible = true;
+            this.game.world.bringToTop(this.preview);
+
+            this.clickedHotkey = true;
+
+            this.hotKeySprite = {buildingName: GameConfig.deck[number], isUnit: this.isUnit};
+        }
+
         onHover(sprite: UIBuildingButton) {
             this.inputOver = true;
             sprite.onOver();
@@ -79,7 +147,7 @@ module Kodo {
             sprite.onOut();
         }
 
-        onUp(sprite: UIBuildingButton) {
+        onUp(sprite: any) {
             this.inputDown = false;
             this.buildingSelected = false;
 
@@ -194,6 +262,7 @@ module Kodo {
 
         update() {
              if (this.game.input.activePointer.isDown) {
+                 
                 let clicouNaBuilding = false;
                 let taMostrando = false;
                 this.buildingsGroup.forEach(function (b: UIBuildingButton) {
@@ -212,6 +281,12 @@ module Kodo {
                         }
                     }.bind(this), this); 
                 }
+                if (this.clickedHotkey) {
+                    this.onUp(this.hotKeySprite);
+                    this.clickedHotkey = false;
+                }
+                
+
             } 
 
             if (this.buildingSelected) {

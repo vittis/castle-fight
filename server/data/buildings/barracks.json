@@ -4,12 +4,12 @@
     "height": 2,
     "maxHP": 20, 
     "maxArmor": 10,
-    "goldCost": 60,
+    "goldCost": 50,
     "woodCost": 0,
 
     "spamUnit": "Soldado",
     "spamCount": 2,
-    "spamRate": 15,
+    "spamRate": 20,
 
     "description": "Trains Footman",
     "incomeGain": 2

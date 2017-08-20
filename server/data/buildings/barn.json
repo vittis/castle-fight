@@ -4,12 +4,12 @@
     "height": 2,
     "maxHP": 15,
     "maxArmor": 5,
-    "goldCost": 45,
+    "goldCost": 40,
     "woodCost": 0,
 
     "spamUnit": "Farmer",
     "spamCount": 3,
-    "spamRate": 10,
+    "spamRate": 15,
 
     "description": "Trains Farmer",
     "incomeGain": 1

@@ -8,6 +8,6 @@
     "attackDmg": 4,
     "attackRate": 2,
     "description": "First attack gains +4 damage and +2 range",
-    "goldCost": 120,
-    "woodCost": 130
+    "goldCost": 65,
+    "woodCost": 75
 }

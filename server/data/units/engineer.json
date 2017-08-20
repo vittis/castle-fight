@@ -8,6 +8,6 @@
     "attackDmg": 3,
     "attackRate": 3,
     "description": "Stuns on hit",
-    "goldCost": 100,
+    "goldCost": 50,
     "woodCost": 0
 }

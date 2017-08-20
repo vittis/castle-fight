@@ -4,11 +4,11 @@
     "height": 2,
     "maxHP": 20,
     "maxArmor": 10,
-    "goldCost": 75,
+    "goldCost": 70,
     "woodCost": 95,
     "spamUnit": "Propeller",
     "spamCount": 3,
-    "spamRate": 10,
+    "spamRate": 15,
     "description": "Trains Propeller",
     "incomeGain": 5
 }

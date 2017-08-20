@@ -10,6 +10,6 @@
     "attackRate": 2,
 
     "description": "Support ranged unit",
-    "goldCost": 60,
+    "goldCost": 35,
     "woodCost": 0
 }

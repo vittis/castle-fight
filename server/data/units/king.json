@@ -8,6 +8,6 @@
     "attackDmg": 3,
     "attackRate": 2,
     "description": "Grapples units within 6 range",
-    "goldCost": 100,
-    "woodCost": 160
+    "goldCost": 65,
+    "woodCost": 80
 }
