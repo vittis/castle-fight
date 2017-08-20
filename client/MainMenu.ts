@@ -12,6 +12,8 @@ module Kodo {
 
         inputField;
         playText : Phaser.Text;
+        roomsText: Phaser.Text;
+
         create() {
             MainMenu.instance = this;
 
@@ -92,9 +94,9 @@ module Kodo {
             roomsButton.alignIn(panelGrande, Phaser.BOTTOM_CENTER, 0, -25);
             roomsButton.events.onInputOver.add(this.onOverButton.bind(this), playButton);
             roomsButton.events.onInputOut.add(this.onOutButton.bind(this), playButton);
-            var roomsText = this.game.add.text(0, 0, 'Rooms', style);
-            roomsText.anchor.setTo(0.5, 0.5);
-            roomsText.alignIn(roomsButton, Phaser.CENTER);
+            this.roomsText = this.game.add.text(0, 0, 'Rooms', style);
+            this.roomsText.anchor.setTo(0.5, 0.5);
+            this.roomsText.alignIn(roomsButton, Phaser.CENTER);
 
             var panelMenor = this.game.add.sprite(0, 0, 'panelMenor');
             panelMenor.anchor.setTo(0.5, 0.5);
@@ -142,7 +144,7 @@ module Kodo {
         }
 
         onRoomsButton() {
-            console.log("clicou no rooms "+this.inputField.value);
+            this.roomsText.text = 'Coming soon... :('
         }
 
         onEditDeckButton() {
