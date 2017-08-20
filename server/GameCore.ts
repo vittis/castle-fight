@@ -51,8 +51,8 @@ export class GameCore {
         this.host.buildBuilding(new Tower(3, 5)); 
 
 
-         this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+         /* this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); */
    /*      this.host.buildBuilding(new Barn(0, 0));   
         this.host.buildBuilding(new Barn(2, 3));      */      
 

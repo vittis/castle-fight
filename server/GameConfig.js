@@ -9,5 +9,5 @@ var GameConfig;
     GameConfig.STARTING_WOOD = 0;
     GameConfig.STARTING_INCOME = 10;
     GameConfig.STARTING_INCOME_RATE = 13;
-    GameConfig.BALL_SPAM_RATE = 10;
+    GameConfig.BALL_SPAM_RATE = 80;
 })(GameConfig = exports.GameConfig || (exports.GameConfig = {}));

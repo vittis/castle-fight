@@ -6,9 +6,7 @@ var AStar_1 = require("./lib/AStar");
 var EuclideanHeuristic_1 = require("./lib/Heuristics/EuclideanHeuristic");
 var GameConfig_1 = require("./GameConfig");
 var Castle_1 = require("./building/Castle");
-var Barracks_1 = require("./building/Barracks");
 var GameServer_1 = require("./GameServer");
-var ArcheryRange_1 = require("./building/ArcheryRange");
 var Serializer_1 = require("./Serializer");
 var IncomeBallManager_1 = require("./IncomeBallManager");
 var Tower_1 = require("./building/Tower");
@@ -26,8 +24,8 @@ var GameCore = (function () {
         this.client.buildBuilding(new Tower_1.Tower(11, 24));
         this.host.buildBuilding(new Tower_1.Tower(11, 5));
         this.host.buildBuilding(new Tower_1.Tower(3, 5));
-        this.host.buildBuilding(new ArcheryRange_1.ArcheryRange(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        this.host.buildBuilding(new Barracks_1.Barracks(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
+        /* this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+        this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); */
         /*      this.host.buildBuilding(new Barn(0, 0));
              this.host.buildBuilding(new Barn(2, 3));      */
         /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
