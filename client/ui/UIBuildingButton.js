@@ -12,13 +12,17 @@ var Kodo;
 (function (Kodo) {
     var UIBuildingButton = (function (_super) {
         __extends(UIBuildingButton, _super);
-        function UIBuildingButton(game, sprite, context, previewName, buildingName, unit) {
+        function UIBuildingButton(game, sprite, context, previewName, buildingName, unit, firstRow) {
             var _this = _super.call(this, game, 0, 0, sprite, null, context, 1, 0, 2) || this;
             _this.mostrarUnit = false;
             _this.over = false;
             _this.isUnit = true;
+            _this.firstRow = true;
             if (unit == null || unit == false) {
                 _this.isUnit = false;
+            }
+            if (firstRow == null || firstRow == false) {
+                _this.firstRow = false;
             }
             _this.spriteName = sprite;
             _this.previewName = previewName;
@@ -76,17 +80,31 @@ var Kodo;
                 box.beginFill(0x000000);
                 box.lineStyle(5, 0x000000, 1);
                 box.moveTo(0, 0);
-                box.lineTo(_this.descTexto.width + 10, 0);
-                box.lineTo(_this.descTexto.width + 10, _this.descTexto.height + 10);
-                box.lineTo((_this.descTexto.width + 10) / 2 + 10, _this.descTexto.height + 10);
-                box.lineTo((_this.descTexto.width + 10) / 2, _this.descTexto.height + 20);
-                box.lineTo((_this.descTexto.width + 10) / 2 - 10, _this.descTexto.height + 10);
-                box.lineTo(0, _this.descTexto.height + 10);
+                if (!_this.firstRow) {
+                    box.lineTo(_this.descTexto.width + 10, 0);
+                    box.lineTo(_this.descTexto.width + 10, _this.descTexto.height + 10);
+                    box.lineTo((_this.descTexto.width + 10) / 2 + 10, _this.descTexto.height + 10);
+                    box.lineTo((_this.descTexto.width + 10) / 2, _this.descTexto.height + 20);
+                    box.lineTo((_this.descTexto.width + 10) / 2 - 10, _this.descTexto.height + 10);
+                    box.lineTo(0, _this.descTexto.height + 10);
+                }
+                else {
+                    box.lineTo((_this.descTexto.width + 10) / 2 - 10, 0);
+                    box.lineTo((_this.descTexto.width + 10) / 2, -10);
+                    box.lineTo((_this.descTexto.width + 10) / 2 + 10, 0);
+                    box.lineTo((_this.descTexto.width + 10), 0);
+                    box.lineTo((_this.descTexto.width + 10), _this.descTexto.height + 10);
+                    box.lineTo(0, _this.descTexto.height + 10);
+                }
                 box.lineTo(0, 0);
                 box.endFill();
                 _this.descricaoBox = _this.game.add.sprite(_this.descTexto.x, _this.descTexto.y, box.generateTexture());
                 _this.descricaoBox.alpha = 0.8;
-                _this.descricaoBox.anchor.setTo(0.5, 1);
+                if (!_this.firstRow)
+                    _this.descricaoBox.anchor.setTo(0.5, 1);
+                else {
+                    _this.descricaoBox.anchor.setTo(0.5, 0);
+                }
                 box.destroy();
                 _this.game.world.swap(_this.descricaoBox, _this.descTexto);
                 _this.descricaoBox.visible = false;
@@ -127,17 +145,30 @@ var Kodo;
                 box2.beginFill(0x000000);
                 box2.lineStyle(5, 0x000000, 1);
                 box2.moveTo(0, 0);
-                box2.lineTo(_this.unitDescTexto.width + 10, 0);
-                box2.lineTo(_this.unitDescTexto.width + 10, _this.unitDescTexto.height + 10);
-                box2.lineTo((_this.unitDescTexto.width + 10) / 2 + 10, _this.unitDescTexto.height + 10);
-                box2.lineTo((_this.unitDescTexto.width + 10) / 2, _this.unitDescTexto.height + 20);
-                box2.lineTo((_this.unitDescTexto.width + 10) / 2 - 10, _this.unitDescTexto.height + 10);
-                box2.lineTo(0, _this.unitDescTexto.height + 10);
+                if (_this.firstRow) {
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2 - 10, 0);
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2, -10);
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2 + 10, 0);
+                    box2.lineTo((_this.unitDescTexto.width + 10), 0);
+                    box2.lineTo((_this.unitDescTexto.width + 10), _this.unitDescTexto.height + 10);
+                    box2.lineTo(0, _this.unitDescTexto.height + 10);
+                }
+                else {
+                    box2.lineTo(_this.unitDescTexto.width + 10, 0);
+                    box2.lineTo(_this.unitDescTexto.width + 10, _this.unitDescTexto.height + 10);
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2 + 10, _this.unitDescTexto.height + 10);
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2, _this.unitDescTexto.height + 20);
+                    box2.lineTo((_this.unitDescTexto.width + 10) / 2 - 10, _this.unitDescTexto.height + 10);
+                    box2.lineTo(0, _this.unitDescTexto.height + 10);
+                }
                 box2.lineTo(0, 0);
                 box2.endFill();
                 _this.unitDescricaoBox = _this.game.add.sprite(_this.unitDescTexto.x, _this.unitDescTexto.y, box2.generateTexture());
                 _this.unitDescricaoBox.alpha = 0.8;
-                _this.unitDescricaoBox.anchor.setTo(0.5, 1);
+                if (!_this.firstRow)
+                    _this.unitDescricaoBox.anchor.setTo(0.5, 1);
+                else
+                    _this.unitDescricaoBox.anchor.setTo(0.5, 0);
                 box2.destroy();
                 _this.game.world.swap(_this.unitDescricaoBox, _this.unitDescTexto);
                 _this.unitDescricaoBox.visible = false;
@@ -241,8 +272,14 @@ var Kodo;
                         this.unitImage.visible = false;
                     }
                     this.descricaoBox.x = this.world.x;
-                    this.descricaoBox.y = this.world.y - this.height / 2;
-                    this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
+                    if (this.firstRow)
+                        this.descricaoBox.y = this.world.y + this.height / 2;
+                    else
+                        this.descricaoBox.y = this.world.y - this.height / 2;
+                    if (this.firstRow)
+                        this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT, 0, -10);
+                    else
+                        this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
                     this.descTexto.x += 10;
                     this.descTexto.y += 10;
                     this.iconGroup.alignIn(this.descTexto, Phaser.TOP_CENTER, 0, -20);
@@ -256,8 +293,14 @@ var Kodo;
                     this.iconGroup.visible = false;
                     if (this.unitDescricaoBox) {
                         this.unitDescricaoBox.x = this.world.x;
-                        this.unitDescricaoBox.y = this.world.y - this.height / 2;
-                        this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT);
+                        if (this.firstRow)
+                            this.unitDescricaoBox.y = this.world.y + this.height / 2;
+                        else
+                            this.unitDescricaoBox.y = this.world.y - this.height / 2;
+                        if (this.firstRow)
+                            this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT, 0, -10);
+                        else
+                            this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT, 0, 0);
                         this.unitDescTexto.x += 10;
                         this.unitDescTexto.y += 10;
                         this.unitIconGroup.alignIn(this.unitDescTexto, Phaser.TOP_CENTER, 0, -20);

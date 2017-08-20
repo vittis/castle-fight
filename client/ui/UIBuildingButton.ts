@@ -26,12 +26,17 @@ module Kodo {
         spriteName;
 
         isUnit;
-
-        constructor(game, sprite : string, context, previewName, buildingName, unit? : boolean) {
+        firstRow;
+        constructor(game, sprite : string, context, previewName, buildingName, unit? : boolean, firstRow? : boolean) {
             super(game, 0, 0, sprite, null, context, 1, 0, 2);
             this.isUnit = true;
+            this.firstRow = true;
+
             if (unit == null || unit == false) {
                 this.isUnit = false;
+            }
+            if (firstRow == null || firstRow == false) {
+                this.firstRow = false;
             }
             this.spriteName = sprite;
             this.previewName = previewName;
@@ -102,18 +107,32 @@ module Kodo {
                 box.beginFill(0x000000);
                 box.lineStyle(5, 0x000000, 1);
                 box.moveTo(0, 0);
-                box.lineTo(this.descTexto.width + 10, 0);
-                box.lineTo(this.descTexto.width + 10, this.descTexto.height + 10);
-                box.lineTo((this.descTexto.width + 10) / 2 + 10, this.descTexto.height + 10);
-                box.lineTo((this.descTexto.width + 10) / 2, this.descTexto.height + 20);
-                box.lineTo((this.descTexto.width + 10) / 2 - 10, this.descTexto.height + 10);
+                if (!this.firstRow) {
+                    box.lineTo(this.descTexto.width + 10, 0);
+                    box.lineTo(this.descTexto.width + 10, this.descTexto.height + 10);
+                    box.lineTo((this.descTexto.width + 10) / 2 + 10, this.descTexto.height + 10);
+                    box.lineTo((this.descTexto.width + 10) / 2, this.descTexto.height + 20);
+                    box.lineTo((this.descTexto.width + 10) / 2 - 10, this.descTexto.height + 10);
+                    box.lineTo(0, this.descTexto.height + 10);
+                }
+                else {
+                    box.lineTo((this.descTexto.width + 10) / 2 - 10, 0);
+                    box.lineTo((this.descTexto.width + 10) / 2, -10);
+                    box.lineTo((this.descTexto.width + 10) / 2 + 10, 0);
+                    box.lineTo((this.descTexto.width + 10), 0);
+                    box.lineTo((this.descTexto.width + 10), this.descTexto.height + 10);
+                    box.lineTo(0, this.descTexto.height + 10);
+                }
 
-                box.lineTo(0, this.descTexto.height + 10);
                 box.lineTo(0, 0);
                 box.endFill();
                 this.descricaoBox = this.game.add.sprite(this.descTexto.x, this.descTexto.y, box.generateTexture());
                 this.descricaoBox.alpha = 0.8;
-                this.descricaoBox.anchor.setTo(0.5, 1);
+                if (!this.firstRow)
+                    this.descricaoBox.anchor.setTo(0.5, 1);
+                else {
+                    this.descricaoBox.anchor.setTo(0.5, 0);
+                }
                 box.destroy();
 
                 this.game.world.swap(this.descricaoBox, this.descTexto);
@@ -165,18 +184,32 @@ module Kodo {
                 box2.beginFill(0x000000);
                 box2.lineStyle(5, 0x000000, 1);
                 box2.moveTo(0, 0);
-                box2.lineTo(this.unitDescTexto.width + 10, 0);
-                box2.lineTo(this.unitDescTexto.width + 10, this.unitDescTexto.height + 10);
-                box2.lineTo((this.unitDescTexto.width + 10) / 2 + 10, this.unitDescTexto.height + 10);
-                box2.lineTo((this.unitDescTexto.width + 10) / 2, this.unitDescTexto.height + 20);
-                box2.lineTo((this.unitDescTexto.width + 10) / 2 - 10, this.unitDescTexto.height + 10);
-
-                box2.lineTo(0, this.unitDescTexto.height + 10);
+                if (this.firstRow){ 
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2 - 10, 0);
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2, -10);
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2 + 10, 0);
+                    box2.lineTo((this.unitDescTexto.width + 10), 0);
+                    box2.lineTo((this.unitDescTexto.width + 10), this.unitDescTexto.height + 10);
+                    box2.lineTo(0, this.unitDescTexto.height + 10);
+                }
+                else {
+                    box2.lineTo(this.unitDescTexto.width + 10, 0);
+                    box2.lineTo(this.unitDescTexto.width + 10, this.unitDescTexto.height + 10);
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2 + 10, this.unitDescTexto.height + 10);
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2, this.unitDescTexto.height + 20);
+                    box2.lineTo((this.unitDescTexto.width + 10) / 2 - 10, this.unitDescTexto.height + 10);
+                    box2.lineTo(0, this.unitDescTexto.height + 10);
+                }
+                
                 box2.lineTo(0, 0);
                 box2.endFill();
                 this.unitDescricaoBox = this.game.add.sprite(this.unitDescTexto.x, this.unitDescTexto.y, box2.generateTexture());
                 this.unitDescricaoBox.alpha = 0.8;
-                this.unitDescricaoBox.anchor.setTo(0.5, 1);
+                if (!this.firstRow)
+                    this.unitDescricaoBox.anchor.setTo(0.5, 1);
+                else
+                    this.unitDescricaoBox.anchor.setTo(0.5, 0);
+
                 box2.destroy();
             
                 this.game.world.swap(this.unitDescricaoBox, this.unitDescTexto);
@@ -303,9 +336,16 @@ module Kodo {
                     }
 
                     this.descricaoBox.x = this.world.x;
-                    this.descricaoBox.y = this.world.y - this.height / 2;
+                    if (this.firstRow)
+                        this.descricaoBox.y = this.world.y + this.height / 2;
+                    else 
+                        this.descricaoBox.y = this.world.y - this.height / 2;
 
-                    this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
+                    if (this.firstRow)
+                        this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT, 0, -10);
+                    else
+                        this.descTexto.alignIn(this.descricaoBox, Phaser.TOP_LEFT);
+
                     this.descTexto.x += 10;
                     this.descTexto.y += 10;
 
@@ -323,8 +363,16 @@ module Kodo {
 
                     if (this.unitDescricaoBox) {
                         this.unitDescricaoBox.x = this.world.x;
-                        this.unitDescricaoBox.y = this.world.y - this.height / 2;
-                        this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT);
+                        
+                        if (this.firstRow)
+                            this.unitDescricaoBox.y = this.world.y + this.height / 2;
+                        else
+                            this.unitDescricaoBox.y = this.world.y - this.height / 2;
+                        if (this.firstRow)
+                            this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT, 0, -10);
+                        else
+                            this.unitDescTexto.alignIn(this.unitDescricaoBox, Phaser.TOP_LEFT, 0, 0);
+
                         this.unitDescTexto.x += 10;
                         this.unitDescTexto.y += 10;
 

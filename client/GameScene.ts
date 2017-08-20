@@ -30,12 +30,11 @@ module Kodo {
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
 
-            var uiArea = this.isHost ? GameConfig.uiWidth : 0; 
 
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
                 for (var j = 0; j < GameConfig.GRID_COLS; j++) {
-                    this.grid[i][j] = new Tile(j * GameConfig.tileSize + uiArea, i * GameConfig.tileSize, i, j);
+                    this.grid[i][j] = new Tile(j * GameConfig.tileSize, i * GameConfig.tileSize, i, j);
                 }
             }
             this.game.add.sprite(0, 0, 'tileFundo');

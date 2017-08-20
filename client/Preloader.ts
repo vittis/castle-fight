@@ -155,6 +155,9 @@ module Kodo {
                 this.game.load.image('playButton', 'assets/48/menu_ui/playButton.png');
                 this.game.load.image('roomsButton', 'assets/48/menu_ui/roomsButton.png');
                 this.game.load.image('backButton', 'assets/48/menu_ui/backButton.png');
+                this.game.load.image('deckbuildingGuide', 'assets/48/menu_ui/deckbuildingGuide.png');
+                this.game.load.image('howToPlay-changelog', 'assets/48/menu_ui/howToPlay-changelog.png');
+
             }
         }
  

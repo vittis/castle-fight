@@ -87,9 +87,8 @@ var Kodo;
             }
             this.armorBar.destroy();
             this.hpBar.destroy();
-            var fade = this.game.add.tween(this).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None);
+            var fade = this.game.add.tween(this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
             fade.onComplete.add(function destroyMe() {
-                console.log(this.dataq.hp);
                 this.destroy();
             }, this);
             fade.start();

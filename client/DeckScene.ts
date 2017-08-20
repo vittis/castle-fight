@@ -16,19 +16,11 @@ module Kodo {
 
             this.game.add.sprite(0, 0, 'tileFundoMaior');
             this.game.stage.backgroundColor = '#29B865';
+            
+            var guide = this.game.add.sprite(0, 0, 'deckbuildingGuide');
+            guide.x = this.game.width - guide.width;
 
-            var style = { font: "80px Fertigo", fill: 'white', /* wordWrap: true, */ align: "center" };
-            /* var titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
-            titleLabel.anchor.setTo(0.5, 0.5);
-            titleLabel.fontWeight = 'bold';
-            titleLabel.stroke = '#0D6032';
-            titleLabel.strokeThickness = 12;
-            titleLabel.setShadow(0, 5, 'rgba(0,0,0,0.5)', 0);
-          
-            var tweenA = this.game.add.tween(titleLabel.scale).to({ x: 1.05, y: 1.05 }, 500, Phaser.Easing.Linear.None);
-            var tweenB = this.game.add.tween(titleLabel.scale).to({ x: 1, y: 1 }, 500, Phaser.Easing.Linear.None);
-            tweenA.chain(tweenB);
-            tweenA.start(); */
+            var style = { font: "80px Fertigo", fill: 'white', /* wordWrap: true, */ align: "center" }
 
              style.font = "60px Lucida Console";
              var cardsLabel = this.game.add.text(this.game.world.centerX, 80, "Cards", style);
@@ -84,16 +76,13 @@ module Kodo {
                  this.yourDeckGroup.add(new UIBuildingButton(this.game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name, isUnit));
              });
 
-
+             var i =0;
              GameConfig.buildingNameData.forEach(name => {
-                 let q =this.buildingsGroup.add(new UIBuildingButton(this.game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) +""+ hostLabel, name));
-                if (this.deck.indexOf(q.buildingName)!=-1) {
-                    q.tint = 0x906666;
-                }
-                /* let r = this.buildingsGroup.add(new UIBuildingButton(game, Kodo[name].spamUnit[0].toLowerCase() + Kodo[name].spamUnit.slice(1) + "_ui_" + hostLabel, this, Kodo[name].spamUnit[0].toLowerCase() + name.slice(1) + "" + hostLabel, Kodo[name].spamUnit, true));
-                if (this.deck.indexOf(r.buildingName) != -1) {
-                    r.tint = 0x906666;
-                } */
+                 let q =this.buildingsGroup.add(new UIBuildingButton(this.game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) +""+ hostLabel, name, false, i > 6 ? false : true));
+                 if (this.deck.indexOf(q.buildingName)!=-1) {
+                     q.tint = 0x906666;
+                 }
+                 i++;
             });
 
              GameConfig.unitNameData.forEach(name => {
