@@ -22,16 +22,28 @@ var Kodo;
             var groupFundo = this.game.add.group();
             var unitNames = ["archerc", "soldadoc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             var _loop_1 = function () {
-                var carinha = this_1.game.add.sprite(-48, this_1.game.world.randomY, unitNames[Math.floor(Math.random() * unitNames.length)]);
+                var card = unitNames[Math.floor(Math.random() * unitNames.length)];
+                var carinha = this_1.game.add.sprite(-48, this_1.game.world.randomY, card);
+                if (card == 'archerc') {
+                    carinha.scale.x *= -1;
+                }
                 var tweenAnda = this_1.game.add.tween(carinha.position).to({ x: this_1.game.width }, 20000, Phaser.Easing.Linear.None, true, i * ((Math.floor(Math.random() * 7) + 3) * 500) + 3000);
                 tweenAnda.onComplete.add(function resetaTween() {
                     carinha.destroy();
-                    var carinha2 = this.game.add.sprite(-48, this.game.world.randomY, unitNames[Math.floor(Math.random() * unitNames.length)]);
+                    var card = unitNames[Math.floor(Math.random() * unitNames.length)];
+                    var carinha2 = this.game.add.sprite(-48, this.game.world.randomY, card);
+                    if (card == 'archerc') {
+                        carinha2.scale.x *= -1;
+                    }
                     groupFundo.add(carinha2);
                     var tweenAnda2 = this.game.add.tween(carinha2.position).to({ x: this.game.width }, 20000, Phaser.Easing.Linear.None, true, (Math.floor(Math.random() * 25) + 2) * 1000);
                     tweenAnda2.onComplete.add(function resetaTween() {
                         carinha2.destroy();
-                        var carinha3 = this.game.add.sprite(-48, this.game.world.randomY, unitNames[Math.floor(Math.random() * unitNames.length)]);
+                        var card = unitNames[Math.floor(Math.random() * unitNames.length)];
+                        var carinha3 = this.game.add.sprite(-48, this.game.world.randomY, card);
+                        if (card == 'archerc') {
+                            carinha2.scale.x *= -1;
+                        }
                         groupFundo.add(carinha3);
                         var tweenAnda3 = this.game.add.tween(carinha3.position).to({ x: this.game.width }, 20000, Phaser.Easing.Linear.None, true, (Math.floor(Math.random() * 25) + 2) * 1000);
                         tweenAnda3.onComplete.add(function resetaTween() {

@@ -79,6 +79,10 @@ module Kodo {
                 this.game.load.image('gravityChamberh', 'assets/48/gravityChamberh_48.png');
                 this.game.load.image('techStationh', 'assets/48/techStationh_48.png');
                 this.game.load.image('techStationc', 'assets/48/techStationc_48.png');
+                this.game.load.image('magesGuildc', 'assets/48/magesGuildc_48.png');
+                this.game.load.image('magesGuildh', 'assets/48/magesGuildh_48.png');
+
+
 
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
                 this.game.load.image('farmerc', 'assets/48/farmerc_48.png');
@@ -92,6 +96,8 @@ module Kodo {
                 this.game.load.image('propellerh', 'assets/48/propellerh_48.png');
                 this.game.load.image('engineerh', 'assets/48/engineerh_48.png');
                 this.game.load.image('engineerc', 'assets/48/engineerc_48.png');
+                this.game.load.image('magec', 'assets/48/magec_48.png');
+                this.game.load.image('mageh', 'assets/48/mageh_48.png');
 
 
                 this.game.load.spritesheet('barracks_ui_h', 'assets/48/ui/barracks_ui_h.png', 66, 66);
@@ -112,6 +118,8 @@ module Kodo {
                 this.game.load.spritesheet('gravityChamber_ui_h', 'assets/48/ui/gravityChamber_ui_h.png', 66, 66);
                 this.game.load.spritesheet('techStation_ui_h', 'assets/48/ui/techStation_ui_h.png', 66, 66);
                 this.game.load.spritesheet('techStation_ui_c', 'assets/48/ui/techStation_ui_c.png', 66, 66);
+                this.game.load.spritesheet('magesGuild_ui_h', 'assets/48/ui/magesGuild_ui_h.png', 66, 66);
+                this.game.load.spritesheet('magesGuild_ui_c', 'assets/48/ui/magesGuild_ui_c.png', 66, 66);
 
                 this.game.load.spritesheet('archer_ui_c', 'assets/48/ui/archer_ui_c.png', 66, 66);
                 this.game.load.spritesheet('farmer_ui_c', 'assets/48/ui/farmer_ui_c.png', 66, 66);
@@ -121,7 +129,8 @@ module Kodo {
                 this.game.load.spritesheet('thief_ui_c', 'assets/48/ui/thief_ui_c.png', 66, 66);
                 this.game.load.spritesheet('engineer_ui_c', 'assets/48/ui/engineer_ui_c.png', 66, 66);
                 this.game.load.spritesheet('sniper_ui_c', 'assets/48/ui/sniper_ui_c.png', 66, 66);
-
+                this.game.load.spritesheet('mage_ui_c', 'assets/48/ui/mage_ui_c.png', 66, 66);
+                
                 this.game.load.spritesheet('archer_ui_h', 'assets/48/ui/archer_ui_h.png', 66, 66);
                 this.game.load.spritesheet('farmer_ui_h', 'assets/48/ui/farmer_ui_h.png', 66, 66);
                 this.game.load.spritesheet('soldado_ui_h', 'assets/48/ui/soldado_ui_h.png', 66, 66);
@@ -130,6 +139,7 @@ module Kodo {
                 this.game.load.spritesheet('thief_ui_h', 'assets/48/ui/thief_ui_h.png', 66, 66);
                 this.game.load.spritesheet('engineer_ui_h', 'assets/48/ui/engineer_ui_h.png', 66, 66);
                 this.game.load.spritesheet('sniper_ui_h', 'assets/48/ui/sniper_ui_h.png', 66, 66);
+                this.game.load.spritesheet('mage_ui_h', 'assets/48/ui/mage_ui_h.png', 66, 66);
 
                 this.game.load.image('upgrade_button', 'assets/48/ui/upgrade_button_48.png');
                 this.game.load.image('gold_icon', 'assets/48/ui/gold_icon.png');

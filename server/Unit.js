@@ -84,11 +84,13 @@ var Unit = (function (_super) {
     };
     Unit.prototype.moveTowards = function (targetTile) {
         //this.step();
-        var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
-        if (path.length > 1) {
-            var pathToTargetTile = this.gm.grid[path[1].y][path[1].x];
-            if (pathToTargetTile.entity == null)
-                this.moveTo(pathToTargetTile);
+        if (!this.getEntityData().statusData.stunned) {
+            var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
+            if (path.length > 1) {
+                var pathToTargetTile = this.gm.grid[path[1].y][path[1].x];
+                if (pathToTargetTile.entity == null)
+                    this.moveTo(pathToTargetTile);
+            }
         }
     };
     Unit.prototype.doAction = function (targetTile) {

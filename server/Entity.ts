@@ -82,7 +82,42 @@ export abstract class Entity {
     getEntityData() {
         return this.dataq;
     }
+    getOuterTiles(): Tile[] {
+        var tiles: Tile[] = [];
 
+        for (var i = 0; i < this.dataq.width; i++) {
+            for (var j = 0; j < this.dataq.height; j++) {
+                var currentTile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
+                this.gm.getNeighbors(currentTile).forEach(t => {
+                    if (t.entity == null) {
+                        if (tiles.indexOf(t) == -1)
+                            tiles.push(t);
+                    }
+                });
+            }
+
+        }
+
+        return tiles;
+    }
+    getOuterTilesWithEntity(): Tile[] {
+        var tiles: Tile[] = [];
+
+        for (var i = 0; i < this.dataq.width; i++) {
+            for (var j = 0; j < this.dataq.height; j++) {
+                var currentTile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
+                this.gm.getNeighbors(currentTile).forEach(t => {
+                    if (t.entity != null) {
+                        if (tiles.indexOf(t) == -1)
+                            tiles.push(t);
+                    }
+                });
+            }
+
+        }
+
+        return tiles;
+    }
     public toString = () : string => {
         return this.dataq.name[0];
     }

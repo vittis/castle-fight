@@ -17,7 +17,7 @@ var Kodo;
             _this.grid = [];
             _this.entities = [];
             _this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10 };
-            _this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false };
+            _this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
             return _this;
         }
         GameScene.prototype.create = function () {

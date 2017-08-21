@@ -13,6 +13,8 @@ export class IncomeBallManager {
     hostMatou = false;
     clientMatou = false;
 
+    baseReward = 10;//+20 no comeco
+
     constructor(gamePlayer : GamePlayer) {
         this.gp = gamePlayer;
     }
@@ -20,7 +22,7 @@ export class IncomeBallManager {
     addBallsToGame() {
         this.gp.addEntity(new IncomeBall(12, 15, this));
         this.gp.addEntity(new IncomeBall(3, 15, this));
-
+        this.baseReward += 20;
     }
     step() {
         this.hostMatou = false;

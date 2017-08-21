@@ -7,7 +7,7 @@
     
     "attackRange": 1,
     "attackDmg": 2,
-    "attackRate": 3,
+    "attackRate": 2,
 
     "description": "Solid standard footman",
     "goldCost": 35,

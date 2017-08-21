@@ -10,19 +10,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Entity_1 = require("./Entity");
-var Building = (function (_super) {
-    __extends(Building, _super);
-    function Building(row, col, buildingData) {
-        return _super.call(this, row, col, buildingData) || this;
+var SpamBuilding_1 = require("./SpamBuilding");
+var Mage_1 = require("../unit/Mage");
+var MagesGuild = (function (_super) {
+    __extends(MagesGuild, _super);
+    function MagesGuild(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/buildings/magesGuild.json'))) || this;
     }
-    Object.defineProperty(Building.prototype, "data", {
-        get: function () {
-            return this.dataq;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Building;
-}(Entity_1.Entity));
-exports.Building = Building;
+    MagesGuild.prototype.spamUnit = function () {
+        _super.prototype.spamUnit.call(this, Mage_1.Mage);
+    };
+    return MagesGuild;
+}(SpamBuilding_1.SpamBuilding));
+exports.MagesGuild = MagesGuild;

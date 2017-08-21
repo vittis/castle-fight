@@ -51,10 +51,10 @@ export class GameCore {
         this.host.buildBuilding(new Tower(3, 5)); 
 
 
-         /* this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-         this.host.buildBuilding(new Barracks(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); */
-   /*      this.host.buildBuilding(new Barn(0, 0));   
-        this.host.buildBuilding(new Barn(2, 3));      */      
+         // this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
+         /* this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); 
+         this.host.buildBuilding(new Barn(0, 0));   
+        this.host.buildBuilding(new Barn(2, 3));   */          
 
        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
@@ -253,11 +253,11 @@ export class GameCore {
                 if (entity instanceof IncomeBall) {
                     if (entity.hostMatou) {
                         this.ballManager.hostMatou = true;
-                        this.host.resourceManager.add(50, 50);
+                        this.host.resourceManager.add(this.ballManager.baseReward, this.ballManager.baseReward);
                     }
                     if (entity.clientMatou) {
                         this.ballManager.clientMatou = true;
-                        this.client.resourceManager.add(50, 50);
+                        this.client.resourceManager.add(this.ballManager.baseReward, this.ballManager.baseReward);
                     }
                 }
                 entity.onDeath();

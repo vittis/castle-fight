@@ -1,0 +1,14 @@
+{
+    "name": "MagesGuild",
+    "width": 2,
+    "height": 2,
+    "maxHP": 20,
+    "maxArmor": 10,
+    "goldCost": 70,
+    "woodCost": 95,
+    "spamUnit": "Mage",
+    "spamCount": 2,
+    "spamRate": 20,
+    "description": "Trains Mage",
+    "incomeGain": 5
+}

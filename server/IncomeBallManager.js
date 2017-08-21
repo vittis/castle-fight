@@ -8,11 +8,13 @@ var IncomeBallManager = (function () {
         this.spamRateCounter = 0;
         this.hostMatou = false;
         this.clientMatou = false;
+        this.baseReward = 10; //+20 no comeco
         this.gp = gamePlayer;
     }
     IncomeBallManager.prototype.addBallsToGame = function () {
         this.gp.addEntity(new IncomeBall_1.IncomeBall(12, 15, this));
         this.gp.addEntity(new IncomeBall_1.IncomeBall(3, 15, this));
+        this.baseReward += 20;
     };
     IncomeBallManager.prototype.step = function () {
         this.hostMatou = false;

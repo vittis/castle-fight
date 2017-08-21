@@ -21,6 +21,7 @@ export class Sniper extends Unit {
                 this.data.attackDmg -= 4;
                 this.data.attackRange -= 2;
                 this.hasAttacked = true;
+                targetTile.entity.getEntityData().statusData.stunned = true;
             }
         }
     }

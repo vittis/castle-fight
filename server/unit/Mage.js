@@ -11,16 +11,15 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
-var Engineer = (function (_super) {
-    __extends(Engineer, _super);
-    function Engineer(row, col) {
-        return _super.call(this, row, col, require('clone')(require('../data/units/engineer.json'))) || this;
+var Mage = (function (_super) {
+    __extends(Mage, _super);
+    function Mage(row, col) {
+        return _super.call(this, row, col, require('clone')(require('../data/units/mage.json'))) || this;
     }
-    Engineer.prototype.doAction = function (targetTile) {
+    Mage.prototype.doAction = function (targetTile) {
         var _this = this;
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            //targetTile.entity.getEntityData().statusData.stunned = true;
             targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != _this.owner.isHost) {
@@ -30,6 +29,6 @@ var Engineer = (function (_super) {
             });
         }
     };
-    return Engineer;
+    return Mage;
 }(Unit_1.Unit));
-exports.Engineer = Engineer;
+exports.Mage = Mage;

@@ -2,12 +2,12 @@
     "name": "Engineer",
     "width": 1,
     "height": 1,
-    "maxHP": 14,
+    "maxHP": 12,
     "maxArmor": 4,
     "attackRange": 1,
-    "attackDmg": 3,
+    "attackDmg": 2,
     "attackRate": 3,
-    "description": "Stuns on hit",
+    "description": "Deals 2 area damage to enemies",
     "goldCost": 50,
     "woodCost": 0
 }

@@ -20,7 +20,7 @@ module Kodo {
         incomeBallBar : IncomeBallBar;
 
         player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10};
-        ballData = {spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false};
+        ballData = {spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0};
         isHost : boolean;
 
         static instance : GameScene = null;

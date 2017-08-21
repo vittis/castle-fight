@@ -47,6 +47,36 @@ var Entity = (function () {
     Entity.prototype.getEntityData = function () {
         return this.dataq;
     };
+    Entity.prototype.getOuterTiles = function () {
+        var tiles = [];
+        for (var i = 0; i < this.dataq.width; i++) {
+            for (var j = 0; j < this.dataq.height; j++) {
+                var currentTile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
+                this.gm.getNeighbors(currentTile).forEach(function (t) {
+                    if (t.entity == null) {
+                        if (tiles.indexOf(t) == -1)
+                            tiles.push(t);
+                    }
+                });
+            }
+        }
+        return tiles;
+    };
+    Entity.prototype.getOuterTilesWithEntity = function () {
+        var tiles = [];
+        for (var i = 0; i < this.dataq.width; i++) {
+            for (var j = 0; j < this.dataq.height; j++) {
+                var currentTile = this.gm.tileAt(this.tile.row + j, this.tile.col + i);
+                this.gm.getNeighbors(currentTile).forEach(function (t) {
+                    if (t.entity != null) {
+                        if (tiles.indexOf(t) == -1)
+                            tiles.push(t);
+                    }
+                });
+            }
+        }
+        return tiles;
+    };
     return Entity;
 }());
 exports.Entity = Entity;
