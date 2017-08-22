@@ -83,7 +83,6 @@ var Unit = (function (_super) {
         }
     };
     Unit.prototype.moveTowards = function (targetTile) {
-        //this.step();
         if (!this.getEntityData().statusData.stunned) {
             var path = this.gm.aStar.path(this.gm.aStar.getNode(this.tile.col, this.tile.row), this.gm.aStar.getNode(targetTile.col, targetTile.row));
             if (path.length > 1) {

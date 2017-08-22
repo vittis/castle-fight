@@ -110,7 +110,6 @@ var Kodo;
                 _this.descricaoBox.visible = false;
                 _this.descTexto.visible = false;
                 _this.iconGroup.visible = false;
-                //-----------------------------------------------------------------
                 console.log(buildingName);
                 console.log(Kodo[Kodo[buildingName].spamUnit]);
                 _this.unitDescricaoString = Kodo[Kodo[buildingName].spamUnit].nome
@@ -208,7 +207,6 @@ var Kodo;
                 armorTexto2_1.alpha = 0.9;
                 armorTexto2_1.alignIn(armor_icon2_1, Phaser.CENTER, 0, 3);
                 var hostLabel_1 = GameConfig.isHost ? "h" : "c";
-                //this.unitImage = this.game.add.sprite(200, 200, Kodo[buildingName].nome.toLowerCase() + hostLabel);
                 _this.unitIconGroup.add(hp_icon2_1);
                 _this.unitIconGroup.add(armor_icon2_1);
                 _this.unitIconGroup.add(hpTexto2_1);
@@ -233,11 +231,9 @@ var Kodo;
                 _this.unitDescricaoBox.visible = false;
                 _this.unitDescTexto.visible = false;
                 _this.unitIconGroup.visible = false;
-                //this.unitImage.visible = false;
                 _this.tudoGroup.add(_this.unitDescricaoBox);
                 _this.tudoGroup.add(_this.unitDescTexto);
                 _this.tudoGroup.add(_this.unitIconGroup);
-                //this.tudoGroup.add(this.unitImage);
                 _this.alive = false;
             }
             return _this;
@@ -320,11 +316,9 @@ var Kodo;
                     this.unitDescTexto.x += 10;
                     this.unitDescTexto.y += 10;
                     this.unitIconGroup.alignIn(this.unitDescTexto, Phaser.TOP_CENTER, 0, -20);
-                    //this.unitImage.alignIn(this.unitDescTexto, Phaser.BOTTOM_CENTER, 0, -25);
                     this.unitDescricaoBox.visible = true;
                     this.unitDescTexto.visible = true;
                     this.unitIconGroup.visible = true;
-                    //this.unitImage.visible = true;
                 }
             }
         };
@@ -348,7 +342,6 @@ var Kodo;
                 this.unitDescricaoBox.visible = false;
                 this.unitDescTexto.visible = false;
                 this.unitIconGroup.visible = false;
-                //this.unitImage.visible = false;
                 this.alive = false;
             }
         };

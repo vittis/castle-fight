@@ -10,11 +10,6 @@ var GameServer = (function () {
         this.clients = new Array();
         GameServer.instance = this;
         this.io = io;
-        //debug>
-        //var player = this.onConnected();   
-        //var player2 = this.onConnected();        
-        //this.onMatchmaking(player);
-        //this.onMatchmaking(player2);
     }
     GameServer.prototype.addPlayer = function (socket) {
         var player = new ServerPlayer_1.ServerPlayer(this.lastPlayerID, socket);
@@ -26,7 +21,6 @@ var GameServer = (function () {
     GameServer.prototype.onConnected = function (socket) {
         if (socket) {
             var glob = require('glob');
-            //console.log(glob.sync('**/server/data/buildings/*.json'));
             var buildingData = [];
             var buildingArray = glob.sync('**/server/data/buildings/*.json');
             buildingArray.forEach(function (element) {

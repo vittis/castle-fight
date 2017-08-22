@@ -18,7 +18,6 @@ var Kodo;
             _this.entity = entity;
             _this.maxArmor = entity.dataq.maxArmor;
             _this.cuts = 1 / _this.maxArmor;
-            //this.alpha = 0.5;
             _this.maxLenght = -33 * entity.dataq.height;
             _this.lenght = _this.maxLenght;
             _this.smooth = _this.lenght;

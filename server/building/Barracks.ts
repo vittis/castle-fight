@@ -1,6 +1,6 @@
 import { SpamBuilding } from "./SpamBuilding";
 import { GridManager } from "../GridManager";
-import { Soldado } from "../unit/soldado";
+import { Footman } from "../unit/Footman";
 
 export class Barracks extends SpamBuilding {
 
@@ -9,7 +9,7 @@ export class Barracks extends SpamBuilding {
     }
 
     spamUnit() {
-        super.spamUnit(Soldado);
+        super.spamUnit(Footman);
     }
 
 }

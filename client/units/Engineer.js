@@ -30,8 +30,6 @@ var Kodo;
             tweenA.chain(tweenB);
             tweenA.start();
             _super.prototype.attack.call(this, tile);
-            //tile.entity.tint = 0xbedbff;
-            //tile.entity.justBeenStunned = true;
         };
         return Engineer;
     }(Kodo.Unit));

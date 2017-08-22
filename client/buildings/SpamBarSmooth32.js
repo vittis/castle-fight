@@ -56,21 +56,7 @@ var Kodo;
                 _this.unitsCountBar[i].x += i * (_this.maxLenght / building.data.spamCount) + 5 / 2 / 2;
             }
             return _this;
-            //this.fadeUnitBarIn();
-            //this.game.time.events.add(4000, this.fadeUnitBarOut.bind(this), this);
         }
-        /*fadeUnitBarIn() {
-            this.fadeIn = true;
-            this.unitsCountBar.forEach(element => {
-                element.alpha = 0;
-            });
-        }
-        fadeUnitBarOut() {
-            this.fadeOut = true;
-            this.unitsCountBar.forEach(element => {
-                element.alpha = 1;
-            });
-        }*/
         SpamBarSmooth32.prototype.update = function () {
             if (this.smooth < this.maxLenght) {
                 this.currentTime += this.game.time.elapsed / 1000;
@@ -80,14 +66,6 @@ var Kodo;
             this.lineStyle(3, 0xffd700, 1);
             this.moveTo(0, 0);
             this.lineTo(this.smooth, 0);
-            /*if (this.fadeIn) {
-                this.unitsCountBar.forEach(element => {
-                    element.alpha += this.game.time.elapsed/1000;
-                    if (element.alpha > 1) {
-                        this.fadeIn = false;
-                    }
-                });
-            }*/
             if (this.fadeOut) {
                 var bar = this.unitsCountBar[this.unitsCountBar.length - 1];
                 bar.alpha -= this.game.time.elapsed / 1000;
@@ -108,8 +86,6 @@ var Kodo;
             this.smooth = 0;
             this.currentTime = 0;
             this.fadeOut = true;
-            //this.fadeUnitBarIn();
-            //this.game.time.events.add(4000, this.fadeUnitBarOut.bind(this), this);
         };
         SpamBarSmooth32.prototype.destroy = function () {
             this.unitsCountBar.forEach(function (element) {

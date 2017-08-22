@@ -92,7 +92,6 @@ var Kodo;
                 this.destroy();
             }, this);
             fade.start();
-            //this.destroy(); 
             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
                 Kodo.GameScene.instance.uiEntityManager.target = null;
                 if (this instanceof Kodo.SpamBuilding) {

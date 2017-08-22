@@ -15,11 +15,9 @@ app.get('/', function (req, res) {
 server.listen(process.env.PORT || 8081, function () {
     console.log('Listening on ' + server.address().port);
 });
-//configs^--------------
 var GameServer_1 = require("./server/GameServer");
 var gameServer = new GameServer_1.GameServer(io);
 setInterval(gameServer.broadCastAllPlayers.bind(gameServer), 5000);
-//io.sockets.emit
 io.on('connection', function (socket) {
     var player = gameServer.onConnected(socket);
     socket.on('askMatchmaking', function (data) {

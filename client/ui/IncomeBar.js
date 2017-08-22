@@ -33,7 +33,7 @@ var Kodo;
             _this.containerBar.alpha = 0.5;
             _this.containerBar.y -= 19;
             _this.containerBar.x -= 19;
-            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
             _this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             _this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
             _this.incomeNumberLabel.fontSize = 30;

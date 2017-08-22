@@ -9,7 +9,7 @@ export class King extends Unit {
     grappleRate = 10;
     grappleCounter = 10;
 
-    canGrapple : boolean = true;
+    canGrapple: boolean = true;
 
     constructor(row, col) {
         super(row, col, require('clone')(require('../data/units/king.json')));
@@ -27,13 +27,13 @@ export class King extends Unit {
     }
 
     doAction(targetTile: Tile): void {
-        
+
         if (this.canGrapple) {
             if (targetTile.entity instanceof Unit) {
                 if (this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) <= 6 && this.gm.getDistance(this.tile.col, this.tile.row, targetTile.col, targetTile.row) >= 2) {
                     this.grapple(targetTile.entity);
                     this.data.attackRange = 1;
-                    this.grappleCounter=0;
+                    this.grappleCounter = 0;
                     this.canGrapple = false;
                 }
                 else {
@@ -53,13 +53,13 @@ export class King extends Unit {
         }
     }
 
-    grapple(unit : Unit) {
+    grapple(unit: Unit) {
         if (!this.owner.isHost) {
-            if (this.gm.tileAt(this.tile.row, this.tile.col -1).entity == null){
-                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col-1]);
+            if (this.gm.tileAt(this.tile.row, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col - 1]);
             }
-            else if (this.gm.tileAt(this.tile.row+1, this.tile.col - 1).entity == null){
-                unit.moveTo(this.gm.grid[this.tile.row+1][this.tile.col - 1]);
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col - 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col - 1]);
             }
             else if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1).entity == null) {
                 unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col - 1]);
@@ -67,10 +67,10 @@ export class King extends Unit {
         }
         else {
             if (this.gm.tileAt(this.tile.row, this.tile.col + 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col+1]);
+                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col + 1]);
             }
-            else if (this.gm.tileAt(this.tile.row+1, this.tile.col + 1).entity == null){
-                unit.moveTo(this.gm.grid[this.tile.row+1][this.tile.col + 1]);
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col + 1).entity == null) {
+                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col + 1]);
             }
             else if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1).entity == null) {
                 unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col + 1]);

@@ -11,14 +11,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var SpamBuilding_1 = require("./SpamBuilding");
-var soldado_1 = require("../unit/soldado");
+var Footman_1 = require("../unit/Footman");
 var Barracks = (function (_super) {
     __extends(Barracks, _super);
     function Barracks(row, col) {
         return _super.call(this, row, col, require('clone')(require('../data/buildings/barracks.json'))) || this;
     }
     Barracks.prototype.spamUnit = function () {
-        _super.prototype.spamUnit.call(this, soldado_1.Soldado);
+        _super.prototype.spamUnit.call(this, Footman_1.Footman);
     };
     return Barracks;
 }(SpamBuilding_1.SpamBuilding));

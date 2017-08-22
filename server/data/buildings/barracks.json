@@ -7,7 +7,7 @@
     "goldCost": 50,
     "woodCost": 0,
 
-    "spamUnit": "Soldado",
+    "spamUnit": "Footman",
     "spamCount": 2,
     "spamRate": 20,
 

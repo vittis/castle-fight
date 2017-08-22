@@ -23,7 +23,7 @@ module Kodo {
             var groupFundo = this.game.add.group();
 
             
-            var unitNames = ["archerc", "soldadoc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
+            var unitNames = ["archerc", "footmanc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             for (var i = 0; i < 9; i++) {
                 let card = unitNames[Math.floor(Math.random() * unitNames.length)];
                 let carinha = this.game.add.sprite(-48, this.game.world.randomY, card);

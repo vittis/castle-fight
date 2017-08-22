@@ -1,6 +1,6 @@
 import { SpamBuilding } from "./SpamBuilding";
 import { GridManager } from "../GridManager";
-import { King } from "../unit/king";
+import { King } from "../unit/King";
 
 export class KingsCourt extends SpamBuilding {
 

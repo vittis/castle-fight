@@ -16,7 +16,7 @@ var Kodo;
             var _this = _super.call(this, game, 0, 0) || this;
             _this.unitsCountBar = [];
             _this.currentTime = 0;
-            _this.timeToMove = GameConfig.updateRate / 1000; // + 0.05;
+            _this.timeToMove = GameConfig.updateRate / 1000;
             _this.fadeIn = false;
             _this.fadeOut = false;
             _this.building = building;

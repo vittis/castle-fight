@@ -14,15 +14,10 @@ var Graph = (function () {
         return null;
     };
     Graph.prototype.getNodes = function () { return this.nodes; };
-    /**
-     * convert a 2d array to a graph
-     * @param data The 2d array containing weights of each tile
-     */
     Graph.prototype.fromArray = function (data) {
         this.nodes = [];
         var width = data[0].length;
         var height = data.length;
-        // create and add nodes
         for (var i = 0; i < height; i++) {
             for (var j = 0; j < width; j++) {
                 var weight = data[i][j];
@@ -30,10 +25,8 @@ var Graph = (function () {
                 this.nodes.push(node);
             }
         }
-        // connect the nodes in O(n)
         for (var i = 0; i < this.nodes.length; i++) {
             var n = this.nodes[i];
-            // loop in a square adding each node as a connection
             for (var x = -1; x <= 1; x++) {
                 for (var y = -1; y <= 1; y++) {
                     if (x == 0 && y == 0)

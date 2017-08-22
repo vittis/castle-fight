@@ -9,10 +9,6 @@ var GraphNode = (function () {
         this.connections = [];
     }
     GraphNode.prototype.getConnections = function () { return this.connections; };
-    /**
-     * Connect this node to another in the parent graph
-     * @param b The graphnode to connect
-     */
     GraphNode.prototype.connectTo = function (b) {
         this.connections.push(b);
     };

@@ -57,7 +57,6 @@ var Kodo;
         UIEntityManager.prototype.onDownTile = function (tile) {
             this.tileMark.x = tile.x;
             this.tileMark.y = tile.y;
-            //mandar pro server
             Client.askSpamTileMark(tile.row, tile.col, this.target.id);
         };
         UIEntityManager.prototype.update = function () {
@@ -74,7 +73,6 @@ var Kodo;
                         this.isShowing = false;
                         this.target = null;
                         this.boxGroup.removeAll();
-                        // this.trainButton.visible = false;
                         if (this.tileMark) {
                             this.tileMark.destroy();
                         }
@@ -96,7 +94,6 @@ var Kodo;
                             this.isShowing = false;
                             this.target = null;
                             this.boxGroup.removeAll();
-                            //this.trainButton.visible = false;
                             this.tileClickArray.forEach(function (t) {
                                 t.visible = false;
                             });

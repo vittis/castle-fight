@@ -1,13 +1,13 @@
 module Kodo {
-    export class Soldado extends Unit {
+    export class Footman extends Unit {
 
         constructor(game: Phaser.Game, tile: Tile, id: number, isHost, data) {
             var texture;
             if (isHost) {
-                texture = 'soldadoh'
+                texture = 'footmanh'
             }
             else {
-                texture = 'soldadoc'
+                texture = 'footmanc'
             }
             
             super(game, tile, id, isHost, texture, data);

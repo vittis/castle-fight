@@ -24,21 +24,12 @@ var GameCore = (function () {
         this.client.buildBuilding(new Tower_1.Tower(11, 24));
         this.host.buildBuilding(new Tower_1.Tower(11, 5));
         this.host.buildBuilding(new Tower_1.Tower(3, 5));
-        // this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
-        /* this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0));
-        this.host.buildBuilding(new Barn(0, 0));
-       this.host.buildBuilding(new Barn(2, 3));   */
-        /*  this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 + 3, 0));
-         this.client.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 2)); */
-        //this.host.addEntity(new Soldado(15, 28));
-        //this.client.addEntity(new Archer(GameConfig.GRID_ROWS / 2 + 4, GameConfig.GRID_COLS - 6));  
         if (client.socket)
             this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: client.id, opponentNick: host.nick });
         if (host.socket)
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: host.id, opponentNick: client.nick });
         setTimeout(this.sendaData.bind(this), 1000);
         setTimeout(this.startGame.bind(this), 3000);
-        //this.gridManager.printGrid();
     }
     GameCore.prototype.startGame = function () {
         this.setSocket(this.client.serverPlayer, false);
@@ -116,7 +107,6 @@ var GameCore = (function () {
     };
     GameCore.prototype.step = function () {
         var _this = this;
-        //tentar atacar
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(function (building) {
             building.resetAttackData();
@@ -157,7 +147,6 @@ var GameCore = (function () {
                 }
             }
         });
-        //tentar mover
         this.getAllUnits().forEach(function (unit) {
             _this.gridManager.aStar.load(_this.gridManager.getNumberGrid());
             if (!unit.justSpawned) {
@@ -218,13 +207,9 @@ var GameCore = (function () {
         });
         this.host.resourceManager.step();
         this.client.resourceManager.step();
-        /* this.gridManager.printGrid();
-        this.printEntityStatus(); */
         this.sendaData();
     };
-    //returns closest tile with an enemy entity in it
     GameCore.prototype.getClosestTargetTile = function (unit) {
-        //   this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         var _this = this;
         var target = null;
         var shortestDistance = 100;

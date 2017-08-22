@@ -85,9 +85,6 @@ var Kodo;
                 }
                 this.cuts = 1 / Kodo.GameScene.instance.ballData.spamRate;
                 this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
-                /* if (counter == 0) {
-                    this.currentTime = 0;
-                } */
             }
         };
         return IncomeBallBar;

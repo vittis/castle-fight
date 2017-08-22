@@ -16,18 +16,15 @@ var Kodo;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Preloader.prototype.preload = function () {
-            //  Set-up our preloader sprite
             this.preloadBar = this.add.sprite(this.game.width / 2, this.game.height / 2, 'preloadBar');
             this.preloadBar.anchor.setTo(0.5, 0.5);
             this.load.setPreloadSprite(this.preloadBar);
-            //  Load our actual games assets
             this.game.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
-            //32x32
             if (GameConfig.tileSize == 32) {
                 this.game.load.image('tile0', 'assets/32/tile0_32.png');
                 this.game.load.image('tile1', 'assets/32/tile1_32.png');
-                this.game.load.image('soldadoh', 'assets/32/soldadoh_32.png');
-                this.game.load.image('soldadoc', 'assets/32/soldadoc_32.png');
+                this.game.load.image('footmanh', 'assets/32/footmanh_32.png');
+                this.game.load.image('footmanc', 'assets/32/footmanc_32.png');
                 this.game.load.image('archerc', 'assets/32/archerc_32.png');
                 this.game.load.image('archerh', 'assets/32/archerh_32.png');
                 this.game.load.image('castleh', 'assets/32/castleh_32.png');
@@ -41,8 +38,8 @@ var Kodo;
             else if (GameConfig.tileSize == 64) {
                 this.game.load.image('tile0', 'assets/64/tile0_64.png');
                 this.game.load.image('tile1', 'assets/64/tile1_64.png');
-                this.game.load.image('soldadoh', 'assets/64/soldadoh_64.png');
-                this.game.load.image('soldadoc', 'assets/64/soldadoc_64.png');
+                this.game.load.image('footmanh', 'assets/64/footmanh_64.png');
+                this.game.load.image('footmanc', 'assets/64/footmanc_64.png');
                 this.game.load.image('archerh', 'assets/64/archerh_64.png');
                 this.game.load.image('archerc', 'assets/64/archerc_64.png');
                 this.game.load.image('castleh', 'assets/64/castleh_64.png');
@@ -54,11 +51,8 @@ var Kodo;
                 this.game.load.image('tiro', 'assets/64/tiro_64.png');
             }
             else {
-                //this.game.load.image('arvore1', 'assets/48/arvore1_48.png');
-                //this.game.load.image('tile0', 'assets/48/tile0_48.png');
-                //this.game.load.image('tile1', 'assets/48/tile1_48.png');
-                this.game.load.image('soldadoh', 'assets/48/soldadoh_48.png');
-                this.game.load.image('soldadoc', 'assets/48/soldadoc_48.png');
+                this.game.load.image('footmanh', 'assets/48/footmanh_48.png');
+                this.game.load.image('footmanc', 'assets/48/footmanc_48.png');
                 this.game.load.image('archerh', 'assets/48/archerh_48.png');
                 this.game.load.image('archerc', 'assets/48/archerc_48.png');
                 this.game.load.image('castleh', 'assets/48/castleh_48.png');
@@ -122,7 +116,7 @@ var Kodo;
                 this.game.load.spritesheet('magesGuild_ui_c', 'assets/48/ui/magesGuild_ui_c.png', 66, 66);
                 this.game.load.spritesheet('archer_ui_c', 'assets/48/ui/archer_ui_c.png', 66, 66);
                 this.game.load.spritesheet('farmer_ui_c', 'assets/48/ui/farmer_ui_c.png', 66, 66);
-                this.game.load.spritesheet('soldado_ui_c', 'assets/48/ui/soldado_ui_c.png', 66, 66);
+                this.game.load.spritesheet('footman_ui_c', 'assets/48/ui/footman_ui_c.png', 66, 66);
                 this.game.load.spritesheet('propeller_ui_c', 'assets/48/ui/propeller_ui_c.png', 66, 66);
                 this.game.load.spritesheet('king_ui_c', 'assets/48/ui/king_ui_c.png', 66, 66);
                 this.game.load.spritesheet('thief_ui_c', 'assets/48/ui/thief_ui_c.png', 66, 66);
@@ -131,7 +125,7 @@ var Kodo;
                 this.game.load.spritesheet('mage_ui_c', 'assets/48/ui/mage_ui_c.png', 66, 66);
                 this.game.load.spritesheet('archer_ui_h', 'assets/48/ui/archer_ui_h.png', 66, 66);
                 this.game.load.spritesheet('farmer_ui_h', 'assets/48/ui/farmer_ui_h.png', 66, 66);
-                this.game.load.spritesheet('soldado_ui_h', 'assets/48/ui/soldado_ui_h.png', 66, 66);
+                this.game.load.spritesheet('footman_ui_h', 'assets/48/ui/footman_ui_h.png', 66, 66);
                 this.game.load.spritesheet('propeller_ui_h', 'assets/48/ui/propeller_ui_h.png', 66, 66);
                 this.game.load.spritesheet('king_ui_h', 'assets/48/ui/king_ui_h.png', 66, 66);
                 this.game.load.spritesheet('thief_ui_h', 'assets/48/ui/thief_ui_h.png', 66, 66);
@@ -166,7 +160,6 @@ var Kodo;
             tween.onComplete.add(this.startMainMenu, this);
         };
         Preloader.prototype.startMainMenu = function () {
-            //this.game.state.start('GameScene', true, false);
             this.game.state.start('MainMenu', true, false);
         };
         return Preloader;

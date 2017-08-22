@@ -24,7 +24,7 @@ var Kodo;
             this.game.stage.backgroundColor = '#29B865';
             var guide = this.game.add.sprite(0, 0, 'deckbuildingGuide');
             guide.x = this.game.width - guide.width;
-            var style = { font: "80px Fertigo", fill: 'white', /* wordWrap: true, */ align: "center" };
+            var style = { font: "80px Fertigo", fill: 'white', align: "center" };
             style.font = "60px Lucida Console";
             var cardsLabel = this.game.add.text(this.game.world.centerX, 80, "Cards", style);
             cardsLabel.anchor.setTo(0.5, 0.5);

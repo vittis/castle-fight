@@ -10,28 +10,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Kodo;
 (function (Kodo) {
-    var Soldado = (function (_super) {
-        __extends(Soldado, _super);
-        function Soldado(game, tile, id, isHost, data) {
+    var Footman = (function (_super) {
+        __extends(Footman, _super);
+        function Footman(game, tile, id, isHost, data) {
             var _this = this;
             var texture;
             if (isHost) {
-                texture = 'soldadoh';
+                texture = 'footmanh';
             }
             else {
-                texture = 'soldadoc';
+                texture = 'footmanc';
             }
             _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
             return _this;
         }
-        Soldado.prototype.attack = function (tile) {
+        Footman.prototype.attack = function (tile) {
             var tweenA = this.game.add.tween(this).to({ x: tile.x, y: tile.y }, 100, Phaser.Easing.Linear.None);
             var tweenB = this.game.add.tween(this).to({ x: this.x, y: this.y }, 100, Phaser.Easing.Linear.None);
             tweenA.chain(tweenB);
             tweenA.start();
             _super.prototype.attack.call(this, tile);
         };
-        return Soldado;
+        return Footman;
     }(Kodo.Unit));
-    Kodo.Soldado = Soldado;
+    Kodo.Footman = Footman;
 })(Kodo || (Kodo = {}));

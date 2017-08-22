@@ -17,7 +17,6 @@ var Tower = (function (_super) {
         return _super.call(this, row, col, require('clone')(require('../data/buildings/tower.json'))) || this;
     }
     Tower.prototype.doAction = function (targetTile) {
-        // super.doAction(targetTile);
         if (this.canAttack())
             this.attack(targetTile.entity);
     };

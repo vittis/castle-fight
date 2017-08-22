@@ -20,7 +20,7 @@ var Kodo;
             this.game.add.sprite(0, 0, 'tileFundoMaior');
             this.game.stage.backgroundColor = '#29B865';
             var groupFundo = this.game.add.group();
-            var unitNames = ["archerc", "soldadoc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
+            var unitNames = ["archerc", "footmanc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             var _loop_1 = function () {
                 var card = unitNames[Math.floor(Math.random() * unitNames.length)];
                 var carinha = this_1.game.add.sprite(-48, this_1.game.world.randomY, card);

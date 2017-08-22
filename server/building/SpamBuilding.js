@@ -47,7 +47,6 @@ var SpamBuilding = (function (_super) {
             this.data.spamCount--;
             if (this.data.spamCount <= 0)
                 this.onDeath();
-            //this.data.spamData.isTraining = false;
         }
         if (this.data.spamData.isTraining) {
             this.data.spamData.spamRateCounter--;

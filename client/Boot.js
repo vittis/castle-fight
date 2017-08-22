@@ -31,21 +31,10 @@ var Kodo;
             GameConfig.GAME_HEIGHT = 838;
             var versaoAndroid = false;
             if (this.game.device.android || this.game.device.iOS) {
-                /* this.game.scale.forceLandscape = true;
-                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                this.game.scale.startFullScreen();
-                this.game.scale.refresh();
-                window.addEventListener('resize', function () { adjust(); });
-                adjust(); */
                 this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
-                //this.game.scale.startFullScreen();
             }
             else {
-                //this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-                //this.scale.setUserScale(1, 1);  
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                //window.addEventListener('resize', function () { adjust(); });
-                //adjust();
                 if (!versaoAndroid)
                     this.scale.setMinMax(0, 0, 1488, 838);
             }
@@ -60,15 +49,3 @@ var Kodo;
     }(Phaser.State));
     Kodo.Boot = Boot;
 })(Kodo || (Kodo = {}));
-/* function adjust() {
-     if (window.innerWidth < GameConfig.GAME_WIDTH || window.innerHeight < GameConfig.GAME_HEIGHT) {
-        var divgame = document.getElementById("game");
-        divgame.style.width = window.innerWidth + "px";
-        divgame.style.height = window.innerHeight + "px";
-    }
-    else if (window.innerWidth > GameConfig.GAME_WIDTH && window.innerHeight > GameConfig.GAME_HEIGHT){
-        var divgame = document.getElementById("game");
-        divgame.style.width = GameConfig.GAME_WIDTH + "px";
-        divgame.style.height = GameConfig.GAME_HEIGHT + "px";
-    }
-} */

@@ -20,7 +20,6 @@ var Engineer = (function (_super) {
         var _this = this;
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            //targetTile.entity.getEntityData().statusData.stunned = true;
             targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != _this.owner.isHost) {
