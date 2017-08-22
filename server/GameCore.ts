@@ -86,21 +86,21 @@ export class GameCore {
             p.socket.on('askBuild', function (data) {
                 if (!data.isUnit) {
                     if (data.isHost) {
-                        this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                        this.host.buildBuilding(new (require('../server/building/'+data.name))[data.name](data.row, data.col));
                     }
                     else {
-                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                        this.client.buildBuilding(new (require('../server/building/' + data.name))[data.name](data.row, data.col));
                     }
                 }
                 else {
                     console.log("vai construir");
                     if (data.isHost) {
                         if (require('./unit/' + data.name))
-                            this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                            this.host.buildBuilding(new (require('../server/unit/' + data.name))[data.name](data.row, data.col));
                     }
                     else {
                         if (require('./unit/' + data.name))
-                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                            this.client.buildBuilding(new (require('../server/unit/' + data.name))[data.name](data.row, data.col));
                     }
                 }
             }.bind(this));
