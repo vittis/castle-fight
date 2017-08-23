@@ -20,6 +20,7 @@ import { IncomeBallManager } from "./IncomeBallManager";
 import { KingsCourt } from "./building/KingsCourt";
 import { Tower } from "./building/Tower";
 import { IncomeBall } from "./building/IncomeBall";
+import {King } from "./unit/King";
 
 export class GameCore {
     id : number;
