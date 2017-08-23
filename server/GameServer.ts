@@ -62,8 +62,6 @@ export class GameServer {
     }
 
     endGame(game : GameCore) : void {
-        console.log("qqqq");
-
         for (var i = 0; i < this.games.length; i++) {
             if (this.games[i].id == game.id) {
                 this.games[i] = null;
@@ -160,6 +158,6 @@ export class GameServer {
                     p.socket.emit('receivePlayers', players);
             });
         }
+        console.log("online players: "+this.clients.length);
     }
-
 }

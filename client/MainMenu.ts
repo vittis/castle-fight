@@ -3,8 +3,6 @@ module Kodo {
     export class MainMenu extends Phaser.State {
 
         public game: PhaserInput.InputFieldGame; // Added
-
-        matchmakingButton : Phaser.Button;
         
         static instance: MainMenu = null;
 
@@ -13,6 +11,10 @@ module Kodo {
         inputField;
         playText : Phaser.Text;
         roomsText: Phaser.Text;
+
+        onlineNumber : Phaser.Text;
+        matchmakingNumber: Phaser.Text;
+        ingameNumber: Phaser.Text;
 
         create() {
             MainMenu.instance = this;
@@ -129,13 +131,71 @@ module Kodo {
             style.fill = 'black';
             var deckNameLabel = this.game.add.text(this.game.world.centerX, 80, GameConfig.deckName, style);
             deckNameLabel.anchor.setTo(0.5, 0.5);
-            deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 23, -30);
+            deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 26, -30);
 
             var tweenA = this.game.add.tween(titleLabel.scale).to({ x: 1.1, y: 1.1 }, 200, Phaser.Easing.Linear.None);
             var tweenB = this.game.add.tween(titleLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
             tweenA.chain(tweenB);
             tweenA.start();
          
+
+            var box = this.game.make.graphics(0, 0);
+            box.beginFill(0x000000);
+            box.drawRoundedRect(0, 0, 220, 145, 20);
+            box.endFill();
+            var serverStatusRect = this.game.add.sprite(0, 0, box.generateTexture());
+            box.destroy();
+            serverStatusRect.anchor.setTo(0.5, 0.5);
+            serverStatusRect.x = howToPlay.x + howToPlay.width/2;
+            serverStatusRect.y = this.game.height - serverStatusRect.height/2 - 110;
+            serverStatusRect.alpha = 0.53;
+
+
+
+            style.font = "22px Arial";
+            style.fill = '#ecec3a';
+            var serverStatusLabel = this.game.add.text(0, 0, "Server Status", style);
+            serverStatusLabel.anchor.setTo(0.5, 0.5);
+            serverStatusLabel.alignIn(serverStatusRect, Phaser.TOP_CENTER, 0, -12);
+            serverStatusLabel.fontWeight = 900;
+
+            style.font = "18px Arial";
+            style.fill = '#ffffff';
+
+            var onlineLabel = this.game.add.text(0, 0, "Online: ", style);
+            onlineLabel.anchor.setTo(0.5, 0.5);
+            onlineLabel.alignTo(serverStatusLabel, Phaser.BOTTOM_CENTER, 0, 5);
+            onlineLabel.fontWeight = 600;
+
+            var matchMaking = this.game.add.text(0, 0, "Matchmaking: ", style);
+            matchMaking.anchor.setTo(0.5, 0.5);
+            matchMaking.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
+            matchMaking.fontWeight = 600; 
+
+            var ingame = this.game.add.text(0, 0, "In-game: ", style);
+            ingame.anchor.setTo(0.5, 0.5);
+            ingame.alignTo(matchMaking, Phaser.BOTTOM_CENTER, 0, 2);
+            ingame.fontWeight = 600;
+
+            style.fill = "#29B865";
+            this.onlineNumber = this.game.add.text(0, 0, "-", style);
+            this.onlineNumber.anchor.setTo(0.5, 0.5);
+            this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER);
+            this.onlineNumber.fontWeight = 600;
+            
+            style.fill = "#c9b32b";
+            this.matchmakingNumber = this.game.add.text(0, 0, "-", style);
+            this.matchmakingNumber.anchor.setTo(0.5, 0.5);
+            this.matchmakingNumber.alignTo(matchMaking, Phaser.RIGHT_CENTER);
+            this.matchmakingNumber.fontWeight = 600;
+
+            style.fill = "#de8787";
+            this.ingameNumber = this.game.add.text(0, 0, "-", style);
+            this.ingameNumber.anchor.setTo(0.5, 0.5);
+            this.ingameNumber.alignTo(ingame, Phaser.RIGHT_CENTER);
+            this.ingameNumber.fontWeight = 600;
+
+
             this.game.time.advancedTiming = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
@@ -173,9 +233,19 @@ module Kodo {
         }
 
         updatePlayersConnected(players : any[]) {
+            this.onlineNumber.text = ""+players.length;
+            var matchmaking=0;
+            var ingame=0;
             players.forEach(p => {
-                console.log(p.id + " - " + p.status);
+                if (p.status == 1) {
+                    matchmaking++;
+                }
+                if (p.status == 2) {
+                    ingame++;
+                }
             });
+            this.matchmakingNumber.text = ""+matchmaking;
+            this.ingameNumber.text = ""+ingame;
         }
 
         onHover(sprite: UIBuildingButton) {

@@ -42,7 +42,6 @@ var GameServer = (function () {
         return game;
     };
     GameServer.prototype.endGame = function (game) {
-        console.log("qqqq");
         for (var i = 0; i < this.games.length; i++) {
             if (this.games[i].id == game.id) {
                 this.games[i] = null;
@@ -131,6 +130,7 @@ var GameServer = (function () {
                     p.socket.emit('receivePlayers', players);
             });
         }
+        console.log("online players: " + this.clients.length);
     };
     GameServer.instance = null;
     return GameServer;

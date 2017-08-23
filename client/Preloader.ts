@@ -9,8 +9,6 @@ module Kodo {
             this.preloadBar.anchor.setTo(0.5, 0.5);
             this.load.setPreloadSprite(this.preloadBar);
 
-            //  Load our actual games assets
-            this.game.load.spritesheet('button', 'assets/button_sprite_sheet.png', 193, 71);
             //32x32
             if (GameConfig.tileSize == 32) {
                 this.game.load.image('tile0', 'assets/32/tile0_32.png');
