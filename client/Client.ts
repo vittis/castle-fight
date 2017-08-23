@@ -76,13 +76,7 @@ module Client {
 
             }
         });
-        console.log("recebi data");
-        if (Kodo.GravityChamber.spamUnit) {
-            console.log("certo")
-        }
-        else {
-            console.log("deu ruim")
-        }
+        console.log("Card data received");
     });
 
     socket.on('endGame', function (data) {

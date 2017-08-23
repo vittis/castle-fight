@@ -161,7 +161,7 @@ module Kodo {
                     + "\nDamage: " + unit.data.attackDmg + "\nRange: " + unit.data.attackRange + "\nAtk Speed: " + unit.data.attackRate;
 
                 var style = {
-                    fill: 'white', wordWrap: false, align: "center"
+                    font:"",fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;
@@ -198,16 +198,18 @@ module Kodo {
                 var hp_icon = this.game.add.sprite(50, 50, 'hp_icon');
                 var armor_icon = this.game.add.sprite(50, 50, 'armor_icon');
                 armor_icon.alignTo(hp_icon, Phaser.RIGHT_CENTER, 10);
+                style.font = "Baloo Paaji";
 
                 entityManager.hpTexto = this.game.add.text(200, 100, "" + unit.dataq.hp, style);
-                entityManager.hpTexto.fontSize = 16;
+                entityManager.hpTexto.fontSize = 17;
                 entityManager.hpTexto.alpha = 0.85;
                 entityManager.hpTexto.alignIn(hp_icon, Phaser.CENTER, 0, 1);
 
                 entityManager.armorTexto = this.game.add.text(200, 100, "" + unit.dataq.armor, style);
-                entityManager.armorTexto.fontSize = 16;
+                entityManager.armorTexto.fontSize = 17;
                 entityManager.armorTexto.alpha = 0.85;
                 entityManager.armorTexto.alignIn(armor_icon, Phaser.CENTER, 0, 3);
+                style.font = "";
 
                 var iconGroup = this.game.add.group();
                 iconGroup.add(hp_icon);
@@ -263,7 +265,7 @@ module Kodo {
                     entityManager.descricaoString = building.dataq.name + "\n" + "\n"+Kodo[building.dataq.name].description;
                 }
                 var style = {
-                    fill: 'white', wordWrap: false, align: "center"
+                    font: "", fill: 'white', wordWrap: false, align: "center"
                 };
                 entityManager.descTexto = this.game.add.text(200, 100, entityManager.descricaoString, style);
                 entityManager.descTexto.fontSize = 16;
@@ -301,15 +303,17 @@ module Kodo {
                 var armor_icon = this.game.add.sprite(50, 50, 'armor_icon');
                 armor_icon.alignTo(hp_icon, Phaser.RIGHT_CENTER, 10);
 
+                style.font = "Baloo Paaji";
                 entityManager.hpTexto = this.game.add.text(200, 100, "" + building.dataq.hp, style);
-                entityManager.hpTexto.fontSize = 16;
+                entityManager.hpTexto.fontSize = 17;
                 entityManager.hpTexto.alpha = 0.85;
                 entityManager.hpTexto.alignIn(hp_icon, Phaser.CENTER, 0, 1);
 
                 entityManager.armorTexto = this.game.add.text(200, 100, "" + building.dataq.armor, style);
-                entityManager.armorTexto.fontSize = 16;
+                entityManager.armorTexto.fontSize = 17;
                 entityManager.armorTexto.alpha = 0.85;
                 entityManager.armorTexto.alignIn(armor_icon, Phaser.CENTER, 0, 3);
+                style.font = "";
 
                 var iconGroup = this.game.add.group();
 

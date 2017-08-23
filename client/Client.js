@@ -65,13 +65,7 @@ var Client;
                 Kodo[element.name].incomeGain = element.incomeGain;
             }
         });
-        console.log("recebi data");
-        if (Kodo.GravityChamber.spamUnit) {
-            console.log("certo");
-        }
-        else {
-            console.log("deu ruim");
-        }
+        console.log("Card data received");
     });
     socket.on('endGame', function (data) {
         console.log("end game recebido - finalizando jogo!");

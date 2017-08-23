@@ -17,7 +17,7 @@ module Kodo {
         constructor(game : Phaser.Game) {
             this.offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
 
-            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = {font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
             this.goldLabel = game.add.text(0, 0, '150', style);
             this.goldLabel.anchor.setTo(0.5, 0.5);
             this.goldLabel.fontSize = 40;

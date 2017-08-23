@@ -151,48 +151,48 @@ module Kodo {
 
 
 
-            style.font = "22px Arial";
+            style.font = "26px Baloo Paaji";
             style.fill = '#ecec3a';
             var serverStatusLabel = this.game.add.text(0, 0, "Server Status", style);
             serverStatusLabel.anchor.setTo(0.5, 0.5);
             serverStatusLabel.alignIn(serverStatusRect, Phaser.TOP_CENTER, 0, -12);
-            serverStatusLabel.fontWeight = 900;
+            //serverStatusLabel.fontWeight = 900;
 
-            style.font = "18px Arial";
+            style.font = "18px Baloo Paaji";
             style.fill = '#ffffff';
 
             var onlineLabel = this.game.add.text(0, 0, "Online: ", style);
             onlineLabel.anchor.setTo(0.5, 0.5);
             onlineLabel.alignTo(serverStatusLabel, Phaser.BOTTOM_CENTER, 0, 5);
-            onlineLabel.fontWeight = 600;
+            //onlineLabel.fontWeight = 600;
 
             var matchMaking = this.game.add.text(0, 0, "Matchmaking: ", style);
             matchMaking.anchor.setTo(0.5, 0.5);
             matchMaking.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
-            matchMaking.fontWeight = 600; 
+            //matchMaking.fontWeight = 600; 
 
             var ingame = this.game.add.text(0, 0, "In-game: ", style);
             ingame.anchor.setTo(0.5, 0.5);
             ingame.alignTo(matchMaking, Phaser.BOTTOM_CENTER, 0, 2);
-            ingame.fontWeight = 600;
+            //ingame.fontWeight = 600;
 
             style.fill = "#29B865";
             this.onlineNumber = this.game.add.text(0, 0, "-", style);
             this.onlineNumber.anchor.setTo(0.5, 0.5);
-            this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER);
-            this.onlineNumber.fontWeight = 600;
+            this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER, 3);
+            //this.onlineNumber.fontWeight = 600;
             
             style.fill = "#c9b32b";
             this.matchmakingNumber = this.game.add.text(0, 0, "-", style);
             this.matchmakingNumber.anchor.setTo(0.5, 0.5);
-            this.matchmakingNumber.alignTo(matchMaking, Phaser.RIGHT_CENTER);
-            this.matchmakingNumber.fontWeight = 600;
+            this.matchmakingNumber.alignTo(matchMaking, Phaser.RIGHT_CENTER, 3);
+            //this.matchmakingNumber.fontWeight = 600;
 
             style.fill = "#de8787";
             this.ingameNumber = this.game.add.text(0, 0, "-", style);
             this.ingameNumber.anchor.setTo(0.5, 0.5);
-            this.ingameNumber.alignTo(ingame, Phaser.RIGHT_CENTER);
-            this.ingameNumber.fontWeight = 600;
+            this.ingameNumber.alignTo(ingame, Phaser.RIGHT_CENTER, 3);
+            //this.ingameNumber.fontWeight = 600;
 
 
             this.game.scale.pageAlignHorizontally = true;
@@ -237,7 +237,6 @@ module Kodo {
         }
 
         startGame() {
-            console.log(this.inputField.value);
             this.game.state.start('GameScene', true, false);
         }
 

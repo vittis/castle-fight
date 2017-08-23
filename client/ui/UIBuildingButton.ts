@@ -44,7 +44,7 @@ module Kodo {
 
             this.tudoGroup = this.game.add.group();
 
-            var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
+            var style = { font: "", fill: '#ecec3a', wordWrap: true, align: "center" };
             this.goldCostText = game.add.text(0, 0, Kodo[buildingName].goldCost, style);
             this.goldCostText.anchor.setTo(0.5, 0.5);
             this.goldCostText.fontSize = 20;
@@ -61,7 +61,7 @@ module Kodo {
                     + "\nTraining Rate: " + Kodo[buildingName].spamRate + "\nIncome Gain: " + Kodo[buildingName].incomeGain + "\nWood Gain: " + (Kodo[buildingName].woodCost > 0 ? 0 : Kodo[buildingName].goldCost) +"\n" + Kodo[buildingName].description+"\n(click to unit info)";
 
                 style = {
-                    fill: 'white', wordWrap: false, align: "center"
+                    font: "", fill: 'white', wordWrap: false, align: "center"
                 };
                 this.descTexto = this.game.add.text(200, 100, this.descricaoString, style);
                 this.descTexto.fontSize = 16;
@@ -86,16 +86,18 @@ module Kodo {
                 var hp_icon = this.game.add.sprite(50, 50, 'hp_icon');
                 var armor_icon = this.game.add.sprite(50, 50, 'armor_icon');
                 armor_icon.alignTo(hp_icon, Phaser.RIGHT_CENTER, 10);
-
+                
+                style.font = "Baloo Paaji";
                 var hpTexto = this.game.add.text(200, 100, ""+Kodo[buildingName].maxHP, style);
-                hpTexto.fontSize = 16;
+                hpTexto.fontSize = 17;
                 hpTexto.alpha = 0.9;
                 hpTexto.alignIn(hp_icon, Phaser.CENTER, 0, 1);
 
                 var armorTexto = this.game.add.text(200, 100, "" + Kodo[buildingName].maxArmor, style);
-                armorTexto.fontSize = 16;
+                armorTexto.fontSize = 17;
                 armorTexto.alpha = 0.9;
                 armorTexto.alignIn(armor_icon, Phaser.CENTER, 0, 3);    
+                style.font = "";
 
                 this.iconGroup.add(hp_icon);
                 this.iconGroup.add(armor_icon);
@@ -146,7 +148,7 @@ module Kodo {
                 + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;
 
                 style = {
-                    fill: 'white', wordWrap: false, align: "center"
+                    font: "", fill: 'white', wordWrap: false, align: "center"
                 };
                 this.unitDescTexto = this.game.add.text(200, 100, this.unitDescricaoString, style);
                 this.unitDescTexto.fontSize = 16;
@@ -159,15 +161,18 @@ module Kodo {
                 var armor_icon2 = this.game.add.sprite(50, 50, 'armor_icon');
                 armor_icon2.alignTo(hp_icon2, Phaser.RIGHT_CENTER, 10);
 
+                style.font = "Baloo Paaji";
+
                 var hpTexto2 = this.game.add.text(200, 100, "" + Kodo[Kodo[buildingName].spamUnit].maxHP, style);
-                hpTexto2.fontSize = 16;
+                hpTexto2.fontSize = 17;
                 hpTexto2.alpha = 0.9;
                 hpTexto2.alignIn(hp_icon2, Phaser.CENTER, 0, 1);
 
                 var armorTexto2 = this.game.add.text(200, 100, "" + Kodo[Kodo[buildingName].spamUnit].maxArmor, style);
-                armorTexto2.fontSize = 16;
+                armorTexto2.fontSize = 17;
                 armorTexto2.alpha = 0.9;
                 armorTexto2.alignIn(armor_icon2, Phaser.CENTER, 0, 3);
+                style.font = "";
 
                 var hostLabel = GameConfig.isHost ? "h" : "c";
                 this.unitImage = this.game.add.sprite(200, 200, Kodo[buildingName].spamUnit.toLowerCase() + hostLabel);
@@ -233,7 +238,7 @@ module Kodo {
                     + "\n" + Kodo[buildingName].description;
 
                 style = {
-                    fill: 'white', wordWrap: false, align: "center"
+                    font: "", fill: 'white', wordWrap: false, align: "center"
                 };
                 this.unitDescTexto = this.game.add.text(200, 100, this.unitDescricaoString, style);
                 this.unitDescTexto.fontSize = 16;
@@ -246,15 +251,17 @@ module Kodo {
                 let armor_icon2 = this.game.add.sprite(50, 50, 'armor_icon');
                 armor_icon2.alignTo(hp_icon2, Phaser.RIGHT_CENTER, 10);
 
+                style.font = "Baloo Paaji";
                 let hpTexto2 = this.game.add.text(200, 100, "" + Kodo[buildingName].maxHP, style);
-                hpTexto2.fontSize = 16;
+                hpTexto2.fontSize = 17;
                 hpTexto2.alpha = 0.9;
                 hpTexto2.alignIn(hp_icon2, Phaser.CENTER, 0, 1);
 
                 let armorTexto2 = this.game.add.text(200, 100, "" + Kodo[buildingName].maxArmor, style);
-                armorTexto2.fontSize = 16;
+                armorTexto2.fontSize = 17;
                 armorTexto2.alpha = 0.9;
                 armorTexto2.alignIn(armor_icon2, Phaser.CENTER, 0, 3);
+                style.font = "";
 
                 let hostLabel = GameConfig.isHost ? "h" : "c";
                 //this.unitImage = this.game.add.sprite(200, 200, Kodo[buildingName].nome.toLowerCase() + hostLabel);

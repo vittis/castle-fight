@@ -9,6 +9,8 @@ module Kodo {
             this.preloadBar.anchor.setTo(0.5, 0.5);
             this.load.setPreloadSprite(this.preloadBar);
 
+            this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+
             //32x32
             if (GameConfig.tileSize == 32) {
                 this.game.load.image('tile0', 'assets/32/tile0_32.png');

@@ -39,7 +39,7 @@ module Kodo {
             this.containerBar.y -= 19;
             this.containerBar.x -= 19;
 
-            var style = { fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
+            var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
 
             this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
             this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
