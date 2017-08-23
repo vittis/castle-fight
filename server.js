@@ -29,6 +29,9 @@ io.on('connection', function (socket) {
         }
         gameServer.onMatchmaking(player);
     });
+    socket.on('cancelMatchmaking', function (data) {
+        gameServer.onCancelMatchmaking(player);
+    });
     socket.on('disconnect', function () {
         gameServer.onDisconnect(player);
     });

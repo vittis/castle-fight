@@ -64,19 +64,12 @@ module Kodo {
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
-
-            console.log(GameConfig.yourNick);
-            console.log(GameConfig.opponentNick);
-
         }
 
          update() {
              this.uiBuildingManager.update();
             this.uiEntityManager.update(); 
         } 
-        render() {
-            this.game.debug.text(this.game.time.fps+"", 2, 14, "#00ff00");
-        }
         
         updateEntities(newEntities : any[]) {
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     

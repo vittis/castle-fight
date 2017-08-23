@@ -124,9 +124,6 @@ var Kodo;
             this.yourDeckGroup.onChildInputDown.add(this.onDownDeckBuilding.bind(this), this);
             this.yourDeckGroup.onChildInputOut.add(this.onOut.bind(this), this);
         };
-        DeckScene.prototype.render = function () {
-            this.game.debug.text(this.game.time.fps + "", 2, 14, "#00ff00");
-        };
         DeckScene.prototype.onHover = function (sprite) {
             sprite.onOver();
         };

@@ -86,6 +86,10 @@ var Client;
         socket.emit('askMatchmaking', { nick: GameConfig.yourNick });
     }
     Client.askMatchmaking = askMatchmaking;
+    function cancelMatchmaking() {
+        socket.emit('cancelMatchmaking');
+    }
+    Client.cancelMatchmaking = cancelMatchmaking;
     function askBuild(row, col, name, isUnit) {
         socket.emit('askBuild', { row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost, isUnit: isUnit });
     }

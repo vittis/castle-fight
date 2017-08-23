@@ -100,6 +100,10 @@ module Client {
         socket.emit('askMatchmaking', {nick: GameConfig.yourNick});
     }
 
+    export function cancelMatchmaking() {
+        socket.emit('cancelMatchmaking');
+    }
+
     export function askBuild(row, col, name, isUnit) {
         socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost, isUnit: isUnit});
     }

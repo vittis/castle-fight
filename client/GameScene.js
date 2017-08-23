@@ -53,15 +53,10 @@ var Kodo;
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
-            console.log(GameConfig.yourNick);
-            console.log(GameConfig.opponentNick);
         };
         GameScene.prototype.update = function () {
             this.uiBuildingManager.update();
             this.uiEntityManager.update();
-        };
-        GameScene.prototype.render = function () {
-            this.game.debug.text(this.game.time.fps + "", 2, 14, "#00ff00");
         };
         GameScene.prototype.updateEntities = function (newEntities) {
             var _this = this;

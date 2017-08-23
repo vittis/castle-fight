@@ -72,6 +72,9 @@ var GameServer = (function () {
             this.createGame(players[0], players[1]);
         }
     };
+    GameServer.prototype.onCancelMatchmaking = function (player) {
+        player.status = ServerPlayer_1.PlayerStatus.connected;
+    };
     GameServer.prototype.getPlayersMatchmaking = function () {
         var players = new Array();
         this.clients.forEach(function (p) {

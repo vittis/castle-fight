@@ -142,10 +142,6 @@ module Kodo {
              this.yourDeckGroup.onChildInputOut.add(this.onOut.bind(this), this);  
         }
 
-        render() {
-            this.game.debug.text(this.game.time.fps + "", 2, 14, "#00ff00");
-        }
-
         onHover(sprite: UIBuildingButton) {
             sprite.onOver();
         }

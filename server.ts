@@ -38,8 +38,10 @@ io.on('connection',function(socket){
             player.nick = data.nick;
         }
         gameServer.onMatchmaking(player);
-    });
-
+    }); 
+    socket.on('cancelMatchmaking', function (data) {
+        gameServer.onCancelMatchmaking(player);
+    }); 
     socket.on('disconnect', function() {
         gameServer.onDisconnect(player);
     });

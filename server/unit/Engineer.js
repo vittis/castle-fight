@@ -20,10 +20,14 @@ var Engineer = (function (_super) {
         var _this = this;
         if (this.canAttack()) {
             this.attack(targetTile.entity);
+            var attackedId = targetTile.entity.id;
             targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != _this.owner.isHost) {
-                        t.entity.receiveAttack(_this);
+                        if (attackedId != t.entity.id) {
+                            t.entity.receiveAttack(_this);
+                            attackedId = t.entity.id;
+                        }
                     }
                 }
             });

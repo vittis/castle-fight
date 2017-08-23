@@ -11,10 +11,15 @@ export class Mage extends Unit {
     doAction(targetTile: Tile) {
         if (this.canAttack()) {
             this.attack(targetTile.entity);
+            var attackedId= targetTile.entity.id;
+            
             targetTile.entity.getOuterTilesWithEntity().forEach(t => {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != this.owner.isHost) {
-                        t.entity.receiveAttack(this);
+                        if (attackedId != t.entity.id) {
+                            t.entity.receiveAttack(this);
+                            attackedId = t.entity.id;
+                        }
                     }
                 }
             });

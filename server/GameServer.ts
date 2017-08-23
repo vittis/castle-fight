@@ -94,6 +94,10 @@ export class GameServer {
         }
     }
 
+    onCancelMatchmaking(player: ServerPlayer) {
+        player.status = PlayerStatus.connected;
+    }
+
     getPlayersMatchmaking() : Array<ServerPlayer> {
         var players : Array<ServerPlayer> = new Array<ServerPlayer>();
         this.clients.forEach(p => {

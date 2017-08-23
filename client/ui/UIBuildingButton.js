@@ -110,8 +110,6 @@ var Kodo;
                 _this.descricaoBox.visible = false;
                 _this.descTexto.visible = false;
                 _this.iconGroup.visible = false;
-                console.log(buildingName);
-                console.log(Kodo[Kodo[buildingName].spamUnit]);
                 _this.unitDescricaoString = Kodo[Kodo[buildingName].spamUnit].nome
                     + "\n   \nDamage: " + Kodo[Kodo[buildingName].spamUnit].attackDmg + "\nRange: " + Kodo[Kodo[buildingName].spamUnit].attackRange + "\nAtk Speed: " + Kodo[Kodo[buildingName].spamUnit].attackRate
                     + "\n\n\n" + Kodo[Kodo[buildingName].spamUnit].description;

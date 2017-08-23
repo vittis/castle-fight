@@ -15,6 +15,7 @@ module Kodo {
         onlineNumber : Phaser.Text;
         matchmakingNumber: Phaser.Text;
         ingameNumber: Phaser.Text;
+        titleLabel : Phaser.Text;
 
         create() {
             MainMenu.instance = this;
@@ -63,16 +64,17 @@ module Kodo {
             howToPlay.x = this.game.width - howToPlay.width;
             
             var style = { font: "86px Fertigo", fill: 'white', align: "center" };
-            var titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
-            titleLabel.anchor.setTo(0.5, 0.5);
-            titleLabel.fontWeight = 'bold';
-            titleLabel.stroke = '#0D6032';
-            titleLabel.strokeThickness = 12; 
-            titleLabel.setShadow(0, 5, 'rgba(0,0,0,0.5)', 0);
+            this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
+            this.titleLabel.anchor.setTo(0.5, 0.5);
+            this.titleLabel.fontWeight = 'bold';
+            this.titleLabel.stroke = '#0D6032';
+            this.titleLabel.strokeThickness = 12; 
+            this.titleLabel.setShadow(0, 5, 'rgba(0,0,0,0.5)', 0);
             
             var panelGrande = this.game.add.sprite(0, 0, 'panelGrande');
             panelGrande.anchor.setTo(0.5, 0.5);
-            panelGrande.alignTo(titleLabel, Phaser.BOTTOM_CENTER, 0, 70);
+            panelGrande.alignTo(this.titleLabel, Phaser.BOTTOM_CENTER, 0, 70);
+
 
             this.inputField = this.game.add.inputField(10, 90, {
                 font: '28px Lucida Console',
@@ -91,9 +93,10 @@ module Kodo {
             });
             
             this.inputField.alignIn(panelGrande, Phaser.TOP_CENTER, -16, -30);
-
+            if (GameConfig.yourNick != "")
+                this.inputField.setText(GameConfig.yourNick);
+            
             style.font = "36px sans-serif";
-
             var playButton = this.game.add.button(0, 0, 'playButton', this.onPlayButton.bind(this), this);
             playButton.anchor.setTo(0.5, 0.5);
             playButton.alignIn(panelGrande, Phaser.CENTER);
@@ -133,10 +136,6 @@ module Kodo {
             deckNameLabel.anchor.setTo(0.5, 0.5);
             deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 26, -30);
 
-            var tweenA = this.game.add.tween(titleLabel.scale).to({ x: 1.1, y: 1.1 }, 200, Phaser.Easing.Linear.None);
-            var tweenB = this.game.add.tween(titleLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
-            tweenA.chain(tweenB);
-            tweenA.start();
          
 
             var box = this.game.make.graphics(0, 0);
@@ -196,20 +195,21 @@ module Kodo {
             this.ingameNumber.fontWeight = 600;
 
 
-            this.game.time.advancedTiming = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
 
 
-            var provider = new PhaserAds.AdProvider.GameDistributionAds(
-                this.game,                                        //Your Phaser game instance
-                '1ed39de1f7164b9b8408921deee70bb7',          //Your gameId
-                'C12AA889-22A8-4F25-926C-E43E9270FDC9-s1'    //Aaaand your gameId
-            );
-            this.game.ads.setAdProvider(provider);
-            this.game.ads.showAd();
-
+            var tweenA = this.game.add.tween(this.titleLabel.scale).to({ x: 1.02, y: 1.02 }, 800, Phaser.Easing.Linear.None);
+            var tweenB = this.game.add.tween(this.titleLabel.scale).to({ x: 1, y: 1 }, 1200, Phaser.Easing.Linear.None);
             
+            tweenA.onComplete.add(function volta() {
+                tweenB.start();
+            }, this);
+
+            tweenB.onComplete.add(function vai() {
+                tweenA.start();
+            }, this);
+            tweenA.start();
         }
         
 
@@ -228,12 +228,11 @@ module Kodo {
 
         onRoomsButton() {
             this.roomsText.text = 'Coming soon... :(';
-            this.game.ads.showAd();
-
         }
 
         onEditDeckButton() {
-            console.log("clicou no edit deck");
+            GameConfig.yourNick = this.inputField.value;
+            Client.cancelMatchmaking();
             this.game.state.start('DeckScene', true, false);
         }
 
@@ -241,9 +240,7 @@ module Kodo {
             console.log(this.inputField.value);
             this.game.state.start('GameScene', true, false);
         }
-        render() {
-            this.game.debug.text(this.game.time.fps + "", 2, 14, "#00ff00");
-        }
+
 
         updatePlayersConnected(players : any[]) {
             this.onlineNumber.text = ""+players.length;
