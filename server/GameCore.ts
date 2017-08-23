@@ -20,7 +20,7 @@ import { IncomeBallManager } from "./IncomeBallManager";
 import { KingsCourt } from "./building/KingsCourt";
 import { Tower } from "./building/Tower";
 import { IncomeBall } from "./building/IncomeBall";
-import {King } from "./unit/King";
+//import {King } from "./unit/King";
 
 export class GameCore {
     id : number;
@@ -100,7 +100,7 @@ export class GameCore {
                     else {
                         if (data.name == "King") {
                             console.log("king vai");
-                            this.client.buildBuilding(new King(data.row, data.col));
+                            //this.client.buildBuilding(new King(data.row, data.col));
                         }
                         else {
                             this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
