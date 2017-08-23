@@ -54,12 +54,7 @@ var GameCore = (function () {
                         this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
                     }
                     else {
-                        if (data.name == "King") {
-                            console.log("king vai");
-                        }
-                        else {
-                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                        }
+                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
                     }
                 }
             }.bind(this));
