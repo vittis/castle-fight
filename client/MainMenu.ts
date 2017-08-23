@@ -199,6 +199,17 @@ module Kodo {
             this.game.time.advancedTiming = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
+
+
+            var provider = new PhaserAds.AdProvider.GameDistributionAds(
+                this.game,                                        //Your Phaser game instance
+                '1ed39de1f7164b9b8408921deee70bb7',          //Your gameId
+                'C12AA889-22A8-4F25-926C-E43E9270FDC9-s1'    //Aaaand your gameId
+            );
+            this.game.ads.setAdProvider(provider);
+            this.game.ads.showAd();
+
+            
         }
         
 
@@ -212,11 +223,13 @@ module Kodo {
             GameConfig.yourNick = this.inputField.value;
 
             Client.askMatchmaking();
-            this.playText.text = 'Matchmaking...'
+            this.playText.text = 'Matchmaking...';
         }
 
         onRoomsButton() {
-            this.roomsText.text = 'Coming soon... :('
+            this.roomsText.text = 'Coming soon... :(';
+            this.game.ads.showAd();
+
         }
 
         onEditDeckButton() {

@@ -22,6 +22,7 @@ var Kodo;
             document.body.style.margin = '0px';
             document.body.style.backgroundColor = '#29B865';
             this.game.add.plugin(new PhaserInput.Plugin(this.game, this.game.plugins));
+            this.game.add.plugin(PhaserAds.AdManager);
             this.input.maxPointers = 1;
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;

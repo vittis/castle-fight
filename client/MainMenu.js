@@ -170,6 +170,9 @@ var Kodo;
             this.game.time.advancedTiming = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
+            var provider = new PhaserAds.AdProvider.GameDistributionAds(this.game, '1ed39de1f7164b9b8408921deee70bb7', 'C12AA889-22A8-4F25-926C-E43E9270FDC9-s1');
+            this.game.ads.setAdProvider(provider);
+            this.game.ads.showAd();
         };
         MainMenu.prototype.onOverButton = function (sprite) {
             sprite.scale.setTo(1.02, 1.02);
@@ -184,6 +187,7 @@ var Kodo;
         };
         MainMenu.prototype.onRoomsButton = function () {
             this.roomsText.text = 'Coming soon... :(';
+            this.game.ads.showAd();
         };
         MainMenu.prototype.onEditDeckButton = function () {
             console.log("clicou no edit deck");
