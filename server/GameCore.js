@@ -11,6 +11,7 @@ var Serializer_1 = require("./Serializer");
 var IncomeBallManager_1 = require("./IncomeBallManager");
 var Tower_1 = require("./building/Tower");
 var IncomeBall_1 = require("./building/IncomeBall");
+var King_1 = require("./unit/King");
 var GameCore = (function () {
     function GameCore(id, host, client) {
         this.id = id;
@@ -54,7 +55,13 @@ var GameCore = (function () {
                         this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
                     }
                     else {
-                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        if (data.name == "King") {
+                            console.log("king vai");
+                            this.client.buildBuilding(new King_1.King(data.row, data.col));
+                        }
+                        else {
+                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        }
                     }
                 }
             }.bind(this));
