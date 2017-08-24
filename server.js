@@ -35,4 +35,7 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         gameServer.onDisconnect(player);
     });
+    socket.on('latency', function (startTime, cb) {
+        cb(startTime);
+    });
 });

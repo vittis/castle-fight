@@ -227,6 +227,7 @@ module Kodo {
         }
 
         onRoomsButton() {
+            Client.checkPing();
             this.roomsText.text = 'Coming soon... :(';
         }
 

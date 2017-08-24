@@ -162,6 +162,7 @@ export class GameServer {
                     p.socket.emit('receivePlayers', players);
             });
         }
-        console.log("online players: "+this.clients.length);
+        if (this.clients.length>0)
+            console.log("online players: "+this.clients.length);
     }
 }

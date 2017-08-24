@@ -90,6 +90,13 @@ module Client {
          }
     });
 
+    export function checkPing() {
+        socket.emit('latency', Date.now(), function (startTime) {
+            var latency = Date.now() - startTime;
+            console.log("ping: "+latency);
+        });
+    }
+    
     export function askMatchmaking() {
         socket.emit('askMatchmaking', {nick: GameConfig.yourNick});
     }

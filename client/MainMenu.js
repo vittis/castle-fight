@@ -182,6 +182,7 @@ var Kodo;
             this.playText.text = 'Matchmaking...';
         };
         MainMenu.prototype.onRoomsButton = function () {
+            Client.checkPing();
             this.roomsText.text = 'Coming soon... :(';
         };
         MainMenu.prototype.onEditDeckButton = function () {
