@@ -83,6 +83,10 @@ var Client;
         });
     }
     Client.checkPing = checkPing;
+    function askBotGame() {
+        socket.emit('askBotGame', { nick: GameConfig.yourNick });
+    }
+    Client.askBotGame = askBotGame;
     function askMatchmaking() {
         socket.emit('askMatchmaking', { nick: GameConfig.yourNick });
     }

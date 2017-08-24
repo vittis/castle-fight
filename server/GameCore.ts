@@ -20,6 +20,7 @@ import { IncomeBallManager } from "./IncomeBallManager";
 import { KingsCourt } from "./building/KingsCourt";
 import { Tower } from "./building/Tower";
 import { IncomeBall } from "./building/IncomeBall";
+import { GameBot } from "./GameBot";
 
 export class GameCore {
     id : number;
@@ -37,7 +38,13 @@ export class GameCore {
         this.gridManager = new GridManager(new AStar(new EuclideanHeuristic()), GameConfig.GRID_ROWS, GameConfig.GRID_COLS);
         
         this.host = new GamePlayer(host, true, this.gridManager);
-        this.client = new GamePlayer(client, false, this.gridManager);
+
+        if (client.socket) {
+            this.client = new GamePlayer(client, false, this.gridManager);
+        }
+        else {
+            this.client = new GameBot(client, false, this.gridManager);
+        }
         this.ballManager = new IncomeBallManager(new GamePlayer(null, null, this.gridManager));
 
         this.host.buildBuilding(new Castle(GameConfig.GRID_ROWS/2 -1, 0));
@@ -65,7 +72,7 @@ export class GameCore {
         
         setTimeout(this.sendaData.bind(this), 1000);
 
-        setTimeout(this.startGame.bind(this), 3000);
+        setTimeout(this.startGame.bind(this), 2000);
 
         //this.gridManager.printGrid();
     } 
@@ -276,6 +283,9 @@ export class GameCore {
         this.host.resourceManager.step();
         this.client.resourceManager.step();
 
+        if (this.client instanceof GameBot) {
+            this.client.step();
+        }
         /* this.gridManager.printGrid();
         this.printEntityStatus(); */
 
@@ -327,6 +337,9 @@ export class GameCore {
     endGame() : void {
         console.log("end game chamado");
         clearInterval(this.update);
+        if (this.client instanceof GameBot) {
+            this.client = null;
+        }
         GameServer.instance.endGame(this);
     }
 

@@ -41,8 +41,10 @@ export abstract class SpamBuilding extends Building {
             var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
             if (tile.entity != null) {
                 tile = this.getTileToSpam();
-                this.data.tileRow = tile.row;
-                this.data.tileCol = tile.col;
+                if (tile) {
+                    this.data.tileRow = tile.row;
+                    this.data.tileCol = tile.col;
+                }
             }
 
             if (tile) {

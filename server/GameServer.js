@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ServerPlayer_1 = require("./ServerPlayer");
 var GameCore_1 = require("./GameCore");
+var ServerBot_1 = require("./ServerBot");
 var GameServer = (function () {
     function GameServer(io) {
         this.lastPlayerID = 0;
@@ -41,26 +42,11 @@ var GameServer = (function () {
         this.lastGameID++;
         return game;
     };
-    GameServer.prototype.endGame = function (game) {
-        for (var i = 0; i < this.games.length; i++) {
-            if (this.games[i].id == game.id) {
-                this.games[i] = null;
-                this.games.splice(i, 1);
-                break;
-            }
-        }
-        game.host.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
-        game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
-        if (game.host.serverPlayer.socket) {
-            game.host.serverPlayer.socket.emit('endGame');
-        }
-        else {
-            game.host.serverPlayer.status = ServerPlayer_1.PlayerStatus.matchmaking;
-        }
-        if (game.client.serverPlayer.socket) {
-            game.client.serverPlayer.socket.emit('endGame');
-        }
-        console.log("jogo id " + game.id + " foi finalizado");
+    GameServer.prototype.startBotGame = function (host) {
+        host.status = ServerPlayer_1.PlayerStatus.ingame;
+        var game = new GameCore_1.GameCore(this.lastGameID, host, new ServerBot_1.ServerBot());
+        this.games.push(game);
+        this.lastGameID++;
     };
     GameServer.prototype.onMatchmaking = function (player) {
         console.log("askMatchmaking requisitado por player id: " + player.id + " " + player.nick);
@@ -96,8 +82,9 @@ var GameServer = (function () {
         for (var i = 0; i < this.clients.length; i++) {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == ServerPlayer_1.PlayerStatus.ingame) {
-                    if (this.getGameByPlayerId(this.clients[i].id) != null)
+                    if (this.getGameByPlayerId(this.clients[i].id) != null) {
                         this.getGameByPlayerId(this.clients[i].id).endGame();
+                    }
                 }
                 this.clients[i] = null;
                 this.clients.splice(i, 1);
@@ -108,7 +95,7 @@ var GameServer = (function () {
     GameServer.prototype.getGameByPlayerId = function (id) {
         var gameCore = null;
         this.games.forEach(function (game) {
-            if (game.client.serverPlayer.id == id || game.host.serverPlayer.id) {
+            if (game.client.serverPlayer.id == id || game.host.serverPlayer.id == id) {
                 gameCore = game;
             }
         });
@@ -135,6 +122,31 @@ var GameServer = (function () {
         }
         if (this.clients.length > 0)
             console.log("online players: " + this.clients.length);
+    };
+    GameServer.prototype.endGame = function (game) {
+        for (var i = 0; i < this.games.length; i++) {
+            if (this.games[i].id == game.id) {
+                this.games[i] = null;
+                this.games.splice(i, 1);
+                break;
+            }
+        }
+        game.host.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
+        if (game.client) {
+            game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
+        }
+        if (game.host.serverPlayer.socket) {
+            game.host.serverPlayer.socket.emit('endGame');
+        }
+        else {
+            game.host.serverPlayer.status = ServerPlayer_1.PlayerStatus.matchmaking;
+        }
+        if (game.client) {
+            if (game.client.serverPlayer.socket) {
+                game.client.serverPlayer.socket.emit('endGame');
+            }
+        }
+        console.log("jogo id " + game.id + " foi finalizado");
     };
     GameServer.instance = null;
     return GameServer;

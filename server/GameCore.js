@@ -11,12 +11,18 @@ var Serializer_1 = require("./Serializer");
 var IncomeBallManager_1 = require("./IncomeBallManager");
 var Tower_1 = require("./building/Tower");
 var IncomeBall_1 = require("./building/IncomeBall");
+var GameBot_1 = require("./GameBot");
 var GameCore = (function () {
     function GameCore(id, host, client) {
         this.id = id;
         this.gridManager = new GridManager_1.GridManager(new AStar_1.AStar(new EuclideanHeuristic_1.EuclideanHeuristic()), GameConfig_1.GameConfig.GRID_ROWS, GameConfig_1.GameConfig.GRID_COLS);
         this.host = new GamePlayer_1.GamePlayer(host, true, this.gridManager);
-        this.client = new GamePlayer_1.GamePlayer(client, false, this.gridManager);
+        if (client.socket) {
+            this.client = new GamePlayer_1.GamePlayer(client, false, this.gridManager);
+        }
+        else {
+            this.client = new GameBot_1.GameBot(client, false, this.gridManager);
+        }
         this.ballManager = new IncomeBallManager_1.IncomeBallManager(new GamePlayer_1.GamePlayer(null, null, this.gridManager));
         this.host.buildBuilding(new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, 0));
         this.client.buildBuilding(new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2));
@@ -29,7 +35,7 @@ var GameCore = (function () {
         if (host.socket)
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: host.id, opponentNick: client.nick });
         setTimeout(this.sendaData.bind(this), 1000);
-        setTimeout(this.startGame.bind(this), 3000);
+        setTimeout(this.startGame.bind(this), 2000);
     }
     GameCore.prototype.startGame = function () {
         this.setSocket(this.client.serverPlayer, false);
@@ -212,6 +218,9 @@ var GameCore = (function () {
         });
         this.host.resourceManager.step();
         this.client.resourceManager.step();
+        if (this.client instanceof GameBot_1.GameBot) {
+            this.client.step();
+        }
         this.sendaData();
     };
     GameCore.prototype.getClosestTargetTile = function (unit) {
@@ -256,6 +265,9 @@ var GameCore = (function () {
     GameCore.prototype.endGame = function () {
         console.log("end game chamado");
         clearInterval(this.update);
+        if (this.client instanceof GameBot_1.GameBot) {
+            this.client = null;
+        }
         GameServer_1.GameServer.instance.endGame(this);
     };
     GameCore.prototype.printEntityStatus = function () {

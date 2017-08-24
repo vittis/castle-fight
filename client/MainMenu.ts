@@ -229,6 +229,7 @@ module Kodo {
         onRoomsButton() {
             Client.checkPing();
             this.roomsText.text = 'Coming soon... :(';
+            Client.askBotGame();
         }
 
         onEditDeckButton() {

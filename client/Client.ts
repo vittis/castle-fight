@@ -97,6 +97,10 @@ module Client {
         });
     }
     
+    export function askBotGame() {
+        socket.emit('askBotGame', { nick: GameConfig.yourNick});
+    }
+
     export function askMatchmaking() {
         socket.emit('askMatchmaking', {nick: GameConfig.yourNick});
     }

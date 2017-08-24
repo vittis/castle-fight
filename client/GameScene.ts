@@ -46,7 +46,7 @@ module Kodo {
             this.uiEntityManager = new UIEntityManager(this.game);
             this.incomeBallBar = new IncomeBallBar(this.game);  
 
-            var style = { font: "14px Lucida Console", fill: 'white', align: "center" };
+            var style = { font: "14px Lucida Console", fill: 'white'};
             var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
             yourNickLabel.stroke = '#E27952';
             yourNickLabel.strokeThickness = 4;
@@ -60,7 +60,7 @@ module Kodo {
             opponentNick.stroke = '#E27952';
             opponentNick.strokeThickness = 4;
             if (GameConfig.isHost) {
-                opponentNick.x = this.game.width - yourNickLabel.width;
+                opponentNick.x = this.game.width - opponentNick.width;
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }

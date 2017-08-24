@@ -184,6 +184,7 @@ var Kodo;
         MainMenu.prototype.onRoomsButton = function () {
             Client.checkPing();
             this.roomsText.text = 'Coming soon... :(';
+            Client.askBotGame();
         };
         MainMenu.prototype.onEditDeckButton = function () {
             GameConfig.yourNick = this.inputField.value;

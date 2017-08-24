@@ -32,6 +32,15 @@ io.on('connection', function (socket) {
     socket.on('cancelMatchmaking', function (data) {
         gameServer.onCancelMatchmaking(player);
     });
+    socket.on('askBotGame', function (data) {
+        if (data.nick == "") {
+            player.nick = "Guest_" + player.id;
+        }
+        else {
+            player.nick = data.nick;
+        }
+        gameServer.startBotGame(player);
+    });
     socket.on('disconnect', function () {
         gameServer.onDisconnect(player);
     });
