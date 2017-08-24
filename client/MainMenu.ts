@@ -63,13 +63,13 @@ module Kodo {
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
             
-            var style = { font: "86px Fertigo", fill: 'white', align: "center" };
+            var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
             this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
             this.titleLabel.anchor.setTo(0.5, 0.5);
             this.titleLabel.fontWeight = 'bold';
             this.titleLabel.stroke = '#0D6032';
-            this.titleLabel.strokeThickness = 12; 
-            this.titleLabel.setShadow(0, 5, 'rgba(0,0,0,0.5)', 0);
+            this.titleLabel.strokeThickness = 20; 
+            this.titleLabel.setShadow(0, 10, 'rgba(0,0,0,0.5)', 0)
             
             var panelGrande = this.game.add.sprite(0, 0, 'panelGrande');
             panelGrande.anchor.setTo(0.5, 0.5);
@@ -111,7 +111,7 @@ module Kodo {
             roomsButton.alignIn(panelGrande, Phaser.BOTTOM_CENTER, 0, -25);
             roomsButton.events.onInputOver.add(this.onOverButton.bind(this), playButton);
             roomsButton.events.onInputOut.add(this.onOutButton.bind(this), playButton);
-            this.roomsText = this.game.add.text(0, 0, 'Rooms', style);
+            this.roomsText = this.game.add.text(0, 0, 'Versus Bot', style);
             this.roomsText.anchor.setTo(0.5, 0.5);
             this.roomsText.alignIn(roomsButton, Phaser.CENTER);
 
@@ -228,7 +228,7 @@ module Kodo {
 
         onRoomsButton() {
             Client.checkPing();
-            this.roomsText.text = 'Coming soon... :(';
+            //this.roomsText.text = 'Coming soon... :(';
             Client.askBotGame();
         }
 
