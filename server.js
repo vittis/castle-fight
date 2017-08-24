@@ -11,6 +11,7 @@ app.use('/libs', express.static(__dirname + '/libs'));
 app.use('/assets', express.static(__dirname + '/assets'));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
+    console.log(req.url);
 });
 server.listen(process.env.PORT || 8081, function () {
     console.log('Listening on ' + server.address().port);
