@@ -1,6 +1,6 @@
 var game = new Kodo.Game();
 var WebFontConfig = {
-    active: function () { console.log("vamo porra"); },
+    active: function () { },
     google: {
         families: ['Baloo Paaji']
     }
