@@ -40,32 +40,37 @@ var GameCore = (function () {
         if (p.socket) {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig_1.GameConfig.STEP_RATE });
             p.socket.on('askBuild', function (data) {
-                if (!data.isUnit) {
-                    if (data.isHost) {
-                        this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                if (this.gridManager.tileAt(data.row, data.col).entity == null) {
+                    if (!data.isUnit) {
+                        if (data.isHost) {
+                            this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                        }
+                        else {
+                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                        }
                     }
                     else {
-                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                    }
-                }
-                else {
-                    console.log("vai construir");
-                    if (data.isHost) {
-                        this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                    }
-                    else {
-                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        if (data.isHost) {
+                            this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        }
+                        else {
+                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        }
                     }
                 }
             }.bind(this));
             p.socket.on('askSpamTileMark', function (data) {
                 if (data.isHost) {
-                    this.host.getEntityById(data.buildingId).data.tileRow = data.row;
-                    this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                    if (this.host.getEntityById(data.buildingId) != null) {
+                        this.host.getEntityById(data.buildingId).data.tileRow = data.row;
+                        this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
                 else {
-                    this.client.getEntityById(data.buildingId).data.tileRow = data.row;
-                    this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    if (this.client.getEntityById(data.buildingId) != null) {
+                        this.client.getEntityById(data.buildingId).data.tileRow = data.row;
+                        this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
             }.bind(this));
             p.socket.on('askTrainUnit', function (data) {

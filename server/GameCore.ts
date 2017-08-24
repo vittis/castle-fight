@@ -49,7 +49,6 @@ export class GameCore {
         this.host.buildBuilding(new Tower(11, 5));     
         this.host.buildBuilding(new Tower(3, 5)); 
 
-
          // this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
          /* this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); 
          this.host.buildBuilding(new Barn(0, 0));   
@@ -83,21 +82,22 @@ export class GameCore {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
 
             p.socket.on('askBuild', function (data) {
-                if (!data.isUnit) {
-                    if (data.isHost) {
-                        this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                if (this.gridManager.tileAt(data.row, data.col).entity == null) {
+                    if (!data.isUnit) {
+                        if (data.isHost) {
+                            this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                        }
+                        else {
+                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                        }
                     }
                     else {
-                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                    }
-                }
-                else {
-                    console.log("vai construir");
-                    if (data.isHost) {
-                        this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                    }
-                    else {
-                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                        if (data.isHost) {
+                            this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                        }
+                        else {
+                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                        }
                     }
                 }
             }.bind(this));

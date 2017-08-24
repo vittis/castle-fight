@@ -31,7 +31,7 @@ var Kodo;
             this.tile.entity = null;
             this.tile = tile;
             this.tile.entity = this;
-            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate + 20, Phaser.Easing.Linear.None, true);
+            this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate + 75, Phaser.Easing.Linear.None, true);
         };
         Unit.prototype.attack = function (tile) {
         };
