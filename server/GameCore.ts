@@ -104,12 +104,16 @@ export class GameCore {
 
             p.socket.on('askSpamTileMark', function (data) {
                 if (data.isHost) {
-                    this.host.getEntityById(data.buildingId).data.tileRow = data.row;
-                    this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                    if (this.host.getEntityById(data.buildingId) != null) {
+                        this.host.getEntityById(data.buildingId).data.tileRow = data.row;
+                        this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
                 else {
-                    this.client.getEntityById(data.buildingId).data.tileRow = data.row;
-                    this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    if (this.client.getEntityById(data.buildingId) != null) {
+                        this.client.getEntityById(data.buildingId).data.tileRow = data.row;
+                        this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
             }.bind(this));
 

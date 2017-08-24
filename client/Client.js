@@ -79,7 +79,7 @@ var Client;
     function checkPing() {
         socket.emit('latency', Date.now(), function (startTime) {
             var latency = Date.now() - startTime;
-            console.log(latency);
+            console.log("ping: " + latency);
         });
     }
     Client.checkPing = checkPing;
