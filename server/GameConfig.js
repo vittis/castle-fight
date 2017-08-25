@@ -4,7 +4,7 @@ var GameConfig;
 (function (GameConfig) {
     GameConfig.GRID_ROWS = 16;
     GameConfig.GRID_COLS = 31;
-    GameConfig.STEP_RATE = 700;
+    GameConfig.STEP_RATE = 300;
     GameConfig.STARTING_GOLD = 150;
     GameConfig.STARTING_WOOD = 0;
     GameConfig.STARTING_INCOME = 10;

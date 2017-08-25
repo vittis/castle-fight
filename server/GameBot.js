@@ -24,8 +24,10 @@ var GameBot = (function (_super) {
         _this.counter = 0;
         _this.botPoints = [{ row: 11, col: 26 }, { row: 13, col: 27 }, { row: 9, col: 28 }, { row: 9, col: 26 }];
         _this.topPoints = [{ row: 3, col: 26 }, { row: 5, col: 27 }, { row: 1, col: 28 }, { row: 1, col: 26 }];
-        _this.middlePoints = [{ row: 7, col: 26 }, { row: 7, col: 28 }];
+        _this.middlePoints = [{ row: 7, col: 25 }, { row: 7, col: 27 }];
         _this.meleeBuildings = ["ThiefsTent", "Barracks", "TechStation"];
+        _this.goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange"];
+        _this.woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
         _this.nextCard = null;
         _this.state = BotStatus.START;
         _this.waitTime = 8;
@@ -38,13 +40,14 @@ var GameBot = (function (_super) {
             if (this.counter >= this.waitTime) {
                 var pos = this.botPoints[Math.floor(Math.random() * this.botPoints.length)];
                 if (this.gm.tileAt(pos.row, pos.col).entity == null) {
-                    var building;
+                    var building = void 0;
                     if (this.nextCard) {
                         building = this.nextCard;
                         if (this.nextCard == "ArcheryRange") {
                             this.state = BotStatus.WAITING;
-                            this.waitTime = 20;
+                            this.waitTime = 50;
                             this.counter = 0;
+                            this.nextCard = "ThiefsTent";
                         }
                         this.nextCard = null;
                     }
@@ -65,18 +68,53 @@ var GameBot = (function (_super) {
         }
         if (this.state == BotStatus.WAITING) {
             if (this.counter >= this.waitTime) {
+                var building = void 0;
+                if (this.nextCard) {
+                    building = this.nextCard;
+                    this.nextCard = null;
+                }
+                else {
+                    building = this.meleeBuildings[Math.floor(Math.random() * this.meleeBuildings.length)];
+                }
                 var pos = this.topPoints[Math.floor(Math.random() * this.topPoints.length)];
                 if (this.gm.tileAt(pos.row, pos.col).entity == null) {
-                    if (this.nextCard) {
-                        building = this.nextCard;
-                        this.nextCard = null;
-                    }
-                    else {
-                        building = this.meleeBuildings[Math.floor(Math.random() * this.meleeBuildings.length)];
-                    }
                     this.buildBuilding(new (require('./building/' + building))[building](pos.row, pos.col));
                     this.counter = 0;
                     this.waitTime = 15;
+                    this.state = BotStatus.AGRESSIVE;
+                }
+            }
+        }
+        if (this.state == BotStatus.AGRESSIVE) {
+            if (this.counter >= this.waitTime) {
+                var building = void 0;
+                if (this.resourceManager.wood >= 160) {
+                    building = this.woodBuildings[Math.floor(Math.random() * this.woodBuildings.length)];
+                }
+                else {
+                    building = this.goldBuildings[Math.floor(Math.random() * this.goldBuildings.length)];
+                }
+                var pos = void 0;
+                if (this.gm.tileAt(7, 25).entity == null || this.gm.tileAt(7, 27).entity == null) {
+                    if (this.gm.tileAt(7, 26).entity == null) {
+                        pos = { row: 7, col: 25 };
+                    }
+                    else {
+                        pos = { row: 7, col: 27 };
+                    }
+                }
+                else {
+                    if (Math.random() >= 0.5) {
+                        pos = this.botPoints[Math.floor(Math.random() * this.botPoints.length)];
+                    }
+                    else {
+                        pos = this.topPoints[Math.floor(Math.random() * this.topPoints.length)];
+                    }
+                }
+                if (this.gm.tileAt(pos.row, pos.col).entity == null) {
+                    this.buildBuilding(new (require('./building/' + building))[building](pos.row, pos.col));
+                    this.counter = 0;
+                    this.waitTime = 10;
                 }
             }
         }
