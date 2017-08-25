@@ -47,7 +47,7 @@ var Kodo;
                 }
                 if (this.target instanceof Kodo.Unit) {
                     this.descTexto.text = this.target.dataq.name + "\n" + "\nDamage: "
-                        + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
+                        + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate + "\n" + Kodo[this.target.dataq.name].description;
                     this.hpTexto.text = "" + this.target.dataq.hp;
                     this.armorTexto.text = "" + this.target.dataq.armor;
                 }
@@ -127,7 +127,7 @@ var Kodo;
                 this.game.time.events.add(150, entityManager.justOpenedFalse.bind(this), this);
                 entityManager.isShowing = true;
                 entityManager.descricaoString = unit.dataq.name + "\n"
-                    + "\nDamage: " + unit.data.attackDmg + "\nRange: " + unit.data.attackRange + "\nAtk Speed: " + unit.data.attackRate;
+                    + "\nDamage: " + unit.data.attackDmg + "\nRange: " + unit.data.attackRange + "\nAtk Speed: " + unit.data.attackRate + "\n" + Kodo[unit.dataq.name].description;
                 var style = {
                     font: "", fill: 'white', wordWrap: false, align: "center"
                 };
