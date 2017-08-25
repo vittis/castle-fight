@@ -183,7 +183,7 @@ var GameCore = (function () {
                                         targetTile = unit.tile.col >= 20 ? _this.gridManager.tileAt(8, 25) : _this.gridManager.tileAt(3, 22);
                                     }
                                     else {
-                                        targetTile = unit.tile.col <= 6 ? _this.gridManager.tileAt(8, 5) : _this.gridManager.tileAt(3, 8);
+                                        targetTile = unit.tile.col <= 8 ? _this.gridManager.tileAt(8, 5) : _this.gridManager.tileAt(3, 8);
                                     }
                                 }
                             }

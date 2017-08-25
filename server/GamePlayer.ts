@@ -29,18 +29,20 @@ export class GamePlayer {
     }
     buildBuilding(b) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {
-            if (!(b instanceof Unit)) {
-                this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
-                if (b.data.woodCost == 0) {
-                    this.resourceManager.add(0, b.data.goldCost);
+            if (this.gm.tileAt(b.row, b.col).entity == null) {
+                if (!(b instanceof Unit)) {
+                    this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
+                    if (b.data.woodCost == 0) {
+                        this.resourceManager.add(0, b.data.goldCost);
+                    }
+                    this.resourceManager.income += b.data.incomeGain;
+                    this.addEntity(b);
                 }
-                this.resourceManager.income += b.data.incomeGain;
-                this.addEntity(b);
-            }
-            else {
-                this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
-                b.justSpawned = true;
-                this.addEntity(b);
+                else {
+                    this.resourceManager.subtract(b.data.goldCost, b.data.woodCost);
+                    b.justSpawned = true;
+                    this.addEntity(b);
+                }
             }
         }
         else {

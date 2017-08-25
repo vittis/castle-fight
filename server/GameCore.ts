@@ -243,7 +243,7 @@ export class GameCore {
                                         targetTile = unit.tile.col >= 20 ? this.gridManager.tileAt(8, 25) : this.gridManager.tileAt(3, 22);
                                     }
                                     else {
-                                        targetTile = unit.tile.col <= 6 ? this.gridManager.tileAt(8, 5) : this.gridManager.tileAt(3, 8);
+                                        targetTile = unit.tile.col <= 8 ? this.gridManager.tileAt(8, 5) : this.gridManager.tileAt(3, 8);
                                     }
                                 }
                             }

@@ -24,9 +24,9 @@ export class GameBot extends GamePlayer {
 
     waitTime;
 
-    meleeBuildings = ["ThiefsTent", "Barracks", "TechStation"];
+    meleeBuildings = ["ThiefsTent", "Barracks", "TechStation", "Barn"];
 
-    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange"];
+    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn"];
 
     woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
 
@@ -42,7 +42,7 @@ export class GameBot extends GamePlayer {
 
     step() {
         this.counter++;
-        console.log(this.state + ", G: " + this.resourceManager.gold + ", W:"+this.resourceManager.wood);
+
         if (this.state == BotStatus.START) {
             if (this.counter >= this.waitTime) {
                 let pos = this.botPoints[Math.floor(Math.random() * this.botPoints.length)];

@@ -25,8 +25,8 @@ var GameBot = (function (_super) {
         _this.botPoints = [{ row: 11, col: 26 }, { row: 13, col: 27 }, { row: 9, col: 28 }, { row: 9, col: 26 }];
         _this.topPoints = [{ row: 3, col: 26 }, { row: 5, col: 27 }, { row: 1, col: 28 }, { row: 1, col: 26 }];
         _this.middlePoints = [{ row: 7, col: 25 }, { row: 7, col: 27 }];
-        _this.meleeBuildings = ["ThiefsTent", "Barracks", "TechStation"];
-        _this.goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange"];
+        _this.meleeBuildings = ["ThiefsTent", "Barracks", "TechStation", "Barn"];
+        _this.goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn"];
         _this.woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
         _this.nextCard = null;
         _this.state = BotStatus.START;
@@ -35,7 +35,6 @@ var GameBot = (function (_super) {
     }
     GameBot.prototype.step = function () {
         this.counter++;
-        console.log(this.state + ", G: " + this.resourceManager.gold + ", W:" + this.resourceManager.wood);
         if (this.state == BotStatus.START) {
             if (this.counter >= this.waitTime) {
                 var pos = this.botPoints[Math.floor(Math.random() * this.botPoints.length)];
