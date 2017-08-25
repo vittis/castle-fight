@@ -153,6 +153,7 @@ var Kodo;
                 this.game.load.image('backButton', 'assets/48/menu_ui/backButton.png');
                 this.game.load.image('deckbuildingGuide', 'assets/48/menu_ui/deckbuildingGuide.png');
                 this.game.load.image('howToPlay-changelog', 'assets/48/menu_ui/howToPlay-changelog.png');
+                this.game.load.image('moreButton', 'assets/48/menu_ui/moreButton.png');
             }
         };
         Preloader.prototype.create = function () {

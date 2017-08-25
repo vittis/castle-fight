@@ -56,6 +56,9 @@ var Kodo;
             for (var i = 0; i < 9; i++) {
                 _loop_1();
             }
+            var moreButton = this.game.add.button(15, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank"); }, this);
+            moreButton.scale.setTo(0.9, 0.9);
+            moreButton.position.setTo(30, this.game.height - 30);
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };

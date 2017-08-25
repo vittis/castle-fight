@@ -59,6 +59,9 @@ module Kodo {
                     }, this);
                 }, this);           
             }
+            var moreButton = this.game.add.button(15, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank");}, this);
+            moreButton.scale.setTo(0.9, 0.9);
+            moreButton.position.setTo(30, this.game.height - 30);
 
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
