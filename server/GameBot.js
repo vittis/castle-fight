@@ -31,6 +31,7 @@ var GameBot = (function (_super) {
         _this.nextCard = null;
         _this.state = BotStatus.START;
         _this.waitTime = 8;
+        _this.resourceManager.incomeRate += 3;
         return _this;
     }
     GameBot.prototype.step = function () {
@@ -113,7 +114,7 @@ var GameBot = (function (_super) {
                 if (this.gm.tileAt(pos.row, pos.col).entity == null) {
                     this.buildBuilding(new (require('./building/' + building))[building](pos.row, pos.col));
                     this.counter = 0;
-                    this.waitTime = 10;
+                    this.waitTime = 5;
                 }
             }
         }

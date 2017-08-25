@@ -24,8 +24,10 @@ var GameCore = (function () {
             this.client = new GameBot_1.GameBot(client, false, this.gridManager);
         }
         this.ballManager = new IncomeBallManager_1.IncomeBallManager(new GamePlayer_1.GamePlayer(null, null, this.gridManager));
-        this.host.buildBuilding(new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, 0));
-        this.client.buildBuilding(new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2));
+        this.hostCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, 0);
+        this.clientCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2);
+        this.host.buildBuilding(this.hostCastle);
+        this.client.buildBuilding(this.clientCastle);
         this.client.buildBuilding(new Tower_1.Tower(3, 24));
         this.client.buildBuilding(new Tower_1.Tower(11, 24));
         this.host.buildBuilding(new Tower_1.Tower(11, 5));
@@ -118,6 +120,16 @@ var GameCore = (function () {
     };
     GameCore.prototype.step = function () {
         var _this = this;
+        if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0) {
+            if (this.clientCastle.data.hp <= 0) {
+                console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
+            }
+            else {
+                console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");
+            }
+            this.endGame();
+            return;
+        }
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(function (building) {
             building.resetAttackData();

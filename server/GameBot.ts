@@ -37,12 +37,12 @@ export class GameBot extends GamePlayer {
         super(player, isHost, gm);
         this.state = BotStatus.START;
         this.waitTime=8;
+        this.resourceManager.incomeRate +=3;
     }
 
 
     step() {
         this.counter++;
-
         if (this.state == BotStatus.START) {
             if (this.counter >= this.waitTime) {
                 let pos = this.botPoints[Math.floor(Math.random() * this.botPoints.length)];
@@ -127,7 +127,7 @@ export class GameBot extends GamePlayer {
                 if (this.gm.tileAt(pos.row, pos.col).entity == null) {
                     this.buildBuilding(new (require('./building/' + building))[building](pos.row, pos.col))
                     this.counter = 0;
-                    this.waitTime = 10;
+                    this.waitTime = 5;
                 }
 
 
