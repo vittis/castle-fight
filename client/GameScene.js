@@ -18,6 +18,7 @@ var Kodo;
             _this.entities = [];
             _this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0 };
             _this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
+            _this.stateCache = [];
             return _this;
         }
         GameScene.prototype.create = function () {
@@ -54,13 +55,21 @@ var Kodo;
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
+            this.game.time.events.loop(720, this.loopCache.bind(this), this);
         };
         GameScene.prototype.update = function () {
             this.uiBuildingManager.update();
             this.uiEntityManager.update();
             this.updateManager.update();
         };
-        GameScene.prototype.updateEntities = function (newEntities) {
+        GameScene.prototype.loopCache = function () {
+            console.log(this.stateCache.length);
+            if (this.stateCache.length > 0) {
+                this.executeUpdateEntities(this.stateCache[0]);
+                this.stateCache.splice(0, 1);
+            }
+        };
+        GameScene.prototype.executeUpdateEntities = function (newEntities) {
             var _this = this;
             console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
@@ -87,6 +96,11 @@ var Kodo;
             this.cleanDeadEntities(newEntities);
             this.uiEntityManager.updateText();
             this.lastTimeUpdate = Date.now();
+        };
+        GameScene.prototype.updateEntities = function (newEntities) {
+            if (this.stateCache.length == 0) {
+                this.stateCache.push(newEntities);
+            }
         };
         GameScene.prototype.cleanDeadEntities = function (newEntities) {
             var idArray = [];

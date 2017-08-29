@@ -31,6 +31,7 @@ module Kodo {
 
         lastTimeUpdate;
 
+        stateCache : any[] = []
 
         create() {
             GameScene.instance = this;
@@ -72,7 +73,7 @@ module Kodo {
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
-
+            this.game.time.events.loop(720, this.loopCache.bind(this), this);
         }
 
          update() {
@@ -80,24 +81,32 @@ module Kodo {
             this.uiEntityManager.update(); 
             this.updateManager.update();
         } 
-        
-        updateEntities(newEntities : any[]) {
+
+        loopCache() {
+            console.log(this.stateCache.length);
+            if (this.stateCache.length > 0){
+                this.executeUpdateEntities(this.stateCache[0]);
+                this.stateCache.splice(0, 1);
+            }
+        }
+
+        executeUpdateEntities(newEntities: any[]) {
             console.log(Date.now() - this.lastTimeUpdate);
-            this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
+            this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
             this.updateManager.updateCounter(this.player.updateRateCounter);
-            if (this.updateManager.uIUpdateButton.allGroup.visible){
+            if (this.updateManager.uIUpdateButton.allGroup.visible) {
                 this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
                 this.updateManager.uIUpdateButton.updateText();
-              }
+            }
 
-            this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
+            this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
                 this.world.bringToTop(item.tudoGroup);
-            }.bind(this), this);  
+            }.bind(this), this);
 
-            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);   
-            
+            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+
             newEntities.forEach(newEntity => {
                 var entityID = newEntity.id;
                 if (this.idExists(entityID)) {
@@ -107,11 +116,19 @@ module Kodo {
                     this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
                 }
             });
-            this.cleanDeadEntities(newEntities);  
-            
+            this.cleanDeadEntities(newEntities);
+
             this.uiEntityManager.updateText();
 
             this.lastTimeUpdate = Date.now();
+        }
+
+
+        updateEntities(newEntities : any[]) {
+            if (this.stateCache.length == 0){
+                this.stateCache.push(newEntities);
+            }
+            //this.executeUpdateEntities(newEntities);
          }
 
         cleanDeadEntities(newEntities : Entity[]) {
