@@ -62,6 +62,7 @@ var Kodo;
         };
         GameScene.prototype.updateEntities = function (newEntities) {
             var _this = this;
+            console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
@@ -85,6 +86,7 @@ var Kodo;
             });
             this.cleanDeadEntities(newEntities);
             this.uiEntityManager.updateText();
+            this.lastTimeUpdate = Date.now();
         };
         GameScene.prototype.cleanDeadEntities = function (newEntities) {
             var idArray = [];

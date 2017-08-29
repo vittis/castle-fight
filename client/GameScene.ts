@@ -29,11 +29,13 @@ module Kodo {
 
         static instance : GameScene = null;
 
+        lastTimeUpdate;
+
+
         create() {
             GameScene.instance = this;
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
-
 
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
                 this.grid[i] = [];
@@ -80,6 +82,7 @@ module Kodo {
         } 
         
         updateEntities(newEntities : any[]) {
+            console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
@@ -107,6 +110,8 @@ module Kodo {
             this.cleanDeadEntities(newEntities);  
             
             this.uiEntityManager.updateText();
+
+            this.lastTimeUpdate = Date.now();
          }
 
         cleanDeadEntities(newEntities : Entity[]) {
@@ -157,9 +162,7 @@ module Kodo {
                         }
                     });
                 }
-
             }
-
             return tiles;
         }
         getNeighbors(tile: Tile): Tile[] {
