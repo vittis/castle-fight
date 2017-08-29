@@ -20,6 +20,9 @@ var DataSerializer;
         obj.income = player.resourceManager.income;
         obj.incomeRate = player.resourceManager.incomeRate;
         obj.incomeRateCounter = player.resourceManager.incomeRateCounter;
+        obj.updateCount = player.updateManager.updateCount;
+        obj.updateRate = player.updateManager.updateRate;
+        obj.updateRateCounter = player.updateManager.updateRateCounter;
         return obj;
     }
     DataSerializer.SerializePlayer = SerializePlayer;

@@ -10,6 +10,6 @@
     "attackRate": 3,
 
     "description": "Gains +3 HP and +1 Damage if there are 4 or more Farmers when this unit is trained",
-    "goldCost": 25,
+    "goldCost": 15,
     "woodCost": 0
 }

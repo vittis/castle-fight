@@ -15,7 +15,7 @@ var SpamBuilding = (function (_super) {
     __extends(SpamBuilding, _super);
     function SpamBuilding(row, col, buildingData) {
         var _this = _super.call(this, row, col, buildingData) || this;
-        _this.data.spamData = { hasSpammed: false, spamRateCounter: _this.data.spamRate, isTraining: true };
+        _this.data.spamData = { hasSpammed: false, spamRateCounter: 0, isTraining: true };
         return _this;
     }
     Object.defineProperty(SpamBuilding.prototype, "data", {
@@ -30,9 +30,11 @@ var SpamBuilding = (function (_super) {
         var tile = this.getTileToSpam();
         this.data.tileRow = tile.row;
         this.data.tileCol = tile.col;
+        this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        this.data.spamCount += this.owner.updateManager.unitCountModifier;
     };
     SpamBuilding.prototype.spamUnit = function (unit) {
-        if (this.data.spamData.spamRateCounter == 0) {
+        if (this.data.spamData.spamRateCounter >= this.data.spamRate) {
             var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
             if (tile.entity != null) {
                 tile = this.getTileToSpam();
@@ -44,14 +46,14 @@ var SpamBuilding = (function (_super) {
             if (tile) {
                 this.owner.addEntity(new unit(tile.row, tile.col));
             }
-            this.data.spamData.spamRateCounter = this.data.spamRate;
+            this.data.spamData.spamRateCounter = 0;
             this.data.spamData.hasSpammed = true;
             this.data.spamCount--;
             if (this.data.spamCount <= 0)
                 this.onDeath();
         }
         if (this.data.spamData.isTraining) {
-            this.data.spamData.spamRateCounter--;
+            this.data.spamData.spamRateCounter++;
         }
     };
     SpamBuilding.prototype.trainUnit = function () {

@@ -38,26 +38,4 @@ export class ResourceManager {
         this.gold += gold;
         this.wood += wood;
     }
-
-
-    /*addIncome(number) {
-        this.income+=
-    }
-
-
-
-
-    addGold(number) {
-        this.gold += number;
-    }
-    subtractGold(number) {
-        this.gold -= number;
-    }
-    addWood(number) {
-        this.wood += number;
-    }
-    subtractWood(number) {
-        this.wood -= number;
-    }*/
-
 }

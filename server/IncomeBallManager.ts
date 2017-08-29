@@ -3,6 +3,7 @@ import { IncomeBall } from "./building/IncomeBall";
 import { GamePlayer } from "./GamePlayer";
 import { Entity } from "./Entity";
 import { GameConfig } from "./GameConfig";
+import { Unit } from "./Unit";
 
 export class IncomeBallManager {
 
@@ -20,6 +21,20 @@ export class IncomeBallManager {
     }
 
     addBallsToGame() {
+        var entity = this.gp.gm.tileAt(12, 15).entity;
+        if (entity != null) {
+            if (entity instanceof Unit) {
+                let outerTiles = entity.getOuterTiles();
+                entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
+            }
+        }
+        entity = this.gp.gm.tileAt(3, 15).entity;
+        if (entity != null) {
+            if (entity instanceof Unit) {
+                let outerTiles = entity.getOuterTiles();
+                entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
+            }
+        }
         this.gp.addEntity(new IncomeBall(12, 15, this));
         this.gp.addEntity(new IncomeBall(3, 15, this));
         this.baseReward += 20;

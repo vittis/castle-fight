@@ -8,6 +8,6 @@
     "attackDmg": 3,
     "attackRate": 2,
     "description": "Pull units within 6 range",
-    "goldCost": 65,
-    "woodCost": 80
+    "goldCost": 55,
+    "woodCost": 60
 }

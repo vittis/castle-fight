@@ -16,7 +16,7 @@ var Kodo;
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.grid = [];
             _this.entities = [];
-            _this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10 };
+            _this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0 };
             _this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
             return _this;
         }
@@ -36,6 +36,7 @@ var Kodo;
             this.uiResourceManager = new Kodo.UIResourceManager(this.game);
             this.uiEntityManager = new Kodo.UIEntityManager(this.game);
             this.incomeBallBar = new Kodo.IncomeBallBar(this.game);
+            this.updateManager = new Kodo.UpdateManager(this.game);
             var style = { font: "14px Lucida Console", fill: 'white' };
             var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
             yourNickLabel.stroke = '#E27952';
@@ -57,12 +58,18 @@ var Kodo;
         GameScene.prototype.update = function () {
             this.uiBuildingManager.update();
             this.uiEntityManager.update();
+            this.updateManager.update();
         };
         GameScene.prototype.updateEntities = function (newEntities) {
             var _this = this;
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
+            this.updateManager.updateCounter(this.player.updateRateCounter);
+            if (this.updateManager.uIUpdateButton.allGroup.visible) {
+                this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
+                this.updateManager.uIUpdateButton.updateText();
+            }
             this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
                 this.world.bringToTop(item.tudoGroup);
             }.bind(this), this);
@@ -142,6 +149,15 @@ var Kodo;
                 return true;
             }
             return false;
+        };
+        GameScene.prototype.getSpamBuildings = function (fromHost) {
+            var buildings = [];
+            this.entities.forEach(function (e) {
+                if (e instanceof Kodo.SpamBuilding && e.isHost == fromHost) {
+                    buildings.push(e);
+                }
+            });
+            return buildings;
         };
         GameScene.instance = null;
         return GameScene;

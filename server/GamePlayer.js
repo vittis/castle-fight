@@ -5,6 +5,7 @@ var Building_1 = require("./Building");
 var SpamBuilding_1 = require("./building/SpamBuilding");
 var ResourceManager_1 = require("./ResourceManager");
 var AttackBuilding_1 = require("./building/AttackBuilding");
+var UpdateManager_1 = require("./UpdateManager");
 var GamePlayer = (function () {
     function GamePlayer(player, isHost, gm) {
         this.entities = [];
@@ -12,6 +13,7 @@ var GamePlayer = (function () {
         this.isHost = isHost;
         this.gm = gm;
         this.resourceManager = new ResourceManager_1.ResourceManager();
+        this.updateManager = new UpdateManager_1.UpdateManager(this);
     }
     GamePlayer.prototype.buildBuilding = function (b) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {

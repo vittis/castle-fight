@@ -9,7 +9,7 @@
 
     "spamUnit": "Archer",
     "spamCount": 2,
-    "spamRate": 20,
+    "spamRate": 35,
 
     "description": "Trains Archer",
     "incomeGain": 2

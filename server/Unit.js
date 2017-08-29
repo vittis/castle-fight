@@ -28,6 +28,17 @@ var Unit = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Unit.prototype.addToGame = function (gm) {
+        _super.prototype.addToGame.call(this, gm);
+        this.data.attackDmg += this.owner.updateManager.attackModifier;
+        this.data.attackRate += this.owner.updateManager.atkSpeedModifier;
+        this.data.attackRate = Math.max(1, this.data.attackRate);
+        this.data.maxHP += this.owner.updateManager.hpModifier;
+        this.data.hp += this.owner.updateManager.hpModifier;
+        if (this.data.attackRange > 1) {
+            this.data.attackRange += this.owner.updateManager.rangeModifier;
+        }
+    };
     Unit.prototype.moveTo = function (tile) {
         this.tile.entity = null;
         this.tile = tile;
@@ -37,7 +48,7 @@ var Unit = (function (_super) {
         _super.prototype.receiveAttack.call(this, unit);
     };
     Unit.prototype.canAttack = function () {
-        return this.attackRateCounter == this.data.attackRate;
+        return this.attackRateCounter >= this.data.attackRate;
     };
     Unit.prototype.inRange = function (targetTile) {
         if (targetTile.entity != null) {

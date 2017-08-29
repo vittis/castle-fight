@@ -2,14 +2,14 @@
     "name": "Archer", 
     "width": 1,
     "height": 1,
-    "maxHP": 9, 
+    "maxHP": 8, 
     "maxArmor": 0,
     
     "attackRange": 3,
     "attackDmg": 2,
-    "attackRate": 2,
+    "attackRate": 3,
 
     "description": "Support ranged unit",
-    "goldCost": 35,
+    "goldCost": 25,
     "woodCost": 0
 }

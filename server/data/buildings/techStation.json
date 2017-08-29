@@ -8,7 +8,7 @@
     "woodCost": 0,
     "spamUnit": "Engineer",
     "spamCount": 2,
-    "spamRate": 20,
+    "spamRate": 35,
     "description": "Trains Engineer",
     "incomeGain": 2
 }

@@ -34,6 +34,10 @@ var Kodo;
             _this.input.useHandCursor = true;
             _this.events.onInputOver.add(_this.onOver.bind(_this), _this);
             _this.events.onInputOut.add(_this.onOut.bind(_this), _this);
+            _this.fade = _this.game.add.tween(_this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+            _this.fade.onComplete.add(function destroyMe() {
+                this.destroy();
+            }, _this);
             game.add.existing(_this);
             return _this;
         }
@@ -87,11 +91,7 @@ var Kodo;
             }
             this.armorBar.destroy();
             this.hpBar.destroy();
-            var fade = this.game.add.tween(this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
-            fade.onComplete.add(function destroyMe() {
-                this.destroy();
-            }, this);
-            fade.start();
+            this.fade.start();
             if (Kodo.GameScene.instance.uiEntityManager.target == this) {
                 Kodo.GameScene.instance.uiEntityManager.target = null;
                 if (this instanceof Kodo.SpamBuilding) {

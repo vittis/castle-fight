@@ -5,6 +5,9 @@ module Kodo {
         income?: number;
         incomeRate?: number;
         incomeRateCounter?;
+        updateRateCounter?;
+        updateRate?;
+        updateCount?;
     }
     export class GameScene extends Phaser.State {
 
@@ -18,8 +21,9 @@ module Kodo {
         uiResourceManager: UIResourceManager;
         uiEntityManager : UIEntityManager;
         incomeBallBar : IncomeBallBar;
+        updateManager : UpdateManager;
 
-        player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10};
+        player : PlayerData = {incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0};
         ballData = {spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0};
         isHost : boolean;
 
@@ -45,6 +49,8 @@ module Kodo {
             this.uiResourceManager = new UIResourceManager(this.game);
             this.uiEntityManager = new UIEntityManager(this.game);
             this.incomeBallBar = new IncomeBallBar(this.game);  
+            this.updateManager = new UpdateManager(this.game);  
+
 
             var style = { font: "14px Lucida Console", fill: 'white'};
             var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
@@ -64,21 +70,28 @@ module Kodo {
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
+
         }
 
          update() {
-             this.uiBuildingManager.update();
+            this.uiBuildingManager.update();
             this.uiEntityManager.update(); 
+            this.updateManager.update();
         } 
         
         updateEntities(newEntities : any[]) {
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);     
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
+            this.updateManager.updateCounter(this.player.updateRateCounter);
+            if (this.updateManager.uIUpdateButton.allGroup.visible){
+                this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
+                this.updateManager.uIUpdateButton.updateText();
+              }
 
             this.uiBuildingManager.buildingsGroup.forEachAlive(function(item) {
                 this.world.bringToTop(item.tudoGroup);
-            }.bind(this), this); 
+            }.bind(this), this);  
 
             this.world.bringToTop(this.uiBuildingManager.buildingsGroup);   
             
@@ -168,5 +181,17 @@ module Kodo {
             }
             return false;
         }
+
+        getSpamBuildings(fromHost : boolean) : SpamBuilding[] {
+            var buildings: SpamBuilding[] = [];
+            this.entities.forEach(e => {
+                if (e instanceof SpamBuilding && e.isHost == fromHost) {
+                    buildings.push(e);
+                }
+            });
+            return buildings;
+        }
+
+
     }
 }

@@ -57,11 +57,31 @@ var Kodo;
             }
             return _this;
         }
+        SpamBarSmooth.prototype.addUnitCount = function () {
+            this.unitsCountBar.forEach(function (bar) {
+                bar.destroy();
+            });
+            this.unitsCountBar = [];
+            for (var i = 0; i < this.building.data.spamCount + 1; i++) {
+                var bar2 = game.make.graphics(0, 0);
+                bar2.beginFill();
+                bar2.lineStyle(5, 0xffd700, 1);
+                bar2.moveTo(0, 0);
+                bar2.lineTo(this.maxLenght / (this.building.data.spamCount + 1) - 5, 0);
+                bar2.endFill();
+                this.unitsCountBar[i] = game.add.sprite(this.x, this.y, bar2.generateTexture());
+                bar2.destroy();
+                this.unitsCountBar[i].alpha = 0.9;
+                this.unitsCountBar[i].y += 3;
+                this.unitsCountBar[i].x -= 5;
+                this.unitsCountBar[i].x += i * (this.maxLenght / (this.building.data.spamCount + 1)) + 5 / 2;
+            }
+        };
         SpamBarSmooth.prototype.update = function () {
             if (this.building.data.spamData.isTraining) {
                 if (this.smooth < this.maxLenght) {
                     this.currentTime += this.game.time.elapsed * 0.001;
-                    this.smooth = Phaser.Math.linear(0, this.maxLenght, this.currentTime / (this.timeToMove * this.spamRate));
+                    this.smooth = Phaser.Math.linear(0, this.maxLenght, this.currentTime / (this.timeToMove * this.building.data.spamRate));
                 }
                 this.clear();
                 this.lineStyle(6, 0xffd700, 1);

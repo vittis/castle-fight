@@ -34,6 +34,22 @@ export abstract class Unit extends Entity{
         this.attackRateCounter = this.data.attackRate;
     }
 
+    addToGame(gm) {
+        super.addToGame(gm);
+        this.data.attackDmg += this.owner.updateManager.attackModifier;
+        
+        this.data.attackRate += this.owner.updateManager.atkSpeedModifier;
+        this.data.attackRate = Math.max(1, this.data.attackRate);
+
+        this.data.maxHP += this.owner.updateManager.hpModifier;
+        this.data.hp += this.owner.updateManager.hpModifier;
+
+        if (this.data.attackRange>1){
+            this.data.attackRange += this.owner.updateManager.rangeModifier;
+        }
+    }
+
+
     moveTo(tile : Tile) : void {
         this.tile.entity = null;
         this.tile = tile;
@@ -44,9 +60,8 @@ export abstract class Unit extends Entity{
         super.receiveAttack(unit);
     }
 
-
     canAttack() : boolean {
-        return this.attackRateCounter == this.data.attackRate;
+        return this.attackRateCounter >= this.data.attackRate;
     }
     inRange(targetTile : Tile) : boolean {
         if (targetTile.entity != null) {

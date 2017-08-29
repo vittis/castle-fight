@@ -40,8 +40,12 @@ var GameCore = (function () {
         setTimeout(this.startGame.bind(this), 2000);
     }
     GameCore.prototype.startGame = function () {
-        this.setSocket(this.client.serverPlayer, false);
-        this.setSocket(this.host.serverPlayer, true);
+        if (this.client.serverPlayer.socket) {
+            this.setSocket(this.client.serverPlayer, false);
+        }
+        if (this.host.serverPlayer.socket) {
+            this.setSocket(this.host.serverPlayer, true);
+        }
         this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
     };
     GameCore.prototype.setSocket = function (p, isHost) {
@@ -101,6 +105,14 @@ var GameCore = (function () {
                         this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
                 }
             }.bind(this));
+            p.socket.on('askUpgrade', function (data) {
+                if (data.isHost) {
+                    this.host.updateManager.upgrade(data.upgrade);
+                }
+                else {
+                    this.client.updateManager.upgrade(data.upgrade);
+                }
+            }.bind(this));
         }
     };
     GameCore.prototype.sendaData = function () {
@@ -122,10 +134,10 @@ var GameCore = (function () {
         var _this = this;
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0) {
             if (this.clientCastle.data.hp <= 0) {
-                console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
+                console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");
             }
             else {
-                console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");
+                console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
             }
             this.endGame();
             return;
@@ -230,6 +242,8 @@ var GameCore = (function () {
         });
         this.host.resourceManager.step();
         this.client.resourceManager.step();
+        this.host.updateManager.step();
+        this.client.updateManager.step();
         if (this.client instanceof GameBot_1.GameBot) {
             this.client.step();
         }

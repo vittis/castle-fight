@@ -1790,7 +1790,7 @@ declare module Phaser {
         forEachDead(callback: Function, callbackContext: any, ...args: any[]): void;
         forEachExists(callback: Function, callbackContext: any): void;
         filter(predicate: Function, checkExists?: boolean): ArraySet;
-        getAt(index: number): PIXI.DisplayObject | number | Phaser.Image;
+        getAt(index: number): /* PIXI.DisplayObject | number | Phaser.Image |  */Phaser.Text;
         getBottom(): any;
         getByName(name: string): any;
         getClosestTo(object: any, callback?: Function, callbackContext?: any): any;
@@ -4943,7 +4943,7 @@ declare module Phaser {
         addFontWeight(weight: string, position: number): Phaser.Text;
         addStrokeColor(color: string, position: number): Phaser.Text;
         alignIn(container: Phaser.Rectangle | Phaser.Sprite | Phaser.Image | Phaser.Text | Phaser.BitmapText | Phaser.Button | Phaser.Graphics | Phaser.TileSprite, position?: number, offsetX?: number, offsetY?: number): any;
-        alignTo(container: Phaser.Rectangle | Phaser.Sprite | Phaser.Image | Phaser.Text | Phaser.BitmapText | Phaser.Button | Phaser.Graphics | Phaser.TileSprite, position?: number, offsetX?: number, offsetY?: number): any;
+        alignTo(container: Phaser.Group | Phaser.Rectangle | Phaser.Sprite | Phaser.Image | Phaser.Text | Phaser.BitmapText | Phaser.Button | Phaser.Graphics | Phaser.TileSprite, position?: number, offsetX?: number, offsetY?: number): any;
         clearColors(): Phaser.Text;
         clearFontValues(): Phaser.Text;
         componentsToFont(components: any): string;

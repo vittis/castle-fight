@@ -5,10 +5,10 @@
     "maxHP": 20,
     "maxArmor": 10,
     "goldCost": 70,
-    "woodCost": 95,
+    "woodCost": 75,
     "spamUnit": "Mage",
     "spamCount": 2,
-    "spamRate": 20,
+    "spamRate": 35,
     "description": "Trains Mage",
     "incomeGain": 4
 }

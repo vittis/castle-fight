@@ -95,6 +95,10 @@ var Client;
         socket.emit('cancelMatchmaking');
     }
     Client.cancelMatchmaking = cancelMatchmaking;
+    function askUpgrade(upgrade) {
+        socket.emit('askUpgrade', { upgrade: upgrade, isHost: GameConfig.isHost });
+    }
+    Client.askUpgrade = askUpgrade;
     function askBuild(row, col, name, isUnit) {
         socket.emit('askBuild', { row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost, isUnit: isUnit });
     }

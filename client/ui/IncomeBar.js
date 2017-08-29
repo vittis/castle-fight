@@ -17,7 +17,7 @@ var Kodo;
             _this.currentTime = 0;
             _this.timeToMove = GameConfig.updateRate / 1000 + 0.045;
             _this.maxLenght = 120;
-            _this.x = 310;
+            _this.x = 264;
             _this.y = game.height - GameConfig.uiHeight / 2;
             _this.smooth = 0;
             game.add.existing(_this);

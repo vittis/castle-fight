@@ -21,7 +21,7 @@ module Kodo {
             this.goldLabel = game.add.text(0, 0, '150', style);
             this.goldLabel.anchor.setTo(0.5, 0.5);
             this.goldLabel.fontSize = 40;
-            this.goldLabel.x = 80;
+            this.goldLabel.x = 64;
             this.goldLabel.y = game.height - GameConfig.uiHeight / 2;
             
             this.goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
@@ -30,7 +30,7 @@ module Kodo {
             this.woodLabel = game.add.text(0, 0, '250', style);
             this.woodLabel.anchor.setTo(0.5, 0.5);
             this.woodLabel.fontSize = 40;
-            this.woodLabel.x = 200;
+            this.woodLabel.x = 184;
             this.woodLabel.y = game.height - GameConfig.uiHeight / 2;
             
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');

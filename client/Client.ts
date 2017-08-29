@@ -109,6 +109,10 @@ module Client {
         socket.emit('cancelMatchmaking');
     }
 
+    export function askUpgrade(upgrade : number) {
+        socket.emit('askUpgrade', { upgrade: upgrade, isHost: GameConfig.isHost });
+    }
+
     export function askBuild(row, col, name, isUnit) {
         socket.emit('askBuild', {row: row, col: col, name: name, isHost: Kodo.GameScene.instance.isHost, isUnit: isUnit});
     }

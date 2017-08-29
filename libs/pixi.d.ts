@@ -520,7 +520,7 @@ declare module PIXI {
         addChild(child: DisplayObject): DisplayObject;
         addChildAt(child: DisplayObject, index: number): DisplayObject;
         getBounds(targetCoordinateSpace?: DisplayObject | Matrix): Rectangle;
-        getChildAt(index: number): DisplayObject;
+        getChildAt(index: number): Phaser.Text;//DIsplayObject
         getChildIndex(child: DisplayObject): number;
         getLocalBounds(): Rectangle;
         removeChild(child: DisplayObject): DisplayObject;

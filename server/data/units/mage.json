@@ -8,6 +8,6 @@
     "attackDmg": 2,
     "attackRate": 2,
     "description": "Deals 2 area damage to enemies",
-    "goldCost": 45,
-    "woodCost": 45
+    "goldCost": 35,
+    "woodCost": 25
 }

@@ -85,8 +85,12 @@ export class GameCore {
     } 
 
     startGame() {
-        this.setSocket(this.client.serverPlayer, false);
-        this.setSocket(this.host.serverPlayer, true);
+        if (this.client.serverPlayer.socket) {
+            this.setSocket(this.client.serverPlayer, false);
+        }
+        if (this.host.serverPlayer.socket) {
+            this.setSocket(this.host.serverPlayer, true);
+        }
 
         this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     }
@@ -152,6 +156,15 @@ export class GameCore {
                         this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
                 }
             }.bind(this));
+
+            p.socket.on('askUpgrade', function (data) {
+                if (data.isHost) {
+                    this.host.updateManager.upgrade(data.upgrade);
+                }
+                else {
+                    this.client.updateManager.upgrade(data.upgrade);
+                }
+            }.bind(this));
         }
     }
 
@@ -177,10 +190,10 @@ export class GameCore {
     step() {
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0 ) {
             if (this.clientCastle.data.hp <= 0) {
-                console.log("JOGOU ACABOU -"+this.client.serverPlayer.nick+"- GANHOU");
+                console.log("JOGOU ACABOU -"+this.host.serverPlayer.nick+"- GANHOU");
             }
             else {
-                console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");
+                console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
             }
             this.endGame();
             return;
@@ -299,6 +312,9 @@ export class GameCore {
 
         this.host.resourceManager.step();
         this.client.resourceManager.step();
+
+        this.host.updateManager.step();
+        this.client.updateManager.step();
 
         if (this.client instanceof GameBot) {
             this.client.step();

@@ -6,6 +6,7 @@ import { SpamBuilding } from "./building/SpamBuilding";
 import { ResourceManager } from "./ResourceManager";
 import { GridManager } from "./GridManager";
 import { AttackBuilding } from "./building/AttackBuilding";
+import { UpdateManager } from "./UpdateManager";
 
 export class GamePlayer {
     static lastEntityID = 0;
@@ -18,6 +19,8 @@ export class GamePlayer {
 
     resourceManager : ResourceManager;
 
+    updateManager : UpdateManager;
+
     gm : GridManager;
 
     constructor(player : ServerPlayer, isHost : boolean, gm : GridManager) {
@@ -26,6 +29,7 @@ export class GamePlayer {
         this.gm = gm;
 
         this.resourceManager = new ResourceManager();
+        this.updateManager = new UpdateManager(this);
     }
     buildBuilding(b) {
         if (this.resourceManager.canBuild(b.data.goldCost, b.data.woodCost)) {
@@ -52,11 +56,13 @@ export class GamePlayer {
 
     
     addEntity(e : Entity) {
+ 
         e.owner = this;
         e.id = GamePlayer.lastEntityID;
         GamePlayer.lastEntityID++;
         this.entities.push(e);
         e.addToGame(this.gm);
+
     }
 
     getAllUnits() : Unit[] {

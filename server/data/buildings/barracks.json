@@ -9,7 +9,7 @@
 
     "spamUnit": "Footman",
     "spamCount": 2,
-    "spamRate": 20,
+    "spamRate": 35,
 
     "description": "Trains Footman",
     "incomeGain": 2

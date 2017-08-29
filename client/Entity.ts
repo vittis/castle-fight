@@ -33,7 +33,9 @@ module Kodo {
         descricaoBox: Phaser.Image;
         descTexto: Phaser.Text;
         descricaoString: string;
-
+        
+        fade;
+        
         constructor(game: Phaser.Game, tile : Tile, id : number, isHost, texture : string, data : EntityData) {
             super(game, tile.x, tile.y, texture);
             this.id = id;
@@ -61,6 +63,12 @@ module Kodo {
             this.input.useHandCursor = true;
             this.events.onInputOver.add(this.onOver.bind(this), this);
             this.events.onInputOut.add(this.onOut.bind(this), this);
+
+            this.fade = this.game.add.tween(this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+            this.fade.onComplete.add(function destroyMe() {
+                this.destroy();
+            }, this);
+
 
             game.add.existing(this);
         }
@@ -118,11 +126,11 @@ module Kodo {
             }
             this.armorBar.destroy();
             this.hpBar.destroy();
-            let fade = this.game.add.tween(this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+/*             let fade = this.game.add.tween(this).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
             fade.onComplete.add(function destroyMe() {
                 this.destroy();
-            }, this); 
-            fade.start();
+            }, this); */ 
+            this.fade.start();
             //this.destroy(); 
              if (Kodo.GameScene.instance.uiEntityManager.target == this) {
                  Kodo.GameScene.instance.uiEntityManager.target = null;

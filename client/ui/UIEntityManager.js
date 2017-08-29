@@ -39,6 +39,11 @@ var Kodo;
                         this.hpTexto.text = "" + this.target.dataq.hp;
                         this.armorTexto.text = "" + this.target.dataq.armor;
                     }
+                    else if (this.target instanceof Kodo.SpamBuilding) {
+                        this.descTexto.text = this.target.dataq.name + "\n\n" + "Training Time: " + this.target.data.spamRate + "\n" + Kodo[this.target.dataq.name].description;
+                        this.hpTexto.text = "" + this.target.dataq.hp;
+                        this.armorTexto.text = "" + this.target.dataq.armor;
+                    }
                     else {
                         this.descTexto.text = this.target.dataq.name + "\n" + "\n" + Kodo[this.target.dataq.name].description;
                         this.hpTexto.text = "" + this.target.dataq.hp;
@@ -215,8 +220,11 @@ var Kodo;
                     entityManager.descricaoString = building.dataq.name + "\n\nDamage: "
                         + building.data.attackDmg + "\nRange: " + building.data.attackRange + "\nAtk Speed: " + building.data.attackRate;
                 }
+                else if (building instanceof Kodo.SpamBuilding) {
+                    entityManager.descricaoString = building.dataq.name + "\n\n" + "Training Time: " + building.data.spamRate + "\n" + Kodo[building.dataq.name].description;
+                }
                 else {
-                    entityManager.descricaoString = building.dataq.name + "\n" + "\n" + Kodo[building.dataq.name].description;
+                    entityManager.descricaoString = building.dataq.name + "\n\n" + Kodo[building.dataq.name].description;
                 }
                 var style = {
                     font: "", fill: 'white', wordWrap: false, align: "center"

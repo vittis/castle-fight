@@ -25,7 +25,7 @@ export abstract class SpamBuilding extends Building {
 
     constructor(row, col, buildingData : BuildingData) {
         super(row, col, buildingData);
-        this.data.spamData = { hasSpammed: false, spamRateCounter: this.data.spamRate, isTraining: true};
+        this.data.spamData = { hasSpammed: false, spamRateCounter: 0, isTraining: true};
     }
 
     addToGame(gm) {
@@ -33,9 +33,44 @@ export abstract class SpamBuilding extends Building {
         var tile = this.getTileToSpam();
         this.data.tileRow = tile.row;
         this.data.tileCol = tile.col;
+        
+        this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        this.data.spamCount += this.owner.updateManager.unitCountModifier;
     }
 
-    spamUnit(unit? : any) {
+    spamUnit(unit?: any) {
+        if (this.data.spamData.spamRateCounter >= this.data.spamRate) {
+
+            var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
+            if (tile.entity != null) {
+                tile = this.getTileToSpam();
+                if (tile) {
+                    this.data.tileRow = tile.row;
+                    this.data.tileCol = tile.col;
+                }
+            }
+
+            if (tile) {
+                this.owner.addEntity(new unit(tile.row, tile.col));
+            }
+            this.data.spamData.spamRateCounter = 0;
+            this.data.spamData.hasSpammed = true;
+            this.data.spamCount--;
+            if (this.data.spamCount <= 0)
+                this.onDeath();
+
+            //this.data.spamData.isTraining = false;
+        }
+        if (this.data.spamData.isTraining) {
+            this.data.spamData.spamRateCounter++;
+        }
+    }
+
+
+
+
+
+    /* spamUnit(unit? : any) {
         if (this.data.spamData.spamRateCounter == 0) {
 
             var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
@@ -61,7 +96,7 @@ export abstract class SpamBuilding extends Building {
        if (this.data.spamData.isTraining) {
             this.data.spamData.spamRateCounter--;
        }
-    }
+    } */
 
     trainUnit() {//n sendo usado
         this.data.spamData.isTraining = true;

@@ -146,6 +146,18 @@ module Kodo {
                 this.game.load.image('wood_icon', 'assets/48/ui/wood_icon.png');
                 this.game.load.image('hp_icon', 'assets/48/ui/hp_icon.png');
                 this.game.load.image('armor_icon', 'assets/48/ui/armor_icon.png');
+                this.game.load.spritesheet('update_button', 'assets/48/ui/update_button.png', 60, 60);
+
+                this.game.load.image('upgrade0', 'assets/48/ui/upgrade_income.png');
+                this.game.load.image('upgrade1', 'assets/48/ui/upgrade_training.png');
+                this.game.load.image('upgrade2', 'assets/48/ui/upgrade_attack.png');
+                this.game.load.image('upgrade3', 'assets/48/ui/upgrade_atkspeed.png');
+                this.game.load.image('upgrade4', 'assets/48/ui/upgrade_resource.png');
+                this.game.load.image('upgrade5', 'assets/48/ui/upgrade_unitCount.png');
+                this.game.load.image('upgrade6', 'assets/48/ui/upgrade_hp.png');
+                this.game.load.image('upgrade7', 'assets/48/ui/upgrade_range.png');
+
+
 
                 this.game.load.image('incomeBall', 'assets/48/incomeBall_48.png');
 

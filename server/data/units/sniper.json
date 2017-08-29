@@ -5,9 +5,9 @@
     "maxHP": 8,
     "maxArmor": 3,
     "attackRange": 4,
-    "attackDmg": 4,
+    "attackDmg": 3,
     "attackRate": 2,
     "description": "First attack gains +4 damage, +2 range and stuns",
-    "goldCost": 65,
-    "woodCost": 75
+    "goldCost": 55,
+    "woodCost": 55
 }

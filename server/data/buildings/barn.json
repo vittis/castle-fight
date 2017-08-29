@@ -9,7 +9,7 @@
 
     "spamUnit": "Farmer",
     "spamCount": 3,
-    "spamRate": 10,
+    "spamRate": 25,
 
     "description": "Trains Farmer",
     "incomeGain": 1

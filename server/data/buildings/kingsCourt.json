@@ -5,10 +5,10 @@
     "maxHP": 35,
     "maxArmor": 10,
     "goldCost": 80,
-    "woodCost": 160,
+    "woodCost": 140,
     "spamUnit": "King",
     "spamCount": 2,
-    "spamRate": 30,
+    "spamRate": 45,
     "description": "Trains King",
     "incomeGain": 8
 }
