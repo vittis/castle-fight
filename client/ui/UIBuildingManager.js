@@ -192,7 +192,7 @@ var Kodo;
                         console.log("n pode construir aqui UNIT");
                     }
                 }
-                this.game.time.events.add(500, this.hidePreview.bind(this), this);
+                this.game.time.events.add(1500, this.hidePreview.bind(this), this);
             }
         };
         UIBuildingManager.prototype.hidePreview = function () {

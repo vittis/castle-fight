@@ -63,7 +63,6 @@ var Kodo;
             this.updateManager.update();
         };
         GameScene.prototype.loopCache = function () {
-            console.log(this.stateCache.length);
             if (this.stateCache.length > 0) {
                 this.executeUpdateEntities(this.stateCache[0]);
                 this.stateCache.splice(0, 1);
@@ -71,7 +70,6 @@ var Kodo;
         };
         GameScene.prototype.executeUpdateEntities = function (newEntities) {
             var _this = this;
-            console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);

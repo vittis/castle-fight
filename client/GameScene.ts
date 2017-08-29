@@ -83,7 +83,7 @@ module Kodo {
         } 
 
         loopCache() {
-            console.log(this.stateCache.length);
+            //console.log(this.stateCache.length);
             if (this.stateCache.length > 0){
                 this.executeUpdateEntities(this.stateCache[0]);
                 this.stateCache.splice(0, 1);
@@ -91,7 +91,7 @@ module Kodo {
         }
 
         executeUpdateEntities(newEntities: any[]) {
-            console.log(Date.now() - this.lastTimeUpdate);
+            //console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
