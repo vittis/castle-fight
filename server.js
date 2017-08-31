@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
     console.log(req.url);
 });
-server.listen(process.env.PORT || 8081, function () {
+server.listen(process.env.PORT || 80, function () {
     console.log('Listening on ' + server.address().port);
 });
 var GameServer_1 = require("./server/GameServer");
