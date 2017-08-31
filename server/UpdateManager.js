@@ -16,7 +16,14 @@ var UpdateManager = (function () {
     function UpdateManager(gamePlayer) {
         this.updateRateCounter = 0;
         this.updateCount = 0;
-        this.upgradeCosts = [2, 1, 1, 2, 1, 3, 1, 2];
+        this.upgradeCosts = [2,
+            1,
+            2,
+            3,
+            1,
+            3,
+            1,
+            2];
         this.attackModifier = 0;
         this.atkSpeedModifier = 0;
         this.hpModifier = 0;
@@ -62,7 +69,7 @@ var UpdateManager = (function () {
                 this.atkSpeedModifier -= 1;
             }
             else if (upgrade == 4) {
-                this.gamePlayer.resourceManager.add(75, 75);
+                this.gamePlayer.resourceManager.add(50, 50);
             }
             else if (upgrade == 5) {
                 this.gamePlayer.getSpamBuildings().forEach(function (b) {
@@ -72,10 +79,10 @@ var UpdateManager = (function () {
             }
             else if (upgrade == 6) {
                 this.gamePlayer.getAllUnits().forEach(function (u) {
-                    u.data.maxHP += 2;
-                    u.data.hp += 2;
+                    u.data.maxHP += 1;
+                    u.data.hp += 1;
                 });
-                this.hpModifier += 2;
+                this.hpModifier += 1;
             }
             else if (upgrade == 7) {
                 this.gamePlayer.getAllUnits().forEach(function (u) {

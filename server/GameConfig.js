@@ -10,5 +10,5 @@ var GameConfig;
     GameConfig.STARTING_INCOME = 15;
     GameConfig.STARTING_INCOME_RATE = 13;
     GameConfig.BALL_SPAM_RATE = 80;
-    GameConfig.UPDATE_RATE = 80;
+    GameConfig.UPDATE_RATE = 55;
 })(GameConfig = exports.GameConfig || (exports.GameConfig = {}));

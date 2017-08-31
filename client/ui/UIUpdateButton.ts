@@ -7,7 +7,14 @@ module Kodo {
 
         wrapGroup : Phaser.Group;
 
-        upgradeCosts = [2, 1, 1, 2, 1, 3, 1, 2];
+        upgradeCosts = [2, //income
+                        1, //training
+                        2, //attack
+                        3, //atk speed
+                        1, //resource
+                        3, //unitcount
+                        1, //hp
+                        2];//range
 
         justOpened = false;
         justClicked = false;

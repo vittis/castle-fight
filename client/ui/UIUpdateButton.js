@@ -2,7 +2,14 @@ var Kodo;
 (function (Kodo) {
     var UIUpdateButton = (function () {
         function UIUpdateButton(game, button) {
-            this.upgradeCosts = [2, 1, 1, 2, 1, 3, 1, 2];
+            this.upgradeCosts = [2,
+                1,
+                2,
+                3,
+                1,
+                3,
+                1,
+                2];
             this.justOpened = false;
             this.justClicked = false;
             this.game = game;

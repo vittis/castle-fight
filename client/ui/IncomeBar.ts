@@ -49,7 +49,6 @@ module Kodo {
             var goldIcon = game.add.sprite(125, game.height - GameConfig.uiHeight / 2, 'gold_icon');
             goldIcon.scale.setTo(0.7, 0.7);
             goldIcon.alignTo(this.incomeNumberLabel, Phaser.RIGHT_CENTER, 3, -2);
-
         }
         update() {
             if (this.smooth < this.maxLenght) {

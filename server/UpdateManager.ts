@@ -22,7 +22,14 @@ export class UpdateManager {
 
     updateCount=0;;
 
-    upgradeCosts = [2, 1, 1, 2, 1, 3, 1, 2];
+    upgradeCosts = [2, //income
+                    1, //training
+                    2, //attack
+                    3, //atk speed
+                    1, //resource
+                    3, //unitcount
+                    1, //hp
+                    2];//range
 
     gamePlayer : GamePlayer;
 
@@ -79,9 +86,9 @@ export class UpdateManager {
                 this.atkSpeedModifier -= 1;
             }
             else if (upgrade == 4) {
-                this.gamePlayer.resourceManager.add(75, 75);
+                this.gamePlayer.resourceManager.add(50, 50);
             }
-            else if (upgrade == 5){
+            else if (upgrade == 5) {
                 this.gamePlayer.getSpamBuildings().forEach(b => {
                     b.data.spamCount += 1;
                 });
@@ -89,10 +96,10 @@ export class UpdateManager {
             }
             else if (upgrade == 6) {
                 this.gamePlayer.getAllUnits().forEach(u => {
-                    u.data.maxHP += 2;
-                    u.data.hp += 2;
+                    u.data.maxHP += 1;
+                    u.data.hp += 1;
                 });
-                this.hpModifier += 2;
+                this.hpModifier += 1;
             }
             else if (upgrade == 7) {
                 this.gamePlayer.getAllUnits().forEach(u => {
