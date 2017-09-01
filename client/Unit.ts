@@ -25,6 +25,8 @@ module Kodo {
         static goldCost = 0;
         static woodCost = 0;
 
+        shield : Phaser.Sprite = null;
+
         get data(): UnitData {
             return this.dataq;
         }
@@ -56,6 +58,20 @@ module Kodo {
             }
             if (this.data.attackData.hasAttacked) {
                 this.attack(Kodo.GameScene.instance.grid[this.data.attackData.row][this.data.attackData.col]);
+            }
+            if (newData.statusData.shielded) {
+                if (this.shield == null) {
+                    this.shield = this.game.add.sprite(0, 0, 'shield');
+                    this.shield.tint = this.isHost ? 0xe27952 : 0x1b914d;
+                    this.addChild(this.shield);
+                }
+            }
+            else {
+                if (this.shield != null) {
+                    this.removeChild(this.shield);
+                    this.shield.destroy();
+                    this.shield = null;
+                }
             }
         }
         onDeath() {

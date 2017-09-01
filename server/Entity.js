@@ -12,7 +12,7 @@ var Entity = (function () {
         this.dataq.armor = data.maxArmor;
         this.row = row;
         this.col = col;
-        this.dataq.statusData = { stunned: false };
+        this.dataq.statusData = { stunned: false, shielded: false };
     }
     Entity.prototype.addToGame = function (gm) {
         this.gm = gm;
@@ -24,14 +24,24 @@ var Entity = (function () {
         }
     };
     Entity.prototype.receiveAttack = function (unit) {
-        this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
-        if (this.dataq.armor > 0)
-            this.dataq.armor--;
+        if (!this.dataq.statusData.shielded) {
+            this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
+            if (this.dataq.armor > 0)
+                this.dataq.armor--;
+        }
+        else {
+            this.dataq.statusData.shielded = false;
+        }
     };
     Entity.prototype.receiveAttackFromBuilding = function (unit) {
-        this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
-        if (this.dataq.armor > 0)
-            this.dataq.armor--;
+        if (!this.dataq.statusData.shielded) {
+            this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
+            if (this.dataq.armor > 0)
+                this.dataq.armor--;
+        }
+        else {
+            this.dataq.statusData.shielded = false;
+        }
     };
     Entity.prototype.takeDamage = function (dmg) {
         this.dataq.hp -= dmg;

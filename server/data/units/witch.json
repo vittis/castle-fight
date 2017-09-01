@@ -1,0 +1,13 @@
+{
+    "name": "Witch",
+    "width": 1,
+    "height": 1,
+    "maxHP": 10,
+    "maxArmor": 0,
+    "attackRange": 2,
+    "attackDmg": 1,
+    "attackRate": 4,
+    "description": "Grants a nearby unit a shield that negates one attack",
+    "goldCost": 40,
+    "woodCost": 0
+}

@@ -1,0 +1,14 @@
+{
+    "name": "WitchsHut",
+    "width": 2,
+    "height": 2,
+    "maxHP": 15,
+    "maxArmor": 5,
+    "goldCost": 65,
+    "woodCost": 0,
+    "spamUnit": "Witch",
+    "spamCount": 2,
+    "spamRate": 35,
+    "description": "Trains Witch",
+    "incomeGain": 2
+}

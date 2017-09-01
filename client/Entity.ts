@@ -11,6 +11,8 @@ module Kodo {
     }
     export interface StatusData {
         stunned?: boolean;
+        shielded?: boolean;
+
     }
      export abstract class Entity extends Phaser.Sprite {
 
@@ -105,6 +107,7 @@ module Kodo {
                 } 
                 this.dataq = newData;
             } 
+
         }
         receiveDamage() {
             this.tint = 0xff3030;

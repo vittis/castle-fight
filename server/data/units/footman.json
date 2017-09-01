@@ -2,14 +2,14 @@
     "name": "Footman", 
     "width": 1,
     "height": 1,
-    "maxHP": 12, 
-    "maxArmor": 3,
+    "maxHP": 10, 
+    "maxArmor": 5,
     
     "attackRange": 1,
-    "attackDmg": 2,
+    "attackDmg": 1,
     "attackRate": 3,
 
-    "description": "Solid standard footman",
+    "description": "Slow, but tanky footman",
     "goldCost": 25,
     "woodCost": 0
 }

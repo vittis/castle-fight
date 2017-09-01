@@ -36,6 +36,9 @@ export class GameCore {
     clientCastle : Building;
     hostCastle : Building;
 
+    startGameTimeout;
+    sendDataTimeout;
+
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -77,22 +80,27 @@ export class GameCore {
         if (host.socket)
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig.STEP_RATE, playerId: host.id, opponentNick: client.nick });
         
-        setTimeout(this.sendaData.bind(this), 1000);
+        this.startGameTimeout = setTimeout(this.sendaData.bind(this), 1000);
 
-        setTimeout(this.startGame.bind(this), 2000);
+        this.sendDataTimeout = setTimeout(this.startGame.bind(this), 2000);
 
         //this.gridManager.printGrid();
     } 
 
     startGame() {
-        if (!(this.client instanceof GameBot)) {
-            this.setSocket(this.client.serverPlayer, false);
+        if (this.client || this.host) {
+            if (this.client) {
+                if (!(this.client instanceof GameBot)) {
+                    this.setSocket(this.client.serverPlayer, false);
+                }
+            }
+            if (this.host) {
+                if (this.host.serverPlayer.socket) {
+                    this.setSocket(this.host.serverPlayer, true);
+                }
+            }
+            this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
         }
-        if (this.host.serverPlayer.socket) {
-            this.setSocket(this.host.serverPlayer, true);
-        }
-
-        this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
     }
 
     setSocket(p : ServerPlayer, isHost : boolean) {
@@ -185,6 +193,7 @@ export class GameCore {
         if (this.client.serverPlayer.socket) {
             this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
         }
+        
     }
 
     step() {
@@ -198,7 +207,7 @@ export class GameCore {
             this.endGame();
             return;
         }
-        //tentar atacar
+        //attack buildings attack
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
 
          this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(building => {
@@ -220,7 +229,7 @@ export class GameCore {
                 }
             }
         }); 
-
+        //unit attack
         this.getAllUnits().forEach(unit => {
             unit.resetAttackData();
             unit.step();
@@ -370,6 +379,8 @@ export class GameCore {
     endGame() : void {
         console.log("end game chamado");
         clearInterval(this.update);
+        clearTimeout(this.sendDataTimeout);
+        clearTimeout(this.startGameTimeout);
         if (this.client instanceof GameBot) {
             this.client = null;
         }

@@ -16,6 +16,7 @@ export interface EntityData {
 }
 export interface StatusData {
     stunned? : boolean;
+    shielded? : boolean;
 }
 
 export abstract class Entity {
@@ -39,7 +40,7 @@ export abstract class Entity {
         this.row = row;
         this.col = col;
         
-        this.dataq.statusData = {stunned : false};
+        this.dataq.statusData = {stunned : false, shielded : false};
     }
 
     addToGame(gm) {
@@ -55,14 +56,24 @@ export abstract class Entity {
     }
 
     receiveAttack(unit : Unit) {
-        this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
-        if (this.dataq.armor > 0)
-            this.dataq.armor--;
+        if (!this.dataq.statusData.shielded) {
+            this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
+            if (this.dataq.armor > 0)
+                this.dataq.armor--;
+        }
+        else {
+            this.dataq.statusData.shielded = false;
+        }
     }
     receiveAttackFromBuilding(unit: AttackBuilding) {
-        this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
-        if (this.dataq.armor > 0)
-            this.dataq.armor--;
+        if (!this.dataq.statusData.shielded) {
+            this.takeDamage(Math.max(unit.data.attackDmg - this.dataq.armor, 0));
+            if (this.dataq.armor > 0)
+                this.dataq.armor--;
+        }
+        else {
+            this.dataq.statusData.shielded = false;
+        }
     }
 
     takeDamage(dmg : number) {

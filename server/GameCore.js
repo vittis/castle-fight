@@ -36,17 +36,23 @@ var GameCore = (function () {
             this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: client.id, opponentNick: host.nick });
         if (host.socket)
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: host.id, opponentNick: client.nick });
-        setTimeout(this.sendaData.bind(this), 1000);
-        setTimeout(this.startGame.bind(this), 2000);
+        this.startGameTimeout = setTimeout(this.sendaData.bind(this), 1000);
+        this.sendDataTimeout = setTimeout(this.startGame.bind(this), 2000);
     }
     GameCore.prototype.startGame = function () {
-        if (!(this.client instanceof GameBot_1.GameBot)) {
-            this.setSocket(this.client.serverPlayer, false);
+        if (this.client || this.host) {
+            if (this.client) {
+                if (!(this.client instanceof GameBot_1.GameBot)) {
+                    this.setSocket(this.client.serverPlayer, false);
+                }
+            }
+            if (this.host) {
+                if (this.host.serverPlayer.socket) {
+                    this.setSocket(this.host.serverPlayer, true);
+                }
+            }
+            this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
         }
-        if (this.host.serverPlayer.socket) {
-            this.setSocket(this.host.serverPlayer, true);
-        }
-        this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
     };
     GameCore.prototype.setSocket = function (p, isHost) {
         if (p.socket) {
@@ -291,6 +297,8 @@ var GameCore = (function () {
     GameCore.prototype.endGame = function () {
         console.log("end game chamado");
         clearInterval(this.update);
+        clearTimeout(this.sendDataTimeout);
+        clearTimeout(this.startGameTimeout);
         if (this.client instanceof GameBot_1.GameBot) {
             this.client = null;
         }

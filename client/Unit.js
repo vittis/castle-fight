@@ -14,6 +14,7 @@ var Kodo;
         __extends(Unit, _super);
         function Unit(game, tile, id, isHost, texture, data) {
             var _this = _super.call(this, game, tile, id, isHost, texture, data) || this;
+            _this.shield = null;
             _this.events.onInputDown.add(Kodo.GameScene.instance.uiEntityManager.onDownUnit, _this);
             return _this;
         }
@@ -44,6 +45,20 @@ var Kodo;
             }
             if (this.data.attackData.hasAttacked) {
                 this.attack(Kodo.GameScene.instance.grid[this.data.attackData.row][this.data.attackData.col]);
+            }
+            if (newData.statusData.shielded) {
+                if (this.shield == null) {
+                    this.shield = this.game.add.sprite(0, 0, 'shield');
+                    this.shield.tint = this.isHost ? 0xe27952 : 0x1b914d;
+                    this.addChild(this.shield);
+                }
+            }
+            else {
+                if (this.shield != null) {
+                    this.removeChild(this.shield);
+                    this.shield.destroy();
+                    this.shield = null;
+                }
             }
         };
         Unit.prototype.onDeath = function () {
