@@ -6,7 +6,7 @@
     "maxArmor": 0,
     "attackRange": 4,
     "attackDmg": 3,
-    "attackRate": 2,
+    "attackRate": 3,
     "description": "First attack gains +4 damage, +2 range and stuns",
     "goldCost": 55,
     "woodCost": 55

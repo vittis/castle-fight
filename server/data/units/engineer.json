@@ -7,7 +7,7 @@
     "attackRange": 1,
     "attackDmg": 1,
     "attackRate": 3,
-    "description": "Leaves a trap device that deals 3 area damage when it dies",
+    "description": "Leaves a trap device that deals 4 area damage when it dies",
     "goldCost": 40,
     "woodCost": 0
 }

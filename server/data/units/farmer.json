@@ -2,12 +2,12 @@
     "name": "Farmer",
     "width": 1,
     "height": 1,
-    "maxHP": 9,
+    "maxHP": 8,
     "maxArmor": 0,
     
     "attackRange": 1,
     "attackDmg": 1,
-    "attackRate": 3,
+    "attackRate": 4,
 
     "description": "Gains +3 HP and +1 Damage if there are 4 or more Farmers when this unit is trained",
     "goldCost": 15,

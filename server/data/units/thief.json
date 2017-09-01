@@ -7,7 +7,7 @@
     "attackRange": 1,
     "attackDmg": 1,
     "attackRate": 2,
-    "description": "Grants +1G for each hit",
+    "description": "Grants +1 gold for each hit",
     "goldCost": 15,
     "woodCost": 0
 }

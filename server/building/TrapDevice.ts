@@ -11,7 +11,7 @@ export class TrapDevice extends Building {
     onDeath() {
         this.getOuterTilesWithEntity().forEach(t => {
             if (t.entity.owner.isHost != this.owner.isHost) {
-                t.entity.takeDamageFromNonUnitSource(3);
+                t.entity.takeDamageFromNonUnitSource(4);
             }
         });
 

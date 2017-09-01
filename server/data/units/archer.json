@@ -9,7 +9,7 @@
     "attackDmg": 2,
     "attackRate": 3,
 
-    "description": "Support ranged unit",
+    "description": "Support ranged archer",
     "goldCost": 25,
     "woodCost": 0
 }
