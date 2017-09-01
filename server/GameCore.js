@@ -36,8 +36,8 @@ var GameCore = (function () {
             this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: client.id, opponentNick: host.nick });
         if (host.socket)
             this.host.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: true, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: host.id, opponentNick: client.nick });
-        this.startGameTimeout = setTimeout(this.sendaData.bind(this), 1000);
-        this.sendDataTimeout = setTimeout(this.startGame.bind(this), 2000);
+        this.sendDataTimeout = setTimeout(this.sendaData.bind(this), 1000);
+        this.startGameTimeout = setTimeout(this.startGame.bind(this), 2000);
     }
     GameCore.prototype.startGame = function () {
         if (this.client || this.host) {

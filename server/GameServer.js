@@ -121,8 +121,6 @@ var GameServer = (function () {
                     p.socket.emit('receivePlayers', players);
             });
         }
-        if (this.clients.length > 0)
-            console.log("online players: " + this.clients.length);
     };
     GameServer.prototype.endGame = function (game) {
         for (var i = 0; i < this.games.length; i++) {

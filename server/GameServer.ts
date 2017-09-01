@@ -149,8 +149,6 @@ export class GameServer {
                     p.socket.emit('receivePlayers', players);
             });
         }
-        if (this.clients.length>0)
-            console.log("online players: "+this.clients.length);
     }
     endGame(game: GameCore): void {
         for (var i = 0; i < this.games.length; i++) {
