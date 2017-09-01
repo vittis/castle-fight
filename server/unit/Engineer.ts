@@ -18,7 +18,10 @@ export class Engineer extends Unit {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != this.owner.isHost) {
                         if (attackedId != t.entity.id) {
+                            let currentAttack = this.data.attackDmg;
+                            this.data.attackDmg = 2;
                             t.entity.receiveAttack(this);
+                            this.data.attackDmg = currentAttack;
                             attackedId = t.entity.id;
                         }
                     }

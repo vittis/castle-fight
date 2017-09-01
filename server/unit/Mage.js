@@ -25,7 +25,10 @@ var Mage = (function (_super) {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != _this.owner.isHost) {
                         if (attackedId != t.entity.id) {
+                            var currentAttack = _this.data.attackDmg;
+                            _this.data.attackDmg = 2;
                             t.entity.receiveAttack(_this);
+                            _this.data.attackDmg = currentAttack;
                             attackedId = t.entity.id;
                         }
                     }
