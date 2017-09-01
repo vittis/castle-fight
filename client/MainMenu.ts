@@ -26,7 +26,6 @@ module Kodo {
             this.game.stage.backgroundColor = '#29B865';
 
             var groupFundo = this.game.add.group();
-            this.rectsGroup = this.game.add.group();
             
             var unitNames = ["archerc", "footmanc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             for (var i = 0; i < 9; i++) {
@@ -225,6 +224,8 @@ module Kodo {
                 tweenA.start();
             }, this);
             tweenA.start();
+
+            this.rectsGroup = this.game.add.group();
 
             this.rectsGroup.add(howToPlay);
             this.rectsGroup.add(serverStatusRect);

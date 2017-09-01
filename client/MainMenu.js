@@ -20,7 +20,6 @@ var Kodo;
             this.game.add.sprite(0, 0, 'tileFundoMaior');
             this.game.stage.backgroundColor = '#29B865';
             var groupFundo = this.game.add.group();
-            this.rectsGroup = this.game.add.group();
             var unitNames = ["archerc", "footmanc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             var _loop_1 = function () {
                 var card = unitNames[Math.floor(Math.random() * unitNames.length)];
@@ -176,6 +175,7 @@ var Kodo;
                 tweenA.start();
             }, this);
             tweenA.start();
+            this.rectsGroup = this.game.add.group();
             this.rectsGroup.add(howToPlay);
             this.rectsGroup.add(serverStatusRect);
             this.rectsGroup.add(serverStatusLabel);
