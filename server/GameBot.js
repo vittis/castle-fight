@@ -31,7 +31,7 @@ var GameBot = (function (_super) {
         _this.nextCard = null;
         _this.state = BotStatus.START;
         _this.waitTime = 8;
-        _this.resourceManager.incomeRate += 3;
+        _this.resourceManager.incomeRate += 5;
         return _this;
     }
     GameBot.prototype.step = function () {

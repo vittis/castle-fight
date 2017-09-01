@@ -1,5 +1,4 @@
-//window.onload = () => {
-    var game = new Kodo.Game();
+var game = new Kodo.Game();
 
 
 var WebFontConfig = {

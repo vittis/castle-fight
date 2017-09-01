@@ -83,6 +83,7 @@ module Kodo {
 
             var key8 = game.input.keyboard.addKey(Phaser.Keyboard.EIGHT);
             key8.onDown.add(this.onDownNumber.bind(this), this);
+
         }
         onDownNumber(param) {
             var hostLabel = GameConfig.isHost ? 'h' : 'c'
@@ -150,6 +151,8 @@ module Kodo {
             this.inputDown = false;
             this.buildingSelected = false;
 
+            var hasBuilt=false;
+
             if (!this.inputOver) {
                 var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
                 var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
@@ -187,11 +190,13 @@ module Kodo {
                             if (GameConfig.isHost) {
                                 if (col < 5) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt=true;
                             }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                         }
@@ -224,11 +229,13 @@ module Kodo {
                             if (GameConfig.isHost) {
                                 if (col < 6) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                         }
@@ -240,12 +247,16 @@ module Kodo {
                         console.log("n pode construir aqui UNIT");
                     }
                 }
-                this.game.time.events.add(1500, this.hidePreview.bind(this), this);
+                this.preview.visible = false;
+
+                if (hasBuilt) {
+                    let sp = this.game.add.sprite(this.preview.x, this.preview.y, this.preview.key);
+                    sp.alpha = 0.8;
+                    this.game.time.events.add(1000, function (sp) { sp.destroy(); }, this, sp);
+                }
             }
-        }   
-        hidePreview() {
-            this.preview.visible = false;
         }
+
         tintBuyable(gold, wood) {
             this.buildingsGroup.forEach(function (b: UIBuildingButton) {
                 if (Kodo[b.buildingName].goldCost > gold || Kodo[b.buildingName].woodCost > wood) {

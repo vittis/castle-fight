@@ -2,6 +2,7 @@ var Kodo;
 (function (Kodo) {
     var UIResourceManager = (function () {
         function UIResourceManager(game) {
+            this.game = game;
             this.offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
             var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, align: "center" };
             this.goldLabel = game.add.text(0, 0, '150', style);
@@ -19,7 +20,7 @@ var Kodo;
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');
         }
         UIResourceManager.prototype.startGame = function () {
-            this.incomeBar = new Kodo.IncomeBar(game);
+            this.incomeBar = new Kodo.IncomeBar(this.game);
         };
         UIResourceManager.prototype.updateResources = function (incomeRateCounter) {
             if (this.incomeBar) {

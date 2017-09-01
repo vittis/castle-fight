@@ -16,22 +16,21 @@ var Kodo;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Boot.prototype.preload = function () {
-            this.load.image('preloadBar', 'assets/loader.png');
+            this.game.load.image('tileFundoPagina', 'assets/48/tileFundoPagina.png');
         };
         Boot.prototype.create = function () {
             document.body.style.margin = '0px';
-            document.body.style.backgroundColor = '#29B865';
+            document.body.style.backgroundColor = '#27AE60';
             this.game.add.plugin(new PhaserInput.Plugin(this.game, this.game.plugins));
             this.input.maxPointers = 1;
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
-            this.game.forceSingleUpdate = true;
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
             var versaoAndroid = false;
             if (this.game.device.android || this.game.device.iOS) {
-                this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             }
             else {
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

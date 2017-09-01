@@ -14,13 +14,13 @@ module Kodo {
 
             if (Kodo.GameScene.instance.ballData.hostMatou && GameConfig.isHost) {
 
-                let goldLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+'+Kodo.GameScene.instance.ballData.reward, style);
+                let goldLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+'+Kodo.GameScene.instance.ballData.reward, style);
                 goldLabel.anchor.setTo(0.5, 0.5);
                 goldLabel.fontSize = 24;
                 goldLabel.scale.setTo(0.3, 0.3);
 
                 style.fill = '#0D6032';
-                let woodLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                let woodLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 woodLabel.anchor.setTo(0.5, 0.5);
                 woodLabel.fontSize = 24;
                 woodLabel.scale.setTo(0.3, 0.3);
@@ -49,13 +49,13 @@ module Kodo {
             }
             else if (Kodo.GameScene.instance.ballData.clientMatou && !GameConfig.isHost) {
 
-                let goldLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                let goldLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 goldLabel.anchor.setTo(0.5, 0.5);
                 goldLabel.fontSize = 24;
                 goldLabel.scale.setTo(0.3, 0.3);
 
                 style.fill = '#0D6032';
-                let woodLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                let woodLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 woodLabel.anchor.setTo(0.5, 0.5);
                 woodLabel.fontSize = 24;
                 woodLabel.scale.setTo(0.3, 0.3);
@@ -83,13 +83,13 @@ module Kodo {
                 tweenD.start();
             }
             else {
-                let goldLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+0', style);
+                let goldLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+0', style);
                 goldLabel.anchor.setTo(0.5, 0.5);
                 goldLabel.fontSize = 24;
                 goldLabel.scale.setTo(0.3, 0.3);
 
                 style.fill = '#0D6032';
-                let woodLabel = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
+                let woodLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
                 woodLabel.anchor.setTo(0.5, 0.5);
                 woodLabel.fontSize = 24;
                 woodLabel.scale.setTo(0.3, 0.3);

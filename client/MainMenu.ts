@@ -17,6 +17,8 @@ module Kodo {
         ingameNumber: Phaser.Text;
         titleLabel : Phaser.Text;
 
+        rectsGroup : Phaser.Group;
+
         create() {
             MainMenu.instance = this;
 
@@ -24,7 +26,7 @@ module Kodo {
             this.game.stage.backgroundColor = '#29B865';
 
             var groupFundo = this.game.add.group();
-
+            this.rectsGroup = this.game.add.group();
             
             var unitNames = ["archerc", "footmanc", "kingc", "sniperc", "propellerc", "thiefc", "farmerc", "engineerc"];
             for (var i = 0; i < 9; i++) {
@@ -63,8 +65,11 @@ module Kodo {
             moreButton.scale.setTo(0.9, 0.9);
             moreButton.position.setTo(30, this.game.height - 30);
 
+
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
+
+
             
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
             this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
@@ -153,6 +158,10 @@ module Kodo {
             serverStatusRect.alpha = 0.53;
 
 
+            var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("http://reddit.com/", "_blank"); }, this, 1, 0, 2);
+            //redditButton.position.setTo(30, this.game.height - 30);
+            redditButton.anchor.setTo(0.5, 0.5);
+            redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 0, 30);
 
             style.font = "26px Baloo Paaji";
             style.fill = '#ecec3a';
@@ -160,6 +169,8 @@ module Kodo {
             serverStatusLabel.anchor.setTo(0.5, 0.5);
             serverStatusLabel.alignIn(serverStatusRect, Phaser.TOP_CENTER, 0, -12);
             //serverStatusLabel.fontWeight = 900;
+
+
 
             style.font = "18px Baloo Paaji";
             style.fill = '#ffffff';
@@ -198,6 +209,7 @@ module Kodo {
             //this.ingameNumber.fontWeight = 600;
 
 
+
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
 
@@ -213,6 +225,21 @@ module Kodo {
                 tweenA.start();
             }, this);
             tweenA.start();
+
+            this.rectsGroup.add(howToPlay);
+            this.rectsGroup.add(serverStatusRect);
+            this.rectsGroup.add(serverStatusLabel);
+            this.rectsGroup.add(redditButton);
+            this.rectsGroup.add(onlineLabel);
+            this.rectsGroup.add(matchMaking);
+            this.rectsGroup.add(ingame);
+            this.rectsGroup.add(this.onlineNumber);
+            this.rectsGroup.add(this.matchmakingNumber);
+            this.rectsGroup.add(this.ingameNumber);
+
+            this.rectsGroup.y = -1 * this.rectsGroup.height;
+
+            var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
         }
         
 

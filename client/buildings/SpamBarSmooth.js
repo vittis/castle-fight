@@ -63,13 +63,13 @@ var Kodo;
             });
             this.unitsCountBar = [];
             for (var i = 0; i < this.building.data.spamCount + 1; i++) {
-                var bar2 = game.make.graphics(0, 0);
+                var bar2 = this.game.make.graphics(0, 0);
                 bar2.beginFill();
                 bar2.lineStyle(5, 0xffd700, 1);
                 bar2.moveTo(0, 0);
                 bar2.lineTo(this.maxLenght / (this.building.data.spamCount + 1) - 5, 0);
                 bar2.endFill();
-                this.unitsCountBar[i] = game.add.sprite(this.x, this.y, bar2.generateTexture());
+                this.unitsCountBar[i] = this.game.add.sprite(this.x, this.y, bar2.generateTexture());
                 bar2.destroy();
                 this.unitsCountBar[i].alpha = 0.9;
                 this.unitsCountBar[i].y += 3;

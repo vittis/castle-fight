@@ -2,13 +2,13 @@ module Kodo {
     export class Boot extends Phaser.State {
        
         preload() {
-            this.load.image('preloadBar', 'assets/loader.png');
-            
+            //this.load.image('preloadBar', 'assets/loader.png');
+            this.game.load.image('tileFundoPagina', 'assets/48/tileFundoPagina.png');
         }
 
         create() {
             document.body.style.margin = '0px';
-            document.body.style.backgroundColor = '#29B865';
+            document.body.style.backgroundColor = '#27AE60';
 
             this.game.add.plugin(new PhaserInput.Plugin(this.game, this.game.plugins));            
             
@@ -16,7 +16,7 @@ module Kodo {
             this.stage.disableVisibilityChange = true;
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
-            this.game.forceSingleUpdate = true;
+            //this.game.forceSingleUpdate = true;
 
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
@@ -30,7 +30,7 @@ module Kodo {
                 this.game.scale.refresh();
                 window.addEventListener('resize', function () { adjust(); });
                 adjust(); */
-                this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+                this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                 //this.game.scale.startFullScreen();
             }
             else {

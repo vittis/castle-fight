@@ -22,12 +22,12 @@ var Kodo;
         IncomeBall.prototype.onDeath = function () {
             var style = { fill: '#ecec3a', wordWrap: true, align: "center" };
             if (Kodo.GameScene.instance.ballData.hostMatou && GameConfig.isHost) {
-                var goldLabel_1 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                var goldLabel_1 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 goldLabel_1.anchor.setTo(0.5, 0.5);
                 goldLabel_1.fontSize = 24;
                 goldLabel_1.scale.setTo(0.3, 0.3);
                 style.fill = '#0D6032';
-                var woodLabel_1 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                var woodLabel_1 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 woodLabel_1.anchor.setTo(0.5, 0.5);
                 woodLabel_1.fontSize = 24;
                 woodLabel_1.scale.setTo(0.3, 0.3);
@@ -49,12 +49,12 @@ var Kodo;
                 tweenD.start();
             }
             else if (Kodo.GameScene.instance.ballData.clientMatou && !GameConfig.isHost) {
-                var goldLabel_2 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                var goldLabel_2 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 goldLabel_2.anchor.setTo(0.5, 0.5);
                 goldLabel_2.fontSize = 24;
                 goldLabel_2.scale.setTo(0.3, 0.3);
                 style.fill = '#0D6032';
-                var woodLabel_2 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
+                var woodLabel_2 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+' + Kodo.GameScene.instance.ballData.reward, style);
                 woodLabel_2.anchor.setTo(0.5, 0.5);
                 woodLabel_2.fontSize = 24;
                 woodLabel_2.scale.setTo(0.3, 0.3);
@@ -76,12 +76,12 @@ var Kodo;
                 tweenD.start();
             }
             else {
-                var goldLabel_3 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+0', style);
+                var goldLabel_3 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+0', style);
                 goldLabel_3.anchor.setTo(0.5, 0.5);
                 goldLabel_3.fontSize = 24;
                 goldLabel_3.scale.setTo(0.3, 0.3);
                 style.fill = '#0D6032';
-                var woodLabel_3 = game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
+                var woodLabel_3 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
                 woodLabel_3.anchor.setTo(0.5, 0.5);
                 woodLabel_3.fontSize = 24;
                 woodLabel_3.scale.setTo(0.3, 0.3);

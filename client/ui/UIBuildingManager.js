@@ -113,6 +113,7 @@ var Kodo;
         UIBuildingManager.prototype.onUp = function (sprite) {
             this.inputDown = false;
             this.buildingSelected = false;
+            var hasBuilt = false;
             if (!this.inputOver) {
                 var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
                 var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
@@ -142,11 +143,13 @@ var Kodo;
                             if (GameConfig.isHost) {
                                 if (col < 5) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                         }
@@ -176,11 +179,13 @@ var Kodo;
                             if (GameConfig.isHost) {
                                 if (col < 6) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
                                     Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                    hasBuilt = true;
                                 }
                             }
                         }
@@ -192,11 +197,13 @@ var Kodo;
                         console.log("n pode construir aqui UNIT");
                     }
                 }
-                this.game.time.events.add(1500, this.hidePreview.bind(this), this);
+                this.preview.visible = false;
+                if (hasBuilt) {
+                    var sp = this.game.add.sprite(this.preview.x, this.preview.y, this.preview.key);
+                    sp.alpha = 0.8;
+                    this.game.time.events.add(1000, function (sp) { sp.destroy(); }, this, sp);
+                }
             }
-        };
-        UIBuildingManager.prototype.hidePreview = function () {
-            this.preview.visible = false;
         };
         UIBuildingManager.prototype.tintBuyable = function (gold, wood) {
             this.buildingsGroup.forEach(function (b) {

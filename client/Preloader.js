@@ -16,10 +16,41 @@ var Kodo;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Preloader.prototype.preload = function () {
-            this.preloadBar = this.add.sprite(this.game.width / 2, this.game.height / 2, 'preloadBar');
-            this.preloadBar.anchor.setTo(0.5, 0.5);
-            this.load.setPreloadSprite(this.preloadBar);
             this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+            this.game.add.sprite(0, 0, 'tileFundoPagina');
+            var loadingLabel = this.game.add.text(this.world.centerX, this.world.centerY, "Loading", { font: "80px Baloo Paaji", fill: '#ffffff', wordWrap: true, align: "center" });
+            loadingLabel.anchor.setTo(0.5, 0.5);
+            var box = this.game.make.graphics(0, 0);
+            box.beginFill(0x000000);
+            box.drawRoundedRect(0, 0, loadingLabel.width + 50, loadingLabel.height + 35, 30);
+            box.endFill();
+            var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
+            box.destroy();
+            loadingRect.anchor.setTo(0.5, 0.5);
+            loadingRect.alignIn(loadingLabel, Phaser.CENTER);
+            loadingRect.alpha = 0.6;
+            var box3 = this.game.make.graphics(0, 0);
+            box3.beginFill(0xecec3a);
+            box3.drawRect(0, 0, 500, 10);
+            box3.endFill();
+            this.preloadBar = this.game.add.sprite(100, 100, box3.generateTexture());
+            box3.destroy();
+            this.preloadBar.alignTo(loadingLabel, Phaser.BOTTOM_CENTER, 0, 60);
+            this.load.setPreloadSprite(this.preloadBar);
+            var box4 = this.game.make.graphics(0, 0);
+            box4.beginFill(0x000000);
+            box4.drawRect(0, 0, 500, 10);
+            box4.endFill();
+            var container = this.game.add.sprite(100, 100, box4.generateTexture());
+            box3.destroy();
+            container.alignTo(loadingLabel, Phaser.BOTTOM_CENTER, 0, 60);
+            container.alpha = 0.6;
+            this.loadingGroup = this.game.add.group();
+            this.loadingGroup.add(loadingLabel);
+            this.loadingGroup.add(loadingRect);
+            this.loadingGroup.add(container);
+            this.loadingGroup.add(this.preloadBar);
+            this.loadingGroup.swap(loadingLabel, loadingRect);
             if (GameConfig.tileSize == 32) {
                 this.game.load.image('tile0', 'assets/32/tile0_32.png');
                 this.game.load.image('tile1', 'assets/32/tile1_32.png');
@@ -163,11 +194,12 @@ var Kodo;
                 this.game.load.image('deckbuildingGuide', 'assets/48/menu_ui/deckbuildingGuide.png');
                 this.game.load.image('howToPlay-changelog', 'assets/48/menu_ui/howToPlay-changelog.png');
                 this.game.load.image('moreButton', 'assets/48/menu_ui/moreButton.png');
+                this.game.load.spritesheet('redditButton', 'assets/48/menu_ui/redditButton.png', 47, 51);
             }
         };
         Preloader.prototype.create = function () {
-            var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-            tween.onComplete.add(this.startMainMenu, this);
+            var tweenB = this.add.tween(this.loadingGroup).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+            tweenB.onComplete.add(this.startMainMenu, this);
         };
         Preloader.prototype.startMainMenu = function () {
             this.game.state.start('MainMenu', true, false);

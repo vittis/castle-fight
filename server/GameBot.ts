@@ -37,7 +37,7 @@ export class GameBot extends GamePlayer {
         super(player, isHost, gm);
         this.state = BotStatus.START;
         this.waitTime=8;
-        this.resourceManager.incomeRate +=3;
+        this.resourceManager.incomeRate +=5;
     }
 
 

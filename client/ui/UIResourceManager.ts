@@ -1,6 +1,8 @@
 module Kodo {
     export class UIResourceManager {
 
+        game : Phaser.Game;
+
         goldLabel : Phaser.Text;
         woodLabel : Phaser.Text;
 
@@ -15,6 +17,7 @@ module Kodo {
         eraLabel : Phaser.Text;
 
         constructor(game : Phaser.Game) {
+            this.game = game;
             this.offsetX = GameConfig.isHost ? 0 : GameConfig.tileSize * GameConfig.GRID_COLS;
 
             var style = {font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
@@ -38,7 +41,7 @@ module Kodo {
         }
 
         startGame() {
-            this.incomeBar = new IncomeBar(game);
+            this.incomeBar = new IncomeBar(this.game);
         }
 
         updateResources(incomeRateCounter : number) {
