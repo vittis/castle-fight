@@ -85,7 +85,7 @@ export class GameCore {
     } 
 
     startGame() {
-        if (this.client.serverPlayer.socket) {
+        if (!(this.client instanceof GameBot)) {
             this.setSocket(this.client.serverPlayer, false);
         }
         if (this.host.serverPlayer.socket) {

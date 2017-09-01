@@ -40,6 +40,7 @@ var GameServer = (function () {
         var game = new GameCore_1.GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
+        console.log("Jogo criado id" + game.id);
         return game;
     };
     GameServer.prototype.startBotGame = function (host) {

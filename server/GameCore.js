@@ -40,7 +40,7 @@ var GameCore = (function () {
         setTimeout(this.startGame.bind(this), 2000);
     }
     GameCore.prototype.startGame = function () {
-        if (this.client.serverPlayer.socket) {
+        if (!(this.client instanceof GameBot_1.GameBot)) {
             this.setSocket(this.client.serverPlayer, false);
         }
         if (this.host.serverPlayer.socket) {

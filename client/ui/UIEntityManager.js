@@ -15,7 +15,7 @@ var Kodo;
             this.trainButton.alpha = 0.9;
             this.trainButton.visible = false;
             if (this.game.device.android || this.game.device.iOS) {
-                this.trainButton.scale.setTo(1.4, 1.4);
+                this.trainButton.scale.setTo(1.1, 1.1);
             }
             for (var i = 0; i < 12; i++) {
                 var q = this.game.add.sprite(0, 0, 'tileClickMark');

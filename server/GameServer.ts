@@ -58,7 +58,7 @@ export class GameServer {
         var game = new GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
-        
+        console.log("Jogo criado id"+game.id);
         return game;
     }
 
