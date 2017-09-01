@@ -11,30 +11,21 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
+var TrapDevice_1 = require("../building/TrapDevice");
 var Engineer = (function (_super) {
     __extends(Engineer, _super);
     function Engineer(row, col) {
         return _super.call(this, row, col, require('clone')(require('../data/units/engineer.json'))) || this;
     }
     Engineer.prototype.doAction = function (targetTile) {
-        var _this = this;
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            var attackedId = targetTile.entity.id;
-            targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
-                if (t.entity != null) {
-                    if (t.entity.owner.isHost != _this.owner.isHost) {
-                        if (attackedId != t.entity.id) {
-                            var currentAttack = _this.data.attackDmg;
-                            _this.data.attackDmg = 2;
-                            t.entity.receiveAttack(_this);
-                            _this.data.attackDmg = currentAttack;
-                            attackedId = t.entity.id;
-                        }
-                    }
-                }
-            });
         }
+    };
+    Engineer.prototype.onDeath = function () {
+        this.tile.entity = null;
+        this.owner.addEntity(new TrapDevice_1.TrapDevice(this.tile.row, this.tile.col));
+        this.owner.removeEntity(this);
     };
     return Engineer;
 }(Unit_1.Unit));

@@ -46,6 +46,16 @@ var Entity = (function () {
     Entity.prototype.takeDamage = function (dmg) {
         this.dataq.hp -= dmg;
     };
+    Entity.prototype.takeDamageFromNonUnitSource = function (damage) {
+        if (!this.dataq.statusData.shielded) {
+            this.takeDamage(Math.max(damage - this.dataq.armor, 0));
+            if (this.dataq.armor > 0)
+                this.dataq.armor--;
+        }
+        else {
+            this.dataq.statusData.shielded = false;
+        }
+    };
     Entity.prototype.onDeath = function () {
         for (var i = 0; i < this.dataq.width; i++) {
             for (var j = 0; j < this.dataq.height; j++) {

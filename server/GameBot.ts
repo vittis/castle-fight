@@ -26,7 +26,7 @@ export class GameBot extends GamePlayer {
 
     meleeBuildings = ["ThiefsTent", "Barracks", "TechStation", "Barn"];
 
-    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn"];
+    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn", "WitchsHut"];
 
     woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
 

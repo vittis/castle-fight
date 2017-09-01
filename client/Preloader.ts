@@ -128,6 +128,8 @@ module Kodo {
                 this.game.load.image('magesGuildh', 'assets/48/magesGuildh_48.png');
                 this.game.load.image('witchsHuth', 'assets/48/witchsHuth_48.png');
                 this.game.load.image('witchsHutc', 'assets/48/witchsHutc_48.png');
+                this.game.load.image('trapDevicec', 'assets/48/trapDevicec_48.png');
+                this.game.load.image('trapDeviceh', 'assets/48/trapDeviceh_48.png');
 
 
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');

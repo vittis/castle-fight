@@ -38,7 +38,7 @@ module Client {
 
     socket.on('receiveBuildingAndUnitData', function (data) {
         data.buildingData.forEach(element => {
-            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower"))
+            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower" || element.name == "TrapDevice"))
                 GameConfig.buildingNameData.push(element.name);
         });
 

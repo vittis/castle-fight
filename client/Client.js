@@ -30,7 +30,7 @@ var Client;
     });
     socket.on('receiveBuildingAndUnitData', function (data) {
         data.buildingData.forEach(function (element) {
-            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower"))
+            if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower" || element.name == "TrapDevice"))
                 GameConfig.buildingNameData.push(element.name);
         });
         data.unitData.forEach(function (element) {

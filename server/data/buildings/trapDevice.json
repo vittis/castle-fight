@@ -1,0 +1,11 @@
+{
+    "name": "TrapDevice",
+    "width": 1,
+    "height": 1,
+    "maxHP": 5,
+    "maxArmor": 2,
+    "goldCost": 0,
+    "woodCost": 0,
+
+    "description": "Explodes dealing 3 area damage to enemies"
+}

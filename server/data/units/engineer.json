@@ -5,9 +5,9 @@
     "maxHP": 10,
     "maxArmor": 2,
     "attackRange": 1,
-    "attackDmg": 2,
+    "attackDmg": 1,
     "attackRate": 3,
-    "description": "Deals 2 area damage to enemies",
+    "description": "Leaves a trap device that deals 3 area damage when it dies",
     "goldCost": 40,
     "woodCost": 0
 }
