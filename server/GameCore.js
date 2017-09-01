@@ -129,11 +129,15 @@ var GameCore = (function () {
         var hostObj = Serializer_1.DataSerializer.SerializePlayer(this.host);
         var clientObj = Serializer_1.DataSerializer.SerializePlayer(this.client);
         var ballObj = Serializer_1.DataSerializer.SerializeBall(this.ballManager);
-        if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData: ballObj });
+        if (this.host) {
+            if (this.host.serverPlayer.socket) {
+                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData: ballObj });
+            }
         }
-        if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+        if (this.client) {
+            if (this.client.serverPlayer.socket) {
+                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+            }
         }
     };
     GameCore.prototype.step = function () {

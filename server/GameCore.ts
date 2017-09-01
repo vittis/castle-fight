@@ -186,14 +186,16 @@ export class GameCore {
         var clientObj = DataSerializer.SerializePlayer(this.client);
 
         var ballObj = DataSerializer.SerializeBall(this.ballManager);
-
-        if (this.host.serverPlayer.socket) {
-            this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj });
+        if (this.host) {
+            if (this.host.serverPlayer.socket) {
+                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj });
+            }
         }
-        if (this.client.serverPlayer.socket) {
-            this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+        if (this.client) {
+            if (this.client.serverPlayer.socket) {
+                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+            }
         }
-        
     }
 
     step() {
