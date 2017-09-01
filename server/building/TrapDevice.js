@@ -20,7 +20,7 @@ var TrapDevice = (function (_super) {
         var _this = this;
         this.getOuterTilesWithEntity().forEach(function (t) {
             if (t.entity.owner.isHost != _this.owner.isHost) {
-                t.entity.takeDamageFromNonUnitSource(3);
+                t.entity.takeDamageFromNonUnitSource(4);
             }
         });
         _super.prototype.onDeath.call(this);
