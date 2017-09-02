@@ -8,7 +8,7 @@
     "woodCost": 80,
 
     "spamUnit": "Farmer",
-    "spamCount": 6,
+    "spamCount": 4,
     "spamRate": 25,
 
     "description": "Trains Farmer",

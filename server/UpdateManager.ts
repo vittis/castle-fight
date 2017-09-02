@@ -16,7 +16,7 @@ export enum Upgrades {
 
 export class UpdateManager {
 
-    updateRateCounter = 0;
+    updateRateCounter = 1;
     updateRate;
 
 
@@ -63,7 +63,7 @@ export class UpdateManager {
         if (this.updateCount >= this.upgradeCosts[upgrade]) {
             this.updateCount -= this.upgradeCosts[upgrade];    
             if (upgrade == 0) {
-                this.gamePlayer.resourceManager.income += 10;
+                this.gamePlayer.resourceManager.income += 15;
             }
             else if (upgrade == 1) {
                 this.gamePlayer.getSpamBuildings().forEach(b => {
@@ -86,7 +86,7 @@ export class UpdateManager {
                 this.atkSpeedModifier -= 1;
             }
             else if (upgrade == 4) {
-                this.gamePlayer.resourceManager.add(50, 50);
+                this.gamePlayer.resourceManager.add(65, 65);
             }
             else if (upgrade == 5) {
                 this.gamePlayer.getSpamBuildings().forEach(b => {

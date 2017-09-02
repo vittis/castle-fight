@@ -2,11 +2,15 @@
     "name": "Castle", 
     "width": 2,
     "height": 2,
-    "maxHP": 60, 
+    "maxHP": 75, 
     "maxArmor": 20,
     "goldCost": 0,
     "woodCost": 0,
 
     "description": "Defend it!",
-    "incomeGain": 0
+    "incomeGain": 0,
+
+    "attackRange": 4,
+    "attackDmg": 4,
+    "attackRate": 2
 }

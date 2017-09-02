@@ -41,6 +41,7 @@ module Kodo {
         }
 
         startGame() {
+            new WarningMessage(this.game, 'Match Started!');
             this.incomeBar = new IncomeBar(this.game);
         }
 

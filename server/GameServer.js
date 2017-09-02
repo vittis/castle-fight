@@ -84,7 +84,12 @@ var GameServer = (function () {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == ServerPlayer_1.PlayerStatus.ingame) {
                     if (this.getGameByPlayerId(this.clients[i].id) != null) {
-                        this.getGameByPlayerId(this.clients[i].id).endGame();
+                        if (this.getGameByPlayerId(this.clients[i].id).client.serverPlayer.id == player.id) {
+                            this.getGameByPlayerId(this.clients[i].id).endGame(true);
+                        }
+                        else {
+                            this.getGameByPlayerId(this.clients[i].id).endGame(false);
+                        }
                     }
                 }
                 this.clients[i] = null;
@@ -122,7 +127,7 @@ var GameServer = (function () {
             });
         }
     };
-    GameServer.prototype.endGame = function (game) {
+    GameServer.prototype.endGame = function (game, hostWon) {
         for (var i = 0; i < this.games.length; i++) {
             if (this.games[i].id == game.id) {
                 this.games[i] = null;
@@ -135,14 +140,12 @@ var GameServer = (function () {
             game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
         }
         if (game.host.serverPlayer.socket) {
-            game.host.serverPlayer.socket.emit('endGame');
-        }
-        else {
-            game.host.serverPlayer.status = ServerPlayer_1.PlayerStatus.matchmaking;
+            game.host.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
-                game.client.serverPlayer.socket.emit('endGame');
+                game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
+                game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");

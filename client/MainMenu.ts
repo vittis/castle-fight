@@ -157,10 +157,16 @@ module Kodo {
             serverStatusRect.alpha = 0.53;
 
 
-            var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("http://reddit.com/", "_blank"); }, this, 1, 0, 2);
+            var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("https://www.reddit.com/r/castlearena/", "_blank"); }, this, 1, 0, 2);
             //redditButton.position.setTo(30, this.game.height - 30);
             redditButton.anchor.setTo(0.5, 0.5);
             redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 0, 30);
+
+            style.font = "18px Baloo Paaji";
+            style.fill = '#12522d';
+            var getInvolved = this.game.add.text(0, 0, "Join Us!", style);
+            getInvolved.anchor.setTo(0.5, 0.5);
+            getInvolved.alignTo(redditButton, Phaser.BOTTOM_CENTER, 0, 1);
 
             style.font = "26px Baloo Paaji";
             style.fill = '#ecec3a';
@@ -231,6 +237,7 @@ module Kodo {
             this.rectsGroup.add(serverStatusRect);
             this.rectsGroup.add(serverStatusLabel);
             this.rectsGroup.add(redditButton);
+            this.rectsGroup.add(getInvolved);
             this.rectsGroup.add(onlineLabel);
             this.rectsGroup.add(matchMaking);
             this.rectsGroup.add(ingame);

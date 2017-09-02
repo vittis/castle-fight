@@ -10,12 +10,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var Building_1 = require("../Building");
+var AttackBuilding_1 = require("./AttackBuilding");
 var Castle = (function (_super) {
     __extends(Castle, _super);
     function Castle(row, col) {
         return _super.call(this, row, col, require('clone')(require('../data/buildings/castle.json'))) || this;
     }
+    Castle.prototype.doAction = function (targetTile) {
+        if (this.canAttack())
+            this.attack(targetTile.entity);
+    };
     return Castle;
-}(Building_1.Building));
+}(AttackBuilding_1.AttackBuilding));
 exports.Castle = Castle;

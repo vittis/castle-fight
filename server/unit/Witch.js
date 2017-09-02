@@ -22,7 +22,6 @@ var Witch = (function (_super) {
         return _this;
     }
     Witch.prototype.doAction = function (targetTile) {
-        console.log("q1");
         if (this.canAttack() && !this.justShielded)
             this.attack(targetTile.entity);
     };
@@ -45,14 +44,12 @@ var Witch = (function (_super) {
                             jaShieldou = true;
                             _this.canShield = false;
                             _this.justShielded = true;
-                            console.log("shieldou " + e.entity.getEntityData().name);
                         }
                     }
                 }
             });
             if (!jaShieldou && this.getEntityData().statusData.shielded == false) {
                 this.getEntityData().statusData.shielded = true;
-                console.log("shieldou eu msm");
                 this.shieldRateCounter = 0;
                 jaShieldou = true;
                 this.canShield = false;

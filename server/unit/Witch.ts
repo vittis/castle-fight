@@ -17,8 +17,6 @@ export class Witch extends Unit {
     }
 
     doAction(targetTile: Tile) {
-        console.log("q1");
-
         if (this.canAttack() && !this.justShielded)
             this.attack(targetTile.entity);
     }
@@ -42,14 +40,12 @@ export class Witch extends Unit {
                             jaShieldou=true;
                             this.canShield = false;
                             this.justShielded = true;
-                            console.log("shieldou "+e.entity.getEntityData().name);
                         }
                     }
                 }
             });
             if (!jaShieldou && this.getEntityData().statusData.shielded==false) {
                 this.getEntityData().statusData.shielded = true;
-                console.log("shieldou eu msm");
                 this.shieldRateCounter = 0;
                 jaShieldou = true;
                 this.canShield = false;

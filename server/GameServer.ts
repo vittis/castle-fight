@@ -107,7 +107,12 @@ export class GameServer {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == PlayerStatus.ingame) {
                     if (this.getGameByPlayerId(this.clients[i].id) != null) {
-                        this.getGameByPlayerId(this.clients[i].id).endGame();
+                        if (this.getGameByPlayerId(this.clients[i].id).client.serverPlayer.id == player.id) {
+                            this.getGameByPlayerId(this.clients[i].id).endGame(true);
+                        }
+                        else {
+                            this.getGameByPlayerId(this.clients[i].id).endGame(false);
+                        }
                     }
                 }
                     this.clients[i] = null;
@@ -150,7 +155,7 @@ export class GameServer {
             });
         }
     }
-    endGame(game: GameCore): void {
+    endGame(game: GameCore, hostWon): void {
         for (var i = 0; i < this.games.length; i++) {
             if (this.games[i].id == game.id) {
                 this.games[i] = null;
@@ -164,14 +169,13 @@ export class GameServer {
             game.client.serverPlayer.status = PlayerStatus.connected;
         }
         if (game.host.serverPlayer.socket) {
-            game.host.serverPlayer.socket.emit('endGame');
-        }
-        else {
-            game.host.serverPlayer.status = PlayerStatus.matchmaking;
+            game.host.serverPlayer.socket.emit('endGame', {hostWon: hostWon});
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
-                game.client.serverPlayer.socket.emit('endGame');
+                game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
+                game.client.serverPlayer.status = PlayerStatus.connected;
+
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");

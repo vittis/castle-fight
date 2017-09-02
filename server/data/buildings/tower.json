@@ -2,7 +2,7 @@
     "name": "Tower",
     "width": 2,
     "height": 2,
-    "maxHP": 60,
+    "maxHP": 75,
     "maxArmor": 20,
     "goldCost": 0,
     "woodCost": 0,

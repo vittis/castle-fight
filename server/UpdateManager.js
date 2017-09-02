@@ -14,7 +14,7 @@ var Upgrades;
 })(Upgrades = exports.Upgrades || (exports.Upgrades = {}));
 var UpdateManager = (function () {
     function UpdateManager(gamePlayer) {
-        this.updateRateCounter = 0;
+        this.updateRateCounter = 1;
         this.updateCount = 0;
         this.upgradeCosts = [2,
             1,
@@ -46,7 +46,7 @@ var UpdateManager = (function () {
         if (this.updateCount >= this.upgradeCosts[upgrade]) {
             this.updateCount -= this.upgradeCosts[upgrade];
             if (upgrade == 0) {
-                this.gamePlayer.resourceManager.income += 10;
+                this.gamePlayer.resourceManager.income += 15;
             }
             else if (upgrade == 1) {
                 this.gamePlayer.getSpamBuildings().forEach(function (b) {
@@ -69,7 +69,7 @@ var UpdateManager = (function () {
                 this.atkSpeedModifier -= 1;
             }
             else if (upgrade == 4) {
-                this.gamePlayer.resourceManager.add(50, 50);
+                this.gamePlayer.resourceManager.add(65, 65);
             }
             else if (upgrade == 5) {
                 this.gamePlayer.getSpamBuildings().forEach(function (b) {

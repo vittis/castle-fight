@@ -3,7 +3,7 @@ module Client {
     var startPingTime=0;
 
     socket.on('startGame',function(data){
-        console.log("start game recebido - iniciando jogo!");
+        console.log("Starting game...");
         var gameId = data.id;
         var rows = data.rows;
         var cols = data.cols;
@@ -25,14 +25,16 @@ module Client {
     });
 
     socket.on('startGameLoop', function (data) {
-        console.log("start game LOOP recebido - iniciando loop!");
+        console.log("Starting main game loop");
         Kodo.GameScene.instance.uiResourceManager.startGame();
     });
 
     socket.on('receiveData', function (data) {
-        Kodo.GameScene.instance.player = data.player;
-        Kodo.GameScene.instance.ballData = data.ballData;
-        Kodo.GameScene.instance.updateEntities(data.entities);
+        if (Kodo.GameScene.instance != null) {
+            Kodo.GameScene.instance.player = data.player;
+            Kodo.GameScene.instance.ballData = data.ballData;
+            Kodo.GameScene.instance.updateEntities(data.entities);
+        }
     });
 
 
@@ -80,8 +82,8 @@ module Client {
     });
 
     socket.on('endGame', function (data) {
-        console.log("end game recebido - finalizando jogo!");
-        Kodo.Game.instance.state.start('MainMenu', true, false);
+        console.log("Finishing match, host won? "+data.hostWon);
+        Kodo.GameScene.instance.endGame(data.hostWon);
     });
 
     socket.on('receivePlayers', function (data : any[]) {
@@ -93,7 +95,7 @@ module Client {
     export function checkPing() {
         socket.emit('latency', Date.now(), function (startTime) {
             var latency = Date.now() - startTime;
-            console.log("ping: "+latency);
+            console.log("Ping: "+latency);
         });
     }
     

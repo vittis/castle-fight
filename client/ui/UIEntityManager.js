@@ -33,7 +33,7 @@ var Kodo;
         UIEntityManager.prototype.updateText = function () {
             if (this.target != null) {
                 if (this.target instanceof Kodo.Building) {
-                    if (this.target instanceof Kodo.Tower) {
+                    if (this.target instanceof Kodo.Tower || this.target instanceof Kodo.Castle) {
                         this.descTexto.text = this.target.dataq.name + "\n\nDamage: "
                             + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
                         this.hpTexto.text = "" + this.target.dataq.hp;
@@ -216,7 +216,7 @@ var Kodo;
                 entityManager.justOpened = true;
                 this.game.time.events.add(150, entityManager.justOpenedFalse.bind(this), this);
                 entityManager.isShowing = true;
-                if (building instanceof Kodo.Tower) {
+                if (building instanceof Kodo.Tower || building instanceof Kodo.Castle) {
                     entityManager.descricaoString = building.dataq.name + "\n\nDamage: "
                         + building.data.attackDmg + "\nRange: " + building.data.attackRange + "\nAtk Speed: " + building.data.attackRate;
                 }

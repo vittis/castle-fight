@@ -33,6 +33,8 @@ module Kodo {
 
         stateCache : any[] = []
 
+        mainLoop;
+
         create() {
             GameScene.instance = this;
             this.game.stage.backgroundColor = '#29B865';
@@ -73,7 +75,40 @@ module Kodo {
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
-            this.game.time.events.loop(720, this.loopCache.bind(this), this);
+            this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
+        }
+
+        endGame(hostWon) {
+            this.game.time.events.remove(this.mainLoop);
+            var stringWon = hostWon == GameConfig.isHost ? "Victory!" : "Defeat! :(";
+
+            var loadingLabel = this.game.add.text(this.game.world.centerX, this.game.world.centerY, stringWon, { font: "80px Baloo Paaji", fill: '#ffffff', wordWrap: false, align: "center" });
+            loadingLabel.anchor.setTo(0.5, 0.5);
+
+            var box = this.game.make.graphics(0, 0);
+            box.beginFill(0x000000);
+            box.drawRoundedRect(0, 0, loadingLabel.width + 50, loadingLabel.height + 35, 30);
+            box.endFill();
+            var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
+            box.destroy();
+            loadingRect.anchor.setTo(0.5, 0.5);
+            loadingRect.alignIn(loadingLabel, Phaser.CENTER);
+            loadingRect.alpha = 0.6;
+
+            var group = this.game.add.group();
+            group.inputEnableChildren = true;
+            
+            loadingLabel.inputEnabled = true;
+            loadingLabel.input.useHandCursor = true;
+
+            loadingRect.inputEnabled = true;
+            loadingRect.input.useHandCursor = true;
+
+            group.add(loadingLabel);
+            group.add(loadingRect);
+            group.swap(loadingLabel,loadingRect);
+
+            group.onChildInputDown.add(function(sp) {sp.game.state.start('MainMenu', true, false);}, this);
         }
 
          update() {
@@ -83,7 +118,6 @@ module Kodo {
         } 
 
         loopCache() {
-            //console.log(this.stateCache.length);
             if (this.stateCache.length > 0){
                 this.executeUpdateEntities(this.stateCache[0]);
                 this.stateCache.splice(0, 1);
@@ -91,7 +125,6 @@ module Kodo {
         }
 
         executeUpdateEntities(newEntities: any[]) {
-            //console.log(Date.now() - this.lastTimeUpdate);
             this.uiResourceManager.updateResources(this.player.incomeRateCounter);
             this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);

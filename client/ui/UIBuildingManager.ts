@@ -152,6 +152,7 @@ module Kodo {
             this.buildingSelected = false;
 
             var hasBuilt=false;
+            var messageString = "Can't deploy here!";
 
             if (!this.inputOver) {
                 var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
@@ -162,14 +163,10 @@ module Kodo {
                 if (!sprite.isUnit) {
 
                     if (row >= GameConfig.GRID_ROWS - 1) {
-                        console.log("tenta de nv otario");
-
                         canBuild = false;
                     }
                     if (col > GameConfig.GRID_COLS - 2) {
                         canBuild = false;
-                        console.log("n opode porra");
-
                     }
                     
                     if (canBuild) {
@@ -177,7 +174,6 @@ module Kodo {
                             for (var j = 0; j < 2; j++) {
                                 if (Kodo.GameScene.instance.grid[row + j][col + i].entity != null) {
                                     canBuild = false;
-                                    console.log("vai da n monstrao");
                                 }
                             }
                         }
@@ -189,26 +185,46 @@ module Kodo {
                         if (canBuild) {
                             if (GameConfig.isHost) {
                                 if (col < 5) {
-                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
-                                    hasBuilt=true;
-                            }
+                                    if (Kodo[sprite.buildingName].goldCost <= Kodo.GameScene.instance.player.gold && Kodo[sprite.buildingName].woodCost <= Kodo.GameScene.instance.player.wood) {
+                                        Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                        hasBuilt=true;
+                                    }
+                                    else {
+                                        canBuild = false;
+                                        messageString = "Not enough resources!";
+                                    }
+                                }
+                                else {
+                                    canBuild = false;
+                                }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
-                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
-                                    hasBuilt = true;
+                                    if (Kodo[sprite.buildingName].goldCost <= Kodo.GameScene.instance.player.gold && Kodo[sprite.buildingName].woodCost <= Kodo.GameScene.instance.player.wood) {
+                                        Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                        hasBuilt = true;
+                                    }
+                                    else {
+                                        canBuild = false;
+                                        messageString = "Not enough resources!";
+                                    }
+                                }
+                                else {
+                                    canBuild = false;
                                 }
                             }
                         }
                         else {
-                            console.log("ja tem uma entidade aqui!!");
+                            canBuild = false;
                         }
                     }
                     else {
-                        console.log("n pode construir aqui");
+                        canBuild = false;
                     }
                 }
-                else {
+                else {//isUnit
+                    canBuild = true;
+
                     if (row > GameConfig.GRID_ROWS - 1) {
                         canBuild = false;
                     }
@@ -228,26 +244,49 @@ module Kodo {
                         if (canBuild) {
                             if (GameConfig.isHost) {
                                 if (col < 6) {
-                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
-                                    hasBuilt = true;
+                                    if (Kodo[sprite.buildingName].goldCost <= Kodo.GameScene.instance.player.gold && Kodo[sprite.buildingName].woodCost <= Kodo.GameScene.instance.player.wood) {
+                                        Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                        hasBuilt = true;
+                                    }
+                                    else {
+                                        canBuild = false;
+                                        messageString = "Not enough resources!";
+
+                                    }
+                                }
+                                else {
+                                    canBuild = false;
                                 }
                             }
                             else {
                                 if (col > GameConfig.GRID_COLS - 7) {
-                                    Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
-                                    hasBuilt = true;
+                                    if (Kodo[sprite.buildingName].goldCost <= Kodo.GameScene.instance.player.gold && Kodo[sprite.buildingName].woodCost <= Kodo.GameScene.instance.player.wood) {
+                                        Client.askBuild(row, col, sprite.buildingName, sprite.isUnit);
+                                        hasBuilt = true;
+                                    }
+                                    else {
+                                        canBuild = false;
+                                        messageString = "Not enough resources!";
+                                    }
+                                }
+                                else {
+                                    canBuild = false;
                                 }
                             }
                         }
                         else {
-                            console.log("ja tem uma entidade aqui!! UNIT");
+                            canBuild = false;
                         }
                     }
                     else {
-                        console.log("n pode construir aqui UNIT");
+                        canBuild = false;
                     }
                 }
                 this.preview.visible = false;
+    
+                if (!canBuild) {
+                    new WarningMessage(this.game, messageString);
+                }
 
                 if (hasBuilt) {
                     let sp = this.game.add.sprite(this.preview.x, this.preview.y, this.preview.key);

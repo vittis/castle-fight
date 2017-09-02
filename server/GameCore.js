@@ -145,11 +145,12 @@ var GameCore = (function () {
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0) {
             if (this.clientCastle.data.hp <= 0) {
                 console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");
+                this.endGame(true);
             }
             else {
                 console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
+                this.endGame(false);
             }
-            this.endGame();
             return;
         }
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
@@ -298,7 +299,7 @@ var GameCore = (function () {
         else
             return this.host.getAllEntities().concat(this.ballManager.gp.getAllEntities());
     };
-    GameCore.prototype.endGame = function () {
+    GameCore.prototype.endGame = function (hostWon) {
         console.log("end game chamado");
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
@@ -306,12 +307,7 @@ var GameCore = (function () {
         if (this.client instanceof GameBot_1.GameBot) {
             this.client = null;
         }
-        GameServer_1.GameServer.instance.endGame(this);
-    };
-    GameCore.prototype.printEntityStatus = function () {
-        this.getAllEntities().forEach(function (e) {
-            console.log(e.getEntityData().name + ", owner: " + e.owner.isHost + ", hp: " + e.getEntityData().hp + ", armor: " + e.getEntityData().armor + ", owner gold: " + e.owner.resourceManager.gold);
-        });
+        GameServer_1.GameServer.instance.endGame(this, hostWon);
     };
     return GameCore;
 }());

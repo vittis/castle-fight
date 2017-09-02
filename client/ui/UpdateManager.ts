@@ -97,6 +97,7 @@ module Kodo {
                 var tweenB = this.game.add.tween(this.updateCountLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
                 tweenA.chain(tweenB);
                 tweenA.start(); 
+                new WarningMessage(this.game, "+1 Upgrade Point", '#40f08b');
             }
         }
 

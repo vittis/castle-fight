@@ -202,11 +202,13 @@ export class GameCore {
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0 ) {
             if (this.clientCastle.data.hp <= 0) {
                 console.log("JOGOU ACABOU -"+this.host.serverPlayer.nick+"- GANHOU");
+                this.endGame(true);
+
             }
             else {
                 console.log("JOGOU ACABOU -" + this.client.serverPlayer.nick + "- GANHOU");
+                this.endGame(false);
             }
-            this.endGame();
             return;
         }
         //attack buildings attack
@@ -378,7 +380,7 @@ export class GameCore {
         else 
             return this.host.getAllEntities().concat(this.ballManager.gp.getAllEntities());
     }
-    endGame() : void {
+    endGame(hostWon) : void {
         console.log("end game chamado");
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
@@ -386,14 +388,14 @@ export class GameCore {
         if (this.client instanceof GameBot) {
             this.client = null;
         }
-        GameServer.instance.endGame(this);
+        GameServer.instance.endGame(this, hostWon);
     }
 
-    printEntityStatus() {
+/*     printEntityStatus() {
         this.getAllEntities().forEach(e => {
             console.log(e.getEntityData().name+", owner: "+e.owner.isHost+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor+", owner gold: "+e.owner.resourceManager.gold);
         });
         
-    }
+    } */
 
 }

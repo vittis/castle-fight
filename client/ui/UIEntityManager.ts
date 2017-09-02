@@ -56,7 +56,7 @@ module Kodo {
         updateText() {
             if (this.target != null) {
                 if (this.target instanceof Building) {
-                    if (this.target instanceof Tower) {
+                    if (this.target instanceof Tower || this.target instanceof Castle) {
                         this.descTexto.text = this.target.dataq.name + "\n\nDamage: " 
                             + this.target.data.attackDmg + "\nRange: " + this.target.data.attackRange + "\nAtk Speed: " + this.target.data.attackRate;
                         this.hpTexto.text = "" + this.target.dataq.hp;
@@ -262,7 +262,7 @@ module Kodo {
                 this.game.time.events.add(150, entityManager.justOpenedFalse.bind(this), this);
 
                 entityManager.isShowing = true; 
-                if (building instanceof Tower) {
+                if (building instanceof Tower || building instanceof Castle) {
                     entityManager.descricaoString = building.dataq.name + "\n\nDamage: " 
                          + building.data.attackDmg + "\nRange: " + building.data.attackRange + "\nAtk Speed: " + building.data.attackRate;
                 }

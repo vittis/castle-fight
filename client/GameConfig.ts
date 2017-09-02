@@ -17,7 +17,7 @@ module GameConfig {
     export var buildingNameData: string[] = [];
     export var unitNameData: string[] = [];
 
-    export var deck = ['Barracks', 'ArcheryRange', 'ThiefsTent', 'Archer', 'Sniper', 'Engineer', 'GravityChamber', 'MagesGuild'];
+    export var deck = ['Barracks', 'ArcheryRange', 'MagesGuild', 'Archer', 'Engineer', 'Sniper', 'GravityChamber', 'KingsCourt'];
 
     export var deckName = "<default deck>";
 

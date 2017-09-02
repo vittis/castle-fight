@@ -8,10 +8,6 @@ module Kodo {
             /* this.preloadBar = this.add.sprite(this.game.width/2, this.game.height/2+55, 'preloadBar');
             this.preloadBar.anchor.setTo(0.5, 0.5);*/
 
-
-
-
-
             this.game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
             this.game.add.sprite(0, 0, 'tileFundoPagina');
@@ -19,7 +15,6 @@ module Kodo {
 
             var loadingLabel = this.game.add.text(this.world.centerX, this.world.centerY, "Loading", { font: "80px Baloo Paaji", fill: '#ffffff', wordWrap: true, align: "center" });
             loadingLabel.anchor.setTo(0.5, 0.5);
-            //loadingLabel.alignTo(this.preloadBar, Phaser.TOP_CENTER, 0, 40);
 
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
