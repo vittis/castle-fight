@@ -125,13 +125,13 @@ var Kodo;
             deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 26, -30);
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 220, 145, 20);
+            box.drawRoundedRect(0, 0, 220, 115, 20);
             box.endFill();
             var serverStatusRect = this.game.add.sprite(0, 0, box.generateTexture());
             box.destroy();
             serverStatusRect.anchor.setTo(0.5, 0.5);
             serverStatusRect.x = howToPlay.x + howToPlay.width / 2;
-            serverStatusRect.y = this.game.height - serverStatusRect.height / 2 - 110;
+            serverStatusRect.y = this.game.height - serverStatusRect.height / 2 - 120;
             serverStatusRect.alpha = 0.53;
             var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("https://www.reddit.com/r/castlearena/", "_blank"); }, this, 1, 0, 2);
             redditButton.anchor.setTo(0.5, 0.5);
@@ -151,20 +151,13 @@ var Kodo;
             var onlineLabel = this.game.add.text(0, 0, "Online: ", style);
             onlineLabel.anchor.setTo(0.5, 0.5);
             onlineLabel.alignTo(serverStatusLabel, Phaser.BOTTOM_CENTER, 0, 5);
-            var matchMaking = this.game.add.text(0, 0, "Matchmaking: ", style);
-            matchMaking.anchor.setTo(0.5, 0.5);
-            matchMaking.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
             var ingame = this.game.add.text(0, 0, "In-game: ", style);
             ingame.anchor.setTo(0.5, 0.5);
-            ingame.alignTo(matchMaking, Phaser.BOTTOM_CENTER, 0, 2);
+            ingame.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
             style.fill = "#29B865";
             this.onlineNumber = this.game.add.text(0, 0, "-", style);
             this.onlineNumber.anchor.setTo(0.5, 0.5);
             this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER, 3);
-            style.fill = "#c9b32b";
-            this.matchmakingNumber = this.game.add.text(0, 0, "-", style);
-            this.matchmakingNumber.anchor.setTo(0.5, 0.5);
-            this.matchmakingNumber.alignTo(matchMaking, Phaser.RIGHT_CENTER, 3);
             style.fill = "#de8787";
             this.ingameNumber = this.game.add.text(0, 0, "-", style);
             this.ingameNumber.anchor.setTo(0.5, 0.5);
@@ -187,10 +180,8 @@ var Kodo;
             this.rectsGroup.add(redditButton);
             this.rectsGroup.add(getInvolved);
             this.rectsGroup.add(onlineLabel);
-            this.rectsGroup.add(matchMaking);
             this.rectsGroup.add(ingame);
             this.rectsGroup.add(this.onlineNumber);
-            this.rectsGroup.add(this.matchmakingNumber);
             this.rectsGroup.add(this.ingameNumber);
             this.rectsGroup.y = -1 * this.rectsGroup.height;
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
@@ -220,17 +211,12 @@ var Kodo;
         };
         MainMenu.prototype.updatePlayersConnected = function (players) {
             this.onlineNumber.text = "" + players.length;
-            var matchmaking = 0;
             var ingame = 0;
             players.forEach(function (p) {
-                if (p.status == 1) {
-                    matchmaking++;
-                }
                 if (p.status == 2) {
                     ingame++;
                 }
             });
-            this.matchmakingNumber.text = "" + matchmaking;
             this.ingameNumber.text = "" + ingame;
         };
         MainMenu.prototype.onHover = function (sprite) {
