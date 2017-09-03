@@ -34,7 +34,6 @@ var GamePlayer = (function () {
             }
         }
         else {
-            console.log("nao ha recursos");
         }
     };
     GamePlayer.prototype.addEntity = function (e) {

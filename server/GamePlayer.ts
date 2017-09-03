@@ -50,7 +50,7 @@ export class GamePlayer {
             }
         }
         else {
-            console.log("nao ha recursos");
+            //console.log("nao ha recursos");
         }
     }
 
