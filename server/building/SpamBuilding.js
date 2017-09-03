@@ -31,6 +31,9 @@ var SpamBuilding = (function (_super) {
         this.data.tileRow = tile.row;
         this.data.tileCol = tile.col;
         this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        if (this.data.spamRate <= 0) {
+            this.data.spamRate = 1;
+        }
         this.data.spamCount += this.owner.updateManager.unitCountModifier;
     };
     SpamBuilding.prototype.spamUnit = function (unit) {

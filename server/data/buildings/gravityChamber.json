@@ -7,8 +7,8 @@
     "goldCost": 70,
     "woodCost": 75,
     "spamUnit": "Propeller",
-    "spamCount": 3,
-    "spamRate": 30,
+    "spamCount": 2,
+    "spamRate": 15,
     "description": "Trains Propeller",
     "incomeGain": 4
 }

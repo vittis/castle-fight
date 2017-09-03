@@ -60,6 +60,7 @@ module Kodo {
             this.lineStyle(19, 0xecec3a, 1);
             this.moveTo(0, 0);
             this.lineTo(this.smooth, 0);
+            
         }
         updateCounter(counter : number) {
             this.cuts = 1 / Kodo.GameScene.instance.player.incomeRate;

@@ -6,7 +6,7 @@ var GameConfig;
     GameConfig.updateRate = 500;
     GameConfig.buildingNameData = [];
     GameConfig.unitNameData = [];
-    GameConfig.deck = ['Barracks', 'ArcheryRange', 'MagesGuild', 'Archer', 'Engineer', 'Sniper', 'GravityChamber', 'KingsCourt'];
+    GameConfig.deck = ['Barracks', 'ArcheryRange', 'Archer', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
     GameConfig.deckName = "<default deck>";
     GameConfig.yourNick = "";
     GameConfig.opponentNick = "";

@@ -9,5 +9,5 @@
     "attackRate": 2,
     "description": "Has double move speed until first attack",
     "goldCost": 35,
-    "woodCost": 20
+    "woodCost": 25
 }

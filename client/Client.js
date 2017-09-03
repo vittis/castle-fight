@@ -4,6 +4,9 @@ var Client;
     var startPingTime = 0;
     socket.on('startGame', function (data) {
         console.log("Starting game...");
+        if (document.hidden) {
+            piscaLoop = setInterval(piscaTitulo, 1000);
+        }
         var gameId = data.id;
         var rows = data.rows;
         var cols = data.cols;
@@ -118,3 +121,15 @@ var Client;
     }
     Client.askPauseUnit = askPauseUnit;
 })(Client || (Client = {}));
+var piscaLoop;
+var originalTitle = document.title;
+var piscaCounter = 0;
+function piscaTitulo() {
+    document.title = document.title == originalTitle ? "Match Found!" : originalTitle;
+    piscaCounter++;
+    if (piscaCounter >= 15) {
+        piscaCounter = 0;
+        document.title = originalTitle;
+        clearInterval(piscaLoop);
+    }
+}

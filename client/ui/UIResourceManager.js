@@ -20,6 +20,7 @@ var Kodo;
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');
         }
         UIResourceManager.prototype.startGame = function () {
+            console.log("kd starta ae");
             new Kodo.WarningMessage(this.game, 'Match Started!');
             this.incomeBar = new Kodo.IncomeBar(this.game);
         };

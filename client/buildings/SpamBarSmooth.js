@@ -100,12 +100,14 @@ var Kodo;
         };
         SpamBarSmooth.prototype.updateCounter = function (counter) {
             if (counter != 0) {
-                counter = counter * -1 + this.spamRate;
-                this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
-                this.clear();
-                this.lineStyle(6, 0xffd700, 1);
-                this.moveTo(0, 0);
-                this.lineTo(this.smooth, 0);
+                if (this.building.data.spamData.isTraining) {
+                    counter = counter * -1 + this.spamRate;
+                    this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
+                    this.clear();
+                    this.lineStyle(6, 0xffd700, 1);
+                    this.moveTo(0, 0);
+                    this.lineTo(this.smooth, 0);
+                }
             }
         };
         SpamBarSmooth.prototype.resetCounter = function () {
