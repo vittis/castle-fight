@@ -31,9 +31,10 @@ export abstract class SpamBuilding extends Building {
     addToGame(gm) {
         super.addToGame(gm);
         var tile = this.getTileToSpam();
-        this.data.tileRow = tile.row;
-        this.data.tileCol = tile.col;
-        
+        if (tile) {
+            this.data.tileRow = tile.row;
+            this.data.tileCol = tile.col;
+        }
         this.data.spamRate += this.owner.updateManager.spamRateModifier;
         if (this.data.spamRate <= 0) {
             this.data.spamRate = 1;

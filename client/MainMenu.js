@@ -185,6 +185,7 @@ var Kodo;
             this.rectsGroup.add(this.ingameNumber);
             this.rectsGroup.y = -1 * this.rectsGroup.height;
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
+            this.game.add.sprite(250, this.game.world.centerY - 20, 'warning').anchor.setTo(0.5, 0.5);
         };
         MainMenu.prototype.onOverButton = function (sprite) {
             sprite.scale.setTo(1.02, 1.02);
