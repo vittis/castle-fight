@@ -55,7 +55,12 @@ export class GridManager {
     }
 
     tileAt(row, col) : Tile {
-        return this.grid[row][col];
+        if (this.isValid(row, col)) {
+            return this.grid[row][col];
+        }
+        else {
+            return this.grid[6][0];
+        }
     }
     
     isValid(row, col) : boolean {

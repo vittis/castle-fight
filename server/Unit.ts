@@ -126,29 +126,31 @@ export abstract class Unit extends Entity{
     }
 
     attack(entity: Entity): void {
-        this.data.attackData.hasAttacked = true;
-        var target: Tile = null;
-        var shortestDistance = 100;
+        if (entity != null) { 
+            this.data.attackData.hasAttacked = true;
+            var target: Tile = null;
+            var shortestDistance = 100;
 
-        for (var i = 0; i < entity.getEntityData().width; i++) {
-            for (var j = 0; j < entity.getEntityData().height; j++) {
-                var tile: Tile = this.gm.tileAt(entity.tile.row + j, entity.tile.col + i);
-                var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
-                if (dist < shortestDistance) {
-                    target = tile;
-                    shortestDistance = dist;
+            for (var i = 0; i < entity.getEntityData().width; i++) {
+                for (var j = 0; j < entity.getEntityData().height; j++) {
+                    var tile: Tile = this.gm.tileAt(entity.tile.row + j, entity.tile.col + i);
+                    var dist = this.gm.aStar.heuristic.getHeuristic(this.tile.col, this.tile.row, 0, tile.col, tile.row, 0);
+                    if (dist < shortestDistance) {
+                        target = tile;
+                        shortestDistance = dist;
+                    }
                 }
             }
+
+            this.data.attackData.row = target.row;
+            this.data.attackData.col = target.col;
+
+            this.target = entity;
+
+            entity.receiveAttack(this);
+
+            this.attackRateCounter = 0;
         }
-
-        this.data.attackData.row = target.row;
-        this.data.attackData.col = target.col;
-
-        this.target = entity;
-
-        entity.receiveAttack(this);
-
-        this.attackRateCounter = 0;
     }
 
     resetAttackData() {

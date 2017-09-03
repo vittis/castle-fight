@@ -43,7 +43,12 @@ var GridManager = (function () {
         return numberGrid;
     };
     GridManager.prototype.tileAt = function (row, col) {
-        return this.grid[row][col];
+        if (this.isValid(row, col)) {
+            return this.grid[row][col];
+        }
+        else {
+            return this.grid[6][0];
+        }
     };
     GridManager.prototype.isValid = function (row, col) {
         if ((row >= 0 && row < this.rows) && (col >= 0 && col < this.cols)) {
