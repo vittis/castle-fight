@@ -57,25 +57,31 @@ var King = (function (_super) {
     };
     King.prototype.grapple = function (unit) {
         if (!this.owner.isHost) {
-            if (this.gm.tileAt(this.tile.row, this.tile.col - 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col - 1]);
+            if (this.gm.tileAt(this.tile.row, this.tile.col - 1) != null) {
+                if (this.gm.tileAt(this.tile.row, this.tile.col - 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row][this.tile.col - 1]);
             }
-            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col - 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col - 1]);
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col - 1) != null) {
+                if (this.gm.tileAt(this.tile.row + 1, this.tile.col - 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col - 1]);
             }
-            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col - 1]);
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1) != null) {
+                if (this.gm.tileAt(this.tile.row - 1, this.tile.col - 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col - 1]);
             }
         }
         else {
-            if (this.gm.tileAt(this.tile.row, this.tile.col + 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row][this.tile.col + 1]);
+            if (this.gm.tileAt(this.tile.row, this.tile.col + 1) != null) {
+                if (this.gm.tileAt(this.tile.row, this.tile.col + 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row][this.tile.col + 1]);
             }
-            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col + 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col + 1]);
+            else if (this.gm.tileAt(this.tile.row + 1, this.tile.col + 1) != null) {
+                if (this.gm.tileAt(this.tile.row + 1, this.tile.col + 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row + 1][this.tile.col + 1]);
             }
-            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1).entity == null) {
-                unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col + 1]);
+            else if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1) != null) {
+                if (this.gm.tileAt(this.tile.row - 1, this.tile.col + 1).entity == null)
+                    unit.moveTo(this.gm.grid[this.tile.row - 1][this.tile.col + 1]);
             }
         }
     };
