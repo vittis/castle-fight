@@ -20,7 +20,9 @@ var Mage = (function (_super) {
         var _this = this;
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            var attackedId = targetTile.entity.id;
+            if (targetTile.entity != null) {
+                var attackedId = targetTile.entity.id;
+            }
             targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
                 if (t.entity != null) {
                     if (t.entity.owner.isHost != _this.owner.isHost) {

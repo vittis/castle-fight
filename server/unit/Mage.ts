@@ -11,7 +11,9 @@ export class Mage extends Unit {
     doAction(targetTile: Tile) {
         if (this.canAttack()) {
             this.attack(targetTile.entity);
-            var attackedId= targetTile.entity.id;
+            if (targetTile.entity != null) {
+                var attackedId= targetTile.entity.id;
+            }
             
             targetTile.entity.getOuterTilesWithEntity().forEach(t => {
                 if (t.entity != null) {
