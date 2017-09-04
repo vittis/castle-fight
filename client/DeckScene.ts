@@ -70,6 +70,10 @@ module Kodo {
              this.yourDeckGroup = this.add.group();
              this.yourDeckGroup.inputEnableChildren = true;
 
+            if (!GameConfig.deck[0]) {
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+            }
+
              GameConfig.deck.forEach(name => {
                  this.deck.push(name);
                  let isUnit = (GameConfig.unitNameData.indexOf(name) >= 0);

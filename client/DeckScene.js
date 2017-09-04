@@ -64,6 +64,9 @@ var Kodo;
             var hostLabel = GameConfig.isHost ? 'h' : 'c';
             this.yourDeckGroup = this.add.group();
             this.yourDeckGroup.inputEnableChildren = true;
+            if (!GameConfig.deck[0]) {
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+            }
             GameConfig.deck.forEach(function (name) {
                 _this.deck.push(name);
                 var isUnit = (GameConfig.unitNameData.indexOf(name) >= 0);
