@@ -28,6 +28,10 @@ module Kodo {
 
             var hostLabel = GameConfig.isHost ? 'h' : 'c'
 
+            if (!GameConfig.deck[0]) {
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+            }
+
             GameConfig.deck.forEach(name => {
                 let isUnit = (GameConfig.unitNameData.indexOf(name) >= 0);
                 this.buildingsGroup.add(new UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name, isUnit));

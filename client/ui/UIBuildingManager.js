@@ -13,6 +13,9 @@ var Kodo;
             this.buildingsGroup = game.add.group();
             this.buildingsGroup.inputEnableChildren = true;
             var hostLabel = GameConfig.isHost ? 'h' : 'c';
+            if (!GameConfig.deck[0]) {
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+            }
             GameConfig.deck.forEach(function (name) {
                 var isUnit = (GameConfig.unitNameData.indexOf(name) >= 0);
                 _this.buildingsGroup.add(new Kodo.UIBuildingButton(game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, _this, name[0].toLowerCase() + name.slice(1) + "" + hostLabel, name, isUnit));
