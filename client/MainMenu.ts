@@ -24,8 +24,16 @@ module Kodo {
             MainMenu.instance = this;
             var cookieValue :string = document.cookie.replace(/(?:(?:^|.*;\s*)deck\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             var deck = cookieValue.split(',');
-            if (deck.length > 0) {
-                GameConfig.deck = deck;
+            if (deck){
+                if (deck.length == 8) {
+                    GameConfig.deck = deck;
+                }
+                else {
+                    GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                }
+            }
+            else {
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
             }
             var deckName: string = document.cookie.replace(/(?:(?:^|.*;\s*)deckName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             if (deckName.length > 0) {
