@@ -13,7 +13,8 @@ module Kodo {
             this.state.add('MainMenu', MainMenu, false);
             this.state.add('DeckScene', DeckScene, false);
             this.state.add('GameScene', GameScene, false);
-            
+            this.state.add('AboutScene', AboutScene, false);
+
             this.state.start('Boot'); 
         }
 

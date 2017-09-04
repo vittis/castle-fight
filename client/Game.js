@@ -20,6 +20,7 @@ var Kodo;
             _this.state.add('MainMenu', Kodo.MainMenu, false);
             _this.state.add('DeckScene', Kodo.DeckScene, false);
             _this.state.add('GameScene', Kodo.GameScene, false);
+            _this.state.add('AboutScene', Kodo.AboutScene, false);
             _this.state.start('Boot');
             return _this;
         }

@@ -234,9 +234,10 @@ module Kodo {
                 this.game.load.image('deckbuildingGuide', 'assets/48/menu_ui/deckbuildingGuide.png');
                 this.game.load.image('howToPlay-changelog', 'assets/48/menu_ui/howToPlay-changelog.png');
                 this.game.load.image('moreButton', 'assets/48/menu_ui/moreButton.png');
-                this.game.load.image('warning', 'assets/48/menu_ui/warning.png');
+                //this.game.load.image('warning', 'assets/48/menu_ui/warning.png');
 
                 this.game.load.spritesheet('redditButton', 'assets/48/menu_ui/redditButton.png', 47, 51);
+                this.game.load.spritesheet('discordButton', 'assets/48/menu_ui/discordButton.png', 47, 51);
 
             }
         }

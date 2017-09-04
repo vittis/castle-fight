@@ -68,9 +68,20 @@ module Kodo {
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
 
+            var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
+            var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {this.game.state.start('AboutScene', true, false);}.bind(this), this);
+            aboutButton.anchor.setTo(0.5, 0.5);
+            aboutButton.tint = 0xb3b3b3;
+            var aboutText = this.game.add.text(this.game.world.centerX, this.game.height - 30, 'About', style);
+            aboutText.fontSize = 17;
+            aboutText.anchor.setTo(0.5, 0.5);
+
+            aboutButton.width = aboutText.width + 10;
+            aboutButton.height = aboutText.height + 3;
+
+            aboutText.alignIn(aboutButton, Phaser.CENTER);
 
             
-            var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
             this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
             this.titleLabel.anchor.setTo(0.5, 0.5);
             this.titleLabel.fontWeight = 'bold';
@@ -158,15 +169,18 @@ module Kodo {
 
 
             var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("https://www.reddit.com/r/castlearena/", "_blank"); }, this, 1, 0, 2);
-            //redditButton.position.setTo(30, this.game.height - 30);
             redditButton.anchor.setTo(0.5, 0.5);
-            redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 0, 30);
+            redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, -27, 30);
+
+            var discordButton = this.game.add.button(15, this.game.height - 30, 'discordButton', function () { window.open("https://discord.gg/tP2YjDb", "_blank"); }, this, 1, 0, 2);
+            discordButton.anchor.setTo(0.5, 0.5);
+            discordButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 27, 30);
 
             style.font = "18px Baloo Paaji";
             style.fill = '#12522d';
             var getInvolved = this.game.add.text(0, 0, "Join Us!", style);
             getInvolved.anchor.setTo(0.5, 0.5);
-            getInvolved.alignTo(redditButton, Phaser.BOTTOM_CENTER, 0, 1);
+            getInvolved.alignTo(redditButton, Phaser.BOTTOM_CENTER, 27, 1);
 
             style.font = "26px Baloo Paaji";
             style.fill = '#ecec3a';
@@ -237,6 +251,7 @@ module Kodo {
             this.rectsGroup.add(serverStatusRect);
             this.rectsGroup.add(serverStatusLabel);
             this.rectsGroup.add(redditButton);
+            this.rectsGroup.add(discordButton);
             this.rectsGroup.add(getInvolved);
             this.rectsGroup.add(onlineLabel);
             //this.rectsGroup.add(matchMaking);
@@ -249,7 +264,7 @@ module Kodo {
 
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
 
-            this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
+            //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
         }
         
 

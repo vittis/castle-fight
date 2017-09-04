@@ -108,21 +108,23 @@ export class GameCore {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
 
             p.socket.on('askBuild', function (data) {
-                if (this.gridManager.tileAt(data.row, data.col).entity == null) {
-                    if (!data.isUnit) {
-                        if (data.isHost) {
-                            this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                if (this != null) {
+                    if (this.gridManager.tileAt(data.row, data.col).entity == null) {
+                        if (!data.isUnit) {
+                            if (data.isHost) {
+                                this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                            }
+                            else {
+                                this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                            }
                         }
                         else {
-                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                        }
-                    }
-                    else {
-                        if (data.isHost) {
-                            this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                        }
-                        else {
-                            this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                            if (data.isHost) {
+                                this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                            }
+                            else {
+                                this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                            }
                         }
                     }
                 }
