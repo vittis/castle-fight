@@ -199,11 +199,15 @@ module Kodo {
                 else {
                     GameConfig.deckName = "<custom deck>";
                 }
+                document.cookie = "deck=" + GameConfig.deck.join(',');
+                document.cookie = "deckName="+ GameConfig.deckName; 
                 this.game.state.start('MainMenu', true, false);
             }
             else if (this.deck.length == 0) {
                 GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'GravityChamber', 'SpecialFacility', 'KingsCourt'];
                 GameConfig.deckName = "<default deck>";
+                document.cookie = "deck="+GameConfig.deck.join(',');
+                document.cookie = "deckName=" + GameConfig.deckName; 
                 this.game.state.start('MainMenu', true, false);
             }
         }

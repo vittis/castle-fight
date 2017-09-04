@@ -20,7 +20,20 @@ module Kodo {
         rectsGroup : Phaser.Group;
 
         create() {
+            hideAbout();
             MainMenu.instance = this;
+            var cookieValue :string = document.cookie.replace(/(?:(?:^|.*;\s*)deck\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            var deck = cookieValue.split(',');
+            if (deck.length > 0) {
+                GameConfig.deck = deck;
+            }
+            var deckName: string = document.cookie.replace(/(?:(?:^|.*;\s*)deckName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            if (deckName.length > 0) {
+                GameConfig.deckName = deckName;
+            }
+            else {
+                GameConfig.deckName = "<default deck>";
+            }
 
             this.game.add.sprite(0, 0, 'tileFundoMaior');
             this.game.stage.backgroundColor = '#29B865';
