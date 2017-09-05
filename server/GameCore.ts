@@ -108,7 +108,7 @@ export class GameCore {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
 
             p.socket.on('askBuild', function (data) {
-                if (this != null) {
+                if (this != null && this.host != null && this.client != null) {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
                             if (data.isHost) {
@@ -123,6 +123,7 @@ export class GameCore {
                                 this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
                             }
                             else {
+                                
                                 this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
                             }
                         }

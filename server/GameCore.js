@@ -58,7 +58,7 @@ var GameCore = (function () {
         if (p.socket) {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig_1.GameConfig.STEP_RATE });
             p.socket.on('askBuild', function (data) {
-                if (this != null) {
+                if (this != null && this.host != null && this.client != null) {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
                             if (data.isHost) {
