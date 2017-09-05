@@ -49,8 +49,10 @@ module Kodo {
             }
         }
         onOutTrainingButton() {
-            if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
-                this.trainButton.visible = false;
+            if (this.trainButtonTarget != null) {
+                if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                    this.trainButton.visible = false;
+                }
             }
         }
         updateText() {

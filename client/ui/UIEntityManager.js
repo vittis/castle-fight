@@ -26,8 +26,10 @@ var Kodo;
             }
         }
         UIEntityManager.prototype.onOutTrainingButton = function () {
-            if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
-                this.trainButton.visible = false;
+            if (this.trainButtonTarget != null) {
+                if (!this.trainButtonTarget.getBounds().contains(this.game.input.x, this.game.input.y)) {
+                    this.trainButton.visible = false;
+                }
             }
         };
         UIEntityManager.prototype.updateText = function () {
