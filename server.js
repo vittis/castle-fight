@@ -55,6 +55,12 @@ io.on('connection', function (socket) {
         cb(startTime);
     });
     socket.on('chatmessage', function (message) {
-        gameServer.onMessage(message);
+        console.log(message);
+        if (message.indexOf('vittis: /alert-') != -1) {
+            io.emit('onAnuncio', message.substr(message.indexOf('-') + 1, message.length));
+        }
+        else {
+            gameServer.onMessage(message);
+        }
     });
 });

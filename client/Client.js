@@ -88,6 +88,13 @@ var Client;
             Kodo.MainMenu.instance.updatePlayersConnected(data);
         }
     });
+    socket.on('onAnuncio', function (msg) {
+        if (Kodo.Game.instance != null) {
+            if (Kodo.Game.instance.state.current == 'MainMenu' || Kodo.Game.instance.state.current == 'GameScene' || Kodo.Game.instance.state.current == 'DeckScene') {
+                new Kodo.WarningMessage(Kodo.Game.instance, msg);
+            }
+        }
+    });
     function checkPing() {
         socket.emit('latency', Date.now(), function (startTime) {
             var latency = Date.now() - startTime;
