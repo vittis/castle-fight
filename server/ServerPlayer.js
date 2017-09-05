@@ -8,6 +8,7 @@ var PlayerStatus;
 })(PlayerStatus = exports.PlayerStatus || (exports.PlayerStatus = {}));
 var ServerPlayer = (function () {
     function ServerPlayer(id, socket) {
+        this.wins = 0;
         this.id = id;
         this.status = PlayerStatus.connected;
         this.nick = "Guest_" + id;

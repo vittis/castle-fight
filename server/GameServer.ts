@@ -11,15 +11,13 @@ export class GameServer {
 
     public static instance : GameServer = null;
 
+    top5Nicks : string[] = [];
+    top5Wins : number[] = [];
+
     io : SocketIO.Server;
     constructor(io) {
         GameServer.instance = this;
         this.io = io;
-        //debug>
-        //var player = this.onConnected();   
-        //var player2 = this.onConnected();        
-        //this.onMatchmaking(player);
-        //this.onMatchmaking(player2);
     }
 
     addPlayer(socket : SocketIO.Socket): ServerPlayer {
@@ -146,12 +144,13 @@ export class GameServer {
             var players: any[] = [];
 
             this.clients.forEach(p => {
-                players.push({ id: p.id, status: p.status });
+                players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
             });
-            
+
+
             playersOnLobby.forEach(p => {
                 if (p.socket)
-                    p.socket.emit('receivePlayers', players);
+                    p.socket.emit('receivePlayers', {players: players});
             });
         }
     }
@@ -170,12 +169,13 @@ export class GameServer {
         }
         if (game.host.serverPlayer.socket) {
             game.host.serverPlayer.socket.emit('endGame', {hostWon: hostWon});
+            game.host.serverPlayer.wins++;
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
                 game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
                 game.client.serverPlayer.status = PlayerStatus.connected;
-
+                game.client.serverPlayer.wins++;
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");
@@ -190,4 +190,26 @@ export class GameServer {
             });
         }
     }
+
+    /* getTop5() {
+        var winsArray=[];
+        var nicksArray = [];
+
+        this.clients.forEach(client => {
+            winsArray.push(client.wins);
+        });
+        if (winsArray.length >=5) {
+            winsArray.splice(5, winsArray.length-5);
+        }
+        this.clients.forEach(client => {
+            if ()
+        });
+
+        var obj;
+        return obj;
+    } */
+
+}
+function sortNumber(a, b) {
+    return a - b;
 }

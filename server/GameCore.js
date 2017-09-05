@@ -14,6 +14,7 @@ var IncomeBall_1 = require("./building/IncomeBall");
 var GameBot_1 = require("./GameBot");
 var GameCore = (function () {
     function GameCore(id, host, client) {
+        this.totalTurns = 0;
         this.id = id;
         this.gridManager = new GridManager_1.GridManager(new AStar_1.AStar(new EuclideanHeuristic_1.EuclideanHeuristic()), GameConfig_1.GameConfig.GRID_ROWS, GameConfig_1.GameConfig.GRID_COLS);
         this.host = new GamePlayer_1.GamePlayer(host, true, this.gridManager);
@@ -24,8 +25,8 @@ var GameCore = (function () {
             this.client = new GameBot_1.GameBot(client, false, this.gridManager);
         }
         this.ballManager = new IncomeBallManager_1.IncomeBallManager(new GamePlayer_1.GamePlayer(null, null, this.gridManager));
-        this.hostCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, 0);
-        this.clientCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2);
+        this.hostCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, 2);
+        this.clientCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2 - 2);
         this.host.buildBuilding(this.hostCastle);
         this.client.buildBuilding(this.clientCastle);
         this.client.buildBuilding(new Tower_1.Tower(3, 24));
@@ -84,16 +85,18 @@ var GameCore = (function () {
                 }
             }.bind(this));
             p.socket.on('askSpamTileMark', function (data) {
-                if (data.isHost) {
-                    if (this.host.getEntityById(data.buildingId) != null) {
-                        this.host.getEntityById(data.buildingId).data.tileRow = data.row;
-                        this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                if (this.host != null && this.client != null) {
+                    if (data.isHost) {
+                        if (this.host.getEntityById(data.buildingId) != null) {
+                            this.host.getEntityById(data.buildingId).data.tileRow = data.row;
+                            this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                        }
                     }
-                }
-                else {
-                    if (this.client.getEntityById(data.buildingId) != null) {
-                        this.client.getEntityById(data.buildingId).data.tileRow = data.row;
-                        this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    else {
+                        if (this.client.getEntityById(data.buildingId) != null) {
+                            this.client.getEntityById(data.buildingId).data.tileRow = data.row;
+                            this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                        }
                     }
                 }
             }.bind(this));
@@ -154,6 +157,7 @@ var GameCore = (function () {
     };
     GameCore.prototype.step = function () {
         var _this = this;
+        this.totalTurns++;
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0) {
             if (this.clientCastle.data.hp <= 0) {
                 console.log("JOGOU ACABOU -" + this.host.serverPlayer.nick + "- GANHOU");

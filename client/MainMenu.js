@@ -221,6 +221,7 @@ var Kodo;
             this.rectsGroup.y = -1 * this.rectsGroup.height;
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
             this.chatBox = new Kodo.ChatBox(this.game);
+            this.leaderboard = new Kodo.Leaderboard(this.game);
         };
         MainMenu.prototype.onFocusOut = function () {
             if (this.inputField.value.length > 0) {
@@ -262,6 +263,9 @@ var Kodo;
                 }
             });
             this.ingameNumber.text = "" + ingame;
+            players.sort(predicateBy("wins"));
+            players.reverse();
+            this.leaderboard.updateTop5(players);
         };
         MainMenu.prototype.onHover = function (sprite) {
             sprite.onOver();

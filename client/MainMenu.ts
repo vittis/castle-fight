@@ -20,6 +20,7 @@ module Kodo {
         rectsGroup : Phaser.Group;
 
         chatBox : ChatBox;
+        leaderboard : Leaderboard;
 
         create() {
             hideAbout();
@@ -291,6 +292,7 @@ module Kodo {
 
             //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
             this.chatBox = new ChatBox(this.game);
+            this.leaderboard = new Leaderboard(this.game);
         }
         onFocusOut() {
             if (this.inputField.value.length > 0) {
@@ -333,18 +335,19 @@ module Kodo {
 
         updatePlayersConnected(players : any[]) {
             this.onlineNumber.text = ""+players.length;
-            //var matchmaking=0;
             var ingame=0;
             players.forEach(p => {
-                /* if (p.status == 1) {
-                    matchmaking++;
-                } */
+
                 if (p.status == 2) {
                     ingame++;
                 }
             });
-            //this.matchmakingNumber.text = ""+matchmaking;
             this.ingameNumber.text = ""+ingame;
+
+
+            players.sort(predicateBy("wins"));
+            players.reverse();
+            this.leaderboard.updateTop5(players);
         }
 
         onHover(sprite: UIBuildingButton) {

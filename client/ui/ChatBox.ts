@@ -13,7 +13,7 @@ module Kodo {
 
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 340, 365, 10);
+            box.drawRoundedRect(0, 0, 340, 330, 10);
             box.endFill();
             this.chatSpace = this.game.add.sprite(10, this.game.height, box.generateTexture());
             box.destroy();
@@ -94,7 +94,7 @@ module Kodo {
                 var newMessage1 = this.game.add.text(0, 0, string1, style);
                 var newMessage2 = this.game.add.text(0, 0, string2, style);
                 
-                while (this.messageGroup.length >= 14) {
+                while (this.messageGroup.length >= 12) {
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                 }
@@ -107,7 +107,7 @@ module Kodo {
                 this.messageGroup.align(1, 15, 0, 22);
             } 
             else {
-                while (this.messageGroup.length >= 15) {
+                while (this.messageGroup.length >= 13) {
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                 }
                 newMessage.addColor('#2bb664', 0);

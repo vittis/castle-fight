@@ -24,7 +24,6 @@ var Client;
     });
     socket.on('startGameLoop', function (data) {
         console.log("Starting main game loop");
-        Kodo.GameScene.instance.uiResourceManager.startGame();
     });
     socket.on('receiveData', function (data) {
         if (Kodo.GameScene.instance != null) {
@@ -83,7 +82,7 @@ var Client;
     });
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
-            Kodo.MainMenu.instance.updatePlayersConnected(data);
+            Kodo.MainMenu.instance.updatePlayersConnected(data.players);
         }
     });
     function checkPing() {
@@ -130,6 +129,17 @@ var Client;
     }
     Client.sendMessage = sendMessage;
 })(Client || (Client = {}));
+function predicateBy(prop) {
+    return function (a, b) {
+        if (a[prop] > b[prop]) {
+            return 1;
+        }
+        else if (a[prop] < b[prop]) {
+            return -1;
+        }
+        return 0;
+    };
+}
 var piscaLoop;
 var originalTitle = document.title;
 var piscaCounter = 0;

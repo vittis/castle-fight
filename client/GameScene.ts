@@ -86,7 +86,7 @@ module Kodo {
             else {
                 surrenderLabel.alignTo(yourNickLabel, Phaser.LEFT_CENTER);
             } */
-
+            this.uiResourceManager.startGame();
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         }
 

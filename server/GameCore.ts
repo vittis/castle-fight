@@ -39,6 +39,8 @@ export class GameCore {
     startGameTimeout;
     sendDataTimeout;
 
+    totalTurns =0;
+
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -54,8 +56,8 @@ export class GameCore {
         }
         this.ballManager = new IncomeBallManager(new GamePlayer(null, null, this.gridManager));
 
-        this.hostCastle = new Castle(GameConfig.GRID_ROWS / 2 - 1, 0);
-        this.clientCastle = new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2)
+        this.hostCastle = new Castle(GameConfig.GRID_ROWS / 2 - 1, 2);
+        this.clientCastle = new Castle(GameConfig.GRID_ROWS / 2 - 1, GameConfig.GRID_COLS - 2 - 2)
 
         this.host.buildBuilding(this.hostCastle);
         this.client.buildBuilding(this.clientCastle);     
@@ -135,16 +137,18 @@ export class GameCore {
             }.bind(this));
 
             p.socket.on('askSpamTileMark', function (data) {
-                if (data.isHost) {
-                    if (this.host.getEntityById(data.buildingId) != null) {
-                        this.host.getEntityById(data.buildingId).data.tileRow = data.row;
-                        this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                if (this.host != null && this.client != null) {
+                    if (data.isHost) {
+                        if (this.host.getEntityById(data.buildingId) != null) {
+                            this.host.getEntityById(data.buildingId).data.tileRow = data.row;
+                            this.host.getEntityById(data.buildingId).data.tileCol = data.col;
+                        }
                     }
-                }
-                else {
-                    if (this.client.getEntityById(data.buildingId) != null) {
-                        this.client.getEntityById(data.buildingId).data.tileRow = data.row;
-                        this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    else {
+                        if (this.client.getEntityById(data.buildingId) != null) {
+                            this.client.getEntityById(data.buildingId).data.tileRow = data.row;
+                            this.client.getEntityById(data.buildingId).data.tileCol = data.col;
+                        }
                     }
                 }
             }.bind(this));
@@ -211,6 +215,7 @@ export class GameCore {
     }
 
     step() {
+        this.totalTurns++;
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0 ) {
             if (this.clientCastle.data.hp <= 0) {
                 console.log("JOGOU ACABOU -"+this.host.serverPlayer.nick+"- GANHOU");

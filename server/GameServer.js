@@ -9,6 +9,8 @@ var GameServer = (function () {
         this.lastGameID = 0;
         this.games = new Array();
         this.clients = new Array();
+        this.top5Nicks = [];
+        this.top5Wins = [];
         GameServer.instance = this;
         this.io = io;
     }
@@ -119,11 +121,11 @@ var GameServer = (function () {
         if (playersOnLobby.length > 0) {
             var players = [];
             this.clients.forEach(function (p) {
-                players.push({ id: p.id, status: p.status });
+                players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
             });
             playersOnLobby.forEach(function (p) {
                 if (p.socket)
-                    p.socket.emit('receivePlayers', players);
+                    p.socket.emit('receivePlayers', { players: players });
             });
         }
     };
@@ -141,11 +143,13 @@ var GameServer = (function () {
         }
         if (game.host.serverPlayer.socket) {
             game.host.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
+            game.host.serverPlayer.wins++;
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
                 game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
                 game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
+                game.client.serverPlayer.wins++;
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");
@@ -163,3 +167,6 @@ var GameServer = (function () {
     return GameServer;
 }());
 exports.GameServer = GameServer;
+function sortNumber(a, b) {
+    return a - b;
+}

@@ -29,11 +29,13 @@ var Kodo;
             _super.prototype.update.call(this);
         };
         Unit.prototype.moveTo = function (tile) {
-            if (tile != null) {
-                this.tile.entity = null;
-                this.tile = tile;
-                this.tile.entity = this;
-                this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate + 75, Phaser.Easing.Linear.None, true);
+            if (this.game != null) {
+                if (tile != null) {
+                    this.tile.entity = null;
+                    this.tile = tile;
+                    this.tile.entity = this;
+                    this.game.add.tween(this).to({ x: tile.x, y: tile.y }, GameConfig.updateRate + 75, Phaser.Easing.Linear.None, true);
+                }
             }
         };
         Unit.prototype.attack = function (tile) {

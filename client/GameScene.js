@@ -55,6 +55,7 @@ var Kodo;
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
+            this.uiResourceManager.startGame();
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         };
         GameScene.prototype.endGame = function (hostWon) {

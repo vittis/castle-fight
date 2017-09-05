@@ -17,7 +17,7 @@ export class GameBot extends GamePlayer {
 
     topPoints = [{ row: 3, col: 26 }, { row: 5, col: 27 }, { row: 1, col: 28 }, { row: 1, col: 26 }];
 
-    middlePoints = [{ row: 7, col: 25 }, { row: 7, col: 27 }];
+    middlePoints = [{ row: 7, col: 25 }, { row: 7, col: 29 }];
 
 
     state : BotStatus;
