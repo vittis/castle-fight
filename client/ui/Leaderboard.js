@@ -5,7 +5,7 @@ var Kodo;
             this.game = game;
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 260, 220, 20);
+            box.drawRoundedRect(0, 0, 260, 260, 20);
             box.endFill();
             var leaderSpace = this.game.add.sprite(0, 0, box.generateTexture());
             box.destroy();
@@ -18,7 +18,7 @@ var Kodo;
         }
         Leaderboard.prototype.updateTop5 = function (players) {
             var style = { font: "20px Baloo Paaji", fill: 'white' };
-            players.splice(5, players.length - 5);
+            players.splice(7, players.length - 7);
             this.top5Group.removeAll();
             for (var i = 0; i < players.length; i++) {
                 var text = this.game.add.text(0, 0, players[i].nick + " - " + players[i].wins + " wins", style);
@@ -26,7 +26,7 @@ var Kodo;
                 text.addColor('#02C605', text.text.indexOf('-') + 1);
                 this.top5Group.add(text);
             }
-            this.top5Group.align(1, 5, 0, 30);
+            this.top5Group.align(1, 7, 0, 30);
             this.top5Group.alignTo(this.label, Phaser.BOTTOM_CENTER, 0, 5);
         };
         return Leaderboard;
