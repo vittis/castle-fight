@@ -111,7 +111,7 @@ export class GameCore {
 
             p.socket.on('askBuild', function (data) {
                 if (this != null && this.host != null && this.client != null) {
-                    if (this.gridManager.tileAt(data.row, data.col).entity == null) {
+                    if (this.gridManager.tileAt(data.row, data.col).entity == null && this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
                         if (!data.isUnit) {
                             if (data.isHost) {
                                 if (this.host != null)
@@ -398,7 +398,7 @@ export class GameCore {
             return this.host.getAllEntities().concat(this.ballManager.gp.getAllEntities());
     }
     endGame(hostWon) : void {
-        console.log("end game chamado");
+        console.log("end game chamado duracao da partida: "+this.totalTurns+"Vencedor: "+this.host.serverPlayer.nick);
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);

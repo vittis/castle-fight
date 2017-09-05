@@ -12,14 +12,14 @@ export class GameServer {
     public static instance : GameServer = null;
 
     //top5Nicks : string[] = [];
-    top3Wins : any[] = []; 
+    top3Wins: any[] = [{ nick: "Guest_35", wins: 0, id: -1 }, { nick: "Guest_44", wins: 0, id: -1 }, { nick: "Guest_50", wins: 0, id: -1 }]; 
 
     io : SocketIO.Server;
     constructor(io) {
         GameServer.instance = this;
         this.io = io;
-        this.top3Wins = [];
-        this.top3Wins[0] = { nick: "Guest_35", wins: 0, id:-1};
+        //this.top3Wins = [];
+        this.top3Wins[0] = { nick: "Guest_35", wins: 0, id:-1 };
         this.top3Wins[1] = { nick: "Guest_44", wins: 0, id:-1 };
         this.top3Wins[2] = { nick: "Guest_50", wins: 0, id:-1 };
     }
@@ -104,7 +104,7 @@ export class GameServer {
     }
 
     onDisconnect(player) : void {
-        console.log("player id "+player.id+" saiu");
+        console.log("player id "+player.id+" "+player.nick+" saiu");
         for (var i = 0; i < this.clients.length; i++) {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == PlayerStatus.ingame) {
@@ -150,27 +150,6 @@ export class GameServer {
 
 
             this.clients.forEach(p => {
-                 /* if (p.wins > this.top3Wins[0].wins) {
-                    let q = this.top3Wins[0];
-                    let q2 = this.top3Wins[1];
-
-                    this.top3Wins[0] = { nick: p.nick, wins: p.wins };
-
-                    this.top3Wins[1] = q;
-                    if (q2.nick != p.nick)
-                        this.top3Wins[2] = q2;
-                }
-                else if (p.wins > this.top3Wins[1].wins && p.nick != this.top3Wins[0].nick) {
-                    let q = this.top3Wins[1];
-
-                    this.top3Wins[1] = { nick: p.nick, wins: p.wins };
-                    this.top3Wins[2] = q;
-                }
-                else if (p.wins > this.top3Wins[2].wins && p.nick != this.top3Wins[1].nick && p.nick != this.top3Wins[0].nick) {
-                     console.log(p.nick + " e " + this.top3Wins[0].nick+": "+p.nick != this.top3Wins[0].nick);
-
-                    this.top3Wins[2] = { nick: p.nick, wins: p.wins };
-                } */ 
                 players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
             });
 
@@ -180,24 +159,29 @@ export class GameServer {
             players.forEach(p => {
                 arr.push({id: p.id, nick: p.nick, wins: p.wins});
             });
-            this.top3Wins.forEach(p => {
+
+            this.top3Wins.forEach(k => {
                 var jaTem = false;
                 arr.forEach(e => {
-                    if (e.nick == p.nick || e.id == p.id) {
-                        jaTem = true;
+                    if (k && e){
+                        if (e.nick == k.nick || e.id == k.id) {
+                            jaTem = true;
+                        }
                     }
                 });
                 if (!jaTem) {
-                    arr.push(p);
+                    arr.push(k);
                 }
             });
 
             arr.sort(predicateBy("wins"));
             arr.reverse();
-
-            this.top3Wins[0] = arr[0];
-            this.top3Wins[1] = arr[1];
-            this.top3Wins[2] = arr[2];
+            if (arr[0])
+                this.top3Wins[0] = arr[0];
+            if (arr[1])
+                this.top3Wins[1] = arr[1];
+            if (arr[2])
+                this.top3Wins[2] = arr[2];
 
 
             playersOnLobby.forEach(p => {

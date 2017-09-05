@@ -9,10 +9,9 @@ var GameServer = (function () {
         this.lastGameID = 0;
         this.games = new Array();
         this.clients = new Array();
-        this.top3Wins = [];
+        this.top3Wins = [{ nick: "Guest_35", wins: 0, id: -1 }, { nick: "Guest_44", wins: 0, id: -1 }, { nick: "Guest_50", wins: 0, id: -1 }];
         GameServer.instance = this;
         this.io = io;
-        this.top3Wins = [];
         this.top3Wins[0] = { nick: "Guest_35", wins: 0, id: -1 };
         this.top3Wins[1] = { nick: "Guest_44", wins: 0, id: -1 };
         this.top3Wins[2] = { nick: "Guest_50", wins: 0, id: -1 };
@@ -84,7 +83,7 @@ var GameServer = (function () {
         return players;
     };
     GameServer.prototype.onDisconnect = function (player) {
-        console.log("player id " + player.id + " saiu");
+        console.log("player id " + player.id + " " + player.nick + " saiu");
         for (var i = 0; i < this.clients.length; i++) {
             if (this.clients[i].id == player.id) {
                 if (this.clients[i].status == ServerPlayer_1.PlayerStatus.ingame) {
@@ -131,22 +130,27 @@ var GameServer = (function () {
             players.forEach(function (p) {
                 arr.push({ id: p.id, nick: p.nick, wins: p.wins });
             });
-            this.top3Wins.forEach(function (p) {
+            this.top3Wins.forEach(function (k) {
                 var jaTem = false;
                 arr.forEach(function (e) {
-                    if (e.nick == p.nick || e.id == p.id) {
-                        jaTem = true;
+                    if (k && e) {
+                        if (e.nick == k.nick || e.id == k.id) {
+                            jaTem = true;
+                        }
                     }
                 });
                 if (!jaTem) {
-                    arr.push(p);
+                    arr.push(k);
                 }
             });
             arr.sort(predicateBy("wins"));
             arr.reverse();
-            this.top3Wins[0] = arr[0];
-            this.top3Wins[1] = arr[1];
-            this.top3Wins[2] = arr[2];
+            if (arr[0])
+                this.top3Wins[0] = arr[0];
+            if (arr[1])
+                this.top3Wins[1] = arr[1];
+            if (arr[2])
+                this.top3Wins[2] = arr[2];
             playersOnLobby.forEach(function (p) {
                 if (p.socket)
                     p.socket.emit('receivePlayers', { players: players, top3: _this.top3Wins });
