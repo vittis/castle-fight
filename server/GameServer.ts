@@ -180,4 +180,14 @@ export class GameServer {
         }
         console.log("jogo id " + game.id + " foi finalizado");
     }
+
+    onMessage(msg) {
+        var playersOnLobby = this.getPlayersOnLobby();
+        if (playersOnLobby.length > 0) {
+            playersOnLobby.forEach(p => {
+                if (p.socket)
+                    p.socket.emit('receiveMessage', msg);
+            });
+        }
+    }
 }

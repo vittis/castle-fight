@@ -150,6 +150,15 @@ var GameServer = (function () {
         }
         console.log("jogo id " + game.id + " foi finalizado");
     };
+    GameServer.prototype.onMessage = function (msg) {
+        var playersOnLobby = this.getPlayersOnLobby();
+        if (playersOnLobby.length > 0) {
+            playersOnLobby.forEach(function (p) {
+                if (p.socket)
+                    p.socket.emit('receiveMessage', msg);
+            });
+        }
+    };
     GameServer.instance = null;
     return GameServer;
 }());

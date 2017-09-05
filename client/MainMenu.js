@@ -77,9 +77,9 @@ var Kodo;
             for (var i = 0; i < 9; i++) {
                 _loop_1();
             }
-            var moreButton = this.game.add.button(15, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank"); }, this);
+            var moreButton = this.game.add.button(0, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank"); }, this);
             moreButton.scale.setTo(0.9, 0.9);
-            moreButton.position.setTo(30, this.game.height - 30);
+            moreButton.position.setTo(30 + 330 + 640, this.game.height - 30);
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
             howToPlay.x = this.game.width - howToPlay.width;
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
@@ -119,6 +119,7 @@ var Kodo;
             this.inputField.alignIn(panelGrande, Phaser.TOP_CENTER, -16, -30);
             if (GameConfig.yourNick != "")
                 this.inputField.setText(GameConfig.yourNick);
+            this.inputField.focusOut.add(this.onFocusOut.bind(this), this);
             style.font = "36px sans-serif";
             var playButton = this.game.add.button(0, 0, 'playButton', this.onPlayButton.bind(this), this);
             playButton.anchor.setTo(0.5, 0.5);
@@ -219,6 +220,15 @@ var Kodo;
             this.rectsGroup.add(this.ingameNumber);
             this.rectsGroup.y = -1 * this.rectsGroup.height;
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
+            this.chatBox = new Kodo.ChatBox(this.game);
+        };
+        MainMenu.prototype.onFocusOut = function () {
+            if (this.inputField.value.length > 0) {
+                GameConfig.yourNick = this.inputField.value;
+            }
+            else {
+                GameConfig.yourNick = "guest";
+            }
         };
         MainMenu.prototype.onOverButton = function (sprite) {
             sprite.scale.setTo(1.02, 1.02);

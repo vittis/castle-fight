@@ -75,6 +75,18 @@ module Kodo {
                 opponentNick.stroke = '#0D6032';
                 opponentNick.strokeThickness = 4;
             }
+
+           /*  style.font = "13px Lucida Console";
+            var surrenderLabel = this.game.add.text(0, 0, "(click to surrender)", style);
+            surrenderLabel.stroke = '#E27952';
+            surrenderLabel.strokeThickness = 4;
+            if (GameConfig.isHost) {
+                surrenderLabel.alignTo(yourNickLabel, Phaser.RIGHT_CENTER);
+            }
+            else {
+                surrenderLabel.alignTo(yourNickLabel, Phaser.LEFT_CENTER);
+            } */
+
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         }
 

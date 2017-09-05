@@ -41,6 +41,11 @@ module Client {
         }
     });
 
+    socket.on('receiveMessage', function (msg) {
+        if (Kodo.Game.instance.state.current == 'MainMenu') {
+            Kodo.MainMenu.instance.chatBox.onReceivedNewMessage(msg);
+        }
+    });
 
     socket.on('receiveBuildingAndUnitData', function (data) {
         data.buildingData.forEach(element => {
@@ -132,6 +137,9 @@ module Client {
     }
     export function askPauseUnit(buildingId) {
         socket.emit('askPauseUnit', { buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
+    }
+    export function sendMessage(msg) {
+        socket.emit('chatmessage', msg);
     }
   }
 

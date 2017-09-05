@@ -33,6 +33,11 @@ var Client;
             Kodo.GameScene.instance.updateEntities(data.entities);
         }
     });
+    socket.on('receiveMessage', function (msg) {
+        if (Kodo.Game.instance.state.current == 'MainMenu') {
+            Kodo.MainMenu.instance.chatBox.onReceivedNewMessage(msg);
+        }
+    });
     socket.on('receiveBuildingAndUnitData', function (data) {
         data.buildingData.forEach(function (element) {
             if (!(element.name == 'Castle' || element.name == "IncomeBall" || element.name == "Tower" || element.name == "TrapDevice"))
@@ -120,6 +125,10 @@ var Client;
         socket.emit('askPauseUnit', { buildingId: buildingId, isHost: Kodo.GameScene.instance.isHost });
     }
     Client.askPauseUnit = askPauseUnit;
+    function sendMessage(msg) {
+        socket.emit('chatmessage', msg);
+    }
+    Client.sendMessage = sendMessage;
 })(Client || (Client = {}));
 var piscaLoop;
 var originalTitle = document.title;

@@ -112,19 +112,22 @@ export class GameCore {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
                             if (data.isHost) {
-                                this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                                if (this.host != null)
+                                    this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
                             }
                             else {
-                                this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                if (this.client != null)
+                                    this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
                             }
                         }
                         else {
                             if (data.isHost) {
-                                this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                                if (this.host != null)
+                                    this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
                             }
                             else {
-                                
-                                this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                                if (this.client != null)
+                                    this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
                             }
                         }
                     }
@@ -170,10 +173,12 @@ export class GameCore {
 
             p.socket.on('askUpgrade', function (data) {
                 if (data.isHost) {
-                    this.host.updateManager.upgrade(data.upgrade);
+                    if (this.host != null)
+                        this.host.updateManager.upgrade(data.upgrade);
                 }
                 else {
-                    this.client.updateManager.upgrade(data.upgrade);
+                    if (this.client != null)
+                        this.client.updateManager.upgrade(data.upgrade);
                 }
             }.bind(this));
         }

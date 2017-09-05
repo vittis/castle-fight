@@ -19,6 +19,8 @@ module Kodo {
 
         rectsGroup : Phaser.Group;
 
+        chatBox : ChatBox;
+
         create() {
             hideAbout();
             MainMenu.instance = this;
@@ -81,9 +83,9 @@ module Kodo {
                     }, this);
                 }, this);           
             }
-            var moreButton = this.game.add.button(15, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank");}, this);
+            var moreButton = this.game.add.button(0, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank");}, this);
             moreButton.scale.setTo(0.9, 0.9);
-            moreButton.position.setTo(30, this.game.height - 30);
+            moreButton.position.setTo(30 + 330+640, this.game.height - 30);
 
 
             var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
@@ -134,6 +136,8 @@ module Kodo {
             this.inputField.alignIn(panelGrande, Phaser.TOP_CENTER, -16, -30);
             if (GameConfig.yourNick != "")
                 this.inputField.setText(GameConfig.yourNick);
+
+            this.inputField.focusOut.add(this.onFocusOut.bind(this), this);
             
             style.font = "36px sans-serif";
             var playButton = this.game.add.button(0, 0, 'playButton', this.onPlayButton.bind(this), this);
@@ -286,8 +290,16 @@ module Kodo {
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
 
             //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
+            this.chatBox = new ChatBox(this.game);
         }
-        
+        onFocusOut() {
+            if (this.inputField.value.length > 0) {
+                GameConfig.yourNick = this.inputField.value;
+            }
+            else {
+                GameConfig.yourNick = "guest";
+            }
+        }
 
         onOverButton(sprite) {
             sprite.scale.setTo(1.02, 1.02);

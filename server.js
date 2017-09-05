@@ -48,4 +48,7 @@ io.on('connection', function (socket) {
     socket.on('latency', function (startTime, cb) {
         cb(startTime);
     });
+    socket.on('chatmessage', function (message) {
+        gameServer.onMessage(message);
+    });
 });

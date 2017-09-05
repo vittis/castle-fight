@@ -23,19 +23,21 @@ var Mage = (function (_super) {
             if (targetTile.entity != null) {
                 var attackedId = targetTile.entity.id;
             }
-            targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
-                if (t.entity != null) {
-                    if (t.entity.owner.isHost != _this.owner.isHost) {
-                        if (attackedId != t.entity.id) {
-                            var currentAttack = _this.data.attackDmg;
-                            _this.data.attackDmg = 2;
-                            t.entity.receiveAttack(_this);
-                            _this.data.attackDmg = currentAttack;
-                            attackedId = t.entity.id;
+            if (targetTile.entity != null) {
+                targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
+                    if (t.entity != null) {
+                        if (t.entity.owner.isHost != _this.owner.isHost) {
+                            if (attackedId != t.entity.id) {
+                                var currentAttack = _this.data.attackDmg;
+                                _this.data.attackDmg = 2;
+                                t.entity.receiveAttack(_this);
+                                _this.data.attackDmg = currentAttack;
+                                attackedId = t.entity.id;
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
     };
     return Mage;
