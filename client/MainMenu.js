@@ -254,18 +254,18 @@ var Kodo;
         MainMenu.prototype.startGame = function () {
             this.game.state.start('GameScene', true, false);
         };
-        MainMenu.prototype.updatePlayersConnected = function (players) {
-            this.onlineNumber.text = "" + players.length;
+        MainMenu.prototype.updatePlayersConnected = function (data) {
+            this.onlineNumber.text = "" + data.players.length;
             var ingame = 0;
-            players.forEach(function (p) {
+            data.players.forEach(function (p) {
                 if (p.status == 2) {
                     ingame++;
                 }
             });
             this.ingameNumber.text = "" + ingame;
-            players.sort(predicateBy("wins"));
-            players.reverse();
-            this.leaderboard.updateTop5(players);
+            data.players.sort(predicateBy("wins"));
+            data.players.reverse();
+            this.leaderboard.updateTop5(data);
         };
         MainMenu.prototype.onHover = function (sprite) {
             sprite.onOver();

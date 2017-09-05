@@ -96,10 +96,7 @@ module Client {
 
     socket.on('receivePlayers', function (data) {
          if (Kodo.Game.instance.state.current == 'MainMenu') {
-             Kodo.MainMenu.instance.updatePlayersConnected(data.players);
-
-            
-
+             Kodo.MainMenu.instance.updatePlayersConnected(data);
          }
     });
 

@@ -333,10 +333,10 @@ module Kodo {
         }
 
 
-        updatePlayersConnected(players : any[]) {
-            this.onlineNumber.text = ""+players.length;
+        updatePlayersConnected(data ) {
+            this.onlineNumber.text = ""+data.players.length;
             var ingame=0;
-            players.forEach(p => {
+            data.players.forEach(p => {
 
                 if (p.status == 2) {
                     ingame++;
@@ -345,9 +345,9 @@ module Kodo {
             this.ingameNumber.text = ""+ingame;
 
 
-            players.sort(predicateBy("wins"));
-            players.reverse();
-            this.leaderboard.updateTop5(players);
+            data.players.sort(predicateBy("wins"));
+            data.players.reverse();
+            this.leaderboard.updateTop5(data);
         }
 
         onHover(sprite: UIBuildingButton) {

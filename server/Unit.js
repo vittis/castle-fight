@@ -40,9 +40,11 @@ var Unit = (function (_super) {
         }
     };
     Unit.prototype.moveTo = function (tile) {
-        this.tile.entity = null;
-        this.tile = tile;
-        tile.entity = this;
+        if (tile != null) {
+            this.tile.entity = null;
+            this.tile = tile;
+            tile.entity = this;
+        }
     };
     Unit.prototype.receiveAttack = function (unit) {
         _super.prototype.receiveAttack.call(this, unit);

@@ -51,9 +51,11 @@ export abstract class Unit extends Entity{
 
 
     moveTo(tile : Tile) : void {
-        this.tile.entity = null;
-        this.tile = tile;
-        tile.entity = this;
+        if (tile != null) {
+            this.tile.entity = null;
+            this.tile = tile;
+            tile.entity = this;
+        }
     }
 
     receiveAttack(unit: Unit) {
