@@ -206,7 +206,7 @@ export class GameServer {
             });
         }
     }
-    endGame(game: GameCore, hostWon): void {
+    endGame(game: GameCore, hostWon, versusBot?): void {
         for (var i = 0; i < this.games.length; i++) {
             if (this.games[i].id == game.id) {
                 this.games[i] = null;
@@ -221,13 +221,15 @@ export class GameServer {
         }
         if (game.host.serverPlayer.socket) {
             game.host.serverPlayer.socket.emit('endGame', {hostWon: hostWon});
-            game.host.serverPlayer.wins++;
+            if (!versusBot)
+                game.host.serverPlayer.wins++;
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
                 game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
                 game.client.serverPlayer.status = PlayerStatus.connected;
-                game.client.serverPlayer.wins++;
+                if (!versusBot)
+                    game.client.serverPlayer.wins++;
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");
@@ -243,23 +245,7 @@ export class GameServer {
         }
     }
 
-    /* getTop5() {
-        var winsArray=[];
-        var nicksArray = [];
 
-        this.clients.forEach(client => {
-            winsArray.push(client.wins);
-        });
-        if (winsArray.length >=5) {
-            winsArray.splice(5, winsArray.length-5);
-        }
-        this.clients.forEach(client => {
-            if ()
-        });
-
-        var obj;
-        return obj;
-    } */
 
 }
 function predicateBy(prop) {

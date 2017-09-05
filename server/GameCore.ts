@@ -402,10 +402,12 @@ export class GameCore {
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);
+        let versusBot = false;
         if (this.client instanceof GameBot) {
             this.client = null;
+            versusBot = true;
         }
-        GameServer.instance.endGame(this, hostWon);
+        GameServer.instance.endGame(this, hostWon, versusBot);
     }
 
 /*     printEntityStatus() {

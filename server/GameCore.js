@@ -320,10 +320,12 @@ var GameCore = (function () {
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);
+        var versusBot = false;
         if (this.client instanceof GameBot_1.GameBot) {
             this.client = null;
+            versusBot = true;
         }
-        GameServer_1.GameServer.instance.endGame(this, hostWon);
+        GameServer_1.GameServer.instance.endGame(this, hostWon, versusBot);
     };
     return GameCore;
 }());
