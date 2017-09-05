@@ -25,11 +25,13 @@ var Kodo;
             return _this;
         }
         Farmer.prototype.attack = function (tile) {
-            var tweenA = this.game.add.tween(this).to({ x: tile.x, y: tile.y }, 100, Phaser.Easing.Linear.None);
-            var tweenB = this.game.add.tween(this).to({ x: this.x, y: this.y }, 100, Phaser.Easing.Linear.None);
-            tweenA.chain(tweenB);
-            tweenA.start();
-            _super.prototype.attack.call(this, tile);
+            if (this.game != null) {
+                var tweenA = this.game.add.tween(this).to({ x: tile.x, y: tile.y }, 100, Phaser.Easing.Linear.None);
+                var tweenB = this.game.add.tween(this).to({ x: this.x, y: this.y }, 100, Phaser.Easing.Linear.None);
+                tweenA.chain(tweenB);
+                tweenA.start();
+                _super.prototype.attack.call(this, tile);
+            }
         };
         return Farmer;
     }(Kodo.Unit));

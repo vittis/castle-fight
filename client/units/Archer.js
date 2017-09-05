@@ -25,8 +25,10 @@ var Kodo;
             return _this;
         }
         Archer.prototype.attack = function (tile) {
-            new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2, this.y + GameConfig.tileSize / 2, tile, this.isHost);
-            _super.prototype.attack.call(this, tile);
+            if (this.game != null) {
+                new Kodo.Projectile(this.game, this.x + GameConfig.tileSize / 2, this.y + GameConfig.tileSize / 2, tile, this.isHost);
+                _super.prototype.attack.call(this, tile);
+            }
         };
         return Archer;
     }(Kodo.Unit));

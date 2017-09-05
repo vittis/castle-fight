@@ -14,8 +14,10 @@ module Kodo {
         }
 
         attack(tile: Tile) {
-            new Projectile(this.game, this.x + GameConfig.tileSize / 2, this.y + GameConfig.tileSize / 2, tile, this.isHost);
-            super.attack(tile);
+            if (this.game != null) {
+                new Projectile(this.game, this.x + GameConfig.tileSize / 2, this.y + GameConfig.tileSize / 2, tile, this.isHost);
+                super.attack(tile);
+            }
         }
 
     }
