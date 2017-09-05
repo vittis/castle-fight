@@ -218,7 +218,15 @@ export class GameServer {
         }
         console.log("jogo id " + game.id + " foi finalizado");
     }
-
+    checkNickExistsAndNotMine(nick, player) {
+        var exists = false;
+        this.clients.concat(this.top3Wins).forEach(client => {
+            if (client.nick == nick && client.id != player.id) {
+                exists = true;
+            }
+        });
+        return exists;
+    }
     onMessage(msg) {
         var playersOnLobby = this.getPlayersOnLobby();
         if (playersOnLobby.length > 0) {

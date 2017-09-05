@@ -184,6 +184,15 @@ var GameServer = (function () {
         }
         console.log("jogo id " + game.id + " foi finalizado");
     };
+    GameServer.prototype.checkNickExistsAndNotMine = function (nick, player) {
+        var exists = false;
+        this.clients.concat(this.top3Wins).forEach(function (client) {
+            if (client.nick == nick && client.id != player.id) {
+                exists = true;
+            }
+        });
+        return exists;
+    };
     GameServer.prototype.onMessage = function (msg) {
         var playersOnLobby = this.getPlayersOnLobby();
         if (playersOnLobby.length > 0) {

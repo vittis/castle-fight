@@ -36,8 +36,14 @@ io.on('connection',function(socket){
             player.nick = "Guest_" + player.id;
         }
         else {
-            player.nick = data.nick;
+            if (gameServer.checkNickExistsAndNotMine(data.nick, player)) {
+                player.nick = data.nick+"_"+player.id;
+            }
+            else {
+                player.nick = data.nick;
+            }
         }
+        player.socket.emit('receiveNick', player.nick);
         gameServer.onMatchmaking(player);
     }); 
     socket.on('cancelMatchmaking', function (data) {

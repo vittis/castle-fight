@@ -80,6 +80,9 @@ var Client;
         console.log("Finishing match, host won? " + data.hostWon);
         Kodo.GameScene.instance.endGame(data.hostWon);
     });
+    socket.on('receiveNick', function (data) {
+        GameConfig.yourNick = data;
+    });
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
             Kodo.MainMenu.instance.updatePlayersConnected(data);
