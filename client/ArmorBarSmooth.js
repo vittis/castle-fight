@@ -35,7 +35,8 @@ var Kodo;
                     this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height - 1);
                 }
                 if (this.smooth < this.lenght) {
-                    this.smooth += this.game.time.elapsed / 100 * 6;
+                    if (this.game != null)
+                        this.smooth += this.game.time.elapsed / 100 * 6;
                 }
                 this.clear();
                 this.lineStyle(6, 0x808080, 1);
