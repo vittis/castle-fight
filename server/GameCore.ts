@@ -150,24 +150,28 @@ export class GameCore {
             }.bind(this));
 
             p.socket.on('askTrainUnit', function (data) {
-                if (data.isHost) {
-                    if (this.host.idExists(data.buildingId))
-                        this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
-                }
-                else {
-                    if (this.client.idExists(data.buildingId))
-                        this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                if (this.host != null && this.client != null) {
+                    if (data.isHost) {
+                        if (this.host.idExists(data.buildingId))
+                            this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                    }
+                    else {
+                        if (this.client.idExists(data.buildingId))
+                            this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                    }
                 }
             }.bind(this));
 
             p.socket.on('askPauseUnit', function (data) {
-                if (data.isHost) {
-                    if (this.host.idExists(data.buildingId))
-                        this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
-                }
-                else {
-                    if (this.client.idExists(data.buildingId))
-                        this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                if (this.host != null && this.client != null) {
+                    if (data.isHost) {
+                        if (this.host.idExists(data.buildingId))
+                            this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                    }
+                    else {
+                        if (this.client.idExists(data.buildingId))
+                            this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                    }
                 }
             }.bind(this));
 

@@ -37,13 +37,12 @@ module Kodo {
             this.woodLabel.y = game.height - GameConfig.uiHeight / 2;
             
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');
-
+            this.incomeBar = new IncomeBar(this.game);
         }
 
         startGame() {
             console.log("kd starta ae");
             new WarningMessage(this.game, 'Match Started!');
-            this.incomeBar = new IncomeBar(this.game);
         }
 
         updateResources(incomeRateCounter : number) {

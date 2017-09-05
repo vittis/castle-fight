@@ -18,11 +18,11 @@ var Kodo;
             this.woodLabel.x = 184;
             this.woodLabel.y = game.height - GameConfig.uiHeight / 2;
             this.woodIcon = game.add.sprite(GameConfig.uiWidth / 2 + 14 + this.offsetX, 95 - 12, 'wood_icon');
+            this.incomeBar = new Kodo.IncomeBar(this.game);
         }
         UIResourceManager.prototype.startGame = function () {
             console.log("kd starta ae");
             new Kodo.WarningMessage(this.game, 'Match Started!');
-            this.incomeBar = new Kodo.IncomeBar(this.game);
         };
         UIResourceManager.prototype.updateResources = function (incomeRateCounter) {
             if (this.incomeBar) {
