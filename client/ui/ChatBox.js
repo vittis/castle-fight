@@ -5,7 +5,7 @@ var Kodo;
             this.game = game;
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 300, 365, 10);
+            box.drawRoundedRect(0, 0, 340, 365, 10);
             box.endFill();
             this.chatSpace = this.game.add.sprite(10, this.game.height, box.generateTexture());
             box.destroy();
@@ -21,7 +21,7 @@ var Kodo;
                 width: this.chatSpace.width - 20,
                 padding: 3,
                 borderWidth: 1,
-                max: '40',
+                max: '45',
                 backgroundColor: '#1f864a',
                 borderColor: '#1f864a',
                 borderRadius: 8,
@@ -51,12 +51,12 @@ var Kodo;
             }
         };
         ChatBox.prototype.onReceivedNewMessage = function (message) {
-            var style = { font: "17px Baloo Paaji", fill: 'white' };
+            var style = { font: "16px Baloo Paaji", fill: 'white' };
             var newMessage = this.game.add.text(0, 0, message, style);
             if (newMessage.width > this.chatSpace.width) {
                 newMessage.destroy();
-                var string1 = message.substring(0, 35);
-                var string2 = message.substring(35, message.length);
+                var string1 = message.substring(0, 43);
+                var string2 = message.substring(43, message.length);
                 var newMessage1 = this.game.add.text(0, 0, string1, style);
                 var newMessage2 = this.game.add.text(0, 0, string2, style);
                 while (this.messageGroup.length >= 14) {
