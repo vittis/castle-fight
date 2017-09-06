@@ -42,7 +42,8 @@ module Kodo {
                     this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height - 1);
                 }
                 if (this.smooth < this.lenght) {
-                    this.smooth += this.game.time.elapsed / 100 * 6;
+                    if (this.game != null)
+                        this.smooth += this.game.time.elapsed / 100 * 6;
                 }
                 this.clear();
                 this.lineStyle(6, 0xd42a2a, 1);
@@ -59,8 +60,10 @@ module Kodo {
             this.lenght = Phaser.Math.linear(this.maxLenght, 0, this.cuts * t);
             this.visible = true;
 
-            this.game.time.events.remove(this.timerEvento);
-            this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
+            if (this.game != null) {
+                this.game.time.events.remove(this.timerEvento);
+                this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
+            }
         }
         hideBar() {
             this.clear();
