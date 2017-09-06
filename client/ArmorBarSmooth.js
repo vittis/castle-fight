@@ -50,8 +50,10 @@ var Kodo;
                 var t = this.maxArmor - newArmor;
                 this.lenght = Phaser.Math.linear(this.maxLenght, 0, this.cuts * t);
                 this.visible = true;
-                this.game.time.events.remove(this.timerEvento);
-                this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
+                if (this.game != null) {
+                    this.game.time.events.remove(this.timerEvento);
+                    this.timerEvento = this.game.time.events.add(5500, this.hideBar.bind(this), this);
+                }
             }
         };
         ArmorBarSmooth.prototype.hideBar = function () {
