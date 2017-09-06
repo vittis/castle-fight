@@ -111,15 +111,17 @@ export class GameCore {
 
             p.socket.on('askBuild', function (data) {
                 if (this != null && this.host != null && this.client != null) {
-                    if (this.gridManager.tileAt(data.row, data.col).entity == null && this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
+                    if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
-                            if (data.isHost) {
-                                if (this.host != null)
-                                    this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
-                            }
-                            else {
-                                if (this.client != null)
-                                    this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                            if (this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
+                                if (data.isHost) {
+                                    if (this.host != null)
+                                        this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                                }
+                                else {
+                                    if (this.client != null)
+                                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                }
                             }
                         }
                         else {
@@ -398,7 +400,7 @@ export class GameCore {
             return this.host.getAllEntities().concat(this.ballManager.gp.getAllEntities());
     }
     endGame(hostWon) : void {
-        console.log("end game chamado duracao da partida: "+this.totalTurns+"Vencedor: "+this.host.serverPlayer.nick);
+        console.log("end game chamado duracao da partida: "+this.totalTurns+" ,Vencedor: "+this.host.serverPlayer.nick);
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);
@@ -410,11 +412,5 @@ export class GameCore {
         GameServer.instance.endGame(this, hostWon, versusBot);
     }
 
-/*     printEntityStatus() {
-        this.getAllEntities().forEach(e => {
-            console.log(e.getEntityData().name+", owner: "+e.owner.isHost+", hp: "+e.getEntityData().hp+", armor: "+e.getEntityData().armor+", owner gold: "+e.owner.resourceManager.gold);
-        });
-        
-    } */
 
 }

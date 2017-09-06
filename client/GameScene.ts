@@ -49,6 +49,27 @@ module Kodo {
             this.game.add.sprite(0, 0, 'tileFundo');
             this.game.add.sprite(this.grid[6][8].x, this.grid[6][8].y, 'arvores');
 
+            var style = { font: "12px Lucida Console", fill: 'white' };
+
+            var surrenderLabel = this.game.add.text(293, this.game.height-9, "Surrender", style);
+            surrenderLabel.anchor.setTo(0, 0.5);
+
+            let box = this.game.make.graphics(0, 0);
+            box.beginFill(0x000000);
+            box.drawRoundedRect(0, 0, surrenderLabel.width + 3, surrenderLabel.height, 5);
+            box.endFill();
+            let loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
+            box.destroy();
+            loadingRect.anchor.setTo(0.5, 0.5);
+            loadingRect.alignIn(surrenderLabel, Phaser.CENTER);
+            loadingRect.alpha = 0.6;
+            loadingRect.y -= 3;
+
+            this.game.world.swap(surrenderLabel, loadingRect);
+            
+            surrenderLabel.inputEnabled = true;
+            surrenderLabel.input.useHandCursor = true;
+            surrenderLabel.events.onInputDown.add(Client.askSurrender, this);
 
             this.uiBuildingManager = new UIBuildingManager(this.game);
             this.uiResourceManager = new UIResourceManager(this.game);
@@ -56,8 +77,8 @@ module Kodo {
             this.incomeBallBar = new IncomeBallBar(this.game);  
             this.updateManager = new UpdateManager(this.game);  
 
+            style = { font: "14px Lucida Console", fill: 'white' };
 
-            var style = { font: "14px Lucida Console", fill: 'white'};
             var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
             yourNickLabel.stroke = '#E27952';
             yourNickLabel.strokeThickness = 4;

@@ -71,6 +71,22 @@ export class GameServer {
         this.lastGameID++;
     }
 
+    onSurrender(player: ServerPlayer) {
+        if (player.status == PlayerStatus.ingame) {
+            if (this.getGameByPlayerId(player.id) != null) {
+                if (this.getGameByPlayerId(player.id).client.serverPlayer.id == player.id) {
+                    this.getGameByPlayerId(player.id).endGame(true);
+                }
+                else {
+                    this.getGameByPlayerId(player.id).endGame(false);
+                }
+            }
+        }
+
+
+        player.status = PlayerStatus.connected;
+    }
+
     onMatchmaking(player : ServerPlayer) {
         console.log("askMatchmaking requisitado por player id: "+player.id+" "+player.nick);
         player.status = PlayerStatus.matchmaking;
@@ -205,14 +221,14 @@ export class GameServer {
         }
         if (game.host.serverPlayer.socket) {
             game.host.serverPlayer.socket.emit('endGame', {hostWon: hostWon});
-            if (!versusBot)
+            if (!versusBot && hostWon)
                 game.host.serverPlayer.wins++;
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
                 game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
                 game.client.serverPlayer.status = PlayerStatus.connected;
-                if (!versusBot)
+                if (!versusBot && !hostWon)
                     game.client.serverPlayer.wins++;
             }
         }

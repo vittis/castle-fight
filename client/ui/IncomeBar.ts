@@ -12,7 +12,7 @@ module Kodo {
         maxLenght: number;
 
         currentTime = 0;
-        timeToMove = GameConfig.updateRate / 1000 + 0.045;
+        timeToMove = GameConfig.updateRate / 1000 + 0.015;
 
         constructor(game: Phaser.Game) {
             super(game, 0, 0);

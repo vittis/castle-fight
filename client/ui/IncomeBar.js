@@ -15,7 +15,7 @@ var Kodo;
         function IncomeBar(game) {
             var _this = _super.call(this, game, 0, 0) || this;
             _this.currentTime = 0;
-            _this.timeToMove = GameConfig.updateRate / 1000 + 0.045;
+            _this.timeToMove = GameConfig.updateRate / 1000 + 0.015;
             _this.maxLenght = 120;
             _this.x = 264;
             _this.y = game.height - GameConfig.uiHeight / 2;

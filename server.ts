@@ -67,6 +67,12 @@ io.on('connection',function(socket){
         cb(startTime);
     }); 
 
+    socket.on('askSurrender', function () {
+        console.log("ask surrender called");
+
+        gameServer.onSurrender(player);
+    }); 
+
     socket.on('chatmessage', function (message : string) {
         console.log(message);
         if (message.indexOf('vittis: /alert-') != -1) {

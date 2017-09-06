@@ -53,6 +53,19 @@ var GameServer = (function () {
         this.games.push(game);
         this.lastGameID++;
     };
+    GameServer.prototype.onSurrender = function (player) {
+        if (player.status == ServerPlayer_1.PlayerStatus.ingame) {
+            if (this.getGameByPlayerId(player.id) != null) {
+                if (this.getGameByPlayerId(player.id).client.serverPlayer.id == player.id) {
+                    this.getGameByPlayerId(player.id).endGame(true);
+                }
+                else {
+                    this.getGameByPlayerId(player.id).endGame(false);
+                }
+            }
+        }
+        player.status = ServerPlayer_1.PlayerStatus.connected;
+    };
     GameServer.prototype.onMatchmaking = function (player) {
         console.log("askMatchmaking requisitado por player id: " + player.id + " " + player.nick);
         player.status = ServerPlayer_1.PlayerStatus.matchmaking;
@@ -171,14 +184,14 @@ var GameServer = (function () {
         }
         if (game.host.serverPlayer.socket) {
             game.host.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
-            if (!versusBot)
+            if (!versusBot && hostWon)
                 game.host.serverPlayer.wins++;
         }
         if (game.client) {
             if (game.client.serverPlayer.socket) {
                 game.client.serverPlayer.socket.emit('endGame', { hostWon: hostWon });
                 game.client.serverPlayer.status = ServerPlayer_1.PlayerStatus.connected;
-                if (!versusBot)
+                if (!versusBot && !hostWon)
                     game.client.serverPlayer.wins++;
             }
         }

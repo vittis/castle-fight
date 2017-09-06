@@ -78,7 +78,12 @@ var Client;
     });
     socket.on('endGame', function (data) {
         console.log("Finishing match, host won? " + data.hostWon);
-        Kodo.GameScene.instance.endGame(data.hostWon);
+        if (Kodo.Game.instance.state.current == 'GameScene') {
+            Kodo.GameScene.instance.endGame(data.hostWon);
+        }
+        else {
+            Kodo.Game.instance.state.start('MainMenu', true, false);
+        }
     });
     socket.on('receiveNick', function (data) {
         GameConfig.yourNick = data;
@@ -138,6 +143,11 @@ var Client;
         socket.emit('chatmessage', msg);
     }
     Client.sendMessage = sendMessage;
+    function askSurrender() {
+        console.log("ask surrender called");
+        socket.emit('askSurrender');
+    }
+    Client.askSurrender = askSurrender;
 })(Client || (Client = {}));
 function predicateBy(prop) {
     return function (a, b) {

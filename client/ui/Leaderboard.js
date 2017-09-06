@@ -18,7 +18,7 @@ var Kodo;
             this.onlineLabel = this.game.add.text(0, 0, "Online", style);
             this.onlineLabel.anchor.setTo(0.5, 0.5);
             this.onlineLabel.alignTo(this.label, Phaser.BOTTOM_CENTER, 0, 0);
-            this.top3Label = this.game.add.text(0, 0, "All Time Top 3", style);
+            this.top3Label = this.game.add.text(0, 0, "Daily Top 3", style);
             this.top3Label.anchor.setTo(0.5, 0.5);
             this.top3Label.alignTo(this.onlineLabel, Phaser.BOTTOM_CENTER, 0, 0);
             this.top5Group = this.game.add.group();

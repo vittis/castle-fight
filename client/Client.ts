@@ -91,7 +91,12 @@ module Client {
 
     socket.on('endGame', function (data) {
         console.log("Finishing match, host won? "+data.hostWon);
-        Kodo.GameScene.instance.endGame(data.hostWon);
+        if (Kodo.Game.instance.state.current == 'GameScene') {
+            Kodo.GameScene.instance.endGame(data.hostWon);
+        }
+        else {
+            Kodo.Game.instance.state.start('MainMenu', true, false);
+        }
     });
 
     socket.on('receiveNick', function (data) {
@@ -151,6 +156,10 @@ module Client {
     }
     export function sendMessage(msg) {
         socket.emit('chatmessage', msg);
+    }
+    export function askSurrender() {
+        console.log("ask surrender called");
+        socket.emit('askSurrender');
     }
   }
 
