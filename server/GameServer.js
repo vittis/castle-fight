@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ServerPlayer_1 = require("./ServerPlayer");
 var GameCore_1 = require("./GameCore");
 var ServerBot_1 = require("./ServerBot");
+var GameBot_1 = require("./GameBot");
+var GameConfig_1 = require("./GameConfig");
 var GameServer = (function () {
     function GameServer(io) {
         this.lastPlayerID = 0;
@@ -52,6 +54,13 @@ var GameServer = (function () {
         var game = new GameCore_1.GameCore(this.lastGameID, host, new ServerBot_1.ServerBot());
         this.games.push(game);
         this.lastGameID++;
+    };
+    GameServer.prototype.onCancelWatch = function (player) {
+        player.status = ServerPlayer_1.PlayerStatus.connected;
+        var game = this.getGameByPlayerId(player.id);
+        if (game != null) {
+            game.removeObserver(player.id);
+        }
     };
     GameServer.prototype.onSurrender = function (player) {
         if (player.status == ServerPlayer_1.PlayerStatus.ingame) {
@@ -109,6 +118,12 @@ var GameServer = (function () {
                         }
                     }
                 }
+                else if (this.clients[i].status == ServerPlayer_1.PlayerStatus.spectating) {
+                    var game_1 = this.getGameByPlayerId(this.clients[i].id);
+                    if (game_1 != null) {
+                        game_1.removeObserver(this.clients[i].id);
+                    }
+                }
                 this.clients[i] = null;
                 this.clients.splice(i, 1);
                 return;
@@ -121,6 +136,11 @@ var GameServer = (function () {
             if (game.client.serverPlayer.id == id || game.host.serverPlayer.id == id) {
                 gameCore = game;
             }
+            game.observers.forEach(function (obs) {
+                if (obs.id == id) {
+                    gameCore = game;
+                }
+            });
         });
         return gameCore;
     };
@@ -164,9 +184,26 @@ var GameServer = (function () {
                 this.top3Wins[1] = arr[1];
             if (arr[2])
                 this.top3Wins[2] = arr[2];
+            var liveGames = [];
+            arr = players;
+            arr.sort(predicateBy("wins"));
+            arr.reverse();
+            var aux = 0;
+            var gameIdsAdded = [];
+            arr.forEach(function (p) {
+                if (p.status == ServerPlayer_1.PlayerStatus.ingame && aux < 3) {
+                    var game_2 = _this.getGameByPlayerId(p.id);
+                    if (gameIdsAdded.indexOf(game_2.id) == -1 && !(game_2.client instanceof GameBot_1.GameBot)) {
+                        liveGames.push({ gameId: game_2.id, host: game_2.host.serverPlayer.nick, client: game_2.client.serverPlayer.nick });
+                        aux++;
+                        gameIdsAdded.push(game_2.id);
+                    }
+                }
+            });
             playersOnLobby.forEach(function (p) {
-                if (p.socket)
-                    p.socket.emit('receivePlayers', { players: players, top3: _this.top3Wins });
+                if (p.socket) {
+                    p.socket.emit('receivePlayers', { players: players, top3: _this.top3Wins, liveGames: liveGames });
+                }
             });
         }
     };
@@ -214,6 +251,24 @@ var GameServer = (function () {
                     p.socket.emit('receiveMessage', msg);
             });
         }
+    };
+    GameServer.prototype.onWatchGame = function (player, gameId) {
+        var game = this.getGameById(gameId);
+        if (game != null) {
+            player.status = ServerPlayer_1.PlayerStatus.spectating;
+            player.socket.emit('startGame', { id: game.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS,
+                isHost: null, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: player.id, opponentNick: game.client.serverPlayer.nick });
+            game.observers.push(player);
+        }
+    };
+    GameServer.prototype.getGameById = function (id) {
+        var game = null;
+        this.games.forEach(function (g) {
+            if (g.id == id) {
+                game = g;
+            }
+        });
+        return game;
     };
     GameServer.instance = null;
     return GameServer;

@@ -15,6 +15,7 @@ var GameBot_1 = require("./GameBot");
 var GameCore = (function () {
     function GameCore(id, host, client) {
         this.totalTurns = 0;
+        this.observers = [];
         this.id = id;
         this.gridManager = new GridManager_1.GridManager(new AStar_1.AStar(new EuclideanHeuristic_1.EuclideanHeuristic()), GameConfig_1.GameConfig.GRID_ROWS, GameConfig_1.GameConfig.GRID_COLS);
         this.host = new GamePlayer_1.GamePlayer(host, true, this.gridManager);
@@ -154,6 +155,21 @@ var GameCore = (function () {
         if (this.client) {
             if (this.client.serverPlayer.socket) {
                 this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+            }
+        }
+        if (this.observers.length > 0) {
+            this.observers.forEach(function (p) {
+                if (p != null) {
+                    p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                }
+            });
+        }
+    };
+    GameCore.prototype.removeObserver = function (id) {
+        for (var i = 0; i < this.observers.length; i++) {
+            if (this.observers[i].id == id) {
+                this.observers.splice(i, 1);
+                break;
             }
         }
     };

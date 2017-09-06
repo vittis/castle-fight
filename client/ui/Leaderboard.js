@@ -9,7 +9,7 @@ var Kodo;
             box.endFill();
             var leaderSpace = this.game.add.sprite(0, 0, box.generateTexture());
             box.destroy();
-            leaderSpace.alpha = 0.47;
+            leaderSpace.alpha = 0.52;
             var style = { font: "26px Baloo Paaji", fill: '#ECEC3A', align: "center" };
             this.label = this.game.add.text(0, 0, "Leaderboards", style);
             this.label.anchor.setTo(0.5, 0.5);

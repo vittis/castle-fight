@@ -109,7 +109,7 @@ var Kodo;
                 width: 320,
                 padding: 16,
                 borderWidth: 1,
-                max: '15',
+                max: '14',
                 backgroundColor: '#ececec',
                 borderColor: '#ececec',
                 borderRadius: 6,
@@ -222,6 +222,7 @@ var Kodo;
             var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
             this.chatBox = new Kodo.ChatBox(this.game);
             this.leaderboard = new Kodo.Leaderboard(this.game);
+            this.watchBox = new Kodo.WatchBox(this.game);
         };
         MainMenu.prototype.onFocusOut = function () {
             if (this.inputField.value.length > 0) {
@@ -266,6 +267,7 @@ var Kodo;
             data.players.sort(predicateBy("wins"));
             data.players.reverse();
             this.leaderboard.updateTop5(data);
+            this.watchBox.updateLiveGames(data.liveGames);
         };
         MainMenu.prototype.onHover = function (sprite) {
             sprite.onOver();

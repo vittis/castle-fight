@@ -58,6 +58,14 @@ io.on('connection', function (socket) {
         console.log("ask surrender called");
         gameServer.onSurrender(player);
     });
+    socket.on('askCancelWatch', function () {
+        console.log("ask cancel watch called");
+        gameServer.onCancelWatch(player);
+    });
+    socket.on('askWatchGame', function (gameId) {
+        console.log("ask watch game called");
+        gameServer.onWatchGame(player, gameId);
+    });
     socket.on('chatmessage', function (message) {
         console.log(message);
         if (message.indexOf('vittis: /alert-') != -1) {

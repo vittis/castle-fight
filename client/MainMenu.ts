@@ -20,6 +20,7 @@ module Kodo {
         rectsGroup : Phaser.Group;
 
         chatBox : ChatBox;
+        watchBox : WatchBox;
         leaderboard : Leaderboard;
 
         create() {
@@ -126,7 +127,7 @@ module Kodo {
                 width: 320,
                 padding: 16,
                 borderWidth: 1,
-                max: '15',
+                max: '14',
                 backgroundColor: '#ececec',
                 borderColor: '#ececec',
                 borderRadius: 6,
@@ -293,6 +294,7 @@ module Kodo {
             //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
             this.chatBox = new ChatBox(this.game);
             this.leaderboard = new Leaderboard(this.game);
+            this.watchBox = new WatchBox(this.game);
         }
         onFocusOut() {
             if (this.inputField.value.length > 0) {
@@ -344,10 +346,10 @@ module Kodo {
             });
             this.ingameNumber.text = " "+ingame;
 
-
             data.players.sort(predicateBy("wins"));
             data.players.reverse();
             this.leaderboard.updateTop5(data);
+            this.watchBox.updateLiveGames(data.liveGames);
         }
 
         onHover(sprite: UIBuildingButton) {

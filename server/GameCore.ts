@@ -41,6 +41,8 @@ export class GameCore {
 
     totalTurns =0;
 
+    observers : ServerPlayer[] = [];
+
     constructor(id : number, host : ServerPlayer, client : ServerPlayer) {
         this.id = id;
 
@@ -214,10 +216,26 @@ export class GameCore {
                 this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
             }
         }
+        if (this.observers.length>0) {
+            this.observers.forEach(p => {
+                if (p != null) {
+                    p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                }
+            });
+        }
     }
-
+    removeObserver(id) {
+        for (var i = 0; i < this.observers.length; i++) {
+            if (this.observers[i].id == id) {
+                this.observers.splice(i, 1);
+                break;
+            }
+        }
+    }
+    
     step() {
         this.totalTurns++;
+        //end game condition
         if (this.clientCastle.data.hp <= 0 || this.hostCastle.data.hp <= 0 ) {
             if (this.clientCastle.data.hp <= 0) {
                 console.log("JOGOU ACABOU -"+this.host.serverPlayer.nick+"- GANHOU");
@@ -230,9 +248,10 @@ export class GameCore {
             }
             return;
         }
-        //attack buildings attack
+        //load map status
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
 
+        //attack buildings loop
          this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(building => {
             building.resetAttackData();
             building.step();

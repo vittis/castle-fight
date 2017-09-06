@@ -10,4 +10,6 @@ var GameConfig;
     GameConfig.deckName = "<default deck>";
     GameConfig.yourNick = "";
     GameConfig.opponentNick = "";
+    GameConfig.hostNick = "";
+    GameConfig.clientNick = "";
 })(GameConfig || (GameConfig = {}));

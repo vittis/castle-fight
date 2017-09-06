@@ -24,4 +24,7 @@ module GameConfig {
     export var yourNick = "";
     export var opponentNick = "";
 
+    export var hostNick = "";
+    export var clientNick = "";
+
 }

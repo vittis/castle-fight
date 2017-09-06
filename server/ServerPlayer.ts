@@ -1,7 +1,8 @@
 export enum PlayerStatus {
     connected,
     matchmaking,
-    ingame
+    ingame,
+    spectating
 }
 
 export class ServerPlayer {

@@ -6,8 +6,8 @@ import { Building } from "../Building";
 
 export class King extends Unit {
 
-    grappleRate = 10;
-    grappleCounter = 10;
+    grappleRate = 6;
+    grappleCounter = 6;
 
     canGrapple: boolean = true;
 

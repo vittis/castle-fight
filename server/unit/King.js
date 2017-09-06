@@ -15,8 +15,8 @@ var King = (function (_super) {
     __extends(King, _super);
     function King(row, col) {
         var _this = _super.call(this, row, col, require('clone')(require('../data/units/king.json'))) || this;
-        _this.grappleRate = 10;
-        _this.grappleCounter = 10;
+        _this.grappleRate = 6;
+        _this.grappleCounter = 6;
         _this.canGrapple = true;
         _this.data.attackRange = 6;
         return _this;

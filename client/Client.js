@@ -26,7 +26,7 @@ var Client;
         console.log("Starting main game loop");
     });
     socket.on('receiveData', function (data) {
-        if (Kodo.GameScene.instance != null) {
+        if (Kodo.GameScene.instance != null && Kodo.Game.instance.state.current == 'GameScene') {
             Kodo.GameScene.instance.player = data.player;
             Kodo.GameScene.instance.ballData = data.ballData;
             Kodo.GameScene.instance.updateEntities(data.entities);
@@ -91,6 +91,7 @@ var Client;
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
             Kodo.MainMenu.instance.updatePlayersConnected(data);
+            console.log(data.liveGames);
         }
     });
     socket.on('onAnuncio', function (msg) {
@@ -148,6 +149,16 @@ var Client;
         socket.emit('askSurrender');
     }
     Client.askSurrender = askSurrender;
+    function askCancelWatch() {
+        console.log("ask cancel watch called");
+        socket.emit('askCancelWatch');
+    }
+    Client.askCancelWatch = askCancelWatch;
+    function askWatchGame(gameId) {
+        console.log("ask watch game called");
+        socket.emit('askWatchGame', gameId);
+    }
+    Client.askWatchGame = askWatchGame;
 })(Client || (Client = {}));
 function predicateBy(prop) {
     return function (a, b) {

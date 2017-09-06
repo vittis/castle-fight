@@ -5,12 +5,12 @@ var Kodo;
             this.game = game;
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 340, 330, 10);
+            box.drawRoundedRect(0, 0, 340, 220, 10);
             box.endFill();
             this.chatSpace = this.game.add.sprite(10, this.game.height, box.generateTexture());
             box.destroy();
             this.chatSpace.anchor.setTo(0, 1);
-            this.chatSpace.alpha = 0.45;
+            this.chatSpace.alpha = 0.52;
             this.inputField = this.game.add.inputField(10, 90, {
                 font: '17px Baloo Paaji',
                 fill: '#ffffff',

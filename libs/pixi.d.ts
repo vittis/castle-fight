@@ -512,7 +512,7 @@ declare module PIXI {
 
         constructor();
 
-        children: DisplayObject[];
+        children: any[];
         height: number;
         width: number;
         ignoreChildInput: boolean;

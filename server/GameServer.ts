@@ -1,6 +1,9 @@
 import { ServerPlayer, PlayerStatus } from './ServerPlayer';
 import { GameCore } from './GameCore'
 import { ServerBot } from "./ServerBot";
+import { GameBot } from "./GameBot";
+import { GameConfig } from "./GameConfig";
+
 
 export class GameServer {
     lastPlayerID = 0;
@@ -70,7 +73,14 @@ export class GameServer {
         this.games.push(game);
         this.lastGameID++;
     }
+    onCancelWatch(player: ServerPlayer) {
+        player.status = PlayerStatus.connected;
+        let game = this.getGameByPlayerId(player.id);
 
+        if (game != null) {
+            game.removeObserver(player.id);
+        }
+    }
     onSurrender(player: ServerPlayer) {
         if (player.status == PlayerStatus.ingame) {
             if (this.getGameByPlayerId(player.id) != null) {
@@ -133,6 +143,12 @@ export class GameServer {
                         }
                     }
                 }
+                else if (this.clients[i].status == PlayerStatus.spectating) {
+                    let game = this.getGameByPlayerId(this.clients[i].id)
+                    if (game != null) {
+                        game.removeObserver(this.clients[i].id);
+                    }
+                }
                     this.clients[i] = null;
                     this.clients.splice(i, 1);
                 return;
@@ -146,6 +162,11 @@ export class GameServer {
             if (game.client.serverPlayer.id == id || game.host.serverPlayer.id == id) {
                 gameCore = game;
             }
+            game.observers.forEach(obs => {
+                if (obs.id == id) {
+                    gameCore = game;
+                }
+            });
         });
         return gameCore;
     }
@@ -199,10 +220,28 @@ export class GameServer {
             if (arr[2])
                 this.top3Wins[2] = arr[2];
 
+            var liveGames = [];
 
+            arr = players;
+            arr.sort(predicateBy("wins"));
+            arr.reverse();
+
+            var aux =0;
+            var gameIdsAdded = [];
+            arr.forEach(p => {
+                if (p.status == PlayerStatus.ingame && aux < 3) {
+                    let game = this.getGameByPlayerId(p.id);
+                    if (gameIdsAdded.indexOf(game.id) == -1 && !(game.client instanceof GameBot)) {
+                        liveGames.push({gameId: game.id, host: game.host.serverPlayer.nick, client: game.client.serverPlayer.nick});
+                        aux++;
+                        gameIdsAdded.push(game.id);
+                    }
+                }
+            });
             playersOnLobby.forEach(p => {
-                if (p.socket)
-                    p.socket.emit('receivePlayers', {players: players, top3: this.top3Wins});
+                if (p.socket) {
+                    p.socket.emit('receivePlayers', {players: players, top3: this.top3Wins, liveGames: liveGames});
+                }
             });
         }
     }
@@ -252,9 +291,25 @@ export class GameServer {
             });
         }
     }
+    onWatchGame(player : ServerPlayer, gameId) {
+        var game = this.getGameById(gameId);
+        if (game != null) {
+            player.status = PlayerStatus.spectating;
+            player.socket.emit('startGame', { id: game.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, 
+                isHost: null, stepRate: GameConfig.STEP_RATE, playerId: player.id, opponentNick: game.client.serverPlayer.nick });
+            game.observers.push(player);
+        }
+    }
 
-
-
+    getGameById(id):GameCore{
+        var game=null;
+        this.games.forEach(g => {
+            if (g.id == id) {
+                game = g;
+            }
+        });
+        return game;
+    }
 }
 function predicateBy(prop) {
     return function (a, b) {

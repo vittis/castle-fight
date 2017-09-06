@@ -111,7 +111,8 @@ module Kodo {
         }
         receiveDamage() {
             this.tint = 0xff3030;
-            this.game.time.events.add(200, this.resetColor.bind(this), this);
+            if(this.game != null)
+                this.game.time.events.add(200, this.resetColor.bind(this), this);
         }
         resetColor() {
             if (!this.dataq.statusData.stunned) {

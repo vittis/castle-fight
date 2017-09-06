@@ -5,6 +5,7 @@ var PlayerStatus;
     PlayerStatus[PlayerStatus["connected"] = 0] = "connected";
     PlayerStatus[PlayerStatus["matchmaking"] = 1] = "matchmaking";
     PlayerStatus[PlayerStatus["ingame"] = 2] = "ingame";
+    PlayerStatus[PlayerStatus["spectating"] = 3] = "spectating";
 })(PlayerStatus = exports.PlayerStatus || (exports.PlayerStatus = {}));
 var ServerPlayer = (function () {
     function ServerPlayer(id, socket) {

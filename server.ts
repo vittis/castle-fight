@@ -72,6 +72,19 @@ io.on('connection',function(socket){
 
         gameServer.onSurrender(player);
     }); 
+    
+    socket.on('askCancelWatch', function () {
+        console.log("ask cancel watch called");
+
+        gameServer.onCancelWatch(player);
+    }); 
+
+    socket.on('askWatchGame', function (gameId) {
+        console.log("ask watch game called");
+
+        gameServer.onWatchGame(player, gameId);
+    }); 
+
 
     socket.on('chatmessage', function (message : string) {
         console.log(message);
@@ -82,5 +95,5 @@ io.on('connection',function(socket){
             gameServer.onMessage(message);
         }
     }); 
-
+    
 });

@@ -23,6 +23,7 @@ var Kodo;
         }
         GameScene.prototype.create = function () {
             GameScene.instance = this;
+            this.entities = [];
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
@@ -34,46 +35,86 @@ var Kodo;
             this.game.add.sprite(0, 0, 'tileFundo');
             this.game.add.sprite(this.grid[6][8].x, this.grid[6][8].y, 'arvores');
             var style = { font: "12px Baloo Paaji", fill: 'white' };
-            var surrenderLabel = this.game.add.text(293, this.game.height - 9, "Surrender", style);
-            surrenderLabel.anchor.setTo(0, 0.5);
-            style = { font: "12px Lucida Console", fill: 'white' };
-            var box = this.game.make.graphics(0, 0);
-            box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, surrenderLabel.width + 3, surrenderLabel.height, 5);
-            box.endFill();
-            var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
-            box.destroy();
-            loadingRect.anchor.setTo(0.5, 0.5);
-            loadingRect.alignIn(surrenderLabel, Phaser.CENTER);
-            loadingRect.alpha = 0.6;
-            loadingRect.y -= 3;
-            this.game.world.swap(surrenderLabel, loadingRect);
-            surrenderLabel.inputEnabled = true;
-            surrenderLabel.input.useHandCursor = true;
-            surrenderLabel.events.onInputDown.add(Client.askSurrender, this);
-            this.uiBuildingManager = new Kodo.UIBuildingManager(this.game);
-            this.uiResourceManager = new Kodo.UIResourceManager(this.game);
+            if (this.isHost != null) {
+                var surrenderLabel = this.game.add.text(293, this.game.height - 9, "Surrender", style);
+                surrenderLabel.anchor.setTo(0, 0.5);
+                style = { font: "12px Lucida Console", fill: 'white' };
+                var box = this.game.make.graphics(0, 0);
+                box.beginFill(0x000000);
+                box.drawRoundedRect(0, 0, surrenderLabel.width + 3, surrenderLabel.height, 5);
+                box.endFill();
+                var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
+                box.destroy();
+                loadingRect.anchor.setTo(0.5, 0.5);
+                loadingRect.alignIn(surrenderLabel, Phaser.CENTER);
+                loadingRect.alpha = 0.6;
+                loadingRect.y -= 3;
+                this.game.world.swap(surrenderLabel, loadingRect);
+                surrenderLabel.inputEnabled = true;
+                surrenderLabel.input.useHandCursor = true;
+                surrenderLabel.events.onInputDown.add(Client.askSurrender, this);
+                this.uiBuildingManager = new Kodo.UIBuildingManager(this.game);
+                this.uiResourceManager = new Kodo.UIResourceManager(this.game);
+                this.updateManager = new Kodo.UpdateManager(this.game);
+                this.uiResourceManager.startGame();
+            }
+            if (this.isHost == null) {
+                var style_1 = { font: "16px Baloo Paaji", fill: 'white' };
+                var surrenderLabel_1 = this.game.add.text(this.game.world.centerX, this.game.height - 50, "Back to Menu", style_1);
+                surrenderLabel_1.anchor.setTo(0.5, 0.5);
+                var box = this.game.make.graphics(0, 0);
+                box.beginFill(0x000000);
+                box.drawRoundedRect(0, 0, surrenderLabel_1.width + 3, surrenderLabel_1.height, 5);
+                box.endFill();
+                var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
+                box.destroy();
+                loadingRect.anchor.setTo(0.5, 0.5);
+                loadingRect.alignIn(surrenderLabel_1, Phaser.CENTER);
+                loadingRect.alpha = 0.6;
+                loadingRect.y -= 3;
+                this.game.world.swap(surrenderLabel_1, loadingRect);
+                surrenderLabel_1.inputEnabled = true;
+                surrenderLabel_1.input.useHandCursor = true;
+                surrenderLabel_1.events.onInputDown.add(function () {
+                    Client.askCancelWatch;
+                    this.game.time.events.remove(this.mainLoop);
+                    this.game.state.start('MainMenu', true, false);
+                }.bind(this), this);
+            }
             this.uiEntityManager = new Kodo.UIEntityManager(this.game);
             this.incomeBallBar = new Kodo.IncomeBallBar(this.game);
-            this.updateManager = new Kodo.UpdateManager(this.game);
             style = { font: "14px Lucida Console", fill: 'white' };
-            var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
-            yourNickLabel.stroke = '#E27952';
-            yourNickLabel.strokeThickness = 4;
-            if (!GameConfig.isHost) {
-                yourNickLabel.x = this.game.width - yourNickLabel.width;
-                yourNickLabel.stroke = '#0D6032';
+            if (this.isHost != null) {
+                var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
+                yourNickLabel.stroke = '#E27952';
                 yourNickLabel.strokeThickness = 4;
-            }
-            var opponentNick = this.game.add.text(0, 0, GameConfig.opponentNick, style);
-            opponentNick.stroke = '#E27952';
-            opponentNick.strokeThickness = 4;
-            if (GameConfig.isHost) {
-                opponentNick.x = this.game.width - opponentNick.width;
-                opponentNick.stroke = '#0D6032';
+                if (!GameConfig.isHost) {
+                    yourNickLabel.x = this.game.width - yourNickLabel.width;
+                    yourNickLabel.stroke = '#0D6032';
+                    yourNickLabel.strokeThickness = 4;
+                }
+                var opponentNick = this.game.add.text(0, 0, GameConfig.opponentNick, style);
+                opponentNick.stroke = '#E27952';
                 opponentNick.strokeThickness = 4;
+                if (GameConfig.isHost) {
+                    opponentNick.x = this.game.width - opponentNick.width;
+                    opponentNick.stroke = '#0D6032';
+                    opponentNick.strokeThickness = 4;
+                }
             }
-            this.uiResourceManager.startGame();
+            else {
+                var yourNickLabel_1 = this.game.add.text(0, 0, GameConfig.hostNick, style);
+                yourNickLabel_1.stroke = '#E27952';
+                yourNickLabel_1.strokeThickness = 4;
+                var opponentNick_1 = this.game.add.text(0, 0, GameConfig.clientNick, style);
+                opponentNick_1.stroke = '#E27952';
+                opponentNick_1.strokeThickness = 4;
+                if (true) {
+                    opponentNick_1.x = this.game.width - opponentNick_1.width;
+                    opponentNick_1.stroke = '#0D6032';
+                    opponentNick_1.strokeThickness = 4;
+                }
+            }
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         };
         GameScene.prototype.endGame = function (hostWon) {
@@ -105,9 +146,11 @@ var Kodo;
             group.onChildInputDown.add(function (sp) { sp.game.state.start('MainMenu', true, false); }, this);
         };
         GameScene.prototype.update = function () {
-            this.uiBuildingManager.update();
-            this.uiEntityManager.update();
-            this.updateManager.update();
+            if (this.isHost != null) {
+                this.uiBuildingManager.update();
+                this.uiEntityManager.update();
+                this.updateManager.update();
+            }
         };
         GameScene.prototype.loopCache = function () {
             if (this.stateCache.length > 0) {
@@ -117,18 +160,20 @@ var Kodo;
         };
         GameScene.prototype.executeUpdateEntities = function (newEntities) {
             var _this = this;
-            this.uiResourceManager.updateResources(this.player.incomeRateCounter);
-            this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
-            this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
-            this.updateManager.updateCounter(this.player.updateRateCounter);
-            if (this.updateManager.uIUpdateButton.allGroup.visible) {
-                this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
-                this.updateManager.uIUpdateButton.updateText();
+            if (this.isHost != null) {
+                this.uiResourceManager.updateResources(this.player.incomeRateCounter);
+                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
+                this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
+                this.updateManager.updateCounter(this.player.updateRateCounter);
+                if (this.updateManager.uIUpdateButton.allGroup.visible) {
+                    this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
+                    this.updateManager.uIUpdateButton.updateText();
+                }
+                this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
+                    this.world.bringToTop(item.tudoGroup);
+                }.bind(this), this);
+                this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
             }
-            this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
-                this.world.bringToTop(item.tudoGroup);
-            }.bind(this), this);
-            this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
             newEntities.forEach(function (newEntity) {
                 var entityID = newEntity.id;
                 if (_this.idExists(entityID)) {
@@ -139,7 +184,9 @@ var Kodo;
                 }
             });
             this.cleanDeadEntities(newEntities);
-            this.uiEntityManager.updateText();
+            if (this.isHost != null) {
+                this.uiEntityManager.updateText();
+            }
             this.lastTimeUpdate = Date.now();
         };
         GameScene.prototype.updateEntities = function (newEntities) {
