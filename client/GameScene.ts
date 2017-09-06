@@ -118,6 +118,11 @@ module Kodo {
             var loadingLabel = this.game.add.text(this.game.world.centerX, this.game.world.centerY, stringWon, { font: "80px Baloo Paaji", fill: '#ffffff', wordWrap: false, align: "center" });
             loadingLabel.anchor.setTo(0.5, 0.5);
 
+            var clickToBack = this.game.add.text(0, 50, "(click to back)", { font: "20px Baloo Paaji", fill: '#ffffff', wordWrap: false, align: "center" });
+            clickToBack.anchor.setTo(0.5, 0.5);
+            loadingLabel.addChild(clickToBack);
+
+
             var box = this.game.make.graphics(0, 0);
             box.beginFill(0x000000);
             box.drawRoundedRect(0, 0, loadingLabel.width + 50, loadingLabel.height + 35, 30);
