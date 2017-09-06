@@ -32,7 +32,7 @@ var Kodo;
             this.inputField.focusOut.add(this.onFocusOut.bind(this), this);
             this.messageGroup = this.game.add.group();
             this.messageGroup.alignIn(this.chatSpace, Phaser.TOP_LEFT, -5, -5);
-            this.onReceivedNewMessage("Pro Tip: Press shift to start typing.");
+            this.onReceivedNewMessage("Pro Tip: Don't refresh the page and keep   winning to get into the leaderboards!");
             var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.SHIFT);
             enterKey.onDown.add(this.onEnter.bind(this), this);
         }

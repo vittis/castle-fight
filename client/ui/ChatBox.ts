@@ -60,7 +60,7 @@ module Kodo {
             this.onReceivedNewMessage("vittis13: vamo caralho");
              this.onReceivedNewMessage("vittis14: vamo caralho");
             this.game.time.events.loop(2000, this.addcoisa.bind(this), this); */
-            this.onReceivedNewMessage("Pro Tip: Press shift to start typing.");
+            this.onReceivedNewMessage("Pro Tip: Don't refresh the page and keep   winning to get into the leaderboards!");
 
             var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.SHIFT);
             enterKey.onDown.add(this.onEnter.bind(this), this);
