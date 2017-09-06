@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var GamePlayer_1 = require("./GamePlayer");
 var GridManager_1 = require("./GridManager");
+var ServerPlayer_1 = require("./ServerPlayer");
 var AStar_1 = require("./lib/AStar");
 var EuclideanHeuristic_1 = require("./lib/Heuristics/EuclideanHeuristic");
 var GameConfig_1 = require("./GameConfig");
@@ -64,24 +65,32 @@ var GameCore = (function () {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
                             if (this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
-                                if (data.isHost) {
-                                    if (this.host != null)
-                                        this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                                }
-                                else {
-                                    if (this.client != null)
-                                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                if (GameConfig_1.GameConfig.BUILDINGS.indexOf(data.name) != -1) {
+                                    if (data.isHost) {
+                                        if (this.host != null) {
+                                            this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                        }
+                                    }
+                                    else {
+                                        if (this.client != null) {
+                                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                        }
+                                    }
                                 }
                             }
                         }
                         else {
-                            if (data.isHost) {
-                                if (this.host != null)
-                                    this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                            }
-                            else {
-                                if (this.client != null)
-                                    this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                            if (GameConfig_1.GameConfig.UNITS.indexOf(data.name) != -1) {
+                                if (data.isHost) {
+                                    if (this.host != null) {
+                                        this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                                    }
+                                }
+                                else {
+                                    if (this.client != null) {
+                                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                                    }
+                                }
                             }
                         }
                     }
@@ -160,7 +169,9 @@ var GameCore = (function () {
         if (this.observers.length > 0) {
             this.observers.forEach(function (p) {
                 if (p != null) {
-                    p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                    if (p.status == ServerPlayer_1.PlayerStatus.spectating) {
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                    }
                 }
             });
         }

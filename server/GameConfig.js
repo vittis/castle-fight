@@ -11,4 +11,6 @@ var GameConfig;
     GameConfig.STARTING_INCOME_RATE = 14;
     GameConfig.BALL_SPAM_RATE = 80;
     GameConfig.UPDATE_RATE = 65;
+    GameConfig.UNITS = ['Archer', 'Engineer', 'Farmer', 'Footman', 'King', 'Mage', 'Propeller', 'Sniper', 'Thief', 'Witch'];
+    GameConfig.BUILDINGS = ['ArcheryRange', 'Barn', 'Barracks', 'GravityChamber', 'KingsCourt', 'MagesGuild', 'SpecialFacility', 'StorageBarn', 'TechStation', 'ThiefsTent', 'WitchsHut'];
 })(GameConfig = exports.GameConfig || (exports.GameConfig = {}));

@@ -1,6 +1,6 @@
 import { GamePlayer } from "./GamePlayer";
 import { GridManager } from "./GridManager";
-import { ServerPlayer } from "./ServerPlayer";
+import { ServerPlayer, PlayerStatus } from "./ServerPlayer";
 import { AStar } from "./lib/AStar";
 import { EuclideanHeuristic } from "./lib/Heuristics/EuclideanHeuristic";
 import { GameConfig } from "./GameConfig";
@@ -107,33 +107,44 @@ export class GameCore {
         }
     }
 
+
+
     setSocket(p : ServerPlayer, isHost : boolean) {
         if (p.socket) {
             p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
+
 
             p.socket.on('askBuild', function (data) {
                 if (this != null && this.host != null && this.client != null) {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
                             if (this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
-                                if (data.isHost) {
-                                    if (this.host != null)
-                                        this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
-                                }
-                                else {
-                                    if (this.client != null)
-                                        this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                if (GameConfig.BUILDINGS.indexOf(data.name) != -1) {
+                                    if (data.isHost) {
+                                        if (this.host != null) {
+                                            this.host.buildBuilding(new (require('./building/'+data.name))[data.name](data.row, data.col));
+                                        }
+                                    }
+                                    else {
+                                        if (this.client != null) {
+                                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
+                                        }
+                                    }
                                 }
                             }
                         }
                         else {
-                            if (data.isHost) {
-                                if (this.host != null)
-                                    this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                            }
-                            else {
-                                if (this.client != null)
-                                    this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));    
+                            if (GameConfig.UNITS.indexOf(data.name) != -1) {
+                                if (data.isHost) {
+                                    if (this.host != null) {
+                                        this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
+                                    }
+                                }
+                                else {
+                                    if (this.client != null) {
+                                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));  
+                                    }  
+                                }
                             }
                         }
                     }
@@ -219,7 +230,9 @@ export class GameCore {
         if (this.observers.length>0) {
             this.observers.forEach(p => {
                 if (p != null) {
-                    p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                    if (p.status == PlayerStatus.spectating) {
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                    }
                 }
             });
         }

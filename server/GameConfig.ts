@@ -10,4 +10,8 @@ export module GameConfig {
     export const BALL_SPAM_RATE = 80;
     export const UPDATE_RATE = 65;
 
+
+    export const UNITS = ['Archer', 'Engineer', 'Farmer', 'Footman', 'King', 'Mage', 'Propeller', 'Sniper', 'Thief', 'Witch'];
+    export const BUILDINGS = ['ArcheryRange', 'Barn', 'Barracks', 'GravityChamber', 'KingsCourt', 'MagesGuild', 'SpecialFacility', 'StorageBarn', 'TechStation', 'ThiefsTent', 'WitchsHut'];
+
 }
