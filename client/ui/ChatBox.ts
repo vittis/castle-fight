@@ -94,7 +94,7 @@ module Kodo {
                 var newMessage1 = this.game.add.text(0, 0, string1, style);
                 var newMessage2 = this.game.add.text(0, 0, string2, style);
                 
-                while (this.messageGroup.length >= 12) {
+                while (this.messageGroup.length >= 8) {
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                 }
@@ -107,7 +107,7 @@ module Kodo {
                 this.messageGroup.align(1, 15, 0, 22);
             } 
             else {
-                while (this.messageGroup.length >= 13) {
+                while (this.messageGroup.length >= 8) {
                     this.messageGroup.remove(this.messageGroup.getChildAt(0), true);
                 }
                 newMessage.addColor('#2bb664', 0);
