@@ -91,7 +91,6 @@ var Client;
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
             Kodo.MainMenu.instance.updatePlayersConnected(data);
-            console.log(data.liveGames);
         }
     });
     socket.on('onAnuncio', function (msg) {

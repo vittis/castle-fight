@@ -47,21 +47,30 @@ module Kodo {
                 box2.anchor.setTo(0.5, 0.5);
                 
                 style.fill = '#ECEC3A';
+                style.font = '18px Baloo Paaji'
 
                 let vsText = this.game.add.text(0, 0, 'vs', style);
                 vsText.anchor.setTo(0.5, 0.5);
                 style.fill = '#ffffff';
 
                 let opponent1 = this.game.add.text(0, 0, '', style);
-                //opponent1.alignTo(vsText, Phaser.LEFT_CENTER, 5);
+                opponent1.alignTo(vsText, Phaser.LEFT_CENTER, 5);
                 let opponent2 = this.game.add.text(0, 0, '', style);
-                //opponent2.alignTo(vsText, Phaser.RIGHT_CENTER, 5);
+                opponent2.alignTo(vsText, Phaser.RIGHT_CENTER, 5);
+                //style.font = '13px Baloo Paaji';
+                //style.fill = '#e97d55'
+                //let watchCountLabel = this.game.add.text(0, 0, '5', style);
+               // watchCountLabel.alignTo(vsText, Phaser.BOTTOM_CENTER, 0, -10);
+                //watchCountLabel.x += 145;
+
 
                 var group = this.game.add.group();
 
                 group.add(vsText);
                 group.add(opponent1);
                 group.add(opponent2);
+                //group.add(watchCountLabel);
+
 
                 this.vsGroup.add(group);
 
@@ -75,7 +84,7 @@ module Kodo {
             this.boxsGroup.align(1, 3, 0, 63);
             this.boxsGroup.alignTo(this.label, Phaser.BOTTOM_CENTER, 0, 5);
             this.vsGroup.align(1, 3, 0, 63);
-            this.vsGroup.alignTo(this.label, Phaser.BOTTOM_CENTER, 12, 22);
+            this.vsGroup.alignTo(this.label, Phaser.BOTTOM_CENTER, 0, 22);
 
 
             this.boxsGroup.onChildInputOver.add(this.onHover.bind(this), this);

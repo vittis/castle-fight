@@ -232,7 +232,7 @@ export class GameServer {
                 if (p.status == PlayerStatus.ingame && aux < 3) {
                     let game = this.getGameByPlayerId(p.id);
                     if (gameIdsAdded.indexOf(game.id) == -1 && !(game.client instanceof GameBot)) {
-                        liveGames.push({gameId: game.id, host: game.host.serverPlayer.nick, client: game.client.serverPlayer.nick});
+                        liveGames.push({gameId: game.id, host: game.host.serverPlayer.nick, client: game.client.serverPlayer.nick, watchCount: game.observers.length});
                         aux++;
                         gameIdsAdded.push(game.id);
                     }

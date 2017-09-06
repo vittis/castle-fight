@@ -194,7 +194,7 @@ var GameServer = (function () {
                 if (p.status == ServerPlayer_1.PlayerStatus.ingame && aux < 3) {
                     var game_2 = _this.getGameByPlayerId(p.id);
                     if (gameIdsAdded.indexOf(game_2.id) == -1 && !(game_2.client instanceof GameBot_1.GameBot)) {
-                        liveGames.push({ gameId: game_2.id, host: game_2.host.serverPlayer.nick, client: game_2.client.serverPlayer.nick });
+                        liveGames.push({ gameId: game_2.id, host: game_2.host.serverPlayer.nick, client: game_2.client.serverPlayer.nick, watchCount: game_2.observers.length });
                         aux++;
                         gameIdsAdded.push(game_2.id);
                     }
