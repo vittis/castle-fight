@@ -104,7 +104,7 @@ module Kodo {
                 surrenderLabel.inputEnabled = true;
                 surrenderLabel.input.useHandCursor = true;
                 surrenderLabel.events.onInputDown.add(function () {
-                    Client.askCancelWatch; this.game.time.events.remove(this.mainLoop);this.game.state.start('MainMenu', true, false);}.bind(this), this);
+                    Client.askCancelWatch(); this.game.time.events.remove(this.mainLoop); this.game.state.start('MainMenu', true, false);}.bind(this), this);
             }
             this.uiEntityManager = new UIEntityManager(this.game);
             this.incomeBallBar = new IncomeBallBar(this.game);  

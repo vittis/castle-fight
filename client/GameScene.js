@@ -76,7 +76,7 @@ var Kodo;
                 surrenderLabel_1.inputEnabled = true;
                 surrenderLabel_1.input.useHandCursor = true;
                 surrenderLabel_1.events.onInputDown.add(function () {
-                    Client.askCancelWatch;
+                    Client.askCancelWatch();
                     this.game.time.events.remove(this.mainLoop);
                     this.game.state.start('MainMenu', true, false);
                 }.bind(this), this);

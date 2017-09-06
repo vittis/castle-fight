@@ -294,7 +294,7 @@ module Kodo {
             //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
             this.chatBox = new ChatBox(this.game);
             this.leaderboard = new Leaderboard(this.game);
-            //this.watchBox = new WatchBox(this.game);
+            this.watchBox = new WatchBox(this.game);
         }
         onFocusOut() {
             if (this.inputField.value.length > 0) {
@@ -349,7 +349,7 @@ module Kodo {
             data.players.sort(predicateBy("wins"));
             data.players.reverse();
             this.leaderboard.updateTop5(data);
-            //this.watchBox.updateLiveGames(data.liveGames);
+            this.watchBox.updateLiveGames(data.liveGames);
         }
 
         onHover(sprite: UIBuildingButton) {
