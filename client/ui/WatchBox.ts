@@ -20,7 +20,7 @@ module Kodo {
             box.destroy();
             this.space.alpha = 0.52;
 
-            var style = { font: "26px Baloo Paaji", fill: '#ECEC3A', align: "center" };
+            var style = { font: "26px Baloo Paaji", fill: '#ff8080', align: "center" };
 
             this.label = this.game.add.text(0, 0, "Live Matches", style)
             this.label.anchor.setTo(0.5, 0.5);
@@ -46,7 +46,7 @@ module Kodo {
                 box2.alpha = 0.02;
                 box2.anchor.setTo(0.5, 0.5);
                 
-                style.fill = '#ECEC3A';
+                style.fill = '#d66a6a';
                 style.font = '18px Baloo Paaji'
 
                 let vsText = this.game.add.text(0, 0, 'vs', style);
