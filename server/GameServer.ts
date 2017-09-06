@@ -15,7 +15,7 @@ export class GameServer {
     public static instance : GameServer = null;
 
     //top5Nicks : string[] = [];
-    top3Wins: any[] = [{ nick: "Guest_35", wins: 0, id: -1 }, { nick: "Guest_44", wins: 0, id: -1 }, { nick: "Guest_50", wins: 0, id: -1 }]; 
+    top3Wins: any[] = [{ nick: "Pychkin", wins: 19, id: -1 }, { nick: "lel_664", wins: 17, id: -1 }, { nick: "lel is back", wins: 17, id: -1 }]; 
 
     io : SocketIO.Server;
     constructor(io) {
