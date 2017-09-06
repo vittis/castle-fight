@@ -255,14 +255,14 @@ var Kodo;
             this.game.state.start('GameScene', true, false);
         };
         MainMenu.prototype.updatePlayersConnected = function (data) {
-            this.onlineNumber.text = "" + data.players.length;
+            this.onlineNumber.text = " " + data.players.length;
             var ingame = 0;
             data.players.forEach(function (p) {
                 if (p.status == 2) {
                     ingame++;
                 }
             });
-            this.ingameNumber.text = "" + ingame;
+            this.ingameNumber.text = " " + ingame;
             data.players.sort(predicateBy("wins"));
             data.players.reverse();
             this.leaderboard.updateTop5(data);

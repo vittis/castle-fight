@@ -334,7 +334,7 @@ module Kodo {
 
 
         updatePlayersConnected(data ) {
-            this.onlineNumber.text = ""+data.players.length;
+            this.onlineNumber.text = " "+data.players.length;
             var ingame=0;
             data.players.forEach(p => {
 
@@ -342,7 +342,7 @@ module Kodo {
                     ingame++;
                 }
             });
-            this.ingameNumber.text = ""+ingame;
+            this.ingameNumber.text = " "+ingame;
 
 
             data.players.sort(predicateBy("wins"));
