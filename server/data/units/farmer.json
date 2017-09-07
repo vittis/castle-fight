@@ -2,7 +2,7 @@
     "name": "Farmer",
     "width": 1,
     "height": 1,
-    "maxHP": 8,
+    "maxHP": 7,
     "maxArmor": 0,
     
     "attackRange": 1,

@@ -70,38 +70,6 @@ export abstract class SpamBuilding extends Building {
         }
     }
 
-
-
-
-
-    /* spamUnit(unit? : any) {
-        if (this.data.spamData.spamRateCounter == 0) {
-
-            var tile = this.gm.tileAt(this.data.tileRow, this.data.tileCol);
-            if (tile.entity != null) {
-                tile = this.getTileToSpam();
-                if (tile) {
-                    this.data.tileRow = tile.row;
-                    this.data.tileCol = tile.col;
-                }
-            }
-
-            if (tile) {
-                this.owner.addEntity(new unit(tile.row, tile.col));
-            }
-            this.data.spamData.spamRateCounter = this.data.spamRate;
-            this.data.spamData.hasSpammed = true;
-            this.data.spamCount--;
-            if (this.data.spamCount <= 0)
-                this.onDeath();
-
-            //this.data.spamData.isTraining = false;
-        }
-       if (this.data.spamData.isTraining) {
-            this.data.spamData.spamRateCounter--;
-       }
-    } */
-
     trainUnit() {//n sendo usado
         this.data.spamData.isTraining = true;
     }

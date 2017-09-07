@@ -7,5 +7,5 @@
     "goldCost": 0,
     "woodCost": 0,
 
-    "description": "Explodes dealing 4 area damage to enemies"
+    "description": "Explodes dealing 4 area damage and stunning enemies"
 }

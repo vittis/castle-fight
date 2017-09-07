@@ -41,7 +41,7 @@ var Kodo;
                         this.hpTexto.text = "" + this.target.dataq.hp;
                         this.armorTexto.text = "" + this.target.dataq.armor;
                     }
-                    else if (this.target instanceof Kodo.SpamBuilding) {
+                    else if (this.target instanceof Kodo.SpamBuilding || this.target instanceof Kodo.EffectBuilding) {
                         this.descTexto.text = this.target.dataq.name + "\n\n" + "Training Time: " + this.target.data.spamRate + "\n" + Kodo[this.target.dataq.name].description;
                         this.hpTexto.text = "" + this.target.dataq.hp;
                         this.armorTexto.text = "" + this.target.dataq.armor;
@@ -222,7 +222,7 @@ var Kodo;
                     entityManager.descricaoString = building.dataq.name + "\n\nDamage: "
                         + building.data.attackDmg + "\nRange: " + building.data.attackRange + "\nAtk Speed: " + building.data.attackRate;
                 }
-                else if (building instanceof Kodo.SpamBuilding) {
+                else if (building instanceof Kodo.SpamBuilding || building instanceof Kodo.EffectBuilding) {
                     entityManager.descricaoString = building.dataq.name + "\n\n" + "Training Time: " + building.data.spamRate + "\n" + Kodo[building.dataq.name].description;
                 }
                 else {

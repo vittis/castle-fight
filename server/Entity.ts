@@ -17,6 +17,7 @@ export interface EntityData {
 export interface StatusData {
     stunned? : boolean;
     shielded? : boolean;
+    heroBuff? : boolean;
 }
 
 export abstract class Entity {
@@ -40,7 +41,7 @@ export abstract class Entity {
         this.row = row;
         this.col = col;
         
-        this.dataq.statusData = {stunned : false, shielded : false};
+        this.dataq.statusData = {stunned : false, shielded : false, heroBuff: false};
     }
 
     addToGame(gm) {

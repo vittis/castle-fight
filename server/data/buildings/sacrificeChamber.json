@@ -1,0 +1,13 @@
+{
+    "name": "SacrificeChamber",
+    "width": 2,
+    "height": 2,
+    "maxHP": 20,
+    "maxArmor": 10,
+    "goldCost": 40,
+    "woodCost": 40,
+    "spamCount": 3,
+    "spamRate": 25,
+    "description": "Kills a random full HP ally. Grants +50G and +50W for each unit killed when destroyed",
+    "incomeGain": 0
+}

@@ -6,6 +6,7 @@ var SpamBuilding_1 = require("./building/SpamBuilding");
 var ResourceManager_1 = require("./ResourceManager");
 var AttackBuilding_1 = require("./building/AttackBuilding");
 var UpdateManager_1 = require("./UpdateManager");
+var EffectBuilding_1 = require("./building/EffectBuilding");
 var GamePlayer = (function () {
     function GamePlayer(player, isHost, gm) {
         this.entities = [];
@@ -74,6 +75,15 @@ var GamePlayer = (function () {
         var buildings = [];
         this.getAllBuildings().forEach(function (e) {
             if (e instanceof SpamBuilding_1.SpamBuilding) {
+                buildings.push(e);
+            }
+        });
+        return buildings;
+    };
+    GamePlayer.prototype.getEffectBuildings = function () {
+        var buildings = [];
+        this.getAllBuildings().forEach(function (e) {
+            if (e instanceof EffectBuilding_1.EffectBuilding) {
                 buildings.push(e);
             }
         });

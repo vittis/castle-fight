@@ -96,7 +96,7 @@ module Kodo {
                  }
              }); 
  
-             this.buildingsGroup.align(7, 3, 110, 90);
+             this.buildingsGroup.align(7, 4, 110, 90);
  
              this.buildingsGroup.x = 435;
              this.buildingsGroup.y = 180; 

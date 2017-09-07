@@ -125,6 +125,11 @@ module Kodo {
                 this.game.load.image('witchsHutc', 'assets/48/witchsHutc_48.png');
                 this.game.load.image('trapDevicec', 'assets/48/trapDevicec_48.png');
                 this.game.load.image('trapDeviceh', 'assets/48/trapDeviceh_48.png');
+                this.game.load.image('heroShrineh', 'assets/48/heroShrineh_48.png');
+                this.game.load.image('heroShrinec', 'assets/48/heroShrinec_48.png');
+                this.game.load.image('sacrificeChamberc', 'assets/48/sacrificeChamberc_48.png');
+                this.game.load.image('sacrificeChamberh', 'assets/48/sacrificeChamberh_48.png');
+
 
 
                 this.game.load.image('farmerh', 'assets/48/farmerh_48.png');
@@ -168,6 +173,10 @@ module Kodo {
                 this.game.load.spritesheet('magesGuild_ui_c', 'assets/48/ui/magesGuild_ui_c.png', 66, 66);
                 this.game.load.spritesheet('witchsHut_ui_c', 'assets/48/ui/witchsHut_ui_c.png', 66, 66);
                 this.game.load.spritesheet('witchsHut_ui_h', 'assets/48/ui/witchsHut_ui_h.png', 66, 66);
+                this.game.load.spritesheet('heroShrine_ui_h', 'assets/48/ui/heroShrine_ui_h.png', 66, 66);
+                this.game.load.spritesheet('heroShrine_ui_c', 'assets/48/ui/heroShrine_ui_c.png', 66, 66);
+                this.game.load.spritesheet('sacrificeChamber_ui_c', 'assets/48/ui/sacrificeChamber_ui_c.png', 66, 66);
+                this.game.load.spritesheet('sacrificeChamber_ui_h', 'assets/48/ui/sacrificeChamber_ui_h.png', 66, 66);
 
 
                 this.game.load.spritesheet('archer_ui_c', 'assets/48/ui/archer_ui_c.png', 66, 66);
@@ -216,6 +225,7 @@ module Kodo {
                 this.game.load.image('tileSelected', 'assets/48/tileSelected_48.png');
                 this.game.load.image('tileClickMark', 'assets/48/tileClickMark_48.png');
                 this.game.load.image('shield', 'assets/48/shield_48.png');
+                this.game.load.image('heroBuff', 'assets/48/heroBuff_48.png');
 
 
                 this.game.load.spritesheet('trainButton', 'assets/48/trainButton_48.png', 26 ,26);

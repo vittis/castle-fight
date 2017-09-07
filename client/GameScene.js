@@ -35,7 +35,7 @@ var Kodo;
             }
             this.game.add.sprite(0, 0, 'tileFundo');
             this.game.add.sprite(this.grid[6][8].x, this.grid[6][8].y, 'arvores');
-            var style = { font: "12px Baloo Paaji", fill: 'white' };
+            var style = { font: "13px Baloo Paaji", fill: 'white' };
             if (this.isHost != null) {
                 var surrenderLabel = this.game.add.text(293, this.game.height - 9, "Surrender", style);
                 surrenderLabel.anchor.setTo(0, 0.5);

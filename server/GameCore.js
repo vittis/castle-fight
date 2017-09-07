@@ -199,6 +199,10 @@ var GameCore = (function () {
             }
             return;
         }
+        this.host.getEffectBuildings().concat(this.client.getEffectBuildings()).forEach(function (building) {
+            building.resetSpamData();
+            building.step();
+        });
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
         this.host.getAttackBuildings().concat(this.client.getAttackBuildings()).forEach(function (building) {
             building.resetAttackData();

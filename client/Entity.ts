@@ -12,7 +12,7 @@ module Kodo {
     export interface StatusData {
         stunned?: boolean;
         shielded?: boolean;
-
+        heroBuff?: boolean
     }
      export abstract class Entity extends Phaser.Sprite {
 

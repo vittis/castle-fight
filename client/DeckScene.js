@@ -86,7 +86,7 @@ var Kodo;
                     q.tint = 0x906666;
                 }
             });
-            this.buildingsGroup.align(7, 3, 110, 90);
+            this.buildingsGroup.align(7, 4, 110, 90);
             this.buildingsGroup.x = 435;
             this.buildingsGroup.y = 180;
             this.buildingsGroup.setAll('anchor.x', 0.5);

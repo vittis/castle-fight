@@ -10,7 +10,7 @@ export class Sniper extends Unit {
     constructor(row, col) {
         super(row, col, require('clone')(require('../data/units/sniper.json')));
         this.data.attackDmg += 4;
-        this.data.attackRange += 2;
+        this.data.attackRange += 3;
     }
 
     doAction(targetTile: Tile): void {
@@ -19,7 +19,7 @@ export class Sniper extends Unit {
             this.attack(targetTile.entity);
             if (!this.hasAttacked) {
                 this.data.attackDmg -= 4;
-                this.data.attackRange -= 2;
+                this.data.attackRange -= 3;
                 this.hasAttacked = true;
                 targetTile.entity.getEntityData().statusData.stunned = true;
             }

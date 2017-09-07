@@ -5,7 +5,7 @@
     "maxHP": 30,
     "maxArmor": 5,
     "goldCost": 70,
-    "woodCost": 80,
+    "woodCost": 75,
 
     "spamUnit": "Farmer",
     "spamCount": 5,

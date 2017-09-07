@@ -261,6 +261,13 @@ export class GameCore {
             }
             return;
         }
+
+
+        this.host.getEffectBuildings().concat(this.client.getEffectBuildings()).forEach(building => {
+            building.resetSpamData();
+            building.step();
+        });
+
         //load map status
         this.gridManager.aStar.load(this.gridManager.getNumberGrid());
 

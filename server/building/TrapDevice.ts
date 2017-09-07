@@ -12,6 +12,7 @@ export class TrapDevice extends Building {
         this.getOuterTilesWithEntity().forEach(t => {
             if (t.entity.owner.isHost != this.owner.isHost) {
                 t.entity.takeDamageFromNonUnitSource(4);
+                t.entity.getEntityData().statusData.stunned = true;
             }
         });
 

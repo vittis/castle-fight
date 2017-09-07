@@ -2,7 +2,7 @@
     "name": "Thief",
     "width": 1,
     "height": 1,
-    "maxHP": 8,
+    "maxHP": 9,
     "maxArmor": 0,
     "attackRange": 1,
     "attackDmg": 1,

@@ -26,6 +26,7 @@ module Kodo {
         static woodCost = 0;
 
         shield : Phaser.Sprite = null;
+        heroBuff: Phaser.Sprite = null;
 
         get data(): UnitData {
             return this.dataq;
@@ -68,6 +69,9 @@ module Kodo {
                     this.shield = this.game.add.sprite(0, 0, 'shield');
                     this.shield.tint = this.isHost ? 0xe27952 : 0x1b914d;
                     this.addChild(this.shield);
+                    if (this.heroBuff != null) {
+                        this.swapChildren(this.heroBuff, this.shield);
+                    }
                 }
             }
             else {
@@ -75,6 +79,23 @@ module Kodo {
                     this.removeChild(this.shield);
                     this.shield.destroy();
                     this.shield = null;
+                }
+            }
+            if (newData.statusData.heroBuff) {
+                if (this.heroBuff == null) {
+                    this.heroBuff = this.game.add.sprite(0, 0, 'heroBuff');
+                    this.heroBuff.tint = this.isHost ? 0xe27952 : 0x1b914d;
+                    this.addChild(this.heroBuff);
+                    if (this.isHost) {
+                        this.heroBuff.x -= 24+15;
+                    }
+                }
+            }
+            else {
+                if (this.heroBuff != null) {
+                    this.removeChild(this.heroBuff);
+                    this.heroBuff.destroy();
+                    this.heroBuff = null;
                 }
             }
         }

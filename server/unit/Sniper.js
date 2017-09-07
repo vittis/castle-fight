@@ -17,7 +17,7 @@ var Sniper = (function (_super) {
         var _this = _super.call(this, row, col, require('clone')(require('../data/units/sniper.json'))) || this;
         _this.hasAttacked = false;
         _this.data.attackDmg += 4;
-        _this.data.attackRange += 2;
+        _this.data.attackRange += 3;
         return _this;
     }
     Sniper.prototype.doAction = function (targetTile) {
@@ -25,7 +25,7 @@ var Sniper = (function (_super) {
             this.attack(targetTile.entity);
             if (!this.hasAttacked) {
                 this.data.attackDmg -= 4;
-                this.data.attackRange -= 2;
+                this.data.attackRange -= 3;
                 this.hasAttacked = true;
                 targetTile.entity.getEntityData().statusData.stunned = true;
             }

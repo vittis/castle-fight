@@ -80,7 +80,6 @@ module Kodo {
 
 
                 this.vsGroup.add(group);
-
                 /* box2.addChild(vsText);
                 box2.addChild(opponent1);
                 box2.addChild(opponent2); */

@@ -12,7 +12,9 @@ module Kodo {
         maxLenght: number;
 
         currentTime = 0;
-        timeToMove = GameConfig.updateRate / 1000 + 0.015;
+        timeToMove = GameConfig.updateRate / 1000;
+
+        lastCounter=0;
 
         constructor(game: Phaser.Game) {
             super(game, 0, 0);
@@ -65,13 +67,14 @@ module Kodo {
         updateCounter(counter : number) {
             this.cuts = 1 / Kodo.GameScene.instance.player.incomeRate;
             this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
-            if (counter == 0) {
+            if (counter == Kodo.GameScene.instance.player.incomeRate || counter < this.lastCounter) {
                 this.currentTime=0;
                 var tweenA = this.game.add.tween(this.incomeNumberLabel.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
                 var tweenB = this.game.add.tween(this.incomeNumberLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
                 tweenA.chain(tweenB);
                 tweenA.start();
             }
+            this.lastCounter = counter;
         }
 
         updateIncomeLabel() {

@@ -157,7 +157,6 @@ module Kodo {
 
             var hasBuilt=false;
             var messageString = "Can't deploy here!";
-
             if (!this.inputOver) {
                 var row = Math.floor(this.game.input.activePointer.y / GameConfig.tileSize);
                 var col = Math.floor(this.game.input.activePointer.x / GameConfig.tileSize);
@@ -165,7 +164,6 @@ module Kodo {
                 var canBuild = true;
 
                 if (!sprite.isUnit) {
-
                     if (row >= GameConfig.GRID_ROWS - 1) {
                         canBuild = false;
                     }

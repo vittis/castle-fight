@@ -12,7 +12,7 @@ var Entity = (function () {
         this.dataq.armor = data.maxArmor;
         this.row = row;
         this.col = col;
-        this.dataq.statusData = { stunned: false, shielded: false };
+        this.dataq.statusData = { stunned: false, shielded: false, heroBuff: false };
     }
     Entity.prototype.addToGame = function (gm) {
         this.gm = gm;
