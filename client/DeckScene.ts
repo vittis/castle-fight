@@ -23,7 +23,7 @@ module Kodo {
             var style = { font: "80px Fertigo", fill: 'white', /* wordWrap: true, */ align: "center" }
 
              style.font = "60px Lucida Console";
-             var cardsLabel = this.game.add.text(this.game.world.centerX, 80, "Cards", style);
+             var cardsLabel = this.game.add.text(this.game.world.centerX, 47, "Cards", style);
              cardsLabel.anchor.setTo(0.5, 0.5);
              cardsLabel.fontWeight = 'bold';
              cardsLabel.stroke = '#0D6032';
@@ -31,7 +31,7 @@ module Kodo {
              cardsLabel.setShadow(0, 3, 'rgba(0,0,0,0.5)', 0);
  
              style.font = "45px Lucida Console";
-             var yourDeckLabel = this.game.add.text(this.game.world.centerX, 465, "Your Deck", style);
+             var yourDeckLabel = this.game.add.text(this.game.world.centerX, 505, "Your Deck", style);
              yourDeckLabel.anchor.setTo(0.5, 0.5);
              yourDeckLabel.fontWeight = 'bold';
              yourDeckLabel.stroke = '#0D6032';
@@ -41,12 +41,12 @@ module Kodo {
 
              var box2 = this.game.make.graphics(0, 0);
              box2.beginFill(0x29B865);
-             box2.drawRoundedRect(0, 0, 786, 270, 10);
+             box2.drawRoundedRect(0, 0, 786, 360, 10);
              box2.endFill();
-             var shadowRect2 = this.game.add.sprite(this.game.world.centerX + 5, 276, box2.generateTexture());
+             var shadowRect2 = this.game.add.sprite(this.game.world.centerX + 5, 227+55, box2.generateTexture());
              shadowRect2.anchor.setTo(0.5, 0.5);
              shadowRect2.tint = 0xececece;
-             var rect2 = this.game.add.sprite(this.game.world.centerX+5, 268, box2.generateTexture());
+             var rect2 = this.game.add.sprite(this.game.world.centerX+5, 219+55, box2.generateTexture());
              rect2.anchor.setTo(0.5, 0.5);
              box2.destroy();
  
@@ -54,10 +54,10 @@ module Kodo {
              box.beginFill(0x29B865);
              box.drawRoundedRect(0, 0, 470, 186, 10);
              box.endFill();
-             var shadowRect = this.game.add.sprite(this.game.world.centerX + 5, 603, box.generateTexture());
+             var shadowRect = this.game.add.sprite(this.game.world.centerX + 5, 638, box.generateTexture());
              shadowRect.anchor.setTo(0.5, 0.5);
              shadowRect.tint = 0xececece;
-             var rect = this.game.add.sprite(this.game.world.centerX+5, 595, box.generateTexture());
+             var rect = this.game.add.sprite(this.game.world.centerX+5, 595+35, box.generateTexture());
              rect.anchor.setTo(0.5, 0.5);
              box.destroy();
  
@@ -82,7 +82,7 @@ module Kodo {
 
              var i =0;
              GameConfig.buildingNameData.forEach(name => {
-                 let q =this.buildingsGroup.add(new UIBuildingButton(this.game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) +""+ hostLabel, name, false, i > 6 ? false : true));
+                 let q =this.buildingsGroup.add(new UIBuildingButton(this.game, name[0].toLowerCase() + name.slice(1) + "_ui_" + hostLabel, this, name[0].toLowerCase() + name.slice(1) +""+ hostLabel, name, false, i > 14 ? false : true));
                  if (this.deck.indexOf(q.buildingName)!=-1) {
                      q.tint = 0x906666;
                  }
@@ -99,7 +99,7 @@ module Kodo {
              this.buildingsGroup.align(7, 4, 110, 90);
  
              this.buildingsGroup.x = 435;
-             this.buildingsGroup.y = 180; 
+             this.buildingsGroup.y = 140; 
              this.buildingsGroup.setAll('anchor.x', 0.5);
              this.buildingsGroup.setAll('anchor.y', 0.5);
              
@@ -108,7 +108,7 @@ module Kodo {
              this.buildingsGroup.onChildInputOut.add(this.onOut.bind(this), this); 
 
              style = { font: "32px sans-serif", fill: 'white', align: "center" };
-             var backButton = this.game.add.button(this.game.world.centerX + 120, this.game.height - 75, 'backButton', this.onBackButton.bind(this), this);
+             var backButton = this.game.add.button(this.game.world.centerX + 120, this.game.height - 55, 'backButton', this.onBackButton.bind(this), this);
              backButton.anchor.setTo(0.5, 0.5);
              backButton.events.onInputOver.add(this.onOverButton.bind(this), backButton);
              backButton.events.onInputOut.add(this.onOutButton.bind(this), backButton);
@@ -136,7 +136,7 @@ module Kodo {
 
              
              this.yourDeckGroup.x = 435+80+20+30;
-             this.yourDeckGroup.y = 515;
+             this.yourDeckGroup.y = 515 + 35;
              this.yourDeckGroup.setAll('anchor.x', 0.5);
              this.yourDeckGroup.setAll('anchor.y', 0.5);
              this.yourDeckGroup.align(4, 2, 110, 90);
