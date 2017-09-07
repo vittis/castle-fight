@@ -12,18 +12,19 @@ export class Mage extends Unit {
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             if (targetTile.entity != null) {
-                var attackedId= targetTile.entity.id;
+                    var attackedId= [];
+                    attackedId.push(targetTile.entity.id);
             }
             if (targetTile.entity != null) {
                 targetTile.entity.getOuterTilesWithEntity().forEach(t => {
                     if (t.entity != null) {
                         if (t.entity.owner.isHost != this.owner.isHost) {
-                            if (attackedId != t.entity.id) {
+                            if (attackedId.indexOf(t.entity.id) == -1) {
                                 let currentAttack = this.data.attackDmg;
                                 this.data.attackDmg = 2;
                                 t.entity.receiveAttack(this);
                                 this.data.attackDmg = currentAttack;
-                                attackedId = t.entity.id;
+                                attackedId.push(t.entity.id);
                             }
                         }
                     }

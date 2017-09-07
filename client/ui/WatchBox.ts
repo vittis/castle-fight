@@ -57,18 +57,25 @@ module Kodo {
                 opponent1.alignTo(vsText, Phaser.LEFT_CENTER, 5);
                 let opponent2 = this.game.add.text(0, 0, '', style);
                 opponent2.alignTo(vsText, Phaser.RIGHT_CENTER, 5);
-                //style.font = '13px Baloo Paaji';
-                //style.fill = '#e97d55'
-                //let watchCountLabel = this.game.add.text(0, 0, '5', style);
-               // watchCountLabel.alignTo(vsText, Phaser.BOTTOM_CENTER, 0, -10);
-                //watchCountLabel.x += 145;
+                style.font = '15px Baloo Paaji';
+                style.fill = '#ff8080'
+                let watchCountLabel = this.game.add.text(0, 0, '0', style);
+                watchCountLabel.anchor.setTo(0.5, 0.5);
+                watchCountLabel.alignTo(vsText, Phaser.BOTTOM_CENTER, 9, -6);
+                let eyeSprite = this.game.add.sprite(0, 0, 'eye');
+                watchCountLabel.addChild(eyeSprite);
+                eyeSprite.x -= 15;
+                eyeSprite.y -= 2;
 
-
+                eyeSprite.anchor.setTo(0.5, 0.5);
+                eyeSprite.tint = 0xffffff;
                 var group = this.game.add.group();
 
                 group.add(vsText);
                 group.add(opponent1);
                 group.add(opponent2);
+                group.add(watchCountLabel);
+
                 //group.add(watchCountLabel);
 
 
@@ -115,6 +122,9 @@ module Kodo {
 
                 this.vsGroup.children[i].getChildAt(2).text = liveGames[i].client;
                 this.vsGroup.children[i].getChildAt(2).alignTo(this.vsGroup.children[i].getChildAt(0), Phaser.RIGHT_CENTER, 5);
+
+                this.vsGroup.children[i].getChildAt(3).text = liveGames[i].watchCount;
+
 
                 this.boxsGroup.children[i].data.gameId = liveGames[i].gameId;
                 this.boxsGroup.children[i].data.clickedBox = i;

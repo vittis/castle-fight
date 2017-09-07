@@ -19,6 +19,7 @@ var Kodo;
             _this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0 };
             _this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
             _this.stateCache = [];
+            _this.watchCount = 0;
             return _this;
         }
         GameScene.prototype.create = function () {
@@ -84,8 +85,9 @@ var Kodo;
             this.uiEntityManager = new Kodo.UIEntityManager(this.game);
             this.incomeBallBar = new Kodo.IncomeBallBar(this.game);
             style = { font: "14px Lucida Console", fill: 'white' };
+            var yourNickLabel;
             if (this.isHost != null) {
-                var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
+                yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
                 yourNickLabel.stroke = '#E27952';
                 yourNickLabel.strokeThickness = 4;
                 if (!GameConfig.isHost) {
@@ -103,9 +105,9 @@ var Kodo;
                 }
             }
             else {
-                var yourNickLabel_1 = this.game.add.text(0, 0, GameConfig.hostNick, style);
-                yourNickLabel_1.stroke = '#E27952';
-                yourNickLabel_1.strokeThickness = 4;
+                yourNickLabel = this.game.add.text(0, 0, GameConfig.hostNick, style);
+                yourNickLabel.stroke = '#E27952';
+                yourNickLabel.strokeThickness = 4;
                 var opponentNick_1 = this.game.add.text(0, 0, GameConfig.clientNick, style);
                 opponentNick_1.stroke = '#E27952';
                 opponentNick_1.strokeThickness = 4;
@@ -115,6 +117,25 @@ var Kodo;
                     opponentNick_1.strokeThickness = 4;
                 }
             }
+            style.font = '13px Baloo Paaji';
+            style.fill = '#ffffff';
+            this.watchCountLabel = this.game.add.text(0, 0, '0', style);
+            this.watchCountLabel.anchor.setTo(0.5, 0.5);
+            if (GameConfig.isHost) {
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.RIGHT_CENTER, 23, 0);
+            }
+            else if (GameConfig.isHost == false) {
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.LEFT_CENTER, 5, 0);
+            }
+            else {
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.RIGHT_CENTER, 23, 0);
+            }
+            var eyeSprite = this.game.add.sprite(0, 0, 'eye');
+            this.watchCountLabel.addChild(eyeSprite);
+            eyeSprite.x -= 15;
+            eyeSprite.y -= 2;
+            eyeSprite.anchor.setTo(0.5, 0.5);
+            eyeSprite.tint = 0xffffff;
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         };
         GameScene.prototype.endGame = function (hostWon) {
@@ -153,6 +174,8 @@ var Kodo;
             }
         };
         GameScene.prototype.loopCache = function () {
+            if (this.watchCountLabel.text != "" + this.watchCount)
+                this.watchCountLabel.text = "" + this.watchCount;
             if (this.stateCache.length > 0) {
                 this.executeUpdateEntities(this.stateCache[0]);
                 this.stateCache.splice(0, 1);

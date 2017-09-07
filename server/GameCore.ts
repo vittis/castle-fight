@@ -219,19 +219,19 @@ export class GameCore {
         var ballObj = DataSerializer.SerializeBall(this.ballManager);
         if (this.host) {
             if (this.host.serverPlayer.socket) {
-                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj });
+                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj, watchCount: this.observers.length });
             }
         }
         if (this.client) {
             if (this.client.serverPlayer.socket) {
-                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: this.observers.length });
             }
         }
         if (this.observers.length>0) {
             this.observers.forEach(p => {
                 if (p != null) {
                     if (p.status == PlayerStatus.spectating) {
-                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: this.observers.length });
                     }
                 }
             });

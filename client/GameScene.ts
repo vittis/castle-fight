@@ -35,6 +35,8 @@ module Kodo {
 
         mainLoop;
 
+        watchCount = 0;
+        watchCountLabel : Phaser.Text;
         create() {
             GameScene.instance = this;
             this.entities = [];
@@ -113,9 +115,9 @@ module Kodo {
 
 
 
-
+            var yourNickLabel;
             if (this.isHost != null) {
-                var yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
+                yourNickLabel = this.game.add.text(0, 0, GameConfig.yourNick, style);
                 yourNickLabel.stroke = '#E27952';
                 yourNickLabel.strokeThickness = 4;
                 if (!GameConfig.isHost) {
@@ -134,7 +136,7 @@ module Kodo {
                 }
             }
             else {
-                let yourNickLabel = this.game.add.text(0, 0, GameConfig.hostNick, style);
+                yourNickLabel = this.game.add.text(0, 0, GameConfig.hostNick, style);
                 yourNickLabel.stroke = '#E27952';
                 yourNickLabel.strokeThickness = 4;
 
@@ -147,7 +149,26 @@ module Kodo {
                     opponentNick.strokeThickness = 4;
                 }
             }
+            style.font = '13px Baloo Paaji';
+            style.fill = '#ffffff'
+            this.watchCountLabel = this.game.add.text(0, 0, '0', style);
+            this.watchCountLabel.anchor.setTo(0.5, 0.5);
+            if (GameConfig.isHost) {
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.RIGHT_CENTER, 23, 0);
+            }
+            else if (GameConfig.isHost == false){
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.LEFT_CENTER, 5, 0);
+            }
+            else {
+                this.watchCountLabel.alignTo(yourNickLabel, Phaser.RIGHT_CENTER, 23, 0);
+            }
+            let eyeSprite = this.game.add.sprite(0, 0, 'eye');
+            this.watchCountLabel.addChild(eyeSprite);
+            eyeSprite.x -= 15;
+            eyeSprite.y -= 2;
 
+            eyeSprite.anchor.setTo(0.5, 0.5);
+            eyeSprite.tint = 0xffffff;
 
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         }
@@ -199,6 +220,8 @@ module Kodo {
         } 
 
         loopCache() {
+            if (this.watchCountLabel.text != ""+this.watchCount)
+                this.watchCountLabel.text = ""+this.watchCount;
             if (this.stateCache.length > 0){
                 this.executeUpdateEntities(this.stateCache[0]);
                 this.stateCache.splice(0, 1);

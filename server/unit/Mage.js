@@ -21,18 +21,19 @@ var Mage = (function (_super) {
         if (this.canAttack()) {
             this.attack(targetTile.entity);
             if (targetTile.entity != null) {
-                var attackedId = targetTile.entity.id;
+                var attackedId = [];
+                attackedId.push(targetTile.entity.id);
             }
             if (targetTile.entity != null) {
                 targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
                     if (t.entity != null) {
                         if (t.entity.owner.isHost != _this.owner.isHost) {
-                            if (attackedId != t.entity.id) {
+                            if (attackedId.indexOf(t.entity.id) == -1) {
                                 var currentAttack = _this.data.attackDmg;
                                 _this.data.attackDmg = 2;
                                 t.entity.receiveAttack(_this);
                                 _this.data.attackDmg = currentAttack;
-                                attackedId = t.entity.id;
+                                attackedId.push(t.entity.id);
                             }
                         }
                     }

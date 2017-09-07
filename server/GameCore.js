@@ -149,6 +149,7 @@ var GameCore = (function () {
         }
     };
     GameCore.prototype.sendaData = function () {
+        var _this = this;
         var entitiesObj = [];
         this.getAllEntities().forEach(function (element) {
             entitiesObj.push(Serializer_1.DataSerializer.SerializeEntity(element));
@@ -158,19 +159,19 @@ var GameCore = (function () {
         var ballObj = Serializer_1.DataSerializer.SerializeBall(this.ballManager);
         if (this.host) {
             if (this.host.serverPlayer.socket) {
-                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData: ballObj });
+                this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData: ballObj, watchCount: this.observers.length });
             }
         }
         if (this.client) {
             if (this.client.serverPlayer.socket) {
-                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                this.client.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: this.observers.length });
             }
         }
         if (this.observers.length > 0) {
             this.observers.forEach(function (p) {
                 if (p != null) {
                     if (p.status == ServerPlayer_1.PlayerStatus.spectating) {
-                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj });
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: _this.observers.length });
                     }
                 }
             });

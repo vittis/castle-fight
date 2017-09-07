@@ -36,6 +36,8 @@ module Client {
         if (Kodo.GameScene.instance != null && Kodo.Game.instance.state.current == 'GameScene') {
             Kodo.GameScene.instance.player = data.player;
             Kodo.GameScene.instance.ballData = data.ballData;
+            Kodo.GameScene.instance.watchCount = data.watchCount;
+
             Kodo.GameScene.instance.updateEntities(data.entities);
         }
     });

@@ -6,7 +6,7 @@
     "maxArmor": 0,
     "attackRange": 3,
     "attackDmg": 2,
-    "attackRate": 2,
+    "attackRate": 3,
     "description": "Deals 2 area damage to enemies",
     "goldCost": 35,
     "woodCost": 25

@@ -2,11 +2,11 @@
     "name": "Thief",
     "width": 1,
     "height": 1,
-    "maxHP": 8,
+    "maxHP": 10,
     "maxArmor": 0,
     "attackRange": 1,
     "attackDmg": 1,
-    "attackRate": 2,
+    "attackRate": 3,
     "description": "Grants +1 gold for each hit",
     "goldCost": 15,
     "woodCost": 0
