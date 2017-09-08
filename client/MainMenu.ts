@@ -33,11 +33,11 @@ module Kodo {
                     GameConfig.deck = deck;
                 }
                 else {
-                    GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                    GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
                 }
             }
             else {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
             }
             var deckName: string = document.cookie.replace(/(?:(?:^|.*;\s*)deckName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             if (deckName.length > 0) {
@@ -140,7 +140,7 @@ module Kodo {
                 this.inputField.setText(GameConfig.yourNick);
 
             this.inputField.focusOut.add(this.onFocusOut.bind(this), this);
-            
+
             style.font = "36px sans-serif";
             var playButton = this.game.add.button(0, 0, 'playButton', this.onPlayButton.bind(this), this);
             playButton.anchor.setTo(0.5, 0.5);
@@ -315,7 +315,8 @@ module Kodo {
             GameConfig.yourNick = this.inputField.value;
 
             Client.askMatchmaking();
-            this.playText.text = 'Matchmaking...';
+            if (this.playText.text == 'Play')
+                this.playText.text = 'Matchmaking...';
         }
 
         onRoomsButton() {

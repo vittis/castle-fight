@@ -65,7 +65,7 @@ var Kodo;
             this.yourDeckGroup = this.add.group();
             this.yourDeckGroup.inputEnableChildren = true;
             if (!GameConfig.deck[0]) {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
             }
             GameConfig.deck.forEach(function (name) {
                 _this.deck.push(name);
@@ -185,7 +185,7 @@ var Kodo;
                 this.game.state.start('MainMenu', true, false);
             }
             else if (this.deck.length == 0) {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'GravityChamber', 'SpecialFacility', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'HeroShrine', 'SpecialFacility', 'KingsCourt'];
                 GameConfig.deckName = "<default deck>";
                 document.cookie = "deck=" + GameConfig.deck.join(',');
                 document.cookie = "deckName=" + GameConfig.deckName;

@@ -107,6 +107,7 @@ module Client {
 
     socket.on('receivePlayers', function (data) {
          if (Kodo.Game.instance.state.current == 'MainMenu') {
+            GameConfig.onlineTop5 = data.onlineTop5;
              Kodo.MainMenu.instance.updatePlayersConnected(data);
          }
     });
@@ -171,6 +172,11 @@ module Client {
     export function askWatchGame(gameId) {
         console.log("ask watch game called");
         socket.emit('askWatchGame', gameId);
+    }
+
+    export function askChallenge(playerId) {
+        console.log("ask challenge called");
+        socket.emit('askChallenge', playerId);
     }
   }
 

@@ -71,7 +71,7 @@ module Kodo {
              this.yourDeckGroup.inputEnableChildren = true;
 
             if (!GameConfig.deck[0]) {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
             }
 
              GameConfig.deck.forEach(name => {
@@ -208,7 +208,7 @@ module Kodo {
                 this.game.state.start('MainMenu', true, false);
             }
             else if (this.deck.length == 0) {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'GravityChamber', 'SpecialFacility', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'Barn', 'ThiefsTent', 'StorageBarn', 'HeroShrine', 'SpecialFacility', 'KingsCourt'];
                 GameConfig.deckName = "<default deck>";
                 document.cookie = "deck="+GameConfig.deck.join(',');
                 document.cookie = "deckName=" + GameConfig.deckName; 

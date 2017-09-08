@@ -12,12 +12,14 @@ module GameConfig {
 
     export var updateRate = 500;
 
+    //export var yourId = -1;
+
     export var isHost;
 
     export var buildingNameData: string[] = [];
     export var unitNameData: string[] = [];
 
-    export var deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild','KingsCourt'];
+    export var deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild','KingsCourt'];
 
     export var deckName = "<default deck>";
 
@@ -26,5 +28,7 @@ module GameConfig {
 
     export var hostNick = "";
     export var clientNick = "";
+
+    export var onlineTop5 = [];
 
 }

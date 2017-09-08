@@ -58,11 +58,54 @@ module Kodo {
 
             data.players.splice(5, data.players.length-5);
             this.top5Group.removeAll();
-            for (var i = 0; i < data.players.length; i++) {
-                var text = this.game.add.text(0, 0, data.players[i].nick + " - " + data.players[i].wins + " wins", style);
+            for (var i = 0; i < GameConfig.onlineTop5.length; i++) {
+                if (Kodo.Game.instance.state.current == 'MainMenu') {
+                    if (GameConfig.onlineTop5[i].nick == GameConfig.yourNick && GameConfig.onlineTop5[i].status == 4) {
+                        Kodo.MainMenu.instance.playText.text = 'Looking For Challengers...'
+                        Kodo.MainMenu.instance.playText.fontSize = 30;
+                    }
+                    else if (GameConfig.onlineTop5[i].nick == GameConfig.yourNick && GameConfig.onlineTop5[i].status == 1) {
+                        Kodo.MainMenu.instance.playText.text = 'Matchmaking...'
+                        Kodo.MainMenu.instance.playText.fontSize = 36;
+                    }
+                }
+                var text = this.game.add.text(0, 0, GameConfig.onlineTop5[i].nick + " - " + GameConfig.onlineTop5[i].wins + " wins", style);
                 text.addColor('#2bb664', text.text.indexOf('-')-1);
                 text.addColor('#02C605', text.text.indexOf('-') + 1);
-                
+                text.anchor.setTo(0.5, 0.5);
+                if (GameConfig.onlineTop5[i].status == 4) {
+                    var sword = this.game.add.sprite(0, 0, 'challengeIcon');
+                    sword.anchor.setTo(0.5, 0.5);
+                    sword.x -= (text.width/2 + 14);
+                    sword.y -= 3;
+
+                    
+                    sword.tint = 0xFF8080;
+
+                    var tweenA = this.game.add.tween(text.scale).to({ x: 1.03, y: 1.03 }, 800, Phaser.Easing.Linear.None);
+                    var tweenB = this.game.add.tween(text.scale).to({ x: 1, y: 1 }, 1200, Phaser.Easing.Linear.None);
+
+                    tweenA.onComplete.add(function volta() {
+                        tweenB.start();
+                    }, this);
+
+                    tweenB.onComplete.add(function vai() {
+                        tweenA.start();
+                    }, this);
+                    tweenA.start();
+
+
+                    text.addChild(sword);
+
+                    text.inputEnabled = true;
+                    text.input.useHandCursor = true;
+                    var playerId = GameConfig.onlineTop5[i].id;
+                    text.events.onInputDown.add(function(){  
+                        Client.askChallenge(playerId);
+                    }, this);
+                }
+
+
                 this.top5Group.add(text);
             }
             this.top5Group.align(1, 5, 0, 30);
@@ -72,6 +115,7 @@ module Kodo {
             this.allTimeGroup.removeAll();
             for (var j = 0; j < data.top3.length; j++) {
                 let text = this.game.add.text(0, 0, data.top3[j].nick + " - " + data.top3[j].wins + " wins", style);
+                text.anchor.setTo(0.5, 0.5);
                 text.addColor('#2bb664', text.text.indexOf('-') - 1);
                 text.addColor('#02C605', text.text.indexOf('-') + 1);
                 this.allTimeGroup.add(text);

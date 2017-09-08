@@ -43,6 +43,10 @@ var GameServer = (function () {
         return this.addPlayer(socket);
     };
     GameServer.prototype.createGame = function (host, client) {
+        host.challengers = [];
+        client.challengers = [];
+        host.status = ServerPlayer_1.PlayerStatus.ingame;
+        client.status = ServerPlayer_1.PlayerStatus.ingame;
         var game = new GameCore_1.GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
@@ -75,14 +79,95 @@ var GameServer = (function () {
         }
         player.status = ServerPlayer_1.PlayerStatus.connected;
     };
+    GameServer.prototype.getOnlineTop5 = function () {
+        var players = [];
+        this.clients.forEach(function (p) {
+            players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
+        });
+        players.sort(predicateBy("wins"));
+        players.reverse();
+        players.splice(5, players.length - 5);
+        return players;
+    };
+    GameServer.prototype.checkIfPlayerOnTop5 = function (player) {
+        var isOnTop5 = false;
+        var players = [];
+        this.clients.forEach(function (p) {
+            players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
+        });
+        players.sort(predicateBy("wins"));
+        players.reverse();
+        players.splice(5, players.length - 5);
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id == player.id) {
+                isOnTop5 = true;
+            }
+        }
+        return isOnTop5;
+    };
     GameServer.prototype.onMatchmaking = function (player) {
         console.log("askMatchmaking requisitado por player id: " + player.id + " " + player.nick);
-        player.status = ServerPlayer_1.PlayerStatus.matchmaking;
-        var players = this.getPlayersMatchmaking();
-        if (players.length >= 2) {
-            players[0].status = ServerPlayer_1.PlayerStatus.ingame;
-            players[1].status = ServerPlayer_1.PlayerStatus.ingame;
-            this.createGame(players[0], players[1]);
+        if (!this.checkIfPlayerOnTop5(player)) {
+            console.log("entrando em matchmaking normal player " + player.nick);
+            player.status = ServerPlayer_1.PlayerStatus.matchmaking;
+            player.challengers = [];
+            var players = this.getPlayersMatchmaking();
+            if (players.length >= 2) {
+                player.challengers = [];
+                players[0].status = ServerPlayer_1.PlayerStatus.ingame;
+                players[1].status = ServerPlayer_1.PlayerStatus.ingame;
+                this.createGame(players[0], players[1]);
+            }
+        }
+        else {
+            if (player.status != ServerPlayer_1.PlayerStatus.preMatchmaking) {
+                console.log("entrando em pre-matchmaking player " + player.nick);
+                player.status = ServerPlayer_1.PlayerStatus.preMatchmaking;
+                this.broadCastAllPlayers();
+                setTimeout(this.resolveMatchmaking.bind(this, player.id), 10000);
+            }
+        }
+    };
+    GameServer.prototype.resolveMatchmaking = function (playerId) {
+        var _this = this;
+        console.log("resolveMatchmaking called por " + playerId);
+        var player = this.getPlayerById(playerId);
+        if (player == null)
+            return;
+        if (player.status == ServerPlayer_1.PlayerStatus.ingame || player.status == ServerPlayer_1.PlayerStatus.spectating || player.status == ServerPlayer_1.PlayerStatus.connected)
+            return;
+        if (player.challengers.length > 0) {
+            var arr = [];
+            player.challengers.forEach(function (p) {
+                var challenger = _this.getPlayerById(p);
+                if (challenger != null) {
+                    arr.push({ id: challenger.id, wins: challenger.wins, status: challenger.status });
+                }
+            });
+            arr.sort(predicateBy("wins"));
+            arr.reverse();
+            var jaAchou = false;
+            arr.forEach(function (p) {
+                if (!(p.status == ServerPlayer_1.PlayerStatus.ingame || p.status == ServerPlayer_1.PlayerStatus.spectating) && !jaAchou) {
+                    console.log("iniciando match com challenger id " + p.id);
+                    player.challengers = [];
+                    var challenger = _this.getPlayerById(p.id);
+                    challenger.status = ServerPlayer_1.PlayerStatus.ingame;
+                    player.status = ServerPlayer_1.PlayerStatus.ingame;
+                    _this.createGame(player, challenger);
+                    jaAchou = true;
+                }
+            });
+        }
+        else {
+            console.log("sem challengers... entrando em matchmaking normal player " + player.nick);
+            player.status = ServerPlayer_1.PlayerStatus.matchmaking;
+            var players = this.getPlayersMatchmaking();
+            if (players.length >= 2) {
+                players[0].status = ServerPlayer_1.PlayerStatus.ingame;
+                players[1].status = ServerPlayer_1.PlayerStatus.ingame;
+                this.createGame(players[0], players[1]);
+            }
         }
     };
     GameServer.prototype.onCancelMatchmaking = function (player) {
@@ -129,6 +214,14 @@ var GameServer = (function () {
                 return;
             }
         }
+    };
+    GameServer.prototype.onChallengePlayer = function (player, id) {
+        var playerChallenged = this.getPlayerById(id);
+        if (playerChallenged == null) {
+            return;
+        }
+        if (!(playerChallenged.status == ServerPlayer_1.PlayerStatus.ingame || playerChallenged.status == ServerPlayer_1.PlayerStatus.spectating))
+            playerChallenged.challengers.push(player.id);
     };
     GameServer.prototype.getGameByPlayerId = function (id) {
         var gameCore = null;
@@ -202,7 +295,7 @@ var GameServer = (function () {
             });
             playersOnLobby.forEach(function (p) {
                 if (p.socket) {
-                    p.socket.emit('receivePlayers', { players: players, top3: _this.top3Wins, liveGames: liveGames });
+                    p.socket.emit('receivePlayers', { players: players, top3: _this.top3Wins, onlineTop5: _this.getOnlineTop5(), liveGames: liveGames });
                 }
             });
         }
@@ -255,6 +348,7 @@ var GameServer = (function () {
     GameServer.prototype.onWatchGame = function (player, gameId) {
         var game = this.getGameById(gameId);
         if (game != null) {
+            player.challengers = [];
             player.status = ServerPlayer_1.PlayerStatus.spectating;
             player.socket.emit('startGame', { id: game.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS,
                 isHost: null, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: player.id, opponentNick: game.client.serverPlayer.nick });
@@ -269,6 +363,15 @@ var GameServer = (function () {
             }
         });
         return game;
+    };
+    GameServer.prototype.getPlayerById = function (id) {
+        var player = null;
+        this.clients.forEach(function (c) {
+            if (c.id == id) {
+                player = c;
+            }
+        });
+        return player;
     };
     GameServer.instance = null;
     return GameServer;

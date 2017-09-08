@@ -25,11 +25,11 @@ var Kodo;
                     GameConfig.deck = deck;
                 }
                 else {
-                    GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                    GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
                 }
             }
             else {
-                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'GravityChamber', 'MagesGuild', 'KingsCourt'];
+                GameConfig.deck = ['Barracks', 'ArcheryRange', 'WitchsHut', 'Engineer', 'Sniper', 'HeroShrine', 'MagesGuild', 'KingsCourt'];
             }
             var deckName = document.cookie.replace(/(?:(?:^|.*;\s*)deckName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             if (deckName.length > 0) {
@@ -241,7 +241,8 @@ var Kodo;
         MainMenu.prototype.onPlayButton = function () {
             GameConfig.yourNick = this.inputField.value;
             Client.askMatchmaking();
-            this.playText.text = 'Matchmaking...';
+            if (this.playText.text == 'Play')
+                this.playText.text = 'Matchmaking...';
         };
         MainMenu.prototype.onRoomsButton = function () {
             Client.checkPing();

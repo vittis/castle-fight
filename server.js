@@ -76,6 +76,15 @@ io.on('connection', function (socket) {
             gameServer.onMessage(message);
         }
     });
+    socket.on('askChallenge', function (playerId) {
+        console.log("ask challenge called");
+        if (player.id == playerId) {
+            console.log("clicked self lol");
+        }
+        else {
+            gameServer.onChallengePlayer(player, playerId);
+        }
+    });
     socket.on('askBuild', function (data) {
         if (gameServer.getGameByPlayerId(player.id) != null && gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
             if (gameServer.getGameByPlayerId(player.id).gridManager.tileAt(data.row, data.col).entity == null) {

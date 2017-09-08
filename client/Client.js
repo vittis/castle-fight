@@ -91,6 +91,7 @@ var Client;
     });
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
+            GameConfig.onlineTop5 = data.onlineTop5;
             Kodo.MainMenu.instance.updatePlayersConnected(data);
         }
     });
@@ -159,6 +160,11 @@ var Client;
         socket.emit('askWatchGame', gameId);
     }
     Client.askWatchGame = askWatchGame;
+    function askChallenge(playerId) {
+        console.log("ask challenge called");
+        socket.emit('askChallenge', playerId);
+    }
+    Client.askChallenge = askChallenge;
 })(Client || (Client = {}));
 function predicateBy(prop) {
     return function (a, b) {

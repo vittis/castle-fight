@@ -215,6 +215,7 @@ var Kodo;
                 this.game.load.image('howToPlay-changelog', 'assets/48/menu_ui/howToPlay-changelog.png');
                 this.game.load.image('moreButton', 'assets/48/menu_ui/moreButton.png');
                 this.game.load.image('eye', 'assets/48/menu_ui/eye.png');
+                this.game.load.image('challengeIcon', 'assets/48/menu_ui/challengeIcon.png');
                 this.game.load.spritesheet('redditButton', 'assets/48/menu_ui/redditButton.png', 47, 51);
                 this.game.load.spritesheet('discordButton', 'assets/48/menu_ui/discordButton.png', 47, 51);
             }

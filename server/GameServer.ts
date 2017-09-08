@@ -60,6 +60,10 @@ export class GameServer {
     }
 
     createGame(host : ServerPlayer, client : ServerPlayer) : GameCore {
+        host.challengers = [];
+        client.challengers = [];
+        host.status = PlayerStatus.ingame;
+        client.status = PlayerStatus.ingame;
         var game = new GameCore(this.lastGameID, host, client);
         this.games.push(game);
         this.lastGameID++;
@@ -97,14 +101,113 @@ export class GameServer {
         player.status = PlayerStatus.connected;
     }
 
+    getOnlineTop5() {
+        var players = [];
+
+        this.clients.forEach(p => {
+            players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
+        });
+        players.sort(predicateBy("wins"));
+        players.reverse();
+
+        players.splice(5, players.length - 5);
+
+        return players;
+    }
+
+
+    checkIfPlayerOnTop5(player : ServerPlayer) : boolean{
+        var isOnTop5 = false;
+
+        var players =[];
+
+
+        this.clients.forEach(p => {
+            players.push({ id: p.id, status: p.status, wins: p.wins, nick: p.nick });
+        });
+
+        players.sort(predicateBy("wins"));
+        players.reverse();
+
+        players.splice(5, players.length-5);
+
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id == player.id) {
+                isOnTop5 = true;
+            }
+        }
+        return isOnTop5;
+    }
+
     onMatchmaking(player : ServerPlayer) {
-        console.log("askMatchmaking requisitado por player id: "+player.id+" "+player.nick);
-        player.status = PlayerStatus.matchmaking;
-        var players : Array<ServerPlayer> = this.getPlayersMatchmaking();
-        if (players.length >= 2) {
-            players[0].status = PlayerStatus.ingame;
-            players[1].status = PlayerStatus.ingame;
-            this.createGame(players[0], players[1]);
+        console.log("askMatchmaking requisitado por player id: " + player.id + " " + player.nick);
+
+        if (!this.checkIfPlayerOnTop5(player)) {
+            console.log("entrando em matchmaking normal player " + player.nick);
+            player.status = PlayerStatus.matchmaking;
+            player.challengers = [];
+            var players : Array<ServerPlayer> = this.getPlayersMatchmaking();
+            if (players.length >= 2) {
+                player.challengers = [];
+
+                players[0].status = PlayerStatus.ingame;
+                players[1].status = PlayerStatus.ingame;
+                this.createGame(players[0], players[1]);
+            }
+        }
+        else {
+            if (player.status != PlayerStatus.preMatchmaking) {
+                console.log("entrando em pre-matchmaking player "+player.nick);
+                player.status = PlayerStatus.preMatchmaking;
+                this.broadCastAllPlayers();
+                setTimeout(this.resolveMatchmaking.bind(this, player.id), 10000);
+            }
+        }
+    }
+
+    resolveMatchmaking(playerId) {
+        console.log("resolveMatchmaking called por "+playerId);
+
+        var player = this.getPlayerById(playerId);
+        if (player == null)
+            return;
+        if (player.status == PlayerStatus.ingame || player.status == PlayerStatus.spectating || player.status == PlayerStatus.connected)
+            return;
+        if (player.challengers.length >0){
+            var arr = [];
+            player.challengers.forEach(p => {
+                let challenger : ServerPlayer = this.getPlayerById(p);
+                if (challenger != null) {
+                    arr.push({id: challenger.id, wins: challenger.wins, status: challenger.status});
+                }
+            });
+
+            arr.sort(predicateBy("wins"));
+            arr.reverse();
+
+            var jaAchou=false;
+            arr.forEach(p => {
+                if (!(p.status == PlayerStatus.ingame || p.status == PlayerStatus.spectating) && !jaAchou) {
+                    console.log("iniciando match com challenger id "+p.id);
+                    player.challengers = [];
+
+                    let challenger = this.getPlayerById(p.id); 
+                    challenger.status = PlayerStatus.ingame;
+                    player.status = PlayerStatus.ingame;
+                    this.createGame(player, challenger);
+                    jaAchou = true;
+                }
+            });
+        }
+        else {
+            console.log("sem challengers... entrando em matchmaking normal player " + player.nick);
+            player.status = PlayerStatus.matchmaking;
+            var players: Array<ServerPlayer> = this.getPlayersMatchmaking();
+            if (players.length >= 2) {
+                players[0].status = PlayerStatus.ingame;
+                players[1].status = PlayerStatus.ingame;
+                this.createGame(players[0], players[1]);
+            }
         }
     }
 
@@ -154,6 +257,16 @@ export class GameServer {
                 return;
             }
         }
+    }
+
+    onChallengePlayer(player, id) {
+        var playerChallenged = this.getPlayerById(id);
+
+        if (playerChallenged == null) {
+            return;
+        }
+        if (!(playerChallenged.status == PlayerStatus.ingame || playerChallenged.status == PlayerStatus.spectating))
+            playerChallenged.challengers.push(player.id);
     }
 
     getGameByPlayerId(id) : GameCore {
@@ -240,7 +353,7 @@ export class GameServer {
             });
             playersOnLobby.forEach(p => {
                 if (p.socket) {
-                    p.socket.emit('receivePlayers', {players: players, top3: this.top3Wins, liveGames: liveGames});
+                    p.socket.emit('receivePlayers', {players: players, top3: this.top3Wins, onlineTop5: this.getOnlineTop5(),liveGames: liveGames});
                 }
             });
         }
@@ -294,6 +407,7 @@ export class GameServer {
     onWatchGame(player : ServerPlayer, gameId) {
         var game = this.getGameById(gameId);
         if (game != null) {
+            player.challengers = [];
             player.status = PlayerStatus.spectating;
             player.socket.emit('startGame', { id: game.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, 
                 isHost: null, stepRate: GameConfig.STEP_RATE, playerId: player.id, opponentNick: game.client.serverPlayer.nick });
@@ -310,6 +424,16 @@ export class GameServer {
         });
         return game;
     }
+    getPlayerById(id) : ServerPlayer {
+        var player = null;
+        this.clients.forEach(c => {
+            if (c.id == id) {
+                player = c
+            }
+        });
+        return player;
+    }
+
 }
 function predicateBy(prop) {
     return function (a, b) {

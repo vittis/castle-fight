@@ -6,11 +6,13 @@ var PlayerStatus;
     PlayerStatus[PlayerStatus["matchmaking"] = 1] = "matchmaking";
     PlayerStatus[PlayerStatus["ingame"] = 2] = "ingame";
     PlayerStatus[PlayerStatus["spectating"] = 3] = "spectating";
+    PlayerStatus[PlayerStatus["preMatchmaking"] = 4] = "preMatchmaking";
 })(PlayerStatus = exports.PlayerStatus || (exports.PlayerStatus = {}));
 var ServerPlayer = (function () {
     function ServerPlayer(id, socket) {
         this.wins = 0;
         this.socketSet = false;
+        this.challengers = [];
         this.id = id;
         this.status = PlayerStatus.connected;
         this.nick = "Guest_" + id;

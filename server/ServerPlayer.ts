@@ -2,7 +2,8 @@ export enum PlayerStatus {
     connected,
     matchmaking,
     ingame,
-    spectating
+    spectating,
+    preMatchmaking
 }
 
 export class ServerPlayer {
@@ -14,6 +15,8 @@ export class ServerPlayer {
     wins = 0;
 
     socketSet = false;
+
+    challengers = [];
 
     constructor(id, socket?) {
         this.id = id;
