@@ -63,7 +63,7 @@ var Kodo;
                     text.input.useHandCursor = true;
                     var playerId = GameConfig.onlineTop5[i].id;
                     text.events.onInputDown.add(function () {
-                        new Kodo.WarningMessage(Kodo.Game.instance, 'Challenged Sent! The player with more wins will get into battle!', null, 2000);
+                        new Kodo.WarningMessage(Kodo.Game.instance, 'Challenge Sent!', null, 2000);
                         Client.askChallenge(playerId);
                     }, this);
                 }
