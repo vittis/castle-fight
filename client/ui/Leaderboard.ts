@@ -101,6 +101,7 @@ module Kodo {
                     text.input.useHandCursor = true;
                     var playerId = GameConfig.onlineTop5[i].id;
                     text.events.onInputDown.add(function(){  
+                        new WarningMessage(Kodo.Game.instance, 'Challenge Sent! The player with more wins will get into battle!', null, 2000);
                         Client.askChallenge(playerId);
                     }, this);
                 }

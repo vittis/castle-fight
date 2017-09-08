@@ -72,7 +72,6 @@ var Kodo;
             sp.alpha = 0.02;
         };
         WatchBox.prototype.onDown = function (sp) {
-            console.log(sp.data.gameId);
             if (sp.data.gameId != null) {
                 Client.askWatchGame(sp.data.gameId);
                 GameConfig.hostNick = this.vsGroup.children[sp.data.clickedBox].getChildAt(1).text;
