@@ -113,53 +113,61 @@ io.on('connection', function (socket) {
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
     socket.on('askSpamTileMark', function (data) {
-        if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
-            if (data.isHost) {
-                if (gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId) != null) {
-                    gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.tileRow = data.row;
-                    gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.tileCol = data.col;
+        if (gameServer.getGameByPlayerId(player.id) != null) {
+            if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
+                if (data.isHost) {
+                    if (gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId) != null) {
+                        gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.tileRow = data.row;
+                        gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
-            }
-            else {
-                if (gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId) != null) {
-                    gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.tileRow = data.row;
-                    gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.tileCol = data.col;
+                else {
+                    if (gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId) != null) {
+                        gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.tileRow = data.row;
+                        gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.tileCol = data.col;
+                    }
                 }
             }
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
     socket.on('askTrainUnit', function (data) {
-        if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
-            if (data.isHost) {
-                if (gameServer.getGameByPlayerId(player.id).host.idExists(data.buildingId))
-                    gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.spamData.isTraining = true;
-            }
-            else {
-                if (gameServer.getGameByPlayerId(player.id).client.idExists(data.buildingId))
-                    gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+        if (gameServer.getGameByPlayerId(player.id) != null) {
+            if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
+                if (data.isHost) {
+                    if (gameServer.getGameByPlayerId(player.id).host.idExists(data.buildingId))
+                        gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                }
+                else {
+                    if (gameServer.getGameByPlayerId(player.id).client.idExists(data.buildingId))
+                        gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.spamData.isTraining = true;
+                }
             }
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
     socket.on('askPauseUnit', function (data) {
-        if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
-            if (data.isHost) {
-                if (gameServer.getGameByPlayerId(player.id).host.idExists(data.buildingId))
-                    gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.spamData.isTraining = false;
-            }
-            else {
-                if (gameServer.getGameByPlayerId(player.id).client.idExists(data.buildingId))
-                    gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+        if (gameServer.getGameByPlayerId(player.id) != null) {
+            if (gameServer.getGameByPlayerId(player.id).host != null && gameServer.getGameByPlayerId(player.id).client != null) {
+                if (data.isHost) {
+                    if (gameServer.getGameByPlayerId(player.id).host.idExists(data.buildingId))
+                        gameServer.getGameByPlayerId(player.id).host.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                }
+                else {
+                    if (gameServer.getGameByPlayerId(player.id).client.idExists(data.buildingId))
+                        gameServer.getGameByPlayerId(player.id).client.getEntityById(data.buildingId).data.spamData.isTraining = false;
+                }
             }
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
     socket.on('askUpgrade', function (data) {
-        if (data.isHost) {
-            if (gameServer.getGameByPlayerId(player.id).host != null)
-                gameServer.getGameByPlayerId(player.id).host.updateManager.upgrade(data.upgrade);
-        }
-        else {
-            if (gameServer.getGameByPlayerId(player.id).client != null)
-                gameServer.getGameByPlayerId(player.id).client.updateManager.upgrade(data.upgrade);
+        if (gameServer.getGameByPlayerId(player.id) != null) {
+            if (data.isHost) {
+                if (gameServer.getGameByPlayerId(player.id).host != null)
+                    gameServer.getGameByPlayerId(player.id).host.updateManager.upgrade(data.upgrade);
+            }
+            else {
+                if (gameServer.getGameByPlayerId(player.id).client != null)
+                    gameServer.getGameByPlayerId(player.id).client.updateManager.upgrade(data.upgrade);
+            }
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
 });

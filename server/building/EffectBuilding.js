@@ -27,11 +27,6 @@ var EffectBuilding = (function (_super) {
     });
     EffectBuilding.prototype.addToGame = function (gm) {
         _super.prototype.addToGame.call(this, gm);
-        this.data.spamRate += this.owner.updateManager.spamRateModifier;
-        if (this.data.spamRate <= 0) {
-            this.data.spamRate = 1;
-        }
-        this.data.spamCount += this.owner.updateManager.unitCountModifier;
     };
     EffectBuilding.prototype.step = function () {
         if (this.data.spamData.spamRateCounter >= this.data.spamRate) {

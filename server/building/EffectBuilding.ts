@@ -29,11 +29,11 @@ export abstract class EffectBuilding extends Building {
     addToGame(gm) {
         super.addToGame(gm);
 
-        this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        /* this.data.spamRate += this.owner.updateManager.spamRateModifier;
         if (this.data.spamRate <= 0) {
             this.data.spamRate = 1;
         }
-        this.data.spamCount += this.owner.updateManager.unitCountModifier;
+        this.data.spamCount += this.owner.updateManager.unitCountModifier; */
     }
 
     abstract canDoEffect() : boolean;

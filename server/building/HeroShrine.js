@@ -20,7 +20,7 @@ var HeroShrine = (function (_super) {
         var canDo = false;
         if (this.owner.getAllUnits().length > 0) {
             this.owner.getAllUnits().forEach(function (unit) {
-                if (unit.data.statusData.heroBuff == false && unit.data.maxHP == unit.data.hp) {
+                if (unit.data.statusData.heroBuff == false) {
                     canDo = true;
                 }
             });
@@ -35,7 +35,7 @@ var HeroShrine = (function (_super) {
         var unit;
         do {
             unit = allUnits[Math.floor(Math.random() * allUnits.length)];
-        } while (unit.data.statusData.heroBuff == true && unit.data.hp != unit.data.maxHP);
+        } while (unit.data.statusData.heroBuff == true);
         unit.data.maxHP += 10;
         unit.data.hp += 10;
         unit.data.attackDmg += 3;
