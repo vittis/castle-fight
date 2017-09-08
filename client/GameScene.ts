@@ -40,6 +40,10 @@ module Kodo {
         create() {
             GameScene.instance = this;
             this.entities = [];
+            this.stateCache = [];
+            this.grid = [];
+            this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0 };
+            this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
 
@@ -170,7 +174,57 @@ module Kodo {
             eyeSprite.anchor.setTo(0.5, 0.5);
             eyeSprite.tint = 0xffffff;
 
+            //this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
+            //GameConfig.updateRate += 200;
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
+
+        }
+        updateEntities(newEntities: any[]) {//chamado a cada 700 pelo server
+            if (this.stateCache.length == 0) {
+                this.stateCache.push(newEntities);
+            }
+            //this.executeUpdateEntities(newEntities);
+        }
+        loopCache() {
+            if (this.stateCache.length > 0) {
+                this.executeUpdateEntities(this.stateCache[0]);
+                this.stateCache.splice(0, 1);
+            }
+        }
+
+        executeUpdateEntities(newEntities: any[]) {
+            if (this.watchCountLabel.text != "" + this.watchCount)
+                this.watchCountLabel.text = "" + this.watchCount;
+            if (this.isHost != null) {
+                this.uiResourceManager.updateResources(this.player.incomeRateCounter);
+                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
+                this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
+                this.updateManager.updateCounter(this.player.updateRateCounter);
+                if (this.updateManager.uIUpdateButton.allGroup.visible) {
+                    this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
+                    this.updateManager.uIUpdateButton.updateText();
+                }
+
+                this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
+                    this.world.bringToTop(item.tudoGroup);
+                }.bind(this), this);
+
+                this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+            }
+            newEntities.forEach(newEntity => {
+                var entityID = newEntity.id;
+                if (this.idExists(entityID)) {
+                    this.getEntityById(entityID).updateStep(newEntity.data, this.grid[newEntity.row][newEntity.col]);
+                }
+                else {
+                    this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
+                }
+            });
+            this.cleanDeadEntities(newEntities);
+            if (this.isHost != null) {
+                this.uiEntityManager.updateText();
+            }
+            //this.lastTimeUpdate = Date.now();
         }
 
         endGame(hostWon) {
@@ -219,55 +273,8 @@ module Kodo {
              }
         } 
 
-        loopCache() {
-            if (this.watchCountLabel.text != ""+this.watchCount)
-                this.watchCountLabel.text = ""+this.watchCount;
-            if (this.stateCache.length > 0){
-                this.executeUpdateEntities(this.stateCache[0]);
-                this.stateCache.splice(0, 1);
-            }
-        }
-
-        executeUpdateEntities(newEntities: any[]) {
-            if (this.isHost != null) {
-                this.uiResourceManager.updateResources(this.player.incomeRateCounter);
-                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
-                this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
-                this.updateManager.updateCounter(this.player.updateRateCounter);
-                if (this.updateManager.uIUpdateButton.allGroup.visible) {
-                    this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
-                    this.updateManager.uIUpdateButton.updateText();
-                }
-
-                this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
-                    this.world.bringToTop(item.tudoGroup);
-                }.bind(this), this);
-
-                this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
-            }
-            newEntities.forEach(newEntity => {
-                var entityID = newEntity.id;
-                if (this.idExists(entityID)) {
-                    this.getEntityById(entityID).updateStep(newEntity.data, this.grid[newEntity.row][newEntity.col]);
-                }
-                else {
-                    this.entities.push(new Kodo[newEntity.data.name](this.game, this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
-                }
-            });
-            this.cleanDeadEntities(newEntities);
-            if (this.isHost != null) {
-                this.uiEntityManager.updateText();
-            }
-            this.lastTimeUpdate = Date.now();
-        }
 
 
-        updateEntities(newEntities : any[]) {
-            if (this.stateCache.length == 0){
-                this.stateCache.push(newEntities);
-            }
-            //this.executeUpdateEntities(newEntities);
-         }
 
         cleanDeadEntities(newEntities : Entity[]) {
             var idArray = [];

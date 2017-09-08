@@ -13,6 +13,8 @@ export class ServerPlayer {
 
     wins = 0;
 
+    socketSet = false;
+
     constructor(id, socket?) {
         this.id = id;
         this.status = PlayerStatus.connected;

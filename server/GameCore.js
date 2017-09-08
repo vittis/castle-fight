@@ -44,108 +44,12 @@ var GameCore = (function () {
     }
     GameCore.prototype.startGame = function () {
         if (this.client || this.host) {
-            if (this.client) {
-                if (!(this.client instanceof GameBot_1.GameBot)) {
-                    this.setSocket(this.client.serverPlayer, false);
-                }
-            }
-            if (this.host) {
-                if (this.host.serverPlayer.socket) {
-                    this.setSocket(this.host.serverPlayer, true);
-                }
-            }
             this.update = setInterval(this.step.bind(this), GameConfig_1.GameConfig.STEP_RATE);
         }
     };
     GameCore.prototype.setSocket = function (p, isHost) {
         if (p.socket) {
-            p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig_1.GameConfig.STEP_RATE });
-            p.socket.on('askBuild', function (data) {
-                if (this != null && this.host != null && this.client != null) {
-                    if (this.gridManager.tileAt(data.row, data.col).entity == null) {
-                        if (!data.isUnit) {
-                            if (this.gridManager.tileAt(data.row + 1, data.col + 1).entity == null) {
-                                if (GameConfig_1.GameConfig.BUILDINGS.indexOf(data.name) != -1) {
-                                    if (data.isHost) {
-                                        if (this.host != null) {
-                                            this.host.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                                        }
-                                    }
-                                    else {
-                                        if (this.client != null) {
-                                            this.client.buildBuilding(new (require('./building/' + data.name))[data.name](data.row, data.col));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else {
-                            if (GameConfig_1.GameConfig.UNITS.indexOf(data.name) != -1) {
-                                if (data.isHost) {
-                                    if (this.host != null) {
-                                        this.host.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                                    }
-                                }
-                                else {
-                                    if (this.client != null) {
-                                        this.client.buildBuilding(new (require('./unit/' + data.name))[data.name](data.row, data.col));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }.bind(this));
-            p.socket.on('askSpamTileMark', function (data) {
-                if (this.host != null && this.client != null) {
-                    if (data.isHost) {
-                        if (this.host.getEntityById(data.buildingId) != null) {
-                            this.host.getEntityById(data.buildingId).data.tileRow = data.row;
-                            this.host.getEntityById(data.buildingId).data.tileCol = data.col;
-                        }
-                    }
-                    else {
-                        if (this.client.getEntityById(data.buildingId) != null) {
-                            this.client.getEntityById(data.buildingId).data.tileRow = data.row;
-                            this.client.getEntityById(data.buildingId).data.tileCol = data.col;
-                        }
-                    }
-                }
-            }.bind(this));
-            p.socket.on('askTrainUnit', function (data) {
-                if (this.host != null && this.client != null) {
-                    if (data.isHost) {
-                        if (this.host.idExists(data.buildingId))
-                            this.host.getEntityById(data.buildingId).data.spamData.isTraining = true;
-                    }
-                    else {
-                        if (this.client.idExists(data.buildingId))
-                            this.client.getEntityById(data.buildingId).data.spamData.isTraining = true;
-                    }
-                }
-            }.bind(this));
-            p.socket.on('askPauseUnit', function (data) {
-                if (this.host != null && this.client != null) {
-                    if (data.isHost) {
-                        if (this.host.idExists(data.buildingId))
-                            this.host.getEntityById(data.buildingId).data.spamData.isTraining = false;
-                    }
-                    else {
-                        if (this.client.idExists(data.buildingId))
-                            this.client.getEntityById(data.buildingId).data.spamData.isTraining = false;
-                    }
-                }
-            }.bind(this));
-            p.socket.on('askUpgrade', function (data) {
-                if (data.isHost) {
-                    if (this.host != null)
-                        this.host.updateManager.upgrade(data.upgrade);
-                }
-                else {
-                    if (this.client != null)
-                        this.client.updateManager.upgrade(data.upgrade);
-                }
-            }.bind(this));
+            console.log("setando socket");
         }
     };
     GameCore.prototype.sendaData = function () {
@@ -354,6 +258,14 @@ var GameCore = (function () {
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);
+        this.sendDataTimeout = null;
+        this.startGameTimeout = null;
+        this.host.getAllEntities().concat(this.client.getAllEntities()).forEach(function (element) {
+            element = null;
+        });
+        this.host.entities = null;
+        this.client.entities = null;
+        this.gridManager = null;
         var versusBot = false;
         if (this.client instanceof GameBot_1.GameBot) {
             this.client = null;

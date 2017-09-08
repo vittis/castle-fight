@@ -13,7 +13,7 @@ export class HeroShrine extends EffectBuilding {
         var canDo = false;
         if (this.owner.getAllUnits().length > 0) {
             this.owner.getAllUnits().forEach(unit => {
-                if (unit.data.statusData.heroBuff == false) {
+                if (unit.data.statusData.heroBuff == false && unit.data.maxHP == unit.data.hp) {
                     canDo=true;
                 }
             });
@@ -29,12 +29,12 @@ export class HeroShrine extends EffectBuilding {
         var unit : Unit;
         do {
             unit = allUnits[Math.floor(Math.random() * allUnits.length)];
-        } while(unit.data.statusData.heroBuff == true);
+        } while (unit.data.statusData.heroBuff == true && unit.data.hp != unit.data.maxHP);
         
-        unit.data.maxHP += 5;
-        unit.data.hp += 5;
+        unit.data.maxHP += 10;
+        unit.data.hp += 10;
         unit.data.attackDmg += 3;
-        unit.data.attackRate = Math.max(1, unit.data.attackRate-1);
+        unit.data.attackRate = Math.max(1, unit.data.attackRate-2);
         unit.data.statusData.heroBuff = true;
 
     }

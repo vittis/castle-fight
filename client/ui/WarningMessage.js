@@ -1,11 +1,15 @@
 var Kodo;
 (function (Kodo) {
     var WarningMessage = (function () {
-        function WarningMessage(gameP, message, c) {
+        function WarningMessage(gameP, message, c, time) {
             this.game = gameP;
             var color = '#ffffff';
             if (c) {
                 color = c;
+            }
+            var duration = 600;
+            if (time) {
+                duration = time;
             }
             var loadingLabel = this.game.add.text(this.game.world.centerX, this.game.world.centerY - GameConfig.uiHeight / 2, message, { font: "25px Baloo Paaji", fill: color, wordWrap: false, align: "center" });
             loadingLabel.anchor.setTo(0.5, 0.5);
@@ -24,8 +28,8 @@ var Kodo;
             group.add(loadingRect);
             group.swap(loadingLabel, loadingRect);
             group.alpha = 0.95;
-            var tweenA = this.game.add.tween(group).to({ alpha: 1 }, 600, Phaser.Easing.Linear.None);
-            var tweenB = this.game.add.tween(group).to({ alpha: 0, y: -20 }, 600, Phaser.Easing.Linear.None);
+            var tweenA = this.game.add.tween(group).to({ alpha: 1 }, duration, Phaser.Easing.Linear.None);
+            var tweenB = this.game.add.tween(group).to({ alpha: 0, y: -20 }, duration, Phaser.Easing.Linear.None);
             tweenA.chain(tweenB);
             tweenB.onComplete.add(function destroi() { group.destroy(); }, this);
             tweenA.start();

@@ -25,6 +25,10 @@ var Kodo;
         GameScene.prototype.create = function () {
             GameScene.instance = this;
             this.entities = [];
+            this.stateCache = [];
+            this.grid = [];
+            this.player = { incomeRate: 1, incomeRateCounter: 0, gold: 150, wood: 0, income: 10, updateRateCounter: 0, updateRate: 1, updateCount: 0 };
+            this.ballData = { spamRate: 1, spamRateCounter: 0, hostMatou: false, clientMatou: false, reward: 0 };
             this.game.stage.backgroundColor = '#29B865';
             this.isHost = GameConfig.isHost;
             for (var i = 0; i < GameConfig.GRID_ROWS; i++) {
@@ -138,6 +142,49 @@ var Kodo;
             eyeSprite.tint = 0xffffff;
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
         };
+        GameScene.prototype.updateEntities = function (newEntities) {
+            if (this.stateCache.length == 0) {
+                this.stateCache.push(newEntities);
+            }
+        };
+        GameScene.prototype.loopCache = function () {
+            if (this.stateCache.length > 0) {
+                this.executeUpdateEntities(this.stateCache[0]);
+                this.stateCache.splice(0, 1);
+            }
+        };
+        GameScene.prototype.executeUpdateEntities = function (newEntities) {
+            var _this = this;
+            if (this.watchCountLabel.text != "" + this.watchCount)
+                this.watchCountLabel.text = "" + this.watchCount;
+            if (this.isHost != null) {
+                this.uiResourceManager.updateResources(this.player.incomeRateCounter);
+                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
+                this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
+                this.updateManager.updateCounter(this.player.updateRateCounter);
+                if (this.updateManager.uIUpdateButton.allGroup.visible) {
+                    this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
+                    this.updateManager.uIUpdateButton.updateText();
+                }
+                this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
+                    this.world.bringToTop(item.tudoGroup);
+                }.bind(this), this);
+                this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+            }
+            newEntities.forEach(function (newEntity) {
+                var entityID = newEntity.id;
+                if (_this.idExists(entityID)) {
+                    _this.getEntityById(entityID).updateStep(newEntity.data, _this.grid[newEntity.row][newEntity.col]);
+                }
+                else {
+                    _this.entities.push(new Kodo[newEntity.data.name](_this.game, _this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
+                }
+            });
+            this.cleanDeadEntities(newEntities);
+            if (this.isHost != null) {
+                this.uiEntityManager.updateText();
+            }
+        };
         GameScene.prototype.endGame = function (hostWon) {
             this.game.time.events.remove(this.mainLoop);
             var stringWon = hostWon == GameConfig.isHost ? "Victory!" : "Defeat! :(";
@@ -171,50 +218,6 @@ var Kodo;
                 this.uiBuildingManager.update();
                 this.uiEntityManager.update();
                 this.updateManager.update();
-            }
-        };
-        GameScene.prototype.loopCache = function () {
-            if (this.watchCountLabel.text != "" + this.watchCount)
-                this.watchCountLabel.text = "" + this.watchCount;
-            if (this.stateCache.length > 0) {
-                this.executeUpdateEntities(this.stateCache[0]);
-                this.stateCache.splice(0, 1);
-            }
-        };
-        GameScene.prototype.executeUpdateEntities = function (newEntities) {
-            var _this = this;
-            if (this.isHost != null) {
-                this.uiResourceManager.updateResources(this.player.incomeRateCounter);
-                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
-                this.uiBuildingManager.tintBuyable(this.player.gold, this.player.wood);
-                this.updateManager.updateCounter(this.player.updateRateCounter);
-                if (this.updateManager.uIUpdateButton.allGroup.visible) {
-                    this.world.bringToTop(this.updateManager.uIUpdateButton.allGroup);
-                    this.updateManager.uIUpdateButton.updateText();
-                }
-                this.uiBuildingManager.buildingsGroup.forEachAlive(function (item) {
-                    this.world.bringToTop(item.tudoGroup);
-                }.bind(this), this);
-                this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
-            }
-            newEntities.forEach(function (newEntity) {
-                var entityID = newEntity.id;
-                if (_this.idExists(entityID)) {
-                    _this.getEntityById(entityID).updateStep(newEntity.data, _this.grid[newEntity.row][newEntity.col]);
-                }
-                else {
-                    _this.entities.push(new Kodo[newEntity.data.name](_this.game, _this.grid[newEntity.row][newEntity.col], entityID, newEntity.isHost, newEntity.data));
-                }
-            });
-            this.cleanDeadEntities(newEntities);
-            if (this.isHost != null) {
-                this.uiEntityManager.updateText();
-            }
-            this.lastTimeUpdate = Date.now();
-        };
-        GameScene.prototype.updateEntities = function (newEntities) {
-            if (this.stateCache.length == 0) {
-                this.stateCache.push(newEntities);
             }
         };
         GameScene.prototype.cleanDeadEntities = function (newEntities) {

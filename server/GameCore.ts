@@ -93,7 +93,7 @@ export class GameCore {
 
     startGame() {
         if (this.client || this.host) {
-            if (this.client) {
+            /* if (this.client) {
                 if (!(this.client instanceof GameBot)) {
                     this.setSocket(this.client.serverPlayer, false);
                 }
@@ -102,7 +102,7 @@ export class GameCore {
                 if (this.host.serverPlayer.socket) {
                     this.setSocket(this.host.serverPlayer, true);
                 }
-            }
+            } */
             this.update = setInterval(this.step.bind(this), GameConfig.STEP_RATE);
         }
     }
@@ -110,11 +110,14 @@ export class GameCore {
 
 
     setSocket(p : ServerPlayer, isHost : boolean) {
-        if (p.socket) {
-            p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
-
-
-            p.socket.on('askBuild', function (data) {
+        if (p.socket /*&& p.socketSet == false*/) {
+            //p.socketSet = true;
+            //p.socket.emit('startGameLoop', { id: this.id, rows: GameConfig.GRID_ROWS, cols: GameConfig.GRID_COLS, isHost: isHost, stepRate: GameConfig.STEP_RATE });
+            
+            console.log("setando socket");
+           
+            /* p.socket.on('askBuild', function (data) {
+                console.log("ey------------------------------------------------------------------------------------------------------");
                 if (this != null && this.host != null && this.client != null) {
                     if (this.gridManager.tileAt(data.row, data.col).entity == null) {
                         if (!data.isUnit) {
@@ -203,9 +206,9 @@ export class GameCore {
                     if (this.client != null)
                         this.client.updateManager.upgrade(data.upgrade);
                 }
-            }.bind(this));
+            }.bind(this));*/
         }
-    }
+    } 
 
     sendaData() {
         var entitiesObj = [];
@@ -217,6 +220,7 @@ export class GameCore {
         var clientObj = DataSerializer.SerializePlayer(this.client);
 
         var ballObj = DataSerializer.SerializeBall(this.ballManager);
+
         if (this.host) {
             if (this.host.serverPlayer.socket) {
                 this.host.serverPlayer.socket.emit('receiveData', { entities: entitiesObj, player: hostObj, ballData : ballObj, watchCount: this.observers.length });
@@ -443,11 +447,21 @@ export class GameCore {
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);
+        this.sendDataTimeout = null;
+        this.startGameTimeout = null;
+        this.host.getAllEntities().concat(this.client.getAllEntities()).forEach(element => {
+            element = null;
+        });
+        this.host.entities = null;
+        this.client.entities = null;
+        this.gridManager = null;
+
         let versusBot = false;
         if (this.client instanceof GameBot) {
             this.client = null;
             versusBot = true;
         }
+
         GameServer.instance.endGame(this, hostWon, versusBot);
     }
 

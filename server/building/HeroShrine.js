@@ -20,7 +20,7 @@ var HeroShrine = (function (_super) {
         var canDo = false;
         if (this.owner.getAllUnits().length > 0) {
             this.owner.getAllUnits().forEach(function (unit) {
-                if (unit.data.statusData.heroBuff == false) {
+                if (unit.data.statusData.heroBuff == false && unit.data.maxHP == unit.data.hp) {
                     canDo = true;
                 }
             });
@@ -35,11 +35,11 @@ var HeroShrine = (function (_super) {
         var unit;
         do {
             unit = allUnits[Math.floor(Math.random() * allUnits.length)];
-        } while (unit.data.statusData.heroBuff == true);
-        unit.data.maxHP += 5;
-        unit.data.hp += 5;
+        } while (unit.data.statusData.heroBuff == true && unit.data.hp != unit.data.maxHP);
+        unit.data.maxHP += 10;
+        unit.data.hp += 10;
         unit.data.attackDmg += 3;
-        unit.data.attackRate = Math.max(1, unit.data.attackRate - 1);
+        unit.data.attackRate = Math.max(1, unit.data.attackRate - 2);
         unit.data.statusData.heroBuff = true;
     };
     return HeroShrine;
