@@ -2,7 +2,7 @@
     "name": "Mage",
     "width": 1,
     "height": 1,
-    "maxHP": 10,
+    "maxHP": 9,
     "maxArmor": 0,
     "attackRange": 3,
     "attackDmg": 2,

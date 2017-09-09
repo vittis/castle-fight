@@ -8,6 +8,6 @@
     "woodCost": 75,
     "spamCount": 1,
     "spamRate": 35,
-    "description": "Grants a random full HP ally +10HP, +3 damage and +2 atk speed",
+    "description": "Grants a random full HP ally +10HP, +3 damage and +1 atk speed",
     "incomeGain": 4
 }

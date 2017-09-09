@@ -60,7 +60,9 @@ module Kodo {
             this.onReceivedNewMessage("vittis13: vamo caralho");
              this.onReceivedNewMessage("vittis14: vamo caralho");
             this.game.time.events.loop(2000, this.addcoisa.bind(this), this); */
-            this.onReceivedNewMessage("Pro Tip: Don't refresh the page and keep   winning to get into the leaderboards!");
+            //this.onReceivedNewMessage("Pro Tip: Don't refresh the page and keep   winning to get into the leaderboards!");
+            this.onReceivedNewMessage("Pro Tip: Click the big arrow to spend your upgrade points! Don't forget to do it!");
+
 
             var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.SHIFT);
             enterKey.onDown.add(this.onEnter.bind(this), this);
@@ -68,9 +70,7 @@ module Kodo {
         onEnter() {
             this.inputField.startFocus();
         }
-        /* addcoisa() {
-            this.onReceivedNewMessage("eta mlkasdasdasdasd asd a sdasd asd ad as das d asdas d ");
-        } */
+
         onFocusOut() {
             if (GameConfig.yourNick != '') {
                 if (this.inputField.value.length > 0) {

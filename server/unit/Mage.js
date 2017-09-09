@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Unit_1 = require("../Unit");
+var Building_1 = require("../Building");
 var Mage = (function (_super) {
     __extends(Mage, _super);
     function Mage(row, col) {
@@ -25,19 +26,21 @@ var Mage = (function (_super) {
                 attackedId.push(targetTile.entity.id);
             }
             if (targetTile.entity != null) {
-                targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
-                    if (t.entity != null) {
-                        if (t.entity.owner.isHost != _this.owner.isHost) {
-                            if (attackedId.indexOf(t.entity.id) == -1) {
-                                var currentAttack = _this.data.attackDmg;
-                                _this.data.attackDmg = 2;
-                                t.entity.receiveAttack(_this);
-                                _this.data.attackDmg = currentAttack;
-                                attackedId.push(t.entity.id);
+                if (!(targetTile.entity instanceof Building_1.Building)) {
+                    targetTile.entity.getOuterTilesWithEntity().forEach(function (t) {
+                        if (t.entity != null) {
+                            if (t.entity.owner.isHost != _this.owner.isHost) {
+                                if (attackedId.indexOf(t.entity.id) == -1) {
+                                    var currentAttack = _this.data.attackDmg;
+                                    _this.data.attackDmg = 2;
+                                    t.entity.receiveAttack(_this);
+                                    _this.data.attackDmg = currentAttack;
+                                    attackedId.push(t.entity.id);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     };

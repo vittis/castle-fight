@@ -34,7 +34,7 @@ export class HeroShrine extends EffectBuilding {
         unit.data.maxHP += 10;
         unit.data.hp += 10;
         unit.data.attackDmg += 3;
-        unit.data.attackRate = Math.max(1, unit.data.attackRate-2);
+        unit.data.attackRate = Math.max(1, unit.data.attackRate-1);
         unit.data.statusData.heroBuff = true;
 
     }
