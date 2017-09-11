@@ -39,7 +39,7 @@ export class SacrificeChamber extends EffectBuilding {
     }
 
     onDeath() {
-        this.owner.resourceManager.add(50*this.unitsKilled, 50*this.unitsKilled);
+        this.owner.resourceManager.add(50*this.unitsKilled, 0);
         super.onDeath();
     }
 

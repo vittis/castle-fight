@@ -22,7 +22,7 @@ module Kodo {
                 goldLabel.scale.setTo(0.3, 0.3);
 
                 style.fill = '#0D6032';
-                let woodLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+150', style);
+                let woodLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
                 woodLabel.anchor.setTo(0.5, 0.5);
                 woodLabel.fontSize = 24;
                 woodLabel.scale.setTo(0.3, 0.3);
