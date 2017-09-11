@@ -4,6 +4,8 @@ var Entity = (function () {
     function Entity(row, col, data) {
         var _this = this;
         this.stunCounter = 0;
+        this.waitingForShield = false;
+        this.waitShieldCounter = 0;
         this.toString = function () {
             return _this.dataq.name[0];
         };
@@ -31,6 +33,7 @@ var Entity = (function () {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     };
     Entity.prototype.receiveAttackFromBuilding = function (unit) {
@@ -41,6 +44,7 @@ var Entity = (function () {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     };
     Entity.prototype.takeDamage = function (dmg) {
@@ -54,6 +58,7 @@ var Entity = (function () {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     };
     Entity.prototype.onDeath = function () {

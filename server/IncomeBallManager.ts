@@ -4,6 +4,7 @@ import { GamePlayer } from "./GamePlayer";
 import { Entity } from "./Entity";
 import { GameConfig } from "./GameConfig";
 import { Unit } from "./Unit";
+import { Building } from "./Building";
 
 export class IncomeBallManager {
 
@@ -27,12 +28,26 @@ export class IncomeBallManager {
                 let outerTiles = entity.getOuterTiles();
                 entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
             }
+            else if (entity instanceof Building) {
+                let outerTiles = entity.getOuterTiles();
+                let tile = outerTiles[Math.floor(Math.random() * outerTiles.length)]; 
+                entity.tile.entity = null;
+                entity.tile = tile;
+                tile.entity = entity;
+            }
         }
         entity = this.gp.gm.tileAt(3, 15).entity;
         if (entity != null) {
             if (entity instanceof Unit) {
                 let outerTiles = entity.getOuterTiles();
                 entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
+            }
+            else if (entity instanceof Building) {
+                let outerTiles = entity.getOuterTiles();
+                let tile = outerTiles[Math.floor(Math.random() * outerTiles.length)];
+                entity.tile.entity = null;
+                entity.tile = tile;
+                tile.entity = entity;
             }
         }
         this.gp.addEntity(new IncomeBall(12, 15, this));

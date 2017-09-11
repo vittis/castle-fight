@@ -6,7 +6,7 @@
     "maxArmor": 0,
     "attackRange": 2,
     "attackDmg": 1,
-    "attackRate": 4,
+    "attackRate": 3,
     "description": "Grants a nearby unit a shield that negates one attack",
     "goldCost": 40,
     "woodCost": 0

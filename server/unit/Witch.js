@@ -38,7 +38,7 @@ var Witch = (function (_super) {
             this.getOuterTilesWithEntity().forEach(function (e) {
                 if (e.entity instanceof Unit_1.Unit) {
                     if (e.entity.owner.isHost == _this.owner.isHost && !jaShieldou) {
-                        if (e.entity.getEntityData().statusData.shielded == false) {
+                        if (e.entity.getEntityData().statusData.shielded == false && !e.entity.waitingForShield) {
                             e.entity.getEntityData().statusData.shielded = true;
                             _this.shieldRateCounter = 0;
                             jaShieldou = true;
@@ -48,7 +48,7 @@ var Witch = (function (_super) {
                     }
                 }
             });
-            if (!jaShieldou && this.getEntityData().statusData.shielded == false) {
+            if (!jaShieldou && this.getEntityData().statusData.shielded == false && !this.waitingForShield) {
                 this.getEntityData().statusData.shielded = true;
                 this.shieldRateCounter = 0;
                 jaShieldou = true;

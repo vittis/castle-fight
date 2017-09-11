@@ -24,6 +24,8 @@ export abstract class Unit extends Entity{
 
     justSpawned : boolean = false;
 
+
+
     get data() : UnitData {
         return this.dataq;
     }
@@ -107,6 +109,13 @@ export abstract class Unit extends Entity{
             if (this.target.getEntityData().hp <= 0) {
                 this.target = null;
             }
+        }
+        if (this.waitingForShield) {
+            this.waitShieldCounter++;
+            if (this.waitShieldCounter >= 5) {
+                this.waitingForShield=false;
+                this.waitShieldCounter = 0;
+            } 
         }
     }
 

@@ -34,7 +34,7 @@ export class Witch extends Unit {
             this.getOuterTilesWithEntity().forEach(e => {
                 if (e.entity instanceof Unit) {
                     if (e.entity.owner.isHost == this.owner.isHost && !jaShieldou) {
-                        if (e.entity.getEntityData().statusData.shielded == false ) {
+                        if (e.entity.getEntityData().statusData.shielded == false && !e.entity.waitingForShield) {
                             e.entity.getEntityData().statusData.shielded = true;
                             this.shieldRateCounter = 0;
                             jaShieldou=true;
@@ -44,7 +44,7 @@ export class Witch extends Unit {
                     }
                 }
             });
-            if (!jaShieldou && this.getEntityData().statusData.shielded==false) {
+            if (!jaShieldou && this.getEntityData().statusData.shielded==false && !this.waitingForShield) {
                 this.getEntityData().statusData.shielded = true;
                 this.shieldRateCounter = 0;
                 jaShieldou = true;

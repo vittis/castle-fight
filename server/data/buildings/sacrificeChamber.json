@@ -5,9 +5,9 @@
     "maxHP": 20,
     "maxArmor": 10,
     "goldCost": 50,
-    "woodCost": 100,
+    "woodCost": 75,
     "spamCount": 3,
     "spamRate": 25,
-    "description": "Kills a random full HP ally. Grants +50G and +50W for each unit killed when destroyed",
+    "description": "Kills a random full HP ally. Grants +50G for each unit killed when destroyed",
     "incomeGain": 0
 }

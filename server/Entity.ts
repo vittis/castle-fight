@@ -34,6 +34,9 @@ export abstract class Entity {
 
     stunCounter = 0;
 
+    waitingForShield = false;
+    waitShieldCounter = 0;//rate = 5
+
     constructor(row, col, data : EntityData) {
         this.dataq = data;
         this.dataq.hp = data.maxHP;
@@ -64,6 +67,7 @@ export abstract class Entity {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     }
     receiveAttackFromBuilding(unit: AttackBuilding) {
@@ -74,6 +78,7 @@ export abstract class Entity {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     }
 
@@ -89,6 +94,7 @@ export abstract class Entity {
         }
         else {
             this.dataq.statusData.shielded = false;
+            this.waitingForShield = true;
         }
     }
 

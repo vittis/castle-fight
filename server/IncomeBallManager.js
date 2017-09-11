@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var IncomeBall_1 = require("./building/IncomeBall");
 var GameConfig_1 = require("./GameConfig");
 var Unit_1 = require("./Unit");
+var Building_1 = require("./Building");
 var IncomeBallManager = (function () {
     function IncomeBallManager(gamePlayer) {
         this.spamRate = GameConfig_1.GameConfig.BALL_SPAM_RATE;
@@ -19,12 +20,26 @@ var IncomeBallManager = (function () {
                 var outerTiles = entity.getOuterTiles();
                 entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
             }
+            else if (entity instanceof Building_1.Building) {
+                var outerTiles = entity.getOuterTiles();
+                var tile = outerTiles[Math.floor(Math.random() * outerTiles.length)];
+                entity.tile.entity = null;
+                entity.tile = tile;
+                tile.entity = entity;
+            }
         }
         entity = this.gp.gm.tileAt(3, 15).entity;
         if (entity != null) {
             if (entity instanceof Unit_1.Unit) {
                 var outerTiles = entity.getOuterTiles();
                 entity.moveTo(outerTiles[Math.floor(Math.random() * outerTiles.length)]);
+            }
+            else if (entity instanceof Building_1.Building) {
+                var outerTiles = entity.getOuterTiles();
+                var tile = outerTiles[Math.floor(Math.random() * outerTiles.length)];
+                entity.tile.entity = null;
+                entity.tile = tile;
+                tile.entity = entity;
             }
         }
         this.gp.addEntity(new IncomeBall_1.IncomeBall(12, 15, this));

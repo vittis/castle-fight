@@ -94,6 +94,13 @@ var Unit = (function (_super) {
                 this.target = null;
             }
         }
+        if (this.waitingForShield) {
+            this.waitShieldCounter++;
+            if (this.waitShieldCounter >= 5) {
+                this.waitingForShield = false;
+                this.waitShieldCounter = 0;
+            }
+        }
     };
     Unit.prototype.moveTowards = function (targetTile) {
         if (!this.getEntityData().statusData.stunned) {
