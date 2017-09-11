@@ -32,7 +32,7 @@ var Kodo;
                 goldLabel_1.fontSize = 24;
                 goldLabel_1.scale.setTo(0.3, 0.3);
                 style.fill = '#0D6032';
-                var woodLabel_1 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+150', style);
+                var woodLabel_1 = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 + 15, '+0', style);
                 woodLabel_1.anchor.setTo(0.5, 0.5);
                 woodLabel_1.fontSize = 24;
                 woodLabel_1.scale.setTo(0.3, 0.3);

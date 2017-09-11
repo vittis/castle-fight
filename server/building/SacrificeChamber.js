@@ -42,7 +42,7 @@ var SacrificeChamber = (function (_super) {
         this.unitsKilled++;
     };
     SacrificeChamber.prototype.onDeath = function () {
-        this.owner.resourceManager.add(50 * this.unitsKilled, 50 * this.unitsKilled);
+        this.owner.resourceManager.add(50 * this.unitsKilled, 0);
         _super.prototype.onDeath.call(this);
     };
     return SacrificeChamber;
