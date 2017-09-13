@@ -444,6 +444,7 @@ export class GameCore {
     }
     endGame(hostWon) : void {
         console.log("end game chamado duracao da partida: "+this.totalTurns+" ,Vencedor: "+this.host.serverPlayer.nick);
+
         clearInterval(this.update);
         clearTimeout(this.sendDataTimeout);
         clearTimeout(this.startGameTimeout);

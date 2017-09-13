@@ -11,12 +11,11 @@ var GameServer = (function () {
         this.lastGameID = 0;
         this.games = new Array();
         this.clients = new Array();
-        this.top3Wins = [{ nick: "Pychkin", wins: 19, id: -1 }, { nick: "lel_664", wins: 17, id: -1 }, { nick: "lel is back", wins: 17, id: -1 }];
+        this.last10messages = [];
+        this.top3Wins = [];
         GameServer.instance = this;
         this.io = io;
-        this.top3Wins[0] = { nick: "Guest_35", wins: 0, id: -1 };
-        this.top3Wins[1] = { nick: "Guest_44", wins: 0, id: -1 };
-        this.top3Wins[2] = { nick: "Guest_50", wins: 0, id: -1 };
+        this.top3Wins = [];
     }
     GameServer.prototype.addPlayer = function (socket) {
         var player = new ServerPlayer_1.ServerPlayer(this.lastPlayerID, socket);
@@ -343,6 +342,10 @@ var GameServer = (function () {
                 if (p.socket)
                     p.socket.emit('receiveMessage', msg);
             });
+        }
+        this.last10messages.push(msg);
+        if (this.last10messages.length > 9) {
+            this.last10messages.splice(0, 1);
         }
     };
     GameServer.prototype.onWatchGame = function (player, gameId) {

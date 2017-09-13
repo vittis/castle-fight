@@ -17,7 +17,6 @@ module Kodo {
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
             //this.game.forceSingleUpdate = true;
-
             GameConfig.GAME_WIDTH = 1488;
             GameConfig.GAME_HEIGHT = 838;
 
@@ -28,7 +27,6 @@ module Kodo {
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                 this.game.scale.startFullScreen();
                 this.game.scale.refresh();
-                window.addEventListener('resize', function () { adjust(); });
                 adjust(); */
                 this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
                 //this.game.scale.startFullScreen();
@@ -47,6 +45,8 @@ module Kodo {
                 this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
                 this.game.scale.startFullScreen();
             }
+            window.addEventListener('resize', function () { adjust(); });
+            adjust();
             this.game.scale.refresh();
             this.game.state.start('Preloader', true, false);
         }
@@ -54,15 +54,17 @@ module Kodo {
     }
 }
 
-/* function adjust() { 
-     if (window.innerWidth < GameConfig.GAME_WIDTH || window.innerHeight < GameConfig.GAME_HEIGHT) {
-        var divgame = document.getElementById("game"); 
-        divgame.style.width = window.innerWidth + "px"; 
-        divgame.style.height = window.innerHeight + "px"; 
-    }
-    else if (window.innerWidth > GameConfig.GAME_WIDTH && window.innerHeight > GameConfig.GAME_HEIGHT){
-        var divgame = document.getElementById("game");
-        divgame.style.width = GameConfig.GAME_WIDTH + "px";
-        divgame.style.height = GameConfig.GAME_HEIGHT + "px"; 
-    } 
-} */
+function adjust() { 
+     var scaleFactor = this.game.scale.scaleFactorInversed.x * 28;
+     if (window.innerHeight < 860) {
+         scaleFactor -= 1;
+     }
+     if (window.innerHeight < 780) {
+         scaleFactor -= 2;
+     }
+     if (window.innerHeight < 700) {
+         scaleFactor -= 2;
+     }
+
+     document.getElementById("menuUI").style.fontSize = scaleFactor + 'px';
+} 

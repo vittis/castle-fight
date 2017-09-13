@@ -67,8 +67,19 @@ io.on('connection', function (socket) {
         console.log("ask watch game called");
         gameServer.onWatchGame(player, gameId);
     });
+    socket.on('askLastMessages', function () {
+        player.socket.emit('onLastMessages', gameServer.last10messages);
+    });
     socket.on('chatmessage', function (message) {
-        console.log(message);
+        var nick = message.substr(0, message.indexOf(':'));
+        if (nick.length == 0) {
+            player.nick = "Guest_" + player.id;
+            message = player.nick + "" + message;
+        }
+        else {
+            player.nick = nick;
+        }
+        ;
         if (message.indexOf('vittis: /alert-') != -1) {
             io.emit('onAnuncio', message.substr(message.indexOf('-') + 1, message.length));
         }
@@ -76,13 +87,25 @@ io.on('connection', function (socket) {
             gameServer.onMessage(message);
         }
     });
-    socket.on('askChallenge', function (playerId) {
+    socket.on('askChallenge', function (data) {
         console.log("ask challenge called");
-        if (player.id == playerId) {
+        if (player.id == data.playerId) {
             console.log("clicked self lol");
         }
         else {
-            gameServer.onChallengePlayer(player, playerId);
+            if (data.nick == "") {
+                player.nick = "Guest_" + player.id;
+            }
+            else {
+                if (gameServer.checkNickExistsAndNotMine(data.nick, player)) {
+                    player.nick = data.nick + "_" + player.id;
+                }
+                else {
+                    player.nick = data.nick;
+                }
+            }
+            player.socket.emit('receiveNick', player.nick);
+            gameServer.onChallengePlayer(player, data.playerId);
         }
     });
     socket.on('askBuild', function (data) {

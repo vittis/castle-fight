@@ -12,20 +12,30 @@ module Kodo {
         playText : Phaser.Text;
         roomsText: Phaser.Text;
 
-        onlineNumber : Phaser.Text;
+/*         onlineNumber : Phaser.Text;
         matchmakingNumber: Phaser.Text;
-        ingameNumber: Phaser.Text;
+        ingameNumber: Phaser.Text; */
         titleLabel : Phaser.Text;
 
         rectsGroup : Phaser.Group;
 
-        chatBox : ChatBox;
+/*         chatBox : ChatBox;
         watchBox : WatchBox;
-        leaderboard : Leaderboard;
+        leaderboard : Leaderboard; */
 
         create() {
             hideAbout();
+            document.getElementById("menuUI").style.display = 'block';
+            Client.askLastMessages();
+            adjust();
+
             MainMenu.instance = this;
+            var nickValue: string = document.cookie.replace(/(?:(?:^|.*;\s*)nick\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            if (nickValue)
+                GameConfig.yourNick = nickValue;
+
+
+
             var cookieValue :string = document.cookie.replace(/(?:(?:^|.*;\s*)deck\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             var deck = cookieValue.split(',');
             if (deck){
@@ -85,16 +95,17 @@ module Kodo {
                     }, this);
                 }, this);           
             }
-            var moreButton = this.game.add.button(0, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank");}, this);
+            /* var moreButton = this.game.add.button(0, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank");}, this);
             moreButton.scale.setTo(0.9, 0.9);
-            moreButton.position.setTo(30 + 330+640, this.game.height - 30);
-
-
-            var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
-            howToPlay.x = this.game.width - howToPlay.width;
+            moreButton.position.setTo(30 + 330+640, this.game.height - 30); */
 
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
-            var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {this.game.state.start('AboutScene', true, false);}.bind(this), this);
+            var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {
+                document.getElementById("menuUI").style.display = 'none';
+                this.game.state.start('AboutScene', true, false);
+            }.bind(this), this);
+
+
             aboutButton.anchor.setTo(0.5, 0.5);
             aboutButton.tint = 0xb3b3b3;
             var aboutText = this.game.add.text(this.game.world.centerX, this.game.height - 30, 'About', style);
@@ -181,80 +192,6 @@ module Kodo {
             deckNameLabel.anchor.setTo(0.5, 0.5);
             deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 26, -30);
 
-         
-
-            var box = this.game.make.graphics(0, 0);
-            box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 220, 115, 20);
-            box.endFill();
-            var serverStatusRect = this.game.add.sprite(0, 0, box.generateTexture());
-            box.destroy();
-            serverStatusRect.anchor.setTo(0.5, 0.5);
-            serverStatusRect.x = howToPlay.x + howToPlay.width/2;
-            serverStatusRect.y = this.game.height - serverStatusRect.height/2 - 120;
-            serverStatusRect.alpha = 0.53;
-
-
-            var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("https://www.reddit.com/r/castlearena/", "_blank"); }, this, 1, 0, 2);
-            redditButton.anchor.setTo(0.5, 0.5);
-            redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, -27, 30);
-
-            var discordButton = this.game.add.button(15, this.game.height - 30, 'discordButton', function () { window.open("https://discord.gg/tP2YjDb", "_blank"); }, this, 1, 0, 2);
-            discordButton.anchor.setTo(0.5, 0.5);
-            discordButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 27, 30);
-
-            style.font = "18px Baloo Paaji";
-            style.fill = '#12522d';
-            var getInvolved = this.game.add.text(0, 0, "Join Us!", style);
-            getInvolved.anchor.setTo(0.5, 0.5);
-            getInvolved.alignTo(redditButton, Phaser.BOTTOM_CENTER, 27, 1);
-
-            style.font = "26px Baloo Paaji";
-            style.fill = '#ecec3a';
-            var serverStatusLabel = this.game.add.text(0, 0, "Server Status", style);
-            serverStatusLabel.anchor.setTo(0.5, 0.5);
-            serverStatusLabel.alignIn(serverStatusRect, Phaser.TOP_CENTER, 0, -12);
-            //serverStatusLabel.fontWeight = 900;
-
-
-
-            style.font = "18px Baloo Paaji";
-            style.fill = '#ffffff';
-
-            var onlineLabel = this.game.add.text(0, 0, "Online: ", style);
-            onlineLabel.anchor.setTo(0.5, 0.5);
-            onlineLabel.alignTo(serverStatusLabel, Phaser.BOTTOM_CENTER, 0, 5);
-            //onlineLabel.fontWeight = 600;
-
-            //var matchMaking = this.game.add.text(0, 0, "Matchmaking: ", style);
-            //matchMaking.anchor.setTo(0.5, 0.5);
-            //matchMaking.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
-            //matchMaking.fontWeight = 600; 
-
-            var ingame = this.game.add.text(0, 0, "In-game: ", style);
-            ingame.anchor.setTo(0.5, 0.5);
-            ingame.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
-            //ingame.fontWeight = 600;
-
-            style.fill = "#29B865";
-            this.onlineNumber = this.game.add.text(0, 0, "-", style);
-            this.onlineNumber.anchor.setTo(0.5, 0.5);
-            this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER, 3);
-            //this.onlineNumber.fontWeight = 600;
-            
-            //style.fill = "#c9b32b";
-            //this.matchmakingNumber = this.game.add.text(0, 0, "-", style);
-            //this.matchmakingNumber.anchor.setTo(0.5, 0.5);
-            //this.matchmakingNumber.alignTo(matchMaking, Phaser.RIGHT_CENTER, 3);
-            //this.matchmakingNumber.fontWeight = 600;
-
-            style.fill = "#de8787";
-            this.ingameNumber = this.game.add.text(0, 0, "-", style);
-            this.ingameNumber.anchor.setTo(0.5, 0.5);
-            this.ingameNumber.alignTo(ingame, Phaser.RIGHT_CENTER, 3);
-            //this.ingameNumber.fontWeight = 600;
-
-
 
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
@@ -271,30 +208,10 @@ module Kodo {
                 tweenA.start();
             }, this);
             tweenA.start();
+            var originalY = this.titleLabel.y;
+            this.titleLabel.y -= 200;
+            var tweenC = this.game.add.tween(this.titleLabel).to({y: originalY}, 1500, Phaser.Easing.Bounce.Out, true);
 
-            this.rectsGroup = this.game.add.group();
-
-            this.rectsGroup.add(howToPlay);
-            this.rectsGroup.add(serverStatusRect);
-            this.rectsGroup.add(serverStatusLabel);
-            this.rectsGroup.add(redditButton);
-            this.rectsGroup.add(discordButton);
-            this.rectsGroup.add(getInvolved);
-            this.rectsGroup.add(onlineLabel);
-            //this.rectsGroup.add(matchMaking);
-            this.rectsGroup.add(ingame);
-            this.rectsGroup.add(this.onlineNumber);
-            //this.rectsGroup.add(this.matchmakingNumber);
-            this.rectsGroup.add(this.ingameNumber);
-
-            this.rectsGroup.y = -1 * this.rectsGroup.height;
-
-            var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
-
-            //this.game.add.sprite(260, this.game.world.centerY -40, 'warning').anchor.setTo(0.5, 0.5);
-            this.chatBox = new ChatBox(this.game);
-            this.leaderboard = new Leaderboard(this.game);
-            this.watchBox = new WatchBox(this.game);
         }
         onFocusOut() {
             if (this.inputField.value.length > 0) {
@@ -312,6 +229,8 @@ module Kodo {
             sprite.scale.setTo(1, 1);
         }
         onPlayButton() {
+            Client.checkPing();
+
             GameConfig.yourNick = this.inputField.value;
 
             Client.askMatchmaking();
@@ -326,18 +245,25 @@ module Kodo {
         }
 
         onEditDeckButton() {
+            Client.checkPing();
+
             GameConfig.yourNick = this.inputField.value;
             Client.cancelMatchmaking();
+            document.getElementById("menuUI").style.display = 'none';
             this.game.state.start('DeckScene', true, false);
         }
 
         startGame() {
             this.game.state.start('GameScene', true, false);
+            document.getElementById("menuUI").style.display = 'none';
+
         }
 
 
-        updatePlayersConnected(data ) {
-            this.onlineNumber.text = " "+data.players.length;
+        updatePlayersConnected(data) {
+            //console.log(this.game.scale.scaleFactor);
+
+/*             this.onlineNumber.text = " "+data.players.length;
             var ingame=0;
             data.players.forEach(p => {
 
@@ -350,7 +276,9 @@ module Kodo {
             data.players.sort(predicateBy("wins"));
             data.players.reverse();
             this.leaderboard.updateTop5(data);
-            this.watchBox.updateLiveGames(data.liveGames);
+            this.watchBox.updateLiveGames(data.liveGames); */
+
+            HtmlUI.updateLeaderboards(data);
         }
 
         onHover(sprite: UIBuildingButton) {
@@ -363,5 +291,5 @@ module Kodo {
             sprite.onOut();
         }
     }
- 
+
 }

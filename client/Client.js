@@ -19,6 +19,7 @@ var Client;
         if (GameConfig.yourNick == "") {
             GameConfig.yourNick = "Guest_" + data.playerId;
         }
+        document.cookie = "nick=" + GameConfig.yourNick;
         GameConfig.opponentNick = data.opponentNick;
         Kodo.MainMenu.instance.startGame();
     });
@@ -35,7 +36,7 @@ var Client;
     });
     socket.on('receiveMessage', function (msg) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
-            Kodo.MainMenu.instance.chatBox.onReceivedNewMessage(msg);
+            HtmlUI.receiveMessage(msg);
         }
     });
     socket.on('receiveBuildingAndUnitData', function (data) {
@@ -88,10 +89,21 @@ var Client;
     });
     socket.on('receiveNick', function (data) {
         GameConfig.yourNick = data;
+        document.cookie = "nick=" + GameConfig.yourNick;
+    });
+    socket.on('onLastMessages', function (last10Messages) {
+        if (Kodo.Game.instance.state.current == 'MainMenu') {
+            HtmlUI.clearMessages();
+            last10Messages.forEach(function (msg) {
+                HtmlUI.receiveMessage(msg);
+            });
+        }
     });
     socket.on('receivePlayers', function (data) {
         if (Kodo.Game.instance.state.current == 'MainMenu') {
             GameConfig.onlineTop5 = data.onlineTop5;
+            GameConfig.top3 = data.top3;
+            GameConfig.liveGames = data.liveGames;
             Kodo.MainMenu.instance.updatePlayersConnected(data);
         }
     });
@@ -111,10 +123,12 @@ var Client;
     Client.checkPing = checkPing;
     function askBotGame() {
         socket.emit('askBotGame', { nick: GameConfig.yourNick });
+        document.cookie = "nick=" + GameConfig.yourNick;
     }
     Client.askBotGame = askBotGame;
     function askMatchmaking() {
         socket.emit('askMatchmaking', { nick: GameConfig.yourNick });
+        document.cookie = "nick=" + GameConfig.yourNick;
     }
     Client.askMatchmaking = askMatchmaking;
     function cancelMatchmaking() {
@@ -155,6 +169,11 @@ var Client;
         socket.emit('askCancelWatch');
     }
     Client.askCancelWatch = askCancelWatch;
+    function askLastMessages() {
+        console.log("ask last messages called");
+        socket.emit('askLastMessages');
+    }
+    Client.askLastMessages = askLastMessages;
     function askWatchGame(gameId) {
         console.log("ask watch game called");
         socket.emit('askWatchGame', gameId);
@@ -162,7 +181,8 @@ var Client;
     Client.askWatchGame = askWatchGame;
     function askChallenge(playerId) {
         console.log("ask challenge called");
-        socket.emit('askChallenge', playerId);
+        socket.emit('askChallenge', { nick: GameConfig.yourNick, playerId: playerId });
+        document.cookie = "nick=" + GameConfig.yourNick;
     }
     Client.askChallenge = askChallenge;
 })(Client || (Client = {}));

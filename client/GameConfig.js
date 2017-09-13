@@ -13,4 +13,6 @@ var GameConfig;
     GameConfig.hostNick = "";
     GameConfig.clientNick = "";
     GameConfig.onlineTop5 = [];
+    GameConfig.top3 = [];
+    GameConfig.liveGames = [];
 })(GameConfig || (GameConfig = {}));

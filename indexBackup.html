@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Deploy powerful buildings and units cards to destroy your opponent's Castle in this fast paced strategy IO game! Castle Arena io!">
+
+    <title>CastleArena.io</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url("/assets/48/tileFundoPagina.png");
+            background-repeat: repeat;
+            font-family: 'Baloo Paaji';
+        }
+
+        a {
+            color: hotpink;
+        }
+    </style>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="libs/phaser.min.js"></script>
+
+    <script src="libs/phaser-input.min.js"></script>
+
+    <script src="client/Boot.js"></script>
+    <script src="client/Game.js"></script>
+    <script src="client/GameScene.js"></script>
+    <script src="client/MainMenu.js"></script>
+    <script src="client/AboutScene.js"></script>
+    <script src="client/DeckScene.js"></script>
+    <script src="client/Preloader.js"></script>
+    <script src="client/Tile.js"></script>
+    <script src="client/Entity.js"></script>
+    <script src="client/GameConfig.js"></script>
+    <script src="client/Unit.js"></script>
+    <script src="client/Building.js"></script>
+    <script src="client/HealthBarSmooth.js"></script>
+    <script src="client/ArmorBarSmooth.js"></script>
+
+    <script src="client/units/Footman.js"></script>
+    <script src="client/units/Archer.js"></script>
+    <script src="client/units/Farmer.js"></script>
+    <script src="client/units/Sniper.js"></script>
+    <script src="client/units/King.js"></script>
+    <script src="client/units/Thief.js"></script>
+    <script src="client/units/Propeller.js"></script>
+    <script src="client/units/Engineer.js"></script>
+    <script src="client/units/Mage.js"></script>
+    <script src="client/units/Witch.js"></script>
+
+
+    <script src="client/units/Projectile.js"></script>
+
+    <script src="client/buildings/Castle.js"></script>
+    <script src="client/buildings/SpamBuilding.js"></script>
+    <script src="client/buildings/EffectBuilding.js"></script>
+
+    <script src="client/buildings/SpamBarSmooth.js"></script>
+
+    <script src="client/ui/UIBuildingManager.js"></script>
+    <script src="client/ui/UIBuildingButton.js"></script>
+    <script src="client/ui/UIEntityManager.js"></script>
+
+    <script src="client/ui/UIResourceManager.js"></script>
+    <script src="client/ui/IncomeBar.js"></script>
+    <script src="client/ui/IncomeBallBar.js"></script>
+    <script src="client/ui/UpdateManager.js"></script>
+    <script src="client/ui/UIUpdateButton.js"></script>
+    <script src="client/ui/WarningMessage.js"></script>
+    <script src="client/ui/ChatBox.js"></script>
+    <script src="client/ui/Leaderboard.js"></script>
+    <script src="client/ui/WatchBox.js"></script>
+
+
+    <script src="client/buildings/ArcheryRange.js"></script>
+    <script src="client/buildings/Barracks.js"></script>
+    <script src="client/buildings/Barn.js"></script>
+    <script src="client/buildings/StorageBarn.js"></script>
+    <script src="client/buildings/SpecialFacility.js"></script>
+    <script src="client/buildings/KingsCourt.js"></script>
+    <script src="client/buildings/ThiefsTent.js"></script>
+    <script src="client/buildings/Tower.js"></script>
+    <script src="client/buildings/GravityChamber.js"></script>
+    <script src="client/buildings/TechStation.js"></script>
+    <script src="client/buildings/MagesGuild.js"></script>
+    <script src="client/buildings/WitchsHut.js"></script>
+    <script src="client/buildings/TrapDevice.js"></script>
+    <script src="client/buildings/HeroShrine.js"></script>
+    <script src="client/buildings/SacrificeChamber.js"></script>
+
+
+    <script src="client/buildings/IncomeBall.js"></script>
+
+    <script src="client/Client.js"></script>
+    <script src="client/app.js"></script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-105167568-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+</head>
+
+<body>
+    <div id='game'></div>
+    <div id='links' style="display:none;text-align: center;position: absolute; z-index: 1; left: 42%; top: 30%; color: white;font-size:30px;">
+        Made by Vitor Bichara<br>
+        <br>Assets from Kenney.nl
+        <p>Partners:</p>
+        <a href="http://crazygames.com">crazygames.com</a><br>
+        <a href="http://iogames.space">iogames.space</a><br>
+        <a href="http://io-games.io/">io-games.io</a><br>
+    </div>
+
+
+</body>
+
+
+</html>

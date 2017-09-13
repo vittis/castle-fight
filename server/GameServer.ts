@@ -14,17 +14,19 @@ export class GameServer {
 
     public static instance : GameServer = null;
 
+    last10messages = [];
+
     //top5Nicks : string[] = [];
-    top3Wins: any[] = [{ nick: "Pychkin", wins: 19, id: -1 }, { nick: "lel_664", wins: 17, id: -1 }, { nick: "lel is back", wins: 17, id: -1 }]; 
+    top3Wins: any[] = []; /* = [{ nick: "Pychkin", wins: 19, id: -1 }, { nick: "lel_664", wins: 17, id: -1 }, { nick: "lel is back", wins: 17, id: -1 }] */
 
     io : SocketIO.Server;
     constructor(io) {
         GameServer.instance = this;
         this.io = io;
-        //this.top3Wins = [];
-        this.top3Wins[0] = { nick: "Guest_35", wins: 0, id:-1 };
+        this.top3Wins = [];
+        /* this.top3Wins[0] = { nick: "Guest_35", wins: 0, id:-1 };
         this.top3Wins[1] = { nick: "Guest_44", wins: 0, id:-1 };
-        this.top3Wins[2] = { nick: "Guest_50", wins: 0, id:-1 };
+        this.top3Wins[2] = { nick: "Guest_50", wins: 0, id:-1 }; */
     }
 
     addPlayer(socket : SocketIO.Socket): ServerPlayer {
@@ -402,6 +404,10 @@ export class GameServer {
                 if (p.socket)
                     p.socket.emit('receiveMessage', msg);
             });
+        }
+        this.last10messages.push(msg);
+        if (this.last10messages.length > 9) {
+            this.last10messages.splice(0, 1);
         }
     }
     onWatchGame(player : ServerPlayer, gameId) {

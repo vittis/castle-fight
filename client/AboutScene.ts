@@ -71,11 +71,11 @@ module Kodo {
 }
 
 function showAbout() {
-    var x = document.getElementById('links');
-    x.style.display = 'block';
+    /* var x = document.getElementById('links');
+    x.style.display = 'block'; */
 } 
 
 function hideAbout() {
-    var x = document.getElementById('links');
-    x.style.display = 'none';
+    /* var x = document.getElementById('links');
+    x.style.display = 'none'; */
 }

@@ -17,7 +17,13 @@ var Kodo;
         }
         MainMenu.prototype.create = function () {
             hideAbout();
+            document.getElementById("menuUI").style.display = 'block';
+            Client.askLastMessages();
+            adjust();
             MainMenu.instance = this;
+            var nickValue = document.cookie.replace(/(?:(?:^|.*;\s*)nick\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            if (nickValue)
+                GameConfig.yourNick = nickValue;
             var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)deck\s*\=\s*([^;]*).*$)|^.*$/, "$1");
             var deck = cookieValue.split(',');
             if (deck) {
@@ -77,13 +83,11 @@ var Kodo;
             for (var i = 0; i < 9; i++) {
                 _loop_1();
             }
-            var moreButton = this.game.add.button(0, this.game.height - 30, 'moreButton', function () { window.open("http://iogames.space/", "_blank"); }, this);
-            moreButton.scale.setTo(0.9, 0.9);
-            moreButton.position.setTo(30 + 330 + 640, this.game.height - 30);
-            var howToPlay = this.game.add.sprite(0, 0, 'howToPlay-changelog');
-            howToPlay.x = this.game.width - howToPlay.width;
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
-            var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () { this.game.state.start('AboutScene', true, false); }.bind(this), this);
+            var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {
+                document.getElementById("menuUI").style.display = 'none';
+                this.game.state.start('AboutScene', true, false);
+            }.bind(this), this);
             aboutButton.anchor.setTo(0.5, 0.5);
             aboutButton.tint = 0xb3b3b3;
             var aboutText = this.game.add.text(this.game.world.centerX, this.game.height - 30, 'About', style);
@@ -154,48 +158,6 @@ var Kodo;
             var deckNameLabel = this.game.add.text(this.game.world.centerX, 80, GameConfig.deckName, style);
             deckNameLabel.anchor.setTo(0.5, 0.5);
             deckNameLabel.alignIn(panelMenor, Phaser.CENTER, 26, -30);
-            var box = this.game.make.graphics(0, 0);
-            box.beginFill(0x000000);
-            box.drawRoundedRect(0, 0, 220, 115, 20);
-            box.endFill();
-            var serverStatusRect = this.game.add.sprite(0, 0, box.generateTexture());
-            box.destroy();
-            serverStatusRect.anchor.setTo(0.5, 0.5);
-            serverStatusRect.x = howToPlay.x + howToPlay.width / 2;
-            serverStatusRect.y = this.game.height - serverStatusRect.height / 2 - 120;
-            serverStatusRect.alpha = 0.53;
-            var redditButton = this.game.add.button(15, this.game.height - 30, 'redditButton', function () { window.open("https://www.reddit.com/r/castlearena/", "_blank"); }, this, 1, 0, 2);
-            redditButton.anchor.setTo(0.5, 0.5);
-            redditButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, -27, 30);
-            var discordButton = this.game.add.button(15, this.game.height - 30, 'discordButton', function () { window.open("https://discord.gg/tP2YjDb", "_blank"); }, this, 1, 0, 2);
-            discordButton.anchor.setTo(0.5, 0.5);
-            discordButton.alignTo(serverStatusRect, Phaser.BOTTOM_CENTER, 27, 30);
-            style.font = "18px Baloo Paaji";
-            style.fill = '#12522d';
-            var getInvolved = this.game.add.text(0, 0, "Join Us!", style);
-            getInvolved.anchor.setTo(0.5, 0.5);
-            getInvolved.alignTo(redditButton, Phaser.BOTTOM_CENTER, 27, 1);
-            style.font = "26px Baloo Paaji";
-            style.fill = '#ecec3a';
-            var serverStatusLabel = this.game.add.text(0, 0, "Server Status", style);
-            serverStatusLabel.anchor.setTo(0.5, 0.5);
-            serverStatusLabel.alignIn(serverStatusRect, Phaser.TOP_CENTER, 0, -12);
-            style.font = "18px Baloo Paaji";
-            style.fill = '#ffffff';
-            var onlineLabel = this.game.add.text(0, 0, "Online: ", style);
-            onlineLabel.anchor.setTo(0.5, 0.5);
-            onlineLabel.alignTo(serverStatusLabel, Phaser.BOTTOM_CENTER, 0, 5);
-            var ingame = this.game.add.text(0, 0, "In-game: ", style);
-            ingame.anchor.setTo(0.5, 0.5);
-            ingame.alignTo(onlineLabel, Phaser.BOTTOM_CENTER, 0, 2);
-            style.fill = "#29B865";
-            this.onlineNumber = this.game.add.text(0, 0, "-", style);
-            this.onlineNumber.anchor.setTo(0.5, 0.5);
-            this.onlineNumber.alignTo(onlineLabel, Phaser.RIGHT_CENTER, 3);
-            style.fill = "#de8787";
-            this.ingameNumber = this.game.add.text(0, 0, "-", style);
-            this.ingameNumber.anchor.setTo(0.5, 0.5);
-            this.ingameNumber.alignTo(ingame, Phaser.RIGHT_CENTER, 3);
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
             var tweenA = this.game.add.tween(this.titleLabel.scale).to({ x: 1.02, y: 1.02 }, 800, Phaser.Easing.Linear.None);
@@ -207,22 +169,9 @@ var Kodo;
                 tweenA.start();
             }, this);
             tweenA.start();
-            this.rectsGroup = this.game.add.group();
-            this.rectsGroup.add(howToPlay);
-            this.rectsGroup.add(serverStatusRect);
-            this.rectsGroup.add(serverStatusLabel);
-            this.rectsGroup.add(redditButton);
-            this.rectsGroup.add(discordButton);
-            this.rectsGroup.add(getInvolved);
-            this.rectsGroup.add(onlineLabel);
-            this.rectsGroup.add(ingame);
-            this.rectsGroup.add(this.onlineNumber);
-            this.rectsGroup.add(this.ingameNumber);
-            this.rectsGroup.y = -1 * this.rectsGroup.height;
-            var tweenDoido = this.add.tween(this.rectsGroup).to({ y: 0 }, 2000, Phaser.Easing.Bounce.Out, true);
-            this.chatBox = new Kodo.ChatBox(this.game);
-            this.leaderboard = new Kodo.Leaderboard(this.game);
-            this.watchBox = new Kodo.WatchBox(this.game);
+            var originalY = this.titleLabel.y;
+            this.titleLabel.y -= 200;
+            var tweenC = this.game.add.tween(this.titleLabel).to({ y: originalY }, 1500, Phaser.Easing.Bounce.Out, true);
         };
         MainMenu.prototype.onFocusOut = function () {
             if (this.inputField.value.length > 0) {
@@ -239,6 +188,7 @@ var Kodo;
             sprite.scale.setTo(1, 1);
         };
         MainMenu.prototype.onPlayButton = function () {
+            Client.checkPing();
             GameConfig.yourNick = this.inputField.value;
             Client.askMatchmaking();
             if (this.playText.text == 'Play')
@@ -249,26 +199,18 @@ var Kodo;
             Client.askBotGame();
         };
         MainMenu.prototype.onEditDeckButton = function () {
+            Client.checkPing();
             GameConfig.yourNick = this.inputField.value;
             Client.cancelMatchmaking();
+            document.getElementById("menuUI").style.display = 'none';
             this.game.state.start('DeckScene', true, false);
         };
         MainMenu.prototype.startGame = function () {
             this.game.state.start('GameScene', true, false);
+            document.getElementById("menuUI").style.display = 'none';
         };
         MainMenu.prototype.updatePlayersConnected = function (data) {
-            this.onlineNumber.text = " " + data.players.length;
-            var ingame = 0;
-            data.players.forEach(function (p) {
-                if (p.status == 2) {
-                    ingame++;
-                }
-            });
-            this.ingameNumber.text = " " + ingame;
-            data.players.sort(predicateBy("wins"));
-            data.players.reverse();
-            this.leaderboard.updateTop5(data);
-            this.watchBox.updateLiveGames(data.liveGames);
+            HtmlUI.updateLeaderboards(data);
         };
         MainMenu.prototype.onHover = function (sprite) {
             sprite.onOver();

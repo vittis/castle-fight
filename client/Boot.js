@@ -41,6 +41,8 @@ var Kodo;
                 this.game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
                 this.game.scale.startFullScreen();
             }
+            window.addEventListener('resize', function () { adjust(); });
+            adjust();
             this.game.scale.refresh();
             this.game.state.start('Preloader', true, false);
         };
@@ -48,3 +50,16 @@ var Kodo;
     }(Phaser.State));
     Kodo.Boot = Boot;
 })(Kodo || (Kodo = {}));
+function adjust() {
+    var scaleFactor = this.game.scale.scaleFactorInversed.x * 28;
+    if (window.innerHeight < 860) {
+        scaleFactor -= 1;
+    }
+    if (window.innerHeight < 780) {
+        scaleFactor -= 2;
+    }
+    if (window.innerHeight < 700) {
+        scaleFactor -= 2;
+    }
+    document.getElementById("menuUI").style.fontSize = scaleFactor + 'px';
+}

@@ -42,10 +42,6 @@ var Kodo;
     Kodo.AboutScene = AboutScene;
 })(Kodo || (Kodo = {}));
 function showAbout() {
-    var x = document.getElementById('links');
-    x.style.display = 'block';
 }
 function hideAbout() {
-    var x = document.getElementById('links');
-    x.style.display = 'none';
 }

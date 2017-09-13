@@ -25,9 +25,9 @@ var GameBot = (function (_super) {
         _this.botPoints = [{ row: 11, col: 26 }, { row: 13, col: 27 }, { row: 9, col: 28 }, { row: 9, col: 26 }];
         _this.topPoints = [{ row: 3, col: 26 }, { row: 5, col: 27 }, { row: 1, col: 28 }, { row: 1, col: 26 }];
         _this.middlePoints = [{ row: 7, col: 25 }, { row: 7, col: 29 }];
-        _this.meleeBuildings = ["ThiefsTent", "Barracks", "TechStation", "Barn"];
-        _this.goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn", "WitchsHut"];
-        _this.woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
+        _this.meleeBuildings = ["ThiefsTent", "Barracks", "TechStation"];
+        _this.goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "WitchsHut"];
+        _this.woodBuildings = ["KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
         _this.nextCard = null;
         _this.state = BotStatus.START;
         _this.waitTime = 8;
@@ -88,7 +88,7 @@ var GameBot = (function (_super) {
         if (this.state == BotStatus.AGRESSIVE) {
             if (this.counter >= this.waitTime) {
                 var building = void 0;
-                if (this.resourceManager.wood >= 160) {
+                if (this.resourceManager.wood >= 140) {
                     building = this.woodBuildings[Math.floor(Math.random() * this.woodBuildings.length)];
                 }
                 else {

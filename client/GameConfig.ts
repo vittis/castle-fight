@@ -30,5 +30,8 @@ module GameConfig {
     export var clientNick = "";
 
     export var onlineTop5 = [];
+    export var top3 = [];
+    export var liveGames = [];
+
 
 }

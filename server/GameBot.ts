@@ -24,11 +24,11 @@ export class GameBot extends GamePlayer {
 
     waitTime;
 
-    meleeBuildings = ["ThiefsTent", "Barracks", "TechStation", "Barn"];
+    meleeBuildings = ["ThiefsTent", "Barracks", "TechStation"];
 
-    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "Barn", "WitchsHut"];
+    goldBuildings = ["ThiefsTent", "Barracks", "TechStation", "ArcheryRange", "WitchsHut"];
 
-    woodBuildings = ["StorageBarn", "KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
+    woodBuildings = ["KingsCourt", "GravityChamber", "SpecialFacility", "MagesGuild"];
 
     nextCard = null;
 
@@ -101,7 +101,7 @@ export class GameBot extends GamePlayer {
         if (this.state == BotStatus.AGRESSIVE) {
             if (this.counter >= this.waitTime) {
                 let building;
-                if (this.resourceManager.wood >= 160) {
+                if (this.resourceManager.wood >= 140) {
                     building = this.woodBuildings[Math.floor(Math.random() * this.woodBuildings.length)];
                 }
                 else {
