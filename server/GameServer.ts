@@ -406,7 +406,7 @@ export class GameServer {
             });
         }
         this.last10messages.push(msg);
-        if (this.last10messages.length > 9) {
+        if (this.last10messages.length > 11) {
             this.last10messages.splice(0, 1);
         }
     }
