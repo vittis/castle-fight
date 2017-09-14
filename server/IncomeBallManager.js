@@ -39,9 +39,11 @@ var IncomeBallManager = (function () {
             else if (entity instanceof Building_1.Building) {
                 var outerTiles = entity.getOuterTiles();
                 var tile = outerTiles[Math.floor(Math.random() * outerTiles.length)];
-                entity.tile.entity = null;
-                entity.tile = tile;
-                tile.entity = entity;
+                if (tile != null) {
+                    entity.tile.entity = null;
+                    entity.tile = tile;
+                    tile.entity = entity;
+                }
             }
         }
         this.gp.addEntity(new IncomeBall_1.IncomeBall(12, 15, this));
