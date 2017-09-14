@@ -83,6 +83,13 @@ io.on('connection', function (socket) {
         if (message.indexOf('vittis: /alert-') != -1) {
             io.emit('onAnuncio', message.substr(message.indexOf('-') + 1, message.length));
         }
+        else if (message.indexOf('vittis: /kick-') != -1) {
+            console.log(message.substr(message.indexOf('-') + 1, message.length));
+            if (gameServer.getPlayerByNick(message.substr(message.indexOf('-') + 1, message.length)) != null) {
+                gameServer.getPlayerByNick(message.substr(message.indexOf('-') + 1, message.length)).socket.disconnect();
+                console.log("se fode");
+            }
+        }
         else {
             gameServer.onMessage(message);
         }

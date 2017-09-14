@@ -444,6 +444,15 @@ export class GameServer {
         });
         return player;
     }
+    getPlayerByNick(nick): ServerPlayer {
+        var player = null;
+        this.clients.forEach(c => {
+            if (c.nick == nick) {
+                player = c
+            }
+        });
+        return player;
+    }
 
 }
 function predicateBy(prop) {

@@ -381,6 +381,15 @@ var GameServer = (function () {
         });
         return player;
     };
+    GameServer.prototype.getPlayerByNick = function (nick) {
+        var player = null;
+        this.clients.forEach(function (c) {
+            if (c.nick == nick) {
+                player = c;
+            }
+        });
+        return player;
+    };
     GameServer.instance = null;
     return GameServer;
 }());
