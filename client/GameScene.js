@@ -64,12 +64,12 @@ var Kodo;
                 this.uiResourceManager.startGame();
             }
             if (this.isHost == null) {
-                var style_1 = { font: "16px Baloo Paaji", fill: 'white' };
-                var surrenderLabel_1 = this.game.add.text(this.game.world.centerX, this.game.height - 50, "Back to Menu", style_1);
+                var style_1 = { font: "20px Baloo Paaji", fill: 'white' };
+                var surrenderLabel_1 = this.game.add.text(this.game.world.centerX, this.game.height - 30, "Back to Menu", style_1);
                 surrenderLabel_1.anchor.setTo(0.5, 0.5);
                 var box = this.game.make.graphics(0, 0);
                 box.beginFill(0x000000);
-                box.drawRoundedRect(0, 0, surrenderLabel_1.width + 3, surrenderLabel_1.height, 5);
+                box.drawRoundedRect(0, 0, surrenderLabel_1.width + 8, surrenderLabel_1.height + 8, 5);
                 box.endFill();
                 var loadingRect = this.game.add.sprite(0, 0, box.generateTexture());
                 box.destroy();
@@ -85,6 +85,7 @@ var Kodo;
                     this.game.time.events.remove(this.mainLoop);
                     this.game.state.start('MainMenu', true, false);
                 }.bind(this), this);
+                this.uiSpectatorManager = new Kodo.UISpectatorManager(this.game);
             }
             this.uiEntityManager = new Kodo.UIEntityManager(this.game);
             this.incomeBallBar = new Kodo.IncomeBallBar(this.game);
@@ -170,6 +171,10 @@ var Kodo;
                     this.world.bringToTop(item.tudoGroup);
                 }.bind(this), this);
                 this.world.bringToTop(this.uiBuildingManager.buildingsGroup);
+            }
+            else {
+                this.uiSpectatorManager.updateResources(this.player);
+                this.incomeBallBar.updateCounter(this.ballData.spamRateCounter);
             }
             newEntities.forEach(function (newEntity) {
                 var entityID = newEntity.id;

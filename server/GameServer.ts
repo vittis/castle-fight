@@ -387,6 +387,11 @@ export class GameServer {
             }
         }
         console.log("jogo id " + game.id + " foi finalizado");
+        if (!versusBot) {
+            let winnerNick = hostWon? game.host.serverPlayer.nick : game.client.serverPlayer.nick;
+            let loserNick = !hostWon ? game.host.serverPlayer.nick : game.client.serverPlayer.nick;
+            this.onMessage(winnerNick+"- has defeated /"+loserNick);
+        }
     }
     checkNickExistsAndNotMine(nick, player) {
         var exists = false;

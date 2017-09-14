@@ -75,7 +75,7 @@ var GameCore = (function () {
             this.observers.forEach(function (p) {
                 if (p != null) {
                     if (p.status == ServerPlayer_1.PlayerStatus.spectating) {
-                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: _this.observers.length });
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: { client: clientObj, host: hostObj }, ballData: ballObj, watchCount: _this.observers.length });
                     }
                 }
             });

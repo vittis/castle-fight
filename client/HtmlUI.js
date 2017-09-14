@@ -71,9 +71,16 @@ var HtmlUI;
         var chatMessages = document.getElementById('chatMessages');
         var div = document.createElement('div');
         chatMessages.appendChild(div);
-        var nick = msg.substr(0, msg.indexOf(':'));
-        var message = msg.substr(msg.indexOf(':') + 1, msg.length);
-        div.innerHTML = "<span style='color: #2BB664'>" + nick + ":</span> " + message;
+        if (msg.indexOf(':') != -1) {
+            var nick = msg.substr(0, msg.indexOf(':'));
+            var message = msg.substr(msg.indexOf(':') + 1, msg.length);
+            div.innerHTML = "<span style='color: #2BB664'>" + nick + ":</span> " + message;
+        }
+        else {
+            var nick1 = msg.substr(0, msg.indexOf('-'));
+            var nick2 = msg.substr(msg.indexOf('/') + 1, msg.length);
+            div.innerHTML = "<span style='color: #FF8080'>" + nick1 + "</span> has defeated <span style='color: #FF8080'>" + nick2 + "</span>";
+        }
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     HtmlUI.receiveMessage = receiveMessage;

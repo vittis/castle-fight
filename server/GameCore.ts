@@ -235,7 +235,7 @@ export class GameCore {
             this.observers.forEach(p => {
                 if (p != null) {
                     if (p.status == PlayerStatus.spectating) {
-                        p.socket.emit('receiveData', { entities: entitiesObj, player: clientObj, ballData: ballObj, watchCount: this.observers.length });
+                        p.socket.emit('receiveData', { entities: entitiesObj, player: {client: clientObj, host: hostObj}, ballData: ballObj, watchCount: this.observers.length });
                     }
                 }
             });

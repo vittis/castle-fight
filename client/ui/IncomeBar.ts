@@ -16,15 +16,20 @@ module Kodo {
 
         lastCounter=0;
 
-        constructor(game: Phaser.Game) {
+        incomeRate=1;
+
+        constructor(game: Phaser.Game, x?) {
             super(game, 0, 0);
 
             this.maxLenght = 120;
-
+            
             this.x = 264;
             this.y = game.height - GameConfig.uiHeight / 2;
             this.smooth = 0;
 
+            if (x) {
+                this.x += x;
+            }
             game.add.existing(this);
 
             var bar = game.make.graphics(0, 0);
@@ -43,7 +48,7 @@ module Kodo {
 
             var style = { font: "Baloo Paaji", fill: '#ecec3a', wordWrap: true, /*wordWrapWidth: this.width,*/ align: "center" };
 
-            this.incomeNumberLabel = game.add.text(0, 0, '+' + Kodo.GameScene.instance.player.income, style);
+            this.incomeNumberLabel = game.add.text(0, 0, '+15', style);
             this.incomeNumberLabel.anchor.setTo(0.5, 0.5);
             this.incomeNumberLabel.fontSize = 30;
             this.incomeNumberLabel.alignTo(this, Phaser.RIGHT_CENTER, this.maxLenght + 5);
@@ -55,7 +60,7 @@ module Kodo {
         update() {
             if (this.smooth < this.maxLenght) {
                 this.currentTime += this.game.time.elapsed * 0.001;
-                this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght*0.05, this.currentTime / (this.timeToMove * Kodo.GameScene.instance.player.incomeRate));
+                this.smooth = Phaser.Math.linear(0, this.maxLenght + this.maxLenght*0.05, this.currentTime / (this.timeToMove * this.incomeRate));
             }
 
             this.clear();
@@ -64,10 +69,14 @@ module Kodo {
             this.lineTo(this.smooth, 0);
             
         }
-        updateCounter(counter : number) {
-            this.cuts = 1 / Kodo.GameScene.instance.player.incomeRate;
+        updateCounter(counter : number, customIncomeRate?) {
+            this.incomeRate = Kodo.GameScene.instance.player.incomeRate;
+            if (customIncomeRate) {
+                this.incomeRate = customIncomeRate;
+            }
+            this.cuts = 1 / this.incomeRate;
             this.smooth = Phaser.Math.linear(0, this.maxLenght, this.cuts * counter);
-            if (counter == Kodo.GameScene.instance.player.incomeRate || counter < this.lastCounter) {
+            if (counter == this.incomeRate || counter < this.lastCounter) {
                 this.currentTime=0;
                 var tweenA = this.game.add.tween(this.incomeNumberLabel.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
                 var tweenB = this.game.add.tween(this.incomeNumberLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
@@ -77,7 +86,11 @@ module Kodo {
             this.lastCounter = counter;
         }
 
-        updateIncomeLabel() {
+        updateIncomeLabel(value?) {
+            if (value) {
+                this.incomeNumberLabel.text = '+' + value;
+                return;
+            }
             this.incomeNumberLabel.text = '+' + Kodo.GameScene.instance.player.income;
         }
        
