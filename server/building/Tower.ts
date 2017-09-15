@@ -18,7 +18,7 @@ export class Tower extends AttackBuilding {
             this.attack(targetTile.entity);
     }
     onDeath() {
-        this.enemy.resourceManager.income += 25;
+        this.enemy.resourceManager.income += 20;
         super.onDeath();
     }
 }

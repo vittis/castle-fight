@@ -23,7 +23,7 @@ var Tower = (function (_super) {
             this.attack(targetTile.entity);
     };
     Tower.prototype.onDeath = function () {
-        this.enemy.resourceManager.income += 25;
+        this.enemy.resourceManager.income += 20;
         _super.prototype.onDeath.call(this);
     };
     return Tower;
