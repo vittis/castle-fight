@@ -2,8 +2,8 @@
     "name": "Castle", 
     "width": 2,
     "height": 2,
-    "maxHP": 60, 
-    "maxArmor": 20,
+    "maxHP": 50, 
+    "maxArmor": 15,
     "goldCost": 0,
     "woodCost": 0,
 
@@ -11,6 +11,6 @@
     "incomeGain": 0,
 
     "attackRange": 4,
-    "attackDmg": 3,
+    "attackDmg": 4,
     "attackRate": 2
 }

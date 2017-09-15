@@ -16,6 +16,10 @@ var AttackBuilding = (function (_super) {
     function AttackBuilding(row, col, buildingData) {
         var _this = _super.call(this, row, col, buildingData) || this;
         _this.target = null;
+        _this.regenRateCounter = 0;
+        _this.regenRate = 5;
+        _this.receivedDamageCounter = 0;
+        _this.receivedDamageRate = 10;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;
@@ -62,6 +66,20 @@ var AttackBuilding = (function (_super) {
                 this.target = null;
             }
         }
+        this.receivedDamageCounter++;
+        if (this.receivedDamageCounter > this.receivedDamageRate) {
+            this.regenRateCounter++;
+            if (this.regenRateCounter >= this.regenRate) {
+                this.regenRateCounter = 0;
+                if (this.data.armor < this.data.maxArmor) {
+                    this.data.armor++;
+                }
+            }
+        }
+    };
+    AttackBuilding.prototype.receiveAttack = function (unit) {
+        this.receivedDamageCounter = 0;
+        _super.prototype.receiveAttack.call(this, unit);
     };
     AttackBuilding.prototype.doAction = function (targetTile) {
         this.step();

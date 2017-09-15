@@ -17,6 +17,10 @@ export abstract class AttackBuilding extends Building {
 
     attackRateCounter: number;
     target: Entity = null;
+    regenRateCounter = 0;
+    regenRate=5;
+    receivedDamageCounter = 0;
+    receivedDamageRate = 10;
 
     get data(): AttackBuildingData {
         return this.dataq;
@@ -66,8 +70,21 @@ export abstract class AttackBuilding extends Building {
                 this.target = null;
             }
         }
+        this.receivedDamageCounter++;
+        if (this.receivedDamageCounter>this.receivedDamageRate) {
+            this.regenRateCounter++;
+            if (this.regenRateCounter >= this.regenRate) {
+                this.regenRateCounter=0;
+                if (this.data.armor < this.data.maxArmor) {
+                    this.data.armor++;
+                }
+            }
+        }
     }
-    
+    receiveAttack(unit) {
+        this.receivedDamageCounter=0;
+        super.receiveAttack(unit);
+    }
     doAction(targetTile: Tile) {
         this.step();
     }

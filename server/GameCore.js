@@ -48,9 +48,6 @@ var GameCore = (function () {
         }
     };
     GameCore.prototype.setSocket = function (p, isHost) {
-        if (p.socket) {
-            console.log("setando socket");
-        }
     };
     GameCore.prototype.sendaData = function () {
         var _this = this;

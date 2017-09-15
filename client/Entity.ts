@@ -87,7 +87,7 @@ module Kodo {
          }
 
         updateStep(newData : EntityData, tile? : Tile) {
-            if (newData.hp < this.dataq.hp || newData.armor < this.dataq.armor) {
+            if (newData.hp != this.dataq.hp || newData.armor != this.dataq.armor) {
                 this.armorBar.receiveDamage(newData.armor);
                 this.hpBar.receiveDamage(newData.hp);
                 if (this.hpBar.lenght < this.armorBar.lenght)
@@ -95,8 +95,13 @@ module Kodo {
                 else 
                     this.barGroup.moveUp(this.hpBar);
 
+                if (!(newData.armor > this.dataq.armor)) {
+                    this.receiveDamage();
+                }
+                else {
+                    this.upArmor();
+                }
                 this.dataq = newData;
-                this.receiveDamage();
             }
             else {
                 if (newData.statusData.stunned) {
@@ -108,6 +113,26 @@ module Kodo {
                 this.dataq = newData;
             } 
 
+        }
+        upArmor() {
+            var style = { fill: '#ffffff', wordWrap: true, align: "center" };
+
+            let goldLabel = this.game.add.text(this.x + this.width / 2, this.y + this.height / 2 - 15, '+1', style);
+            goldLabel.anchor.setTo(0.5, 0.5);
+            goldLabel.fontSize = 24;
+            goldLabel.scale.setTo(0.3, 0.3);
+
+            let tweenA = this.game.add.tween(goldLabel.scale).to({ x: 1.5, y: 1.5 }, 200, Phaser.Easing.Linear.None);
+            let tweenB = this.game.add.tween(goldLabel.scale).to({ x: 1, y: 1 }, 200, Phaser.Easing.Linear.None);
+            let tweenC = this.game.add.tween(goldLabel).to({ alpha: 0 }, 300, Phaser.Easing.Linear.None);
+
+            tweenC.onComplete.add(function removeText() {
+                goldLabel.destroy();
+            }, this);
+
+            tweenA.chain(tweenB);
+            tweenB.chain(tweenC);
+            tweenA.start();
         }
         receiveDamage() {
             this.tint = 0xff3030;

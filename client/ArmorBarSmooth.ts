@@ -42,8 +42,13 @@ module Kodo {
                     this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height - 1);
                 }
                 if (this.smooth < this.lenght) {
+
                     if (this.game != null)
                         this.smooth += this.game.time.elapsed / 100 * 6;
+                }
+                else if (this.smooth > this.lenght) {
+                    if (this.game != null)
+                        this.smooth -= this.game.time.elapsed / 100 * 6;
                 }
                 this.clear();
                 this.lineStyle(6, 0x808080, 1);
