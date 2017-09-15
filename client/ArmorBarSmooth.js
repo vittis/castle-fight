@@ -35,12 +35,10 @@ var Kodo;
                     this.y = this.entity.y + GameConfig.tileSize - 7 + GameConfig.tileSize * (this.entity.dataq.height - 1);
                 }
                 if (this.smooth < this.lenght) {
-                    console.log("ih2");
                     if (this.game != null)
                         this.smooth += this.game.time.elapsed / 100 * 6;
                 }
                 else if (this.smooth > this.lenght) {
-                    console.log("ih");
                     if (this.game != null)
                         this.smooth -= this.game.time.elapsed / 100 * 6;
                 }
