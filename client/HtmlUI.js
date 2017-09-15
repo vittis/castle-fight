@@ -68,6 +68,7 @@ var HtmlUI;
     }
     HtmlUI.clearMessages = clearMessages;
     function receiveMessage(msg) {
+        msg = msg.replace(/</g, "&lt;");
         var chatMessages = document.getElementById('chatMessages');
         var div = document.createElement('div');
         chatMessages.appendChild(div);
