@@ -1,11 +1,15 @@
 import { AttackBuilding } from "./AttackBuilding";
 import { GridManager } from "../GridManager";
 import { Tile } from "../Tile";
+import { GamePlayer } from "../GamePlayer";
 
 export class Tower extends AttackBuilding {
 
-    constructor(row, col) {
+    enemy : GamePlayer;
+
+    constructor(row, col, enemy) {
         super(row, col, require('clone')(require('../data/buildings/tower.json')));
+        this.enemy = enemy;
     }
 
     doAction(targetTile: Tile) {
@@ -13,5 +17,8 @@ export class Tower extends AttackBuilding {
         if (this.canAttack())
             this.attack(targetTile.entity);
     }
-
+    onDeath() {
+        this.enemy.resourceManager.income += 25;
+        super.onDeath();
+    }
 }

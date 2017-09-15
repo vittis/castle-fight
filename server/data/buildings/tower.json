@@ -6,10 +6,10 @@
     "maxArmor": 10,
     "goldCost": 0,
     "woodCost": 0,
-    "description": "Protective tower",
+    "description": "Grants +25 income to the enemy if destroyed",
     "incomeGain": 0,
 
     "attackRange": 4,
-    "attackDmg": 3,
-    "attackRate": 1
+    "attackDmg": 4,
+    "attackRate": 2
 }

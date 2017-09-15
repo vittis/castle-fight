@@ -64,11 +64,11 @@ export class GameCore {
         this.host.buildBuilding(this.hostCastle);
         this.client.buildBuilding(this.clientCastle);     
 
-        this.client.buildBuilding(new Tower(3, 24));  
-        this.client.buildBuilding(new Tower(11, 24));     
+        this.client.buildBuilding(new Tower(3, 24, this.host));  
+        this.client.buildBuilding(new Tower(11, 24, this.host));     
    
-        this.host.buildBuilding(new Tower(11, 5));     
-        this.host.buildBuilding(new Tower(3, 5)); 
+        this.host.buildBuilding(new Tower(11, 5, this.client));     
+        this.host.buildBuilding(new Tower(3, 5, this.client)); 
 
          // this.host.buildBuilding(new ArcheryRange(GameConfig.GRID_ROWS / 2 - 1 - 2 - 2, 1));
          /* this.host.buildBuilding(new Barn(GameConfig.GRID_ROWS / 2 - 1 - 2, 0)); 

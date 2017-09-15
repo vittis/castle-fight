@@ -105,7 +105,6 @@ export abstract class Entity {
             }
         }
         this.owner.removeEntity(this);
-        
     }
 
     getEntityData() {

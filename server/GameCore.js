@@ -31,10 +31,10 @@ var GameCore = (function () {
         this.clientCastle = new Castle_1.Castle(GameConfig_1.GameConfig.GRID_ROWS / 2 - 1, GameConfig_1.GameConfig.GRID_COLS - 2 - 2);
         this.host.buildBuilding(this.hostCastle);
         this.client.buildBuilding(this.clientCastle);
-        this.client.buildBuilding(new Tower_1.Tower(3, 24));
-        this.client.buildBuilding(new Tower_1.Tower(11, 24));
-        this.host.buildBuilding(new Tower_1.Tower(11, 5));
-        this.host.buildBuilding(new Tower_1.Tower(3, 5));
+        this.client.buildBuilding(new Tower_1.Tower(3, 24, this.host));
+        this.client.buildBuilding(new Tower_1.Tower(11, 24, this.host));
+        this.host.buildBuilding(new Tower_1.Tower(11, 5, this.client));
+        this.host.buildBuilding(new Tower_1.Tower(3, 5, this.client));
         if (client.socket)
             this.client.serverPlayer.socket.emit('startGame', { id: this.id, rows: GameConfig_1.GameConfig.GRID_ROWS, cols: GameConfig_1.GameConfig.GRID_COLS, isHost: false, stepRate: GameConfig_1.GameConfig.STEP_RATE, playerId: client.id, opponentNick: host.nick });
         if (host.socket)

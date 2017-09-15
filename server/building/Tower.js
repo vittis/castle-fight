@@ -13,12 +13,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var AttackBuilding_1 = require("./AttackBuilding");
 var Tower = (function (_super) {
     __extends(Tower, _super);
-    function Tower(row, col) {
-        return _super.call(this, row, col, require('clone')(require('../data/buildings/tower.json'))) || this;
+    function Tower(row, col, enemy) {
+        var _this = _super.call(this, row, col, require('clone')(require('../data/buildings/tower.json'))) || this;
+        _this.enemy = enemy;
+        return _this;
     }
     Tower.prototype.doAction = function (targetTile) {
         if (this.canAttack())
             this.attack(targetTile.entity);
+    };
+    Tower.prototype.onDeath = function () {
+        this.enemy.resourceManager.income += 25;
+        _super.prototype.onDeath.call(this);
     };
     return Tower;
 }(AttackBuilding_1.AttackBuilding));
