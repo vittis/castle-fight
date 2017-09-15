@@ -17,6 +17,7 @@ var Kodo;
         }
         MainMenu.prototype.create = function () {
             hideAbout();
+            document.getElementById("bottomLeftBox").style.display = 'block';
             document.getElementById("menuUI").style.display = 'block';
             Client.askLastMessages();
             adjust();
@@ -85,6 +86,7 @@ var Kodo;
             }
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
             var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {
+                document.getElementById("bottomLeftBox").style.display = 'none';
                 document.getElementById("menuUI").style.display = 'none';
                 this.game.state.start('AboutScene', true, false);
             }.bind(this), this);
@@ -172,6 +174,16 @@ var Kodo;
             var originalY = this.titleLabel.y;
             this.titleLabel.y -= 200;
             var tweenC = this.game.add.tween(this.titleLabel).to({ y: originalY }, 1500, Phaser.Easing.Bounce.Out, true);
+            var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+            enterKey.onDown.add(function () {
+                if (document.getElementById('inputChat') == document.activeElement) {
+                    if (document.getElementById('inputChat').value != '') {
+                        Client.sendMessage(GameConfig.yourNick + ": " + document.getElementById('inputChat').value);
+                        document.getElementById('inputChat').value = '';
+                    }
+                }
+                document.getElementById('inputChat').focus();
+            }, this);
         };
         MainMenu.prototype.onFocusOut = function () {
             if (this.inputField.value.length > 0) {
@@ -202,11 +214,13 @@ var Kodo;
             Client.checkPing();
             GameConfig.yourNick = this.inputField.value;
             Client.cancelMatchmaking();
+            document.getElementById("bottomLeftBox").style.display = 'none';
             document.getElementById("menuUI").style.display = 'none';
             this.game.state.start('DeckScene', true, false);
         };
         MainMenu.prototype.startGame = function () {
             this.game.state.start('GameScene', true, false);
+            document.getElementById("bottomLeftBox").style.display = 'none';
             document.getElementById("menuUI").style.display = 'none';
         };
         MainMenu.prototype.updatePlayersConnected = function (data) {

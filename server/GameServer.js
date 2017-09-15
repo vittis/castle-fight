@@ -50,6 +50,8 @@ var GameServer = (function () {
         this.games.push(game);
         this.lastGameID++;
         console.log("Jogo criado id" + game.id);
+        host.lastMsgSent = "";
+        client.lastMsgSent = "";
         return game;
     };
     GameServer.prototype.startBotGame = function (host) {
@@ -57,6 +59,7 @@ var GameServer = (function () {
         var game = new GameCore_1.GameCore(this.lastGameID, host, new ServerBot_1.ServerBot());
         this.games.push(game);
         this.lastGameID++;
+        console.log("started bot match! with " + host.nick);
     };
     GameServer.prototype.onCancelWatch = function (player) {
         player.status = ServerPlayer_1.PlayerStatus.connected;
@@ -340,17 +343,29 @@ var GameServer = (function () {
         });
         return exists;
     };
-    GameServer.prototype.onMessage = function (msg) {
-        var playersOnLobby = this.getPlayersOnLobby();
-        if (playersOnLobby.length > 0) {
-            playersOnLobby.forEach(function (p) {
-                if (p.socket)
-                    p.socket.emit('receiveMessage', msg);
-            });
+    GameServer.prototype.onMessage = function (msg, player) {
+        if (player) {
+            if (player.lastMsgSent != msg) {
+                this.io.emit('receiveMessage', msg);
+                this.last10messages.push(msg);
+                if (this.last10messages.length > 11) {
+                    this.last10messages.splice(0, 1);
+                }
+                player.lastMsgSent = msg;
+            }
         }
-        this.last10messages.push(msg);
-        if (this.last10messages.length > 11) {
-            this.last10messages.splice(0, 1);
+        else {
+            var playersOnLobby = this.getPlayersOnLobby();
+            if (playersOnLobby.length > 0) {
+                playersOnLobby.forEach(function (p) {
+                    if (p.socket)
+                        p.socket.emit('receiveMessage', msg);
+                });
+            }
+            this.last10messages.push(msg);
+            if (this.last10messages.length > 11) {
+                this.last10messages.splice(0, 1);
+            }
         }
     };
     GameServer.prototype.onWatchGame = function (player, gameId) {

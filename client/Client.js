@@ -35,9 +35,7 @@ var Client;
         }
     });
     socket.on('receiveMessage', function (msg) {
-        if (Kodo.Game.instance.state.current == 'MainMenu') {
-            HtmlUI.receiveMessage(msg);
-        }
+        HtmlUI.receiveMessage(msg);
     });
     socket.on('receiveBuildingAndUnitData', function (data) {
         data.buildingData.forEach(function (element) {

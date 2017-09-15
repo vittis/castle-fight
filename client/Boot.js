@@ -61,5 +61,6 @@ function adjust() {
     if (window.innerHeight < 700) {
         scaleFactor -= 2;
     }
+    document.getElementById("bottomLeftBox").style.fontSize = scaleFactor + 'px';
     document.getElementById("menuUI").style.fontSize = scaleFactor + 'px';
 }

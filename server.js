@@ -91,7 +91,7 @@ io.on('connection', function (socket) {
             }
         }
         else {
-            gameServer.onMessage(message);
+            gameServer.onMessage(message, player);
         }
     });
     socket.on('askChallenge', function (data) {

@@ -13,6 +13,7 @@ var ServerPlayer = (function () {
         this.wins = 0;
         this.socketSet = false;
         this.challengers = [];
+        this.lastMsgSent = "";
         this.id = id;
         this.status = PlayerStatus.connected;
         this.nick = "Guest_" + id;

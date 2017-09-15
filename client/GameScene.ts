@@ -183,7 +183,11 @@ module Kodo {
             //this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
             //GameConfig.updateRate += 200;
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
-
+            HtmlUI.isShowingIngameChat=false;
+            var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+            enterKey.onDown.add(HtmlUI.hideShowChat, this);
+            var scapeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
+            scapeKey.onDown.add(HtmlUI.hideChat, this);
         }
         updateEntities(newEntities: any[]) {//chamado a cada 700 pelo server
             if (this.stateCache.length == 0) {

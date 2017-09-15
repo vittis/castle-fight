@@ -83,10 +83,9 @@ module HtmlUI {
         }
     }
     export function receiveMessage(msg) {
-        var chatMessages = document.getElementById('chatMessages')
+        var chatMessages = document.getElementById('chatMessages');
         var div = document.createElement('div');
         chatMessages.appendChild(div);
-
         if (msg.indexOf(':') != -1) {
             var nick = msg.substr(0, msg.indexOf(':'));
             var message = msg.substr(msg.indexOf(':')+1, msg.length)
@@ -100,7 +99,33 @@ module HtmlUI {
         }
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-
+    export var isShowingIngameChat=false;
+    export function hideShowChat() {
+        if (!isShowingIngameChat) {
+            document.getElementById('bottomLeftBox').style.display = 'block';
+            isShowingIngameChat=true;
+            document.getElementById('inputChat').focus();
+        }
+        else if (document.getElementById('inputChat') == document.activeElement) {
+            if (document.getElementById('inputChat').value != '') {
+                Client.sendMessage(GameConfig.yourNick + ": " + document.getElementById('inputChat').value);
+                document.getElementById('inputChat').value = '';
+            }
+            else {
+                document.getElementById('bottomLeftBox').style.display = 'none';
+                isShowingIngameChat = false;
+            }
+        }
+        else {
+            document.getElementById('inputChat').focus();
+        }
+    }
+    export function hideChat() {
+        if (isShowingIngameChat) {
+            document.getElementById('bottomLeftBox').style.display = 'none';
+            isShowingIngameChat = false;
+        }
+    }
 
     window.onload = () => {
         document.getElementsByClassName('matchItem')[0].addEventListener('click', function (event) {
@@ -135,17 +160,18 @@ module HtmlUI {
             }
         });
 
-
-        document.getElementById('inputChat').onkeypress = function (e) {
+        /* document.getElementById('inputChat').onkeypress = function (e) {
+            console.log(e.keyCode);
             if (!e) e = window.event;
+            console.log(e.keyCode);
+
             if (e.keyCode == 13) {
                 if (this.value != ''){
                     Client.sendMessage(GameConfig.yourNick + ": "+this.value);
                     this.value = '';
                 }
-                return false;
             }
-        }
+        } */
     };
 
 

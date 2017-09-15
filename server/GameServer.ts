@@ -70,6 +70,8 @@ export class GameServer {
         this.games.push(game);
         this.lastGameID++;
         console.log("Jogo criado id"+game.id);
+        host.lastMsgSent="";
+        client.lastMsgSent="";
         return game;
     }
 
@@ -78,6 +80,7 @@ export class GameServer {
         var game = new GameCore(this.lastGameID, host, new ServerBot());
         this.games.push(game);
         this.lastGameID++;
+        console.log("started bot match! with "+host.nick);
     }
     onCancelWatch(player: ServerPlayer) {
         player.status = PlayerStatus.connected;
@@ -402,17 +405,37 @@ export class GameServer {
         });
         return exists;
     }
-    onMessage(msg) {
-        var playersOnLobby = this.getPlayersOnLobby();
-        if (playersOnLobby.length > 0) {
-            playersOnLobby.forEach(p => {
-                if (p.socket)
-                    p.socket.emit('receiveMessage', msg);
-            });
+    onMessage(msg, player? : ServerPlayer) {
+        if (player) {
+            if (player.lastMsgSent != msg) {
+                /* let playersOnLobby = this.getPlayersOnLobby();
+                if (playersOnLobby.length > 0) {
+                    playersOnLobby.forEach(p => {
+                        if (p.socket)
+                            p.socket.emit('receiveMessage', msg);
+                    });
+                } */
+                this.io.emit('receiveMessage', msg);
+                this.last10messages.push(msg);
+                if (this.last10messages.length > 11) {
+                    this.last10messages.splice(0, 1);
+                }
+
+                player.lastMsgSent = msg;
+            }
         }
-        this.last10messages.push(msg);
-        if (this.last10messages.length > 11) {
-            this.last10messages.splice(0, 1);
+        else {
+            let playersOnLobby = this.getPlayersOnLobby();
+            if (playersOnLobby.length > 0) {
+                playersOnLobby.forEach(p => {
+                    if (p.socket)
+                        p.socket.emit('receiveMessage', msg);
+                });
+            }
+            this.last10messages.push(msg);
+            if (this.last10messages.length > 11) {
+                this.last10messages.splice(0, 1);
+            }
         }
     }
     onWatchGame(player : ServerPlayer, gameId) {

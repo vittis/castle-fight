@@ -142,6 +142,11 @@ var Kodo;
             eyeSprite.anchor.setTo(0.5, 0.5);
             eyeSprite.tint = 0xffffff;
             this.mainLoop = this.game.time.events.loop(720, this.loopCache.bind(this), this);
+            HtmlUI.isShowingIngameChat = false;
+            var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+            enterKey.onDown.add(HtmlUI.hideShowChat, this);
+            var scapeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
+            scapeKey.onDown.add(HtmlUI.hideChat, this);
         };
         GameScene.prototype.updateEntities = function (newEntities) {
             if (this.stateCache.length == 0) {

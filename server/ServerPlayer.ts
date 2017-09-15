@@ -18,6 +18,8 @@ export class ServerPlayer {
 
     challengers = [];
 
+    lastMsgSent ="";
+
     constructor(id, socket?) {
         this.id = id;
         this.status = PlayerStatus.connected;

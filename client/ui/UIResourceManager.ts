@@ -42,6 +42,10 @@ module Kodo {
 
         startGame() {
             new WarningMessage(this.game, 'Match Started!');
+            this.game.time.events.add(2000, this.showMsg.bind(this), this);
+        }
+        showMsg() {
+            new WarningMessage(this.game, 'Press Enter to open chat!', null, 1500);
         }
 
         updateResources(incomeRateCounter : number) {

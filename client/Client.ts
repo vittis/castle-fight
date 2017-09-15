@@ -44,10 +44,7 @@ module Client {
     });
 
     socket.on('receiveMessage', function (msg) {
-        if (Kodo.Game.instance.state.current == 'MainMenu') {
-            /* Kodo.MainMenu.instance.chatBox.onReceivedNewMessage(msg); */
-            HtmlUI.receiveMessage(msg);
-        }
+        HtmlUI.receiveMessage(msg);
     });
 
     socket.on('receiveBuildingAndUnitData', function (data) {

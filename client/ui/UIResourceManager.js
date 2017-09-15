@@ -22,6 +22,10 @@ var Kodo;
         }
         UIResourceManager.prototype.startGame = function () {
             new Kodo.WarningMessage(this.game, 'Match Started!');
+            this.game.time.events.add(2000, this.showMsg.bind(this), this);
+        };
+        UIResourceManager.prototype.showMsg = function () {
+            new Kodo.WarningMessage(this.game, 'Press Enter to open chat!', null, 1500);
         };
         UIResourceManager.prototype.updateResources = function (incomeRateCounter) {
             if (this.incomeBar) {

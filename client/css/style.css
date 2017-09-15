@@ -33,6 +33,12 @@
     -webkit-animation: closeAnimation 1.5s both ease;
     animation: closeAnimation 1.5s both ease;
 }
+.animEsquerda2 {
+    transform-origin: 100% 50%;
+    -webkit-transform-origin: 100% 50%;
+    -webkit-animation: closeAnimation 1.5s both ease;
+    animation: closeAnimation 0.5s both ease;
+}
 @keyframes closeAnimation {
       0% {
         -webkit-transform: translateX(-300px);

@@ -84,6 +84,35 @@ var HtmlUI;
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     HtmlUI.receiveMessage = receiveMessage;
+    HtmlUI.isShowingIngameChat = false;
+    function hideShowChat() {
+        if (!HtmlUI.isShowingIngameChat) {
+            document.getElementById('bottomLeftBox').style.display = 'block';
+            HtmlUI.isShowingIngameChat = true;
+            document.getElementById('inputChat').focus();
+        }
+        else if (document.getElementById('inputChat') == document.activeElement) {
+            if (document.getElementById('inputChat').value != '') {
+                Client.sendMessage(GameConfig.yourNick + ": " + document.getElementById('inputChat').value);
+                document.getElementById('inputChat').value = '';
+            }
+            else {
+                document.getElementById('bottomLeftBox').style.display = 'none';
+                HtmlUI.isShowingIngameChat = false;
+            }
+        }
+        else {
+            document.getElementById('inputChat').focus();
+        }
+    }
+    HtmlUI.hideShowChat = hideShowChat;
+    function hideChat() {
+        if (HtmlUI.isShowingIngameChat) {
+            document.getElementById('bottomLeftBox').style.display = 'none';
+            HtmlUI.isShowingIngameChat = false;
+        }
+    }
+    HtmlUI.hideChat = hideChat;
     window.onload = function () {
         document.getElementsByClassName('matchItem')[0].addEventListener('click', function (event) {
             if (liveGameId[0] != null) {
@@ -110,16 +139,5 @@ var HtmlUI;
                 GameConfig.clientNick = lis[2].children[2].innerHTML;
             }
         });
-        document.getElementById('inputChat').onkeypress = function (e) {
-            if (!e)
-                e = window.event;
-            if (e.keyCode == 13) {
-                if (this.value != '') {
-                    Client.sendMessage(GameConfig.yourNick + ": " + this.value);
-                    this.value = '';
-                }
-                return false;
-            }
-        };
     };
 })(HtmlUI || (HtmlUI = {}));

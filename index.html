@@ -134,7 +134,7 @@
                                 <div style="display: inline; color:#02C605"onclick="HtmlUI.onChallenge(0)"></div>
                             </li>
                             <li style="margin:0 0 11px 0;">
-                                 <img src="assets/48/menu_ui/challengeIcon.png" class="challenge"onclick="HtmlUI.onChallenge(1)">
+                                <img src="assets/48/menu_ui/challengeIcon.png" class="challenge"onclick="HtmlUI.onChallenge(1)">
                                 <div style="display: inline;"onclick="HtmlUI.onChallenge(1)"></div>
                                 <div style="display: inline; color:#02C605"onclick="HtmlUI.onChallenge(1)"></div>
                             </li>
@@ -174,7 +174,7 @@
                 <div id='liveMatches' class="unselectable">
                     <div style="font-size: 1em; color: #ff8080; text-align: center;padding-top: 3px;">Live Matches</div>
                     <ul id='liveMatchesList' style="font-size: 0.65em; color: white; text-align: center; padding-top: 12px;">
-      
+    
                             <li class="matchItem" style="display: none" >
                                 <div style="display: inline;"></div>
                                 <div style="color: #d66a6a; display: inline;">vs</div>
@@ -219,11 +219,11 @@
                     <div style="font-size: 1em; color: #ECEC3A; text-align: center;padding-top: 3px;">Changelog</div>
                     <div style="font-size: 0.65em; color: white; text-align: center;margin: 15px 10px 10px 10px;">
                         <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;">September 14</span>
+                        -In-game chat (press enter while in game)
+                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 14</span>
                         -Improved spectator mode
                         <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 13</span>
                         -UI Overhaul
-                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 11</span> 
-                        -Minor balance changes
                     </div>
                 </div>
             </div>
@@ -260,27 +260,21 @@
                     </a>
                 </div>
             </div>
+        </div>  
+        <div id='bottomLeftBox' class="animEsquerda2" style="display: none; font-size: 26px;">
+            <div id='chatBox'>
+                <div id='container'>
+                    <div id='chatMessages'>
 
-            <div id='bottomLeftBox' class="animEsquerda">
-                <div id='chatBox'>
-                    <div id='container'>
-                        <div id='chatMessages'> 
-                            <div><span style="color: #2BB664">vittis:</span> kkkk como assim po? ta me dizendo q isso é real????</div>
-                            <div><span style="color: #2BB664">faggot:</span> vai toma no cu tranquilo</div>
-                        </div>
-                    </div>
-
-                    <div id='inputContainer'>
-                        <input maxlength="65" id="inputChat" placeholder="Enter Message" type="text" autocomplete="off"
-                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" />>
                     </div>
                 </div>
+
+                <div id='inputContainer'>
+                    <input maxlength="65" id="inputChat" placeholder="Enter Message" type="text" autocomplete="off" onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'Enter Message'" />>
+                </div>
             </div>
-
-
         </div>
-
-
     </body>
 
 

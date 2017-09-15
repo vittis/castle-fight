@@ -25,7 +25,9 @@ module Kodo {
 
         create() {
             hideAbout();
+            document.getElementById("bottomLeftBox").style.display = 'block';
             document.getElementById("menuUI").style.display = 'block';
+
             Client.askLastMessages();
             adjust();
 
@@ -101,6 +103,7 @@ module Kodo {
 
             var style = { font: "86px Baloo Paaji", fill: 'white', align: "center" };
             var aboutButton = this.game.add.button(this.game.world.centerX, this.game.height - 40, 'playButton', function () {
+                document.getElementById("bottomLeftBox").style.display = 'none';
                 document.getElementById("menuUI").style.display = 'none';
                 this.game.state.start('AboutScene', true, false);
             }.bind(this), this);
@@ -212,6 +215,17 @@ module Kodo {
             this.titleLabel.y -= 200;
             var tweenC = this.game.add.tween(this.titleLabel).to({y: originalY}, 1500, Phaser.Easing.Bounce.Out, true);
 
+            var enterKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ENTER);
+            enterKey.onDown.add(function () {
+                if (document.getElementById('inputChat') == document.activeElement) {
+                    if (document.getElementById('inputChat').value != '') {
+                        Client.sendMessage(GameConfig.yourNick + ": " + document.getElementById('inputChat').value);
+                        document.getElementById('inputChat').value = '';
+                    }
+                }
+                document.getElementById('inputChat').focus();
+
+            }, this);
         }
         onFocusOut() {
             if (this.inputField.value.length > 0) {
@@ -249,35 +263,20 @@ module Kodo {
 
             GameConfig.yourNick = this.inputField.value;
             Client.cancelMatchmaking();
+            document.getElementById("bottomLeftBox").style.display = 'none';
             document.getElementById("menuUI").style.display = 'none';
             this.game.state.start('DeckScene', true, false);
         }
 
         startGame() {
             this.game.state.start('GameScene', true, false);
+            document.getElementById("bottomLeftBox").style.display = 'none';
             document.getElementById("menuUI").style.display = 'none';
 
         }
 
 
         updatePlayersConnected(data) {
-            //console.log(this.game.scale.scaleFactor);
-
-/*             this.onlineNumber.text = " "+data.players.length;
-            var ingame=0;
-            data.players.forEach(p => {
-
-                if (p.status == 2) {
-                    ingame++;
-                }
-            });
-            this.ingameNumber.text = " "+ingame;
-
-            data.players.sort(predicateBy("wins"));
-            data.players.reverse();
-            this.leaderboard.updateTop5(data);
-            this.watchBox.updateLiveGames(data.liveGames); */
-
             HtmlUI.updateLeaderboards(data);
         }
 
