@@ -17,9 +17,9 @@ var AttackBuilding = (function (_super) {
         var _this = _super.call(this, row, col, buildingData) || this;
         _this.target = null;
         _this.regenRateCounter = 0;
-        _this.regenRate = 5;
+        _this.regenRate = 15;
         _this.receivedDamageCounter = 0;
-        _this.receivedDamageRate = 5;
+        _this.receivedDamageRate = 20;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;
