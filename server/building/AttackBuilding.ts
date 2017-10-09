@@ -20,7 +20,7 @@ export abstract class AttackBuilding extends Building {
     regenRateCounter = 0;
     regenRate=15;
     receivedDamageCounter = 0;
-    receivedDamageRate = 20;
+    receivedDamageRate = 10;
 
     get data(): AttackBuildingData {
         return this.dataq;

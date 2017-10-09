@@ -9,6 +9,14 @@ export class HeroShrine extends EffectBuilding {
     constructor(row, col) {
         super(row, col, require('clone')(require('../data/buildings/heroShrine.json')));
     }
+    addToGame(gm) {
+        super.addToGame(gm);
+        this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        if (this.data.spamRate <= 0) {
+            this.data.spamRate = 1;
+        }
+        this.data.spamCount += this.owner.updateManager.unitCountModifier; 
+    }
     canDoEffect() {
         var canDo = false;
         if (this.owner.getAllUnits().length > 0) {

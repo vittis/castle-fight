@@ -27,7 +27,7 @@ var Farmer = (function (_super) {
         if (farmersInGame > 3) {
             this.data.maxHP = this.data.maxHP + 3;
             this.data.hp = this.data.maxHP;
-            this.data.attackDmg = this.data.attackDmg * 2;
+            this.data.attackDmg = this.data.attackDmg + 1;
         }
     };
     Farmer.prototype.doAction = function (targetTile) {

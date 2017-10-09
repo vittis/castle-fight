@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameConfig_1 = require("./GameConfig");
+var SacrificeChamber_1 = require("./building/SacrificeChamber");
 var Upgrades;
 (function (Upgrades) {
     Upgrades[Upgrades["INCOME"] = 0] = "INCOME";
@@ -52,6 +53,10 @@ var UpdateManager = (function () {
                 this.gamePlayer.getSpamBuildings().forEach(function (b) {
                     b.data.spamRate -= 5;
                 });
+                this.gamePlayer.getEffectBuildings().forEach(function (b) {
+                    if (!(b instanceof SacrificeChamber_1.SacrificeChamber))
+                        b.data.spamRate -= 5;
+                });
                 this.spamRateModifier -= 5;
             }
             else if (upgrade == 2) {
@@ -74,6 +79,10 @@ var UpdateManager = (function () {
             else if (upgrade == 5) {
                 this.gamePlayer.getSpamBuildings().forEach(function (b) {
                     b.data.spamCount += 1;
+                });
+                this.gamePlayer.getEffectBuildings().forEach(function (b) {
+                    if (!(b instanceof SacrificeChamber_1.SacrificeChamber))
+                        b.data.spamCount += 1;
                 });
                 this.unitCountModifier += 1;
             }

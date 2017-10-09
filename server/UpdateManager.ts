@@ -1,5 +1,6 @@
 import { GameConfig } from "./GameConfig";
 import { GamePlayer } from "./GamePlayer";
+import { SacrificeChamber } from "./building/SacrificeChamber";
 
 
 export enum Upgrades {
@@ -69,6 +70,12 @@ export class UpdateManager {
                 this.gamePlayer.getSpamBuildings().forEach(b => {
                     b.data.spamRate -= 5;
                 });
+                this.gamePlayer.getEffectBuildings().forEach(b => {
+                    if (!(b instanceof SacrificeChamber))
+                        b.data.spamRate -= 5;
+                });
+
+
                 this.spamRateModifier -= 5;
             }
             else if (upgrade == 2) {//atk
@@ -92,6 +99,11 @@ export class UpdateManager {
                 this.gamePlayer.getSpamBuildings().forEach(b => {
                     b.data.spamCount += 1;
                 });
+                this.gamePlayer.getEffectBuildings().forEach(b => {
+                    if (!(b instanceof SacrificeChamber))
+                        b.data.spamCount += 1;
+                });
+
                 this.unitCountModifier +=1;
             }
             else if (upgrade == 6) {

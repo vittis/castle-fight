@@ -19,7 +19,7 @@ var AttackBuilding = (function (_super) {
         _this.regenRateCounter = 0;
         _this.regenRate = 15;
         _this.receivedDamageCounter = 0;
-        _this.receivedDamageRate = 20;
+        _this.receivedDamageRate = 10;
         _this.data.attackData = { hasAttacked: false, row: -1, col: -1 };
         _this.attackRateCounter = _this.data.attackRate;
         return _this;

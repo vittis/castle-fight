@@ -16,6 +16,14 @@ var HeroShrine = (function (_super) {
     function HeroShrine(row, col) {
         return _super.call(this, row, col, require('clone')(require('../data/buildings/heroShrine.json'))) || this;
     }
+    HeroShrine.prototype.addToGame = function (gm) {
+        _super.prototype.addToGame.call(this, gm);
+        this.data.spamRate += this.owner.updateManager.spamRateModifier;
+        if (this.data.spamRate <= 0) {
+            this.data.spamRate = 1;
+        }
+        this.data.spamCount += this.owner.updateManager.unitCountModifier;
+    };
     HeroShrine.prototype.canDoEffect = function () {
         var canDo = false;
         if (this.owner.getAllUnits().length > 0) {
