@@ -37,6 +37,7 @@
         <script src="client/GameScene.js"></script>
         <script src="client/MainMenu.js"></script>
         <script src="client/AboutScene.js"></script>
+        <script src="client/GuideScene.js"></script>
         <script src="client/DeckScene.js"></script>
         <script src="client/Preloader.js"></script>
         <script src="client/Tile.js"></script>
@@ -218,15 +219,21 @@
                 <div id='changeLog' class="unselectable">
                     <div style="font-size: 1em; color: #ECEC3A; text-align: center;padding-top: 3px;">Changelog</div>
                     <div style="font-size: 0.65em; color: white; text-align: center;margin: 15px 10px 10px 10px;">
-                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;">September 15</span>
+                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;">October 9</span>
+                         -Balance changes<br><a style="font-size: 0.8em;" href="https://www.reddit.com/r/castlearena/comments/75bunu/october_9_changelog_balance_changes/"target="_blank">-details here-</a>
+
+                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 15</span>
                         -In-game chat <br><span style="font-size: 0.75em;">(press enter while in game)</span><br><br>
                         -Tower balance change<br> <a style="font-size: 0.8em;" href="https://www.reddit.com/r/castlearena/comments/708y5b/september_15_changelog_tower_balance_change/" target="_blank">-details here-</a>
                         <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 14</span>
                         -Improved spectator mode
-                        <span style="font-size: 1.2em;color: #ECEC3A;display:block;padding-bottom: 11px;padding-top: 20px;">September 13</span>
-                        -UI Overhaul
                     </div>
                 </div>
+
+                <div id='tutorial' style="display: none;" onclick="HtmlUI.showGuide()">
+                    Guide & Tips
+                </div>
+
             </div>
 
             <div id='bottomRightBox' class="animDireita">
@@ -256,11 +263,18 @@
             </div>
             <div id='moreBox'>
                 <div id='moreGames'>
-                    <a href="https://www.reddit.com/r/castlearena/" target="_blank" style="display:block;">
+                    <a href="https://iogames.space/" target="_blank" style="display:block;">
                         <img src="assets/48/menu_ui/moreButton.png">
                     </a>
                 </div>
             </div>
+
+
+            <div id='tutorialBox' class="animDireita">
+                
+            </div>
+
+
         </div>  
         <div id='bottomLeftBox' class="animEsquerda2" style="display: none; font-size: 26px;">
             <div id='chatBox'>
@@ -276,6 +290,27 @@
                 </div>
             </div>
         </div>
+
+        <div id='guide' class="animEsquerda2" style="display: none; font-size: 26px;">
+            <div id='tiers'>
+                <div id='basic'>
+                    <div id='basicLabel' style="color: #FF8080; font-size: 1.5em;padding-bottom: 10px;">
+                        Basic
+                    </div>
+                    <div class='basicItem'>
+                        Income
+                    </div>
+                    <div class='basicItem'>
+                        Buildings vs Units
+                    </div>
+                    <div class='basicItem'>
+                        Teste
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
     </body>
 
 
