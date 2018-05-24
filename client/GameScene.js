@@ -303,6 +303,15 @@ var Kodo;
             });
             return buildings;
         };
+        GameScene.prototype.getEffectBuildings = function (fromHost) {
+            var buildings = [];
+            this.entities.forEach(function (e) {
+                if (e instanceof Kodo.EffectBuilding && e.isHost == fromHost) {
+                    buildings.push(e);
+                }
+            });
+            return buildings;
+        };
         GameScene.instance = null;
         return GameScene;
     }(Phaser.State));

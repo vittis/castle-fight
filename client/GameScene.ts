@@ -370,7 +370,15 @@ module Kodo {
             });
             return buildings;
         }
-
+        getEffectBuildings(fromHost: boolean): EffectBuilding[] {
+            var buildings: EffectBuilding[] = [];
+            this.entities.forEach(e => {
+                if (e instanceof EffectBuilding && e.isHost == fromHost) {
+                    buildings.push(e);
+                }
+            });
+            return buildings;
+        }
 
     }
 }

@@ -119,6 +119,10 @@ module Kodo {
                     Kodo.GameScene.instance.getSpamBuildings(GameConfig.isHost).forEach(b => {
                         b.bar.addUnitCount();
                     }); 
+                    Kodo.GameScene.instance.getEffectBuildings(GameConfig.isHost).forEach(b => {
+                        if (!(b instanceof SacrificeChamber))
+                            b.bar.addUnitCount();
+                    }); 
                 }
             }
         }

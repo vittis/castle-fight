@@ -96,6 +96,10 @@ var Kodo;
                     Kodo.GameScene.instance.getSpamBuildings(GameConfig.isHost).forEach(function (b) {
                         b.bar.addUnitCount();
                     });
+                    Kodo.GameScene.instance.getEffectBuildings(GameConfig.isHost).forEach(function (b) {
+                        if (!(b instanceof Kodo.SacrificeChamber))
+                            b.bar.addUnitCount();
+                    });
                 }
             }
         };

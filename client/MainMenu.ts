@@ -121,7 +121,7 @@ module Kodo {
             aboutText.alignIn(aboutButton, Phaser.CENTER);
 
             
-            this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castle Arena", style);
+            this.titleLabel = this.game.add.text(this.game.world.centerX, 80, "Castlez.io", style);
             this.titleLabel.anchor.setTo(0.5, 0.5);
             this.titleLabel.fontWeight = 'bold';
             this.titleLabel.stroke = '#0D6032';
