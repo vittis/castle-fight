@@ -165,7 +165,7 @@ export class GameServer {
                 console.log("entrando em pre-matchmaking player "+player.nick);
                 player.status = PlayerStatus.preMatchmaking;
                 this.broadCastAllPlayers();
-                setTimeout(this.resolveMatchmaking.bind(this, player.id), 10000);
+                setTimeout(this.resolveMatchmaking.bind(this, player.id), 5000);
             }
         }
     }

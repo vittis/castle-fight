@@ -126,7 +126,7 @@ var GameServer = (function () {
                 console.log("entrando em pre-matchmaking player " + player.nick);
                 player.status = ServerPlayer_1.PlayerStatus.preMatchmaking;
                 this.broadCastAllPlayers();
-                setTimeout(this.resolveMatchmaking.bind(this, player.id), 10000);
+                setTimeout(this.resolveMatchmaking.bind(this, player.id), 5000);
             }
         }
     };
