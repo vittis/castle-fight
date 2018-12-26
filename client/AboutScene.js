@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Kodo;
 (function (Kodo) {
-    var AboutScene = (function (_super) {
+    var AboutScene = (function (_super) { 
         __extends(AboutScene, _super);
         function AboutScene() {
             return _super !== null && _super.apply(this, arguments) || this;

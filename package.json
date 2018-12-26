@@ -1,7 +1,7 @@
 {
   "name": "castle-fight",
   "version": "1.0.0",
-  "description": "castle fight bom",
+  "description": "Castle Arena",
   "main": "index.js",
   "scripts": {
     "start": "cls & tsc & node server.js"

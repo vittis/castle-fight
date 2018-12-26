@@ -19,7 +19,7 @@ app.get('/',function(req,res){
 server.listen(process.env.PORT || 80, function () {
     console.log('Listening on '+server.address().port);
 });            
-//configs^--------------
+// configs ^--------------
 import {GameServer} from './server/GameServer';
 import { GameConfig } from "./server/GameConfig";
 
@@ -28,7 +28,6 @@ var gameServer : GameServer = new GameServer(io);
 
 setInterval(gameServer.broadCastAllPlayers.bind(gameServer), 5000);
 
-//io.sockets.emit
 io.on('connection',function(socket){
 
     var player = gameServer.onConnected(socket);
@@ -236,22 +235,4 @@ io.on('connection',function(socket){
             }
         }
     }.bind(gameServer.getGameByPlayerId(player.id)));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });

@@ -3,7 +3,7 @@
 
 declare module p2 {
 
-    export class AABB {
+    export class AABB { 
 
         constructor(options?: {
             upperBound?: number[];
