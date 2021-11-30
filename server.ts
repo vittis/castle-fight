@@ -16,7 +16,7 @@ app.get('/',function(req,res){
     console.log(req.url);
 });
 
-server.listen(process.env.PORT || 80, function () {
+server.listen(process.env.PORT || 8081, function () {
     console.log('Listening on '+server.address().port);
 });            
 // configs ^--------------
